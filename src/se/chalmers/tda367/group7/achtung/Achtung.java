@@ -12,7 +12,7 @@ public class Achtung implements Runnable {
 
 	private GameEngine engine = new GameEngine(3);
 
-	private static final double DESIRED_FPS = 1000;
+	private static final double DESIRED_FPS = 60;
 	private static final double DESIRED_TICK_RATE = 60;
 
 	private long lastFrame;
@@ -41,14 +41,14 @@ public class Achtung implements Runnable {
 
 			long tickDelta = System.nanoTime() - this.lastTick;
 			if (tickDelta > tickDelay) {
-				update();
 				this.lastTick = System.nanoTime();
+				update();
 			}
 
 			long fpsDelta = System.nanoTime() - this.lastFrame;
 			if (fpsDelta > fpsDelay) {
-				render();
 				this.lastFrame = System.nanoTime();
+				render();
 			}
 
 			// No sleep is done to keep precision
