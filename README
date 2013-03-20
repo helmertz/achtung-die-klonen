@@ -1,0 +1,6 @@
+Achtung, die Klonen 
+
+Requires LWJGL! Before opening project:
+1. Download from http://www.lwjgl.org/download.php
+2. Extract jar files to "lib"
+3. Extract native files for platform (.dll, .so,...) to "native"
