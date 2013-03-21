@@ -22,9 +22,10 @@ public class Player {
 	private int rightKeyCode;
 	
 	private int updateCounter;
-	private int updateRate = 4;
+	private int updateRate = 1;
 
 	private boolean nextBlank;
+	private float nextBlankChance = 0.02f;
 	
 	public Player() {
 		this.color = ReadableColor.WHITE;
@@ -49,9 +50,12 @@ public class Player {
 			this.updateCounter = 0;
 			if (!nextBlank) {
 				this.body.add(new PlayerSegment(this.lastPos, this.pos, 10));
+				nextBlankChance = 0.02f;
+			} else {
+				nextBlankChance = 0.5f;
 			}
 			this.lastPos = this.pos;
-			nextBlank = 0.02 > Math.random();
+			nextBlank = nextBlankChance > Math.random();
 		}
 	}
 
