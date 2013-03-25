@@ -6,7 +6,8 @@ This is structure-wise probably not at all like what the finished version will b
 
 ## Instructions
 Requires LWJGL! Before opening project:
-1. Download from http://www.lwjgl.org/download.php (select "lwjgl-2.8.5.zip")
-2. Extract jar files to "lib"
-3. Extract native files for platform (.dll, .so,...) to "native"
-4. Import into Eclipse and run from "Main".
+
+1.  Download from http://www.lwjgl.org/download.php (select "lwjgl-2.8.5.zip")
+2.  Extract jar files to "lib"
+3.  Extract native files for platform (.dll, .so,...) to "native"
+4.  Import into Eclipse and run from "Main".
