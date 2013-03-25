@@ -1,6 +1,6 @@
 # Achtung, die Klonen
 
-## Our version of the classical game Achtung, Die Kurve
+## Our version of the classical game Achtung, die Kurve
 
 This is structure-wise probably not at all like what the finished version will be. What's here so far is for demonstrating and testing how some of the technical parts, like rendering and input handling, could be done.
 
