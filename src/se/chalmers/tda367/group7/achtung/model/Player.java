@@ -8,13 +8,18 @@ import org.lwjgl.util.vector.Vector2f;
 
 public class Player {
 
-	private List<PowerUp> powerUps;
-	private Body body = new Body();
+	private String name;
+	private Color color;
 	
-	public Player(Color color, String name) {
-		powerUps = new ArrayList<PowerUp>();
+	private List<PowerUp> powerUps = new ArrayList<PowerUp>();;
+	private Body body;
+	
+	public Player(String name, Color color, float startX, float startY) {
+		this.name = name;
+		this.body = new Body(new Vector2f(startX, startY));
+		this.color = color;
 	}
-	
+
 	public void setPosition(Vector2f position) {
 		body.setHeadPosition(position);
 	}
@@ -24,6 +29,8 @@ public class Player {
 	 */
 	public void update() {
 		updatePowerUps();
+		// let the body handle movement related updates?
+		body.update();
 	}
 	
 	/**
@@ -48,5 +55,33 @@ public class Player {
 				powerUps.remove(p);
 			}
 		}
+	}
+
+	public void setSpeed(float speed) {
+		body.setSpeed(speed);
+	}
+
+	public void setRotation(float rotation) {
+		body.setRotation(rotation);
+	}
+
+	public float getSpeed() {
+		return body.getSpeed();
+	}
+
+	public float getRotation() {
+		return body.getRotation();
+	}
+
+	public Body getBody() {
+		return body;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Color getColor() {
+		return color;
 	}
 }
