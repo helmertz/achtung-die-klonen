@@ -4,19 +4,25 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.util.vector.Vector2f;
+
 public class Player {
 
 	private List<PowerUp> powerUps;
+	private Body body = new Body();
 	
 	public Player(Color color, String name) {
 		powerUps = new ArrayList<PowerUp>();
+	}
+	
+	public void setPosition(Vector2f position) {
+		body.setHeadPosition(position);
 	}
 	
 	/**
 	 * Update the player.
 	 */
 	public void update() {
-		
 		updatePowerUps();
 	}
 	
