@@ -8,27 +8,30 @@ import org.lwjgl.util.vector.Vector2f;
 
 public class Player {
 
-	private List<PowerUp> powerUps;
-	private Body body = new Body();
+	private String name;
+	private Color color;
 	
 	private int points;
-	private final int id;
+	private int id;
 	private double speed;
-	private Color color;
 	private double rotationAngle;
-	private String name;
 	
-	public Player(Color color, String name, int id) {
-		powerUps = new ArrayList<PowerUp>();
+	private List<PowerUp> powerUps = new ArrayList<PowerUp>();;
+	private Body body;
+	
+	public Player(String name, Color color, float startX, float startY) {
 		this.name = name;
-		this.id = id;
+		this.body = new Body(new Vector2f(startX, startY));
+		this.color = color;
 	}
-	
+
 	/**
 	 * Update the player.
 	 */
 	public void update() {
 		updatePowerUps();
+		// let the body handle movement related updates?
+		body.update();
 	}
 	
 	/**
@@ -90,13 +93,8 @@ public class Player {
 	public Color getColor() {
 		return color;
 	}
-
-	public String getName() {
-		return name;
-	}
 	
 	public void setPosition(Vector2f position) {
 		body.setHeadPosition(position);
 	}
-
 }
