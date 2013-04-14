@@ -13,10 +13,8 @@ public class Player {
 	
 	private int points;
 	private int id;
-	private double speed;
-	private double rotationAngle;
-	
-	private List<PowerUp> powerUps = new ArrayList<PowerUp>();;
+
+	private List<PowerUp> powerUps = new ArrayList<PowerUp>();
 	private Body body;
 	
 	public Player(String name, Color color, float startX, float startY) {
@@ -63,19 +61,19 @@ public class Player {
 	}
 	
 	public double getSpeed() {
-		return speed;
+		return body.getSpeed();
 	}
 
-	public void setSpeed(double speed) {
-		this.speed = speed;
+	public void setSpeed(float speed) {
+		body.setSpeed(speed);
 	}
 
 	public double getRotationAngle() {
-		return rotationAngle;
+		return body.getRotationAngle();
 	}
 
-	public void setRotationAngle(double rotationAngle) {
-		this.rotationAngle = rotationAngle;
+	public void setRotationAngle(float rotationAngle) {
+		body.setRotationAngle(rotationAngle);
 	}
 
 	public List<PowerUp> getPowerUps() {
@@ -100,5 +98,9 @@ public class Player {
 
 	public Body getBody() {
 		return this.body;
+	}
+
+	public String getName() {
+		return name;
 	}
 }

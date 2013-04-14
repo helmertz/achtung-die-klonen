@@ -22,18 +22,18 @@ public class Body {
 	// Have speed and direction stored like this, instead of separate vector,
 	// will probably make more sense in our game. (Since we lack gravity and
 	// such)
-	// Would it make more sense if these were properties of the head?
+	// Would it make more sense if these were properties of the head or player?
 	private float speed;
-	private float rotation; // in degrees
+	private float rotationAngle; // in degrees
 	
 	public Body (Vector2f position) {
 		this(position, DEFAULT_SPEED, DEFAULT_ROTATION);
 	}
 	
-	public Body (Vector2f position, float speed, float rotation) {
+	public Body (Vector2f position, float speed, float rotationAngle) {
 		head = new Head(position, headDiameter);
 		this.speed = speed;
-		this.rotation = rotation;
+		this.rotationAngle = rotationAngle;
 	}
 	
 	public Head getHead() {
@@ -62,8 +62,8 @@ public class Body {
 		float y = position.getY();
 		
 		// Calculates the new position of the head.
-		x = (float) (x + speed * Math.cos(Math.toRadians(rotation)));
-		y = (float) (y + speed * Math.sin(Math.toRadians(rotation)));
+		x = (float) (x + speed * Math.cos(Math.toRadians(rotationAngle)));
+		y = (float) (y + speed * Math.sin(Math.toRadians(rotationAngle)));
 		
 		position.setX(x);
 		position.setY(y);
@@ -77,11 +77,11 @@ public class Body {
 		this.speed = speed;
 	}
 
-	public float getRotation() {
-		return rotation;
+	public float getRotationAngle() {
+		return rotationAngle;
 	}
 
-	public void setRotation(float rotation) {
-		this.rotation = rotation;
+	public void setRotationAngle(float rotation) {
+		this.rotationAngle = rotation;
 	}
 }
