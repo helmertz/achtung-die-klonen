@@ -11,12 +11,17 @@ public class Player {
 	private List<PowerUp> powerUps;
 	private Body body = new Body();
 	
-	public Player(Color color, String name) {
-		powerUps = new ArrayList<PowerUp>();
-	}
+	private int points;
+	private final int id;
+	private double speed;
+	private Color color;
+	private double rotationAngle;
+	private String name;
 	
-	public void setPosition(Vector2f position) {
-		body.setHeadPosition(position);
+	public Player(Color color, String name, int id) {
+		powerUps = new ArrayList<PowerUp>();
+		this.name = name;
+		this.id = id;
 	}
 	
 	/**
@@ -44,9 +49,54 @@ public class Player {
 		for (PowerUp p : powerUps) {
 			p.update();
 			if (!p.isActive()) {
-				p.removeEffect(this);
-				powerUps.remove(p);
+				removePowerUpAndEffect(p);
 			}
 		}
 	}
+	
+	private void removePowerUpAndEffect(PowerUp powerUp) {
+		powerUp.removeEffect(this);
+		powerUps.remove(powerUp);
+	}
+	
+	public double getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+
+	public double getRotationAngle() {
+		return rotationAngle;
+	}
+
+	public void setRotationAngle(double rotationAngle) {
+		this.rotationAngle = rotationAngle;
+	}
+
+	public List<PowerUp> getPowerUps() {
+		return powerUps;
+	}
+
+	public int getPoints() {
+		return points;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public String getName() {
+		return name;
+	}
+	
+	public void setPosition(Vector2f position) {
+		body.setHeadPosition(position);
+	}
+
 }
