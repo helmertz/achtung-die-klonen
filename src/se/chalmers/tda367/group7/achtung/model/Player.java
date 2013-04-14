@@ -97,4 +97,8 @@ public class Player {
 	public void setPosition(Vector2f position) {
 		body.setHeadPosition(position);
 	}
+
+	public Body getBody() {
+		return this.body;
+	}
 }

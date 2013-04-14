@@ -15,7 +15,7 @@ public class PlayerTest {
 		p.setSpeed(1);
 
 		// In degrees, 90 should mean straight up (positive y direction)
-		p.setRotation(90);
+		p.setRotationAngle(90);
 
 		Vector2f position = p.getBody().getHead().getPosition();
 
@@ -34,7 +34,7 @@ public class PlayerTest {
 		// Checks if y is increased by one,
 		assertTrue(newX == oldX && Math.round(newY) == Math.round(oldY + 1));
 
-		p.setRotation(0);
+		p.setRotationAngle(0);
 
 		p.update();
 
