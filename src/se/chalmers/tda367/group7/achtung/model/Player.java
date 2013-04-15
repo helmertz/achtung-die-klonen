@@ -6,13 +6,24 @@ import java.util.List;
 
 import org.lwjgl.util.vector.Vector2f;
 
+/**
+ * This class holds all logic for moving the body.
+ */
 public class Player {
+
+	public static final float DEFAULT_SPEED = 1;
+	public static final float DEFAULT_ROTATION = 0;
 
 	private String name;
 	private Color color;
 	
 	private int points;
 	private int id;
+	private static int numberOfPlayers = 0;
+	
+	private float speed;
+	private float rotationAngle; // in degrees
+	
 
 	private List<PowerUp> powerUps = new ArrayList<PowerUp>();
 	private Body body;
@@ -21,15 +32,24 @@ public class Player {
 		this.name = name;
 		this.body = new Body(new Vector2f(startX, startY));
 		this.color = color;
+		
+		// id mechanism.
+		id = numberOfPlayers;
+		numberOfPlayers++;
 	}
 
 	/**
-	 * Update the player.
+	 * Update the player. 
 	 */
 	public void update() {
 		updatePowerUps();
-		// let the body handle movement related updates?
-		body.update();
+
+		// Calculates the new delta position.
+		float dx = (float) (speed * Math.cos(Math.toRadians(rotationAngle)));
+		float dy = (float) (speed * Math.sin(Math.toRadians(rotationAngle)));
+		
+		// Update body with new delta positions.
+		body.update(dx, dy);
 	}
 	
 	/**
@@ -59,22 +79,6 @@ public class Player {
 		powerUp.removeEffect(this);
 		powerUps.remove(powerUp);
 	}
-	
-	public double getSpeed() {
-		return body.getSpeed();
-	}
-
-	public void setSpeed(float speed) {
-		body.setSpeed(speed);
-	}
-
-	public double getRotationAngle() {
-		return body.getRotationAngle();
-	}
-
-	public void setRotationAngle(float rotationAngle) {
-		body.setRotationAngle(rotationAngle);
-	}
 
 	public List<PowerUp> getPowerUps() {
 		return powerUps;
@@ -102,5 +106,28 @@ public class Player {
 
 	public String getName() {
 		return name;
+	}
+	public float getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+
+	public float getRotationAngle() {
+		return rotationAngle;
+	}
+
+	public void setRotationAngle(float rotation) {
+		this.rotationAngle = rotation;
+	}
+	
+	public float getWidth() {
+		return body.getWidth();
+	}
+
+	public void setWidth(float width) {
+		body.setWidth(width);
 	}
 }

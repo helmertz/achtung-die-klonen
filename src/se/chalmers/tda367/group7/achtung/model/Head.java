@@ -20,6 +20,10 @@ public class Head {
 	public float getDiameter() {
 		return diameter;
 	}
+	
+	public void setDiameter(float diameter) {
+		this.diameter = diameter;
+	}
 
 	public void setPosition(Vector2f position) {
 		this.position = position;

@@ -5,35 +5,25 @@ import java.util.List;
 
 import org.lwjgl.util.vector.Vector2f;
 
-// Class responsible for position in game and movement updates
+/**
+ * Class representing the state of the body.
+ */
 public class Body {
-	
-	public static final float DEFAULT_SPEED = 1;
-	public static final float DEFAULT_ROTATION = 0;
+
+	public static final float DEFAULT_WIDTH = 10;
+
+	private float width;
 	
 	private Head head;
-	private List<BodySegment> bodySegments = new ArrayList<BodySegment>();
+	private List<BodySegment> bodySegments;
 	
-	// TODO: don't hardcode this in this class probably, but would be weird
-	// to have a setHeadDiameter method in this class, makes no sense from an
-	// interface perspective
-	private float headDiameter = 10;
-	
-	// Have speed and direction stored like this, instead of separate vector,
-	// will probably make more sense in our game. (Since we lack gravity and
-	// such)
-	// Would it make more sense if these were properties of the head or player?
-	private float speed;
-	private float rotationAngle; // in degrees
 	
 	public Body (Vector2f position) {
-		this(position, DEFAULT_SPEED, DEFAULT_ROTATION);
-	}
-	
-	public Body (Vector2f position, float speed, float rotationAngle) {
-		head = new Head(position, headDiameter);
-		this.speed = speed;
-		this.rotationAngle = rotationAngle;
+		width = DEFAULT_WIDTH;
+		
+		// Width of the body is the same as the diameter of the head.
+		head = new Head(position, width);
+		bodySegments = new ArrayList<BodySegment>();
 	}
 	
 	public Head getHead() {
@@ -50,38 +40,45 @@ public class Body {
 
 	public void setHeadPosition(Vector2f position) {
 		if(this.head == null) {
-			head = new Head(position, headDiameter);
+			head = new Head(position, width);
 		} else {
 			head.setPosition(position);
 		}
 	}
 
-	public void update() {
-		Vector2f position = head.getPosition();
-		float x = position.getX();
-		float y = position.getY();
+	/**
+	 * Moves the body by the delta values.
+	 * 
+	 * @param dx - the length to move in the x-axis
+	 * @param dy - the length to move in the y-axis
+	 */
+	public void update(float dx, float dy) {
 		
-		// Calculates the new position of the head.
-		x = (float) (x + speed * Math.cos(Math.toRadians(rotationAngle)));
-		y = (float) (y + speed * Math.sin(Math.toRadians(rotationAngle)));
+		// Update head with delta positions
+		Vector2f headPosition = head.getPosition();
+		float x = headPosition.getX();
+		float y = headPosition.getY();
 		
-		position.setX(x);
-		position.setY(y);
+		headPosition.setX(x + dx);
+		headPosition.setY(y + dy);
+		
+		// Create a new body segment and add to body segment list.
+		// Will use previous body segment end as start, so that there are no duplicated variables.
+		// TODO - This will have to be thought through when holes is implemented.
+		if (bodySegments.isEmpty()) {
+			addBodySegment(new BodySegment(new Vector2f(x, y), new Vector2f(x + dx, y + dy), width));
+		} else {
+			Vector2f start = bodySegments.get(bodySegments.size() - 1).getEnd();
+			addBodySegment(new BodySegment(start, new Vector2f(x + dx, y + dy), width));
+		}
+	}
+	
+	public float getWidth() {
+		return width;
 	}
 
-	public float getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(float speed) {
-		this.speed = speed;
-	}
-
-	public float getRotationAngle() {
-		return rotationAngle;
-	}
-
-	public void setRotationAngle(float rotation) {
-		this.rotationAngle = rotation;
+	public void setWidth(float width) {
+		this.width = width;
+		head.setDiameter(width);
 	}
 }
