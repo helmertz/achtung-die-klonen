@@ -22,7 +22,7 @@ public class Player {
 	private static int numberOfPlayers = 0;
 	
 	private float speed;
-	private float rotationAngle; // in degrees
+	private float rotationAngleDeg; // in degrees
 	
 
 	private List<PowerUp> powerUps = new ArrayList<PowerUp>();
@@ -45,8 +45,8 @@ public class Player {
 		updatePowerUps();
 
 		// Calculates the new delta position.
-		float dx = (float) (speed * Math.cos(Math.toRadians(rotationAngle)));
-		float dy = (float) (speed * Math.sin(Math.toRadians(rotationAngle)));
+		float dx = (float) (speed * Math.cos(Math.toRadians(rotationAngleDeg)));
+		float dy = (float) (speed * Math.sin(Math.toRadians(rotationAngleDeg)));
 		
 		// Update body with new delta positions.
 		body.update(dx, dy);
@@ -115,12 +115,12 @@ public class Player {
 		this.speed = speed;
 	}
 
-	public float getRotationAngle() {
-		return rotationAngle;
+	public float getRotationAngleDeg() {
+		return rotationAngleDeg;
 	}
 
-	public void setRotationAngle(float rotation) {
-		this.rotationAngle = rotation;
+	public void setRotationAngleDeg(float rotationDeg) {
+		this.rotationAngleDeg = rotationDeg;
 	}
 	
 	public float getWidth() {
