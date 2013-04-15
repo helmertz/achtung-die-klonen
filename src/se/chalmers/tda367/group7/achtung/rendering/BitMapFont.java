@@ -19,9 +19,9 @@ public class BitMapFont {
 	public static final String CHARACTERS = 
 			"0123456789abcdef" + 
 			"ghijklmnopqrstuv" + 
-			"wxyzÂ‰ˆABCDEFGHI" + 
+			"wxyz√•√§√∂ABCDEFGHI" + 
 			"JKLMNOPQRSTUVWXY" + 
-			"Z≈ƒ÷., -'*!:()[]" + 
+			"Z√•√§√∂., -'*!:()[]" + 
 			"{}#@&_?/\\\"";
 
 	private static final int CHARS_PER_ROW = 16;
