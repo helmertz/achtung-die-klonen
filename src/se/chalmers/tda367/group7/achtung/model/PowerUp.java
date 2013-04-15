@@ -3,13 +3,11 @@ package se.chalmers.tda367.group7.achtung.model;
 public class PowerUp {
 
 	private PlayerPowerUpEffect effect;
-	private final int durationEffectIsActiveFor;
 	private int timeElapsed;
 	
 	
 	public PowerUp(PlayerPowerUpEffect effect) {
 		this.effect = effect;
-		durationEffectIsActiveFor = this.effect.getDuration();
 	}
 
 	public void applyEffect(Player p) {
@@ -24,7 +22,7 @@ public class PowerUp {
 	 * @return true if the power up is still active
 	 */
 	public boolean isActive() {
-		return durationEffectIsActiveFor - timeElapsed > 0;
+		return effect.getDuration() - timeElapsed > 0;
 	}
 	
 	/**
