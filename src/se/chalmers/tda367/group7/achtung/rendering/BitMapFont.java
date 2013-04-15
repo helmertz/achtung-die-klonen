@@ -21,7 +21,7 @@ public class BitMapFont {
 			"ghijklmnopqrstuv" + 
 			"wxyzåäöABCDEFGHI" + 
 			"JKLMNOPQRSTUVWXY" + 
-			"Zåäö., -'*!:()[]" + 
+			"ZÅÄÖ., -'*!:()[]" + 
 			"{}#@&_?/\\\"";
 
 	private static final int CHARS_PER_ROW = 16;
