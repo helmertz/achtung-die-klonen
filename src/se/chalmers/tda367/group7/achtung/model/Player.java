@@ -13,6 +13,7 @@ public class Player {
 
 	public static final float DEFAULT_SPEED = 1;
 	public static final float DEFAULT_ROTATION = 0;
+	public static final float DEFAULT_ROTATION_SPEED = 0.1f;
 
 	private String name;
 	private Color color;
@@ -22,7 +23,8 @@ public class Player {
 	private static int numberOfPlayers = 0;
 	
 	private float speed;
-	private float rotationAngleDeg; // in degrees
+	private float rotationAngleDeg; // the angle the snake is facing.
+	private float rotationSpeedDeg;	// the angle the snake is turning with.
 	
 
 	private List<PowerUp> powerUps = new ArrayList<PowerUp>();
@@ -32,6 +34,10 @@ public class Player {
 		this.name = name;
 		this.body = new Body(new Vector2f(startX, startY));
 		this.color = color;
+		
+		speed = DEFAULT_SPEED;
+		rotationAngleDeg = DEFAULT_ROTATION;
+		rotationSpeedDeg = DEFAULT_ROTATION_SPEED;
 		
 		// id mechanism.
 		id = numberOfPlayers;
@@ -97,6 +103,7 @@ public class Player {
 		this.points = points;
 	}
 	
+	
 	public int getId() {
 		return id;
 	}
@@ -130,6 +137,22 @@ public class Player {
 
 	public void setRotationAngleDeg(float rotationDeg) {
 		this.rotationAngleDeg = rotationDeg;
+	}
+	
+	public float getRotationSpeedDeg() {
+		return rotationSpeedDeg;
+	}
+	
+	public void setRotationSpeedDeg(float rotationSpeed) {
+		this.rotationSpeedDeg = rotationSpeed;
+	}
+	
+	public void turnRight() {
+		rotationAngleDeg += rotationSpeedDeg;
+	}
+	
+	public void turnLeft() {
+		rotationAngleDeg -= rotationSpeedDeg;
 	}
 	
 	public float getWidth() {
