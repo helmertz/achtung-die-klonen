@@ -87,7 +87,16 @@ public class Player {
 	public int getPoints() {
 		return points;
 	}
-
+	
+	/**
+	 * Adds the given number of points to the player.
+	 * 
+	 * @param points - the amount of points to add
+	 */
+	public void addPoints(int points) {
+		this.points = points;
+	}
+	
 	public int getId() {
 		return id;
 	}
