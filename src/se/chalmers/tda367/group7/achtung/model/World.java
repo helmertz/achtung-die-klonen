@@ -4,20 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class containing the data for a game currenty playing.
+ * Class containing the data for a game currently playing.
  */
 public class World {
 
-	private int width;
-	private int heigth;
+	private final int width;
+	private final int height;
 
 	private List<Player> players;
 	private List<Player> activePlayers; // should only contain non dead players.
-	// when a player dies it is removed from acitvePlayers.
 	
 	public World(int width, int heigth) {
 		this.width = width;
-		this.heigth = heigth;
+		this.height = heigth;
 		
 		players = new ArrayList<>();
 		activePlayers = new ArrayList<>();
@@ -29,11 +28,15 @@ public class World {
 	
 	public void update() {
 		if (isRoundActive()) {
-			for (Player player : activePlayers) {
-				player.update();
-			}
+			updatePlayers();
 			
 			// TODO - implement collision detection and random power up placement.
+		}
+	}
+
+	private void updatePlayers() {
+		for (Player player : activePlayers) {
+			player.update();
 		}
 	}
 	
@@ -51,10 +54,14 @@ public class World {
 		if (!isRoundActive()) {
 			activePlayers.addAll(players);
 			
-			for (Player player : activePlayers) {
-				// TODO - fix so that startpoints is different, and not too close, for each snake.
-				player.createNewBody(0, 0);
-			}
+			createPlayersInWorld();
+		}
+	}
+
+	private void createPlayersInWorld() {
+		for (Player player : activePlayers) {
+			// TODO - fix so that startpoints is different, and not too close, for each snake.
+			player.createNewBody(0, 0);
 		}
 	}
 	
@@ -62,8 +69,12 @@ public class World {
 	 * @return true if a player has won.
 	 */
 	public boolean isGameOver() {
+		return playerHasGoalPoints();
+	}
 
+	private boolean playerHasGoalPoints() {
 		int goalPoints = getGoalPoints();
+		
 		for (Player player : players) {
 			if (player.getPoints() >= goalPoints) {
 				return true;

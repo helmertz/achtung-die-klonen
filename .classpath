@@ -15,7 +15,7 @@
 	<classpathentry kind="lib" path="lib/lwjgl.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://lwjgl.org/javadoc/"/>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Achtung, die Klonen/native"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="achtung-die-klonen/native"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/lzma.jar"/>
