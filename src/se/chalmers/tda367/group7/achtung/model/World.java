@@ -42,7 +42,13 @@ public class World {
 	 * @return true if there are players still alive
 	 */
 	public boolean isRoundActive() {
-		return false; //TODO - fix this
+		int deadPlayers = 0;
+		for (Player player : players) {
+			if (player.getBody().isDead()) {
+				deadPlayers++;
+			}
+		}
+		return deadPlayers == players.size();
 	}
 	
 	/**
