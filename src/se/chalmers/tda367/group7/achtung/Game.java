@@ -12,6 +12,13 @@ import se.chalmers.tda367.group7.achtung.rendering.lwjgl.LWJGLRenderService;
 public class Game {
 
 	private RenderService renderer;
+	private final int TICKS_PER_SECOND = 25;
+	private final int SKIP_TICKS = 1000000000 / TICKS_PER_SECOND;
+	private final int MAX_FRAMESKIP = 5;
+	
+	private int loops;
+	private long nextGameTick = getTickCount();
+	private float interpolation;
 
 	public Game() {
 		try {
@@ -22,18 +29,34 @@ public class Game {
 		}
 	}
 
+	private long getTickCount() {
+		return System.nanoTime();
+	}
+
 	public void run() {
 		// TODO implement a proper game loop. Check
 		// http://www.koonsolo.com/news/dewitters-gameloop/ for some different
 		// types. Interpolation type renderer would probably work well, but is a
 		// bit more difficult to implement.
 		while (!renderer.isCloseRequested()) {
-			logic();
-			render();
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
+			loops = 0;
+			
+			while(getTickCount() > nextGameTick && loops < MAX_FRAMESKIP) {
+				
+				
+				logic();
+				
+				nextGameTick += SKIP_TICKS;
+				loops++;
 			}
+			
+			interpolation = (getTickCount() + SKIP_TICKS - nextGameTick) / (float)SKIP_TICKS;
+			render(interpolation);
+			
+//			try {
+//				Thread.sleep(10);
+//			} catch (InterruptedException e) {
+//			}
 		}
 	}
 
@@ -41,11 +64,12 @@ public class Game {
 		// TODO game logic
 	}
 
-	private void render() {
+	private void render(float interpolation) {
 		renderer.preDraw();
 		
 		// TODO SomeOtherClass.render(renderer)
 		
 		renderer.postDraw();
+		System.out.println(interpolation);
 	}
 }
