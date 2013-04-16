@@ -11,7 +11,6 @@ public class Body {
 
 	public static final float DEFAULT_WIDTH = 10;
 	private static final float DEFAULT_SPEED = 1;
-	private static final float DEFAULT_ROTATION = 0;
 	private static final float DEFAULT_ROTATION_SPEED = 0.1f;
 
 	private float speed;
