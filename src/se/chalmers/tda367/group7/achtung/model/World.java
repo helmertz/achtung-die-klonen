@@ -12,14 +12,12 @@ public class World {
 	private final int height;
 
 	private List<Player> players;
-	private List<Player> activePlayers; // should only contain non dead players.
 	
 	public World(int width, int height) {
 		this.width = width;
 		this.height = height;
 		
 		players = new ArrayList<>();
-		activePlayers = new ArrayList<>();
 	}
 	
 	public void addPlayer(Player p) {
@@ -35,7 +33,7 @@ public class World {
 	}
 
 	private void updatePlayers() {
-		for (Player player : activePlayers) {
+		for (Player player : players) {
 			player.update();
 		}
 	}
@@ -44,7 +42,7 @@ public class World {
 	 * @return true if there are players still alive
 	 */
 	public boolean isRoundActive() {
-		return activePlayers.size() > 0;
+		return false; //TODO - fix this
 	}
 	
 	/**
@@ -52,14 +50,12 @@ public class World {
 	 */
 	public void startRound() {
 		if (!isRoundActive()) {
-			activePlayers.addAll(players);
-			
-			createPlayersInWorld();
+			createPlayerBodys();
 		}
 	}
 
-	private void createPlayersInWorld() {
-		for (Player player : activePlayers) {
+	private void createPlayerBodys() {
+		for (Player player : players) {
 			// TODO - fix so that startpoints is different, and not too close, for each snake.
 			player.createNewBody(0, 0);
 		}
