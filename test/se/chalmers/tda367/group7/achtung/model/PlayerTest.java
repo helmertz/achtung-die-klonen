@@ -11,7 +11,8 @@ public class PlayerTest {
 
 	@Test
 	public void moveTest() {
-		Player p = new Player("Test Player", Color.WHITE, 20, 50);
+		Player p = new Player("Test Player", Color.WHITE);
+		p.createNewBody(20, 50);
 		p.setSpeed(1);
 
 		// In degrees, 90 should mean straight up (positive y direction)
