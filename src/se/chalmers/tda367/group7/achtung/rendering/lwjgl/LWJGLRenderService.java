@@ -1,4 +1,4 @@
-package se.chalmers.tda367.group7.achtung.rendering;
+package se.chalmers.tda367.group7.achtung.rendering.lwjgl;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -8,6 +8,9 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.PixelFormat;
+
+import se.chalmers.tda367.group7.achtung.rendering.Color;
+import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public class LWJGLRenderService implements RenderService {
 
@@ -36,13 +39,11 @@ public class LWJGLRenderService implements RenderService {
 	}
 
 	private void initOpenGL() {
-
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_LIGHTING);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_ALPHA_TEST);
 		glEnable(GL_BLEND);
-
 		sizeRefrash();
 	}
 

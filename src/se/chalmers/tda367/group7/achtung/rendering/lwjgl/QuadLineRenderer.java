@@ -1,4 +1,4 @@
-package se.chalmers.tda367.group7.achtung.rendering;
+package se.chalmers.tda367.group7.achtung.rendering.lwjgl;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;

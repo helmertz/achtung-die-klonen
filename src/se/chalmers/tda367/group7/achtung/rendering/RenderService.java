@@ -1,16 +1,17 @@
 package se.chalmers.tda367.group7.achtung.rendering;
 
+
 public interface RenderService {
-	// Called before things for a new frame is drawn
+	// Called before drawing for a new frame
 	public void preDraw();
 
-	// Called after drawing for one frame has been done
+	// Called after drawing for a frame is finished
 	public void postDraw();
 
 	// Sets the color the screen is filled with after it has been cleared
 	public void setBackgroundColor(Color color);
 
-	// Draws a line between two points, width the set width
+	// Draws a line between two points, with specified width and color
 	public void drawLine(float x1, float y1, float x2, float y2, float width,
 			Color color);
 
@@ -20,7 +21,7 @@ public interface RenderService {
 	public void setViewAreaSize(float width, float height);
 
 	// Draws a filled rectangle where x and y is the location of the top left
-	// corner.
+	// corner
 	public void drawFilledRect(float x, float y, float width, float height,
 			Color color);
 
@@ -29,7 +30,7 @@ public interface RenderService {
 			float lineWidth, Color color);
 
 	// Draws text on the screen where x and y specifies the top left corner of
-	// the first letter.
+	// the first letter
 	public void drawString(String s, float x, float y, float scale);
 
 	// Should perhaps be removed later on
