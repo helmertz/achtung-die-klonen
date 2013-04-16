@@ -24,14 +24,14 @@ public class Body {
 	private List<BodySegment> bodySegments;
 	private List<PowerUp> powerUps = new ArrayList<PowerUp>();
 	
-	public Body (Position position) {		
+	public Body (Position position, float rotation) {		
 		// Width of the body is the same as the diameter of the head.
 		head = new Head(position, width);
 		bodySegments = new ArrayList<BodySegment>();
 		
 		width = DEFAULT_WIDTH;
 		speed = DEFAULT_SPEED;
-		rotationAngleDeg = DEFAULT_ROTATION;
+		rotationAngleDeg = rotation;
 		rotationSpeedDeg = DEFAULT_ROTATION_SPEED;
 	}
 	

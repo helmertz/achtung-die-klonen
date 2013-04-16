@@ -66,8 +66,8 @@ public class Player {
 		return this.body;
 	}
 	
-	public void createNewBody(float startX, float startY) {
-		body = new Body(new Position(startX, startY));
+	public void setBody(Body body) {
+		this.body = body;
 	}
 
 	public String getName() {
