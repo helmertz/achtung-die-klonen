@@ -39,8 +39,5 @@ public class ExampleUsage {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {}
 		}
-		
-		
 	}
-
 }

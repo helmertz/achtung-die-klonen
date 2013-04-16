@@ -1,6 +1,5 @@
 package se.chalmers.tda367.group7.achtung.rendering;
 
-
 public interface RenderService {
 	// Called before drawing for a new frame
 	public void preDraw();
