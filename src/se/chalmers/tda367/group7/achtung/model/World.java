@@ -89,4 +89,12 @@ public class World {
 	public int getGoalPoints() {
 		return 10*(players.size() -1);
 	}
+	
+	public int getWidth() {
+		return this.width;
+	}
+	
+	public int getHeight() {
+		return this.height;
+	}
 }
