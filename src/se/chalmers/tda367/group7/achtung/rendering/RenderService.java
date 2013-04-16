@@ -34,4 +34,8 @@ public interface RenderService {
 
 	// Should perhaps be removed later on
 	public boolean isCloseRequested();
+
+	public float getViewAreaHeight();
+
+	public float getViewAreaWidth();
 }
