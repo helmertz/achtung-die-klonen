@@ -3,7 +3,6 @@ package se.chalmers.tda367.group7.achtung.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.util.vector.Vector2f;
 
 /**
  * Class representing the state of the body.
@@ -18,7 +17,7 @@ public class Body {
 	private List<BodySegment> bodySegments;
 	
 	
-	public Body (Vector2f position) {
+	public Body (Position position) {
 		width = DEFAULT_WIDTH;
 		
 		// Width of the body is the same as the diameter of the head.
@@ -38,7 +37,7 @@ public class Body {
 		bodySegments.add(bodySegment);
 	}
 
-	public void setHeadPosition(Vector2f position) {
+	public void setHeadPosition(Position position) {
 		if(this.head == null) {
 			head = new Head(position, width);
 		} else {
@@ -55,7 +54,7 @@ public class Body {
 	public void update(float dx, float dy) {
 		
 		// Update head with delta positions
-		Vector2f headPosition = head.getPosition();
+		Position headPosition = head.getPosition();
 		float x = headPosition.getX();
 		float y = headPosition.getY();
 		
@@ -66,10 +65,10 @@ public class Body {
 		// Will use previous body segment end as start, so that there are no duplicated variables.
 		// TODO - This will have to be thought through when holes is implemented.
 		if (bodySegments.isEmpty()) {
-			addBodySegment(new BodySegment(new Vector2f(x, y), new Vector2f(x + dx, y + dy), width));
+			addBodySegment(new BodySegment(new Position(x, y), new Position(x + dx, y + dy), width));
 		} else {
-			Vector2f start = bodySegments.get(bodySegments.size() - 1).getEnd();
-			addBodySegment(new BodySegment(start, new Vector2f(x + dx, y + dy), width));
+			Position start = bodySegments.get(bodySegments.size() - 1).getEnd();
+			addBodySegment(new BodySegment(start, new Position(x + dx, y + dy), width));
 		}
 	}
 	

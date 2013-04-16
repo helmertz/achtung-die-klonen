@@ -17,7 +17,7 @@ public class PlayerTest {
 		// In degrees, 90 should mean straight up (positive y direction)
 		p.setRotationAngleDeg(90);
 
-		Vector2f position = p.getBody().getHead().getPosition();
+		Position position = p.getBody().getHead().getPosition();
 
 		float oldX = position.getX();
 		float oldY = position.getY();

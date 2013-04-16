@@ -114,7 +114,7 @@ public class Player {
 		return color;
 	}
 	
-	public void setPosition(Vector2f position) {
+	public void setPosition(Position position) {
 		body.setHeadPosition(position);
 	}
 
@@ -123,7 +123,7 @@ public class Player {
 	}
 	
 	public void createNewBody(float startX, float startY) {
-		body = new Body(new Vector2f(startX, startY));
+		body = new Body(new Position(startX, startY));
 	}
 
 	public String getName() {
