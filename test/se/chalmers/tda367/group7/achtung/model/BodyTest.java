@@ -8,7 +8,7 @@ public class BodyTest {
 
 	@Test
 	public void moveTest() {
-		Body b = new Body(new Position(20, 50));
+		Body b = new Body(new Position(20, 50), 0);
 		b.setSpeed(1);
 
 		// In degrees, 90 should mean straight up (positive y direction)
