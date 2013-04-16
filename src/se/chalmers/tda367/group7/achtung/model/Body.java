@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Body {
 
-	public static final float DEFAULT_WIDTH = 10;
+	private static final float DEFAULT_WIDTH = 10;
 	private static final float DEFAULT_SPEED = 1;
 	private static final float DEFAULT_ROTATION_SPEED = 0.1f;
 
@@ -18,6 +18,7 @@ public class Body {
 	private float rotationSpeedDeg;	// the angle the snake is turning with.
 
 	private float width;
+	private boolean dead;
 	
 	private Head head;
 	private List<BodySegment> bodySegments;
@@ -28,6 +29,7 @@ public class Body {
 		head = new Head(position, width);
 		bodySegments = new ArrayList<BodySegment>();
 		
+		dead = false;
 		width = DEFAULT_WIDTH;
 		speed = DEFAULT_SPEED;
 		rotationAngleDeg = rotation;
@@ -60,7 +62,9 @@ public class Body {
 	public void update() {
 		updatePowerUps();
 
-		updatePosition();
+		if (!dead) {
+			updatePosition();
+		}
 	}
 
 	private void updatePosition() {
@@ -147,5 +151,13 @@ public class Body {
 
 	public Position getPosition() {
 		return head.getPosition();
+	}
+	
+	public boolean isDead() {
+		return dead;
+	}
+	
+	public void kill() {
+		dead = true;
 	}
 }
