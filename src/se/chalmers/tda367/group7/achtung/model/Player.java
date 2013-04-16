@@ -11,9 +11,9 @@ import org.lwjgl.util.vector.Vector2f;
  */
 public class Player {
 
-	public static final float DEFAULT_SPEED = 1;
-	public static final float DEFAULT_ROTATION = 0;
-	public static final float DEFAULT_ROTATION_SPEED = 0.1f;
+	private static final float DEFAULT_SPEED = 1;
+	private static final float DEFAULT_ROTATION = 0;
+	private static final float DEFAULT_ROTATION_SPEED = 0.1f;
 
 	private String name;
 	private Color color;
