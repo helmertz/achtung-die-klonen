@@ -63,7 +63,24 @@ public class LWJGLRenderService implements RenderService {
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glOrtho(0, viewAreaWidth, viewAreaHeight, 0, 0, 1);
+		
+		float xPadding = 0;
+		float yPadding = 0;
+		
+		// for proportional scaling
+		float displayRatio = (float) Display.getWidth() / Display.getHeight();
+		float viewRatio = (float) viewAreaWidth / viewAreaHeight;
+
+		if (viewRatio < displayRatio) {
+			// Padd on width
+			// xPadding = 
+		} else {
+			// Padd on height
+			yPadding = 100;
+		}
+
+		glOrtho(-xPadding, viewAreaWidth + xPadding, viewAreaHeight + yPadding,
+				-yPadding, 0, 1);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 	}
@@ -120,10 +137,10 @@ public class LWJGLRenderService implements RenderService {
 	public void drawLinedRect(float x, float y, float width, float height,
 			float lineWidth, Color color) {
 		bindColor(color);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glLineWidth(lineWidth);
-		drawRect(x, y, width, height);
-
+		drawRect(x, y, width, lineWidth);
+		drawRect(x + width - lineWidth, y, lineWidth, height);
+		drawRect(x, y + height - lineWidth, width, lineWidth);
+		drawRect(x, y, lineWidth, height);
 	}
 
 	private void drawRect(float x, float y, float width, float height) {
@@ -144,6 +161,16 @@ public class LWJGLRenderService implements RenderService {
 	@Override
 	public boolean isCloseRequested() {
 		return Display.isCloseRequested();
+	}
+
+	@Override
+	public float getViewAreaWidth() {
+		return viewAreaWidth;
+	}
+
+	@Override
+	public float getViewAreaHeight() {
+		return viewAreaHeight;
 	}
 
 }

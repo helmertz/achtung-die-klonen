@@ -16,11 +16,14 @@ public class ExampleUsage {
 		}
 		
 		renderService.setBackgroundColor(Color.BLUE);
-		renderService.setViewAreaSize(500, 500);
+		renderService.setViewAreaSize(800, 500);
 		
 		while(!renderService.isCloseRequested()) {
 			renderService.preDraw();
 		
+			// Draws a border at the inner part of the view area
+			renderService.drawLinedRect(0, 0, renderService.getViewAreaWidth(), renderService.getViewAreaHeight(), 5, Color.WHITE);
+			
 			// Draws a square showing where (0,0) is
 			renderService.drawFilledRect(-10, -10, 20, 20, Color.WHITE);
 
