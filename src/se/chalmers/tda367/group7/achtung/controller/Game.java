@@ -1,4 +1,4 @@
-package se.chalmers.tda367.group7.achtung;
+package se.chalmers.tda367.group7.achtung.controller;
 
 import org.lwjgl.LWJGLException;
 
