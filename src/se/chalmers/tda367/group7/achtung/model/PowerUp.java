@@ -10,11 +10,11 @@ public class PowerUp {
 		this.effect = effect;
 	}
 
-	public void applyEffect(Player p) {
+	public void applyEffect(Body p) {
 		effect.applyEffect(p);
 	}
 	
-	public void removeEffect(Player p) {
+	public void removeEffect(Body p) {
 		effect.removeEffect(p);
 	}
 	

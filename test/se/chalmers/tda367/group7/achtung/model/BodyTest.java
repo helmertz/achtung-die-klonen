@@ -2,29 +2,25 @@ package se.chalmers.tda367.group7.achtung.model;
 
 import static org.junit.Assert.*;
 
-import java.awt.Color;
-
 import org.junit.Test;
-import org.lwjgl.util.vector.Vector2f;
 
-public class PlayerTest {
+public class BodyTest {
 
 	@Test
 	public void moveTest() {
-		Player p = new Player("Test Player", Color.WHITE);
-		p.createNewBody(20, 50);
-		p.setSpeed(1);
+		Body b = new Body(new Position(20, 50));
+		b.setSpeed(1);
 
 		// In degrees, 90 should mean straight up (positive y direction)
-		p.setRotationAngleDeg(90);
+		b.setRotationAngleDeg(90);
 
-		Position position = p.getBody().getHead().getPosition();
+		Position position = b.getPosition();
 
 		float oldX = position.getX();
 		float oldY = position.getY();
 
 		// Performs one "game tick".
-		p.update();
+		b.update();
 
 		float newX = position.getX();
 		float newY = position.getY();
@@ -35,9 +31,9 @@ public class PlayerTest {
 		// Checks if y is increased by one,
 		assertTrue(newX == oldX && Math.round(newY) == Math.round(oldY + 1));
 
-		p.setRotationAngleDeg(0);
+		b.setRotationAngleDeg(0);
 
-		p.update();
+		b.update();
 
 		newX = position.getX();
 		newY = position.getY();
