@@ -14,9 +14,9 @@ public class World {
 	private List<Player> players;
 	private List<Player> activePlayers; // should only contain non dead players.
 	
-	public World(int width, int heigth) {
+	public World(int width, int height) {
 		this.width = width;
-		this.height = heigth;
+		this.height = height;
 		
 		players = new ArrayList<>();
 		activePlayers = new ArrayList<>();
