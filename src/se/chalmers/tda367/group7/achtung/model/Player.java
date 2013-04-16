@@ -30,9 +30,9 @@ public class Player {
 	private List<PowerUp> powerUps = new ArrayList<PowerUp>();
 	private Body body;
 	
-	public Player(String name, Color color, float startX, float startY) {
+	public Player(String name, Color color) {
 		this.name = name;
-		this.body = new Body(new Vector2f(startX, startY));
+//		this.body = new Body(new Vector2f(startX, startY));
 		this.color = color;
 		
 		speed = DEFAULT_SPEED;
@@ -46,8 +46,10 @@ public class Player {
 
 	/**
 	 * Update the player. 
+	 * The player will have to have a body before this method is called.
 	 */
 	public void update() {
+		// TODO - throw some kind of exception if there is no body.
 		updatePowerUps();
 
 		// Calculates the new delta position.
@@ -118,6 +120,10 @@ public class Player {
 
 	public Body getBody() {
 		return this.body;
+	}
+	
+	public void createNewBody(float startX, float startY) {
+		body = new Body(new Vector2f(startX, startY));
 	}
 
 	public String getName() {

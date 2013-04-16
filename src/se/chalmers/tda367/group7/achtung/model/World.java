@@ -12,7 +12,8 @@ public class World {
 	private int heigth;
 
 	private List<Player> players;
-	private List<Player> activePlayers; // should only non dead players
+	private List<Player> activePlayers; // should only contain non dead players.
+	// when a player dies it is removed from acitvePlayers.
 	
 	public World(int width, int heigth) {
 		this.width = width;
@@ -27,16 +28,20 @@ public class World {
 	}
 	
 	public void update() {
-		for (Player player : activePlayers) {
-			player.update();
+		if (isRoundActive()) {
+			for (Player player : activePlayers) {
+				player.update();
+			}
+			
+			// TODO - implement collision detection and random power up placement.
 		}
-		
-		// TODO - implement collision detection and random power up placement.
 	}
 	
+	/**
+	 * @return true if there are players still alive
+	 */
 	public boolean isRoundActive() {
-		// TODO - this should return true only when a round is active
-		return false;
+		return activePlayers.size() > 0;
 	}
 	
 	/**
@@ -45,13 +50,26 @@ public class World {
 	public void startRound() {
 		if (!isRoundActive()) {
 			activePlayers.addAll(players);
-			// TODO - create new player body
+			
+			for (Player player : activePlayers) {
+				// TODO - fix so that startpoints is different, and not too close, for each snake.
+				player.createNewBody(0, 0);
+			}
 		}
 	}
 	
+	/**
+	 * @return true if a player has won.
+	 */
 	public boolean isGameOver() {
-		// TODO - return true when on of the players has reached the goal points.
-		return true;
+
+		int goalPoints = getGoalPoints();
+		for (Player player : players) {
+			if (player.getPoints() >= goalPoints) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
