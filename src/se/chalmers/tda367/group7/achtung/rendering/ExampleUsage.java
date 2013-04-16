@@ -28,14 +28,20 @@ public class ExampleUsage {
 			renderService.drawFilledRect(-10, -10, 20, 20, Color.WHITE);
 
 			// Should draw an X covering the center of the screen
-			renderService.drawLine(125, 100, 375, 375, 10, Color.RED);
-			renderService.drawLine(125, 375, 375, 100, 10, Color.GREEN);
-			
+			renderService.drawLine(renderService.getViewAreaWidth() / 4f,
+					renderService.getViewAreaHeight() / 4f,
+					3f * renderService.getViewAreaWidth() / 4f,
+					3f * renderService.getViewAreaHeight() / 4f, 10, Color.RED);
+			renderService.drawLine(renderService.getViewAreaWidth() / 4f,
+					3f * renderService.getViewAreaHeight() / 4f,
+					3f * renderService.getViewAreaWidth() / 4f,
+					renderService.getViewAreaHeight() / 4f, 10, Color.GREEN);
+
 			// Should render Hello World! at the top of the screen
-			renderService.drawString("Hello World!", 150, 0, 1f);
-			
+			renderService.drawString("Hello World!", 300, 0, 1f);
+
 			// The same thing, but twice the size below
-			renderService.drawString("Hello World!", 60, 30, 2f);
+			renderService.drawString("Hello World!", 220, 30, 2f);
 			
 			renderService.postDraw();
 			try {

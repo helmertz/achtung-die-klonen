@@ -63,20 +63,20 @@ public class LWJGLRenderService implements RenderService {
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		
+
 		float xPadding = 0;
 		float yPadding = 0;
-		
+
 		// for proportional scaling
 		float displayRatio = (float) Display.getWidth() / Display.getHeight();
-		float viewRatio = (float) viewAreaWidth / viewAreaHeight;
+		float viewRatio = viewAreaWidth / viewAreaHeight;
 
 		if (viewRatio < displayRatio) {
 			// Padd on width
-			// xPadding = 
+			xPadding = (viewAreaHeight * displayRatio - viewAreaWidth) / 2;
 		} else {
 			// Padd on height
-			yPadding = 100;
+			yPadding = (viewAreaWidth / displayRatio - viewAreaHeight) / 2;
 		}
 
 		glOrtho(-xPadding, viewAreaWidth + xPadding, viewAreaHeight + yPadding,
