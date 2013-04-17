@@ -42,6 +42,14 @@ public class BitMapFont {
 	public BitMapFont(String filePath) throws IOException {
 		loadTexture(filePath);
 	}
+	
+	public float getWidth(String string, float scale) {
+		return string.length()* CHAR_WIDTH * scale;
+	}
+	
+	public float getHeight(String string, float scale) {
+		return (1 + string.split("/n").length)*CHAR_HEIGHT * scale;
+	}
 
 	public void render(String s, float x, float y, float scale) {
 		glPushMatrix();
@@ -136,5 +144,9 @@ public class BitMapFont {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
+	}
+
+	public void renderCentered(String string, float x, float y, float scale) {
+		render(string, x - getWidth(string, scale)/2, y - getHeight(string, scale)/2, scale);
 	}
 }

@@ -173,4 +173,9 @@ public class LWJGLRenderService implements RenderService {
 		return viewAreaHeight;
 	}
 
+	@Override
+	public void drawStringCentered(String string, float x, float y, float scale) {
+		bitMapFont.renderCentered(string, x, y, scale);
+	}
+
 }

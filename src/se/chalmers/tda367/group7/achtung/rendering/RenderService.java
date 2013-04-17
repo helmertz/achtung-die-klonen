@@ -38,4 +38,6 @@ public interface RenderService {
 	public float getViewAreaHeight();
 
 	public float getViewAreaWidth();
+
+	public void drawStringCentered(String name, float x, float y, float scale);
 }
