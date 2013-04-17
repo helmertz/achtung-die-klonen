@@ -1,15 +1,42 @@
 package se.chalmers.tda367.group7.achtung.controller;
 
-import org.lwjgl.input.Keyboard;
 
+import se.chalmers.tda367.group7.achtung.input.InputEvent;
 import se.chalmers.tda367.group7.achtung.model.Player;
 
-public interface PlayerController {
+public class PlayerController {
 
-	public void setPlayer(Player player);
+	private int leftKey;
+	private int rightKey;
 	
-	public void setRightKey(int key);
+	public Player player;
+	
+	public PlayerController() {
+		// TODO Auto-generated constructor stub
+	}
 
-	public void setLeftKey(int key);
+	public void setPlayer(Player player) {
+		this.player = player;
+
+	}
+
+	public void setRightKey(int key) {
+		rightKey = key;
+
+	}
+
+	public void setLeftKey(int key) {
+		leftKey = key;
+	}
+
+	public boolean onInputEvent(InputEvent e) {
+		int key = e.getKey();
+		if (key == rightKey) {
+			player.turnRight();
+		} else if (key == leftKey) {
+			player.turnLeft();
+		}
+		return false;
+	}
 
 }

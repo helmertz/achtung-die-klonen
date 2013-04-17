@@ -53,7 +53,7 @@ public class LWJGLRenderService implements RenderService {
 		Display.setDisplayMode(new DisplayMode(800, 600));
 
 		// Change 4 to 0 if this causes an exception
-		PixelFormat pf = new PixelFormat().withSamples(4);
+		PixelFormat pf = new PixelFormat().withSamples(0);
 
 		Display.create(pf);
 	}
