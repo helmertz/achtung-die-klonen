@@ -19,6 +19,8 @@ public class PlayerView implements View {
 		
 		Body body = player.getBody();
 
+		renderService.drawStringCentered(player.getName(), body.getPosition().getX(), body.getPosition().getY(), 1f);
+		
 		for (BodySegment b : body.getBodySegments()) {
 
 			renderService.drawLine(b.getStart().getX(), b.getStart().getY(), b
