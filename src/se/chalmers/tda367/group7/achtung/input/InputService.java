@@ -6,8 +6,5 @@ public interface InputService {
 	
 	public void removeListener(InputListener listener);
 	
-	public void update();
-	
-	public boolean isKeyDown(int key);
-	
+	public void update();	
 }

@@ -7,7 +7,6 @@ import org.lwjgl.input.Keyboard;
 
 import se.chalmers.tda367.group7.achtung.input.InputEvent;
 import se.chalmers.tda367.group7.achtung.input.InputListener;
-import se.chalmers.tda367.group7.achtung.input.InputService;
 import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.model.World;
 
@@ -38,12 +37,5 @@ public class WorldController implements InputListener {
 			}
 		}
 		return false;
-	}
-	
-	// Called at a constant game speed
-	public void update(InputService service) {
-		for(PlayerController pc : playerControllers) {
-			pc.update(service);
-		}
 	}
 }

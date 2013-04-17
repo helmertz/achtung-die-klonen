@@ -34,10 +34,4 @@ public class LWJGLInputService implements InputService {
 			}
 		}
 	}
-
-	@Override
-	public boolean isKeyDown(int key) {
-		return Keyboard.isKeyDown(key);
-	}
-
 }

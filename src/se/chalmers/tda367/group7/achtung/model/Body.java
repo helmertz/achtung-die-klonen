@@ -3,7 +3,6 @@ package se.chalmers.tda367.group7.achtung.model;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * Class representing the physical state of a player.
  */
@@ -23,6 +22,12 @@ public class Body {
 	private Head head;
 	private List<BodySegment> bodySegments;
 	private List<PowerUp> powerUps = new ArrayList<PowerUp>();
+	private TurnMode turnMode;
+	
+	// pretty bad names, please change if
+	public enum TurnMode {
+		LEFT, RIGHT, FORWARD
+	}
 	
 	public Body (Position position, float rotation) {		
 		// Width of the body is the same as the diameter of the head.
@@ -68,6 +73,13 @@ public class Body {
 	}
 
 	private void updatePosition() {
+		
+		if(turnMode == TurnMode.LEFT) {
+			turnLeft();
+		} else if (turnMode == TurnMode.RIGHT) {
+			turnRight();
+		}
+		
 		// Update head with delta positions
 		Position headPosition = head.getPosition();
 		float x = headPosition.getX();
@@ -167,5 +179,9 @@ public class Body {
 
 	public float getSpeed() {
 		return speed;
+	}
+
+	public void setTurnMode(TurnMode turnMode) {
+		this.turnMode = turnMode;
 	}
 }

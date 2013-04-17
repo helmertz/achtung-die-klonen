@@ -67,20 +67,18 @@ public class Game {
 				loops++;
 			}
 			
+			// TODO implement being able to limit fps
 			float interpolation = (getTickCount() + SKIP_TICKS - nextGameTick) / (float)SKIP_TICKS;
 			render(interpolation);
 			
-//			try {
-//				Thread.sleep(10);
-//			} catch (InterruptedException e) {
-//			}
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+			}
 		}
 	}
 
 	private void logic() {
-		// TODO controller should probably not at all be used this way
-		worldController.update(inputService);
-		
 		world.update();
 	}
 
