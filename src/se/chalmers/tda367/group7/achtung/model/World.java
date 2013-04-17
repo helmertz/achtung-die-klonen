@@ -24,8 +24,11 @@ public class World {
 
 		// Hardcoded in at the moment
 		Player p1 = new Player("Player 1", se.chalmers.tda367.group7.achtung.rendering.Color.WHITE);
+		Player p2 = new Player("Player 2", se.chalmers.tda367.group7.achtung.rendering.Color.WHITE);
 		p1.setBody(BodyFactory.getBody(1000, 1000));
 		addPlayer(p1);
+		p2.setBody(BodyFactory.getBody(900, 1000));
+		addPlayer(p2);
 	}
 	
 	public void addPlayer(Player p) {
@@ -33,12 +36,12 @@ public class World {
 	}
 	
 	public void update() {
-		if (isRoundActive()) {
+//		if (isRoundActive()) {
 			updatePlayers();
 			
 			// TODO - implement collision detection and random power up placement.
 			detectCollision();
-		}
+//		}
 	}
 	
 	private void detectCollision() {
@@ -50,19 +53,20 @@ public class World {
 		for(Player player : players) {
 			Body currentBody = player.getBody();
 			
-			// Create coordinates for the last bodysegment
+			// Create coordinates for the most recent bodysegment
 			// of the player being checked
 			List<BodySegment> playerSegments = player.getBody().getBodySegments();
 			BodySegment lastSeg = playerSegments.get(playerSegments.size() - 1);
 			
 			float lastx1 = lastSeg.getStart().getX();
-			float lastx2 = lastSeg.getEnd().getX();
 			float lasty1 = lastSeg.getStart().getY();
+			
+			float lastx2 = lastSeg.getEnd().getX();
 			float lasty2 = lastSeg.getEnd().getY();
 			
 			float lastlength = (float) Math.sqrt(Math.pow(lastx2-lastx1,2) + Math.pow(lasty2-lasty1,2));
-			float lastxadd = width * ((lasty2-lasty1) / (lastlength*2));
-			float lastyadd = width * ((lastx2-lastx1) / (lastlength*2));
+			float lastxadd = lastSeg.getWidth() * ((lasty2-lasty1) / (lastlength*2));
+			float lastyadd = lastSeg.getWidth() * ((lastx2-lastx1) / (lastlength*2));
 			
 			float thisx1 = lastx1 + lastxadd;
 			float thisy1 = lasty1 - lastyadd;
@@ -86,8 +90,9 @@ public class World {
 				// with either of these
 				for(BodySegment seg : otherBodySegments) {
 					float x1 = seg.getStart().getX();
-					float x2 = seg.getEnd().getX();
 					float y1 = seg.getStart().getY();
+					
+					float x2 = seg.getEnd().getX();
 					float y2 = seg.getEnd().getY();
 					
 					float length = (float) Math.sqrt(Math.pow(x2-x1,2) + Math.pow(y2-y1,2));
@@ -109,8 +114,10 @@ public class World {
 					// Check if current player's last body
 					// segment is inside the boundaries of
 					// the body segment being checked
-					if(thisx1 >= otherx1 && thisy1 >= othery1 || thisx2 >= otherx2 && thisy2 <= othery2 
-							|| thisx3 >= otherx3 && thisy3 <= othery3 && thisx4 <= otherx4 && thisy4 >= othery4) {
+					if((thisx1 >= otherx1 && thisx4 <= otherx4 && thisy1 >= othery1 && thisy2 <= othery2) 
+							|| (thisx2 >= otherx2 && thisx3 <= otherx3 && thisy2 <= othery2 && thisy1 >= othery1) 
+							|| (thisx3 <= otherx3 && thisx2 >= otherx2 && thisy3 <= othery3 && thisy4 >= othery4) 
+							|| (thisx4 <= otherx4 && thisx1 >= otherx1 && thisy4 >= othery4 && thisy3 <= othery3)) {
 //						currentBody.kill();
 						System.out.println("collision happened");
 					}
