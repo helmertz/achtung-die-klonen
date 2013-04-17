@@ -48,7 +48,7 @@ public class World {
 				deadPlayers++;
 			}
 		}
-		return deadPlayers == players.size();
+		return deadPlayers == players.size() - 1;
 	}
 	
 	/**
