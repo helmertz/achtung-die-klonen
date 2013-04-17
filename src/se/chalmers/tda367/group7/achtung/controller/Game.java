@@ -2,8 +2,10 @@ package se.chalmers.tda367.group7.achtung.controller;
 
 import org.lwjgl.LWJGLException;
 
+import se.chalmers.tda367.group7.achtung.model.World;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.LWJGLRenderService;
+import se.chalmers.tda367.group7.achtung.view.WorldView;
 
 /**
  * A class containing the game loop, responsible for handling the timing of game
@@ -19,6 +21,8 @@ public class Game {
 	private int loops;
 	private long nextGameTick = getTickCount();
 	private float interpolation;
+	private World world;
+	private WorldView worldView;
 
 	public Game() {
 		try {
@@ -27,6 +31,10 @@ public class Game {
 			e.printStackTrace();
 			System.exit(1);
 		}
+		
+		// Hard coded here temporarily
+		this.world = new World(1000,1000);
+		this.worldView = new WorldView(world);
 	}
 
 	private long getTickCount() {
@@ -41,9 +49,7 @@ public class Game {
 		while (!renderer.isCloseRequested()) {
 			loops = 0;
 			
-			while(getTickCount() > nextGameTick && loops < MAX_FRAMESKIP) {
-				
-				
+			while(getTickCount() > nextGameTick && loops < MAX_FRAMESKIP) {				
 				logic();
 				
 				nextGameTick += SKIP_TICKS;
@@ -62,14 +68,15 @@ public class Game {
 
 	private void logic() {
 		// TODO game logic
+		
+		world.update();
 	}
 
 	private void render(float interpolation) {
 		renderer.preDraw();
 		
-		// TODO SomeOtherClass.render(renderer)
+		worldView.render(renderer, interpolation);
 		
 		renderer.postDraw();
-		System.out.println(interpolation);
 	}
 }

@@ -1,6 +1,6 @@
 package se.chalmers.tda367.group7.achtung.model;
 
-import java.awt.Color;
+import se.chalmers.tda367.group7.achtung.rendering.Color;
 
 /**
  * A class representing a player, that is persistent over the rounds.
@@ -48,7 +48,6 @@ public class Player {
 	public void addPoints(int points) {
 		this.points = points;
 	}
-	
 	
 	public int getId() {
 		return id;
