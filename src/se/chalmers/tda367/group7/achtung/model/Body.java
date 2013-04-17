@@ -160,4 +160,12 @@ public class Body {
 	public void kill() {
 		dead = true;
 	}
+
+	public float getRotationAngleDeg() {
+		return rotationAngleDeg;
+	}
+
+	public float getSpeed() {
+		return speed;
+	}
 }

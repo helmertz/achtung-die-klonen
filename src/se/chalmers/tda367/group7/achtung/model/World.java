@@ -15,14 +15,17 @@ public class World {
 
 	private List<Player> players;
 	
-	private CollisionDetector collisionDetector = new CollisionDetector();
 	
 	public World(int width, int height) {
 		this.width = width;
 		this.height = height;
 		
 		players = new ArrayList<>();
-		
+
+		// Hardcoded in at the moment
+		Player p1 = new Player("Player 1", se.chalmers.tda367.group7.achtung.rendering.Color.WHITE);
+		p1.setBody(BodyFactory.getBody(1000, 1000));
+		addPlayer(p1);
 	}
 	
 	public void addPlayer(Player p) {
@@ -108,7 +111,7 @@ public class World {
 					// the body segment being checked
 					if(thisx1 >= otherx1 && thisy1 >= othery1 || thisx2 >= otherx2 && thisy2 <= othery2 
 							|| thisx3 >= otherx3 && thisy3 <= othery3 && thisx4 <= otherx4 && thisy4 >= othery4) {
-						currentBody.kill();
+//						currentBody.kill();
 						System.out.println("collision happened");
 					}
 				}
@@ -183,5 +186,9 @@ public class World {
 	
 	public int getHeight() {
 		return this.height;
+	}
+
+	public List<Player> getPlayers() {
+		return players;
 	}
 }

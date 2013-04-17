@@ -10,7 +10,7 @@ public class QuadLineRenderer implements LineRenderer {
 	@Override
 	public void drawLine(float x1, float y1, float x2, float y2, float width) {
 		float length = (float) Math.sqrt(Math.pow(x2-x1,2) + Math.pow(y2-y1,2));
-		float xadd = width*(y2-y1)/(length*2);
+		float xadd = width * ((y2-y1) / (length*2));
 		float yadd = width*(x2-x1)/(length*2);
 
 		glBegin(GL_QUADS);
