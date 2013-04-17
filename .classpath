@@ -19,7 +19,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/lzma.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Jakob/Downloads/PNGDecoder.jar"/>
+	<classpathentry kind="lib" path="PNGDecoder.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="src" path="res"/>
 	<classpathentry kind="output" path="bin"/>
