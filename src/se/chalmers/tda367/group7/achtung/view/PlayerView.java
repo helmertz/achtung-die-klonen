@@ -19,8 +19,6 @@ public class PlayerView implements View {
 		
 		Body body = player.getBody();
 
-		renderService.drawStringCentered(player.getName(), body.getPosition().getX(), body.getPosition().getY(), 1f);
-		
 		for (BodySegment b : body.getBodySegments()) {
 
 			renderService.drawLine(b.getStart().getX(), b.getStart().getY(), b
@@ -36,14 +34,14 @@ public class PlayerView implements View {
 		if (!body.isDead()) {
 
 			float interpolationX = (float) (interpolation * body.getSpeed() * Math
-					.cos(body.getRotationAngleDeg()));
+					.cos(Math.toRadians(body.getRotationAngleDeg())));
 			float interpolationY = (float) (interpolation * body.getSpeed() * Math
-					.sin(body.getRotationAngleDeg()));
+					.sin(Math.toRadians(body.getRotationAngleDeg())));
 
 			headX += interpolationX;
 			headY += interpolationY;
 		}
-
+		
 		// Draw line from end of last segment to head position
 		if (!body.getBodySegments().isEmpty()) {
 			BodySegment lastSegment = body.getBodySegments().get(
@@ -52,6 +50,8 @@ public class PlayerView implements View {
 			renderService.drawLine(endPos.getX(), endPos.getY(), headX, headY,
 					body.getWidth(), player.getColor());
 		}
+		
+		renderService.drawStringCentered(player.getName(), headX, headY, 1f);
 	}
 
 }

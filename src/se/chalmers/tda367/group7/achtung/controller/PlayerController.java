@@ -2,6 +2,7 @@ package se.chalmers.tda367.group7.achtung.controller;
 
 
 import se.chalmers.tda367.group7.achtung.input.InputEvent;
+import se.chalmers.tda367.group7.achtung.input.InputService;
 import se.chalmers.tda367.group7.achtung.model.Player;
 
 public class PlayerController {
@@ -11,13 +12,8 @@ public class PlayerController {
 	
 	public Player player;
 	
-	public PlayerController() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public void setPlayer(Player player) {
+	public PlayerController(Player player) {
 		this.player = player;
-
 	}
 
 	public void setRightKey(int key) {
@@ -30,13 +26,16 @@ public class PlayerController {
 	}
 
 	public boolean onInputEvent(InputEvent e) {
-		int key = e.getKey();
-		if (key == rightKey) {
-			player.turnRight();
-		} else if (key == leftKey) {
+		return false;
+	}
+
+	public void update(InputService service) {
+		if(service.isKeyDown(leftKey)) {
 			player.turnLeft();
 		}
-		return false;
+		if(service.isKeyDown(rightKey)) {
+			player.turnRight();
+		}
 	}
 
 }

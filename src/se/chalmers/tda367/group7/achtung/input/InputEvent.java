@@ -4,12 +4,12 @@ public class InputEvent {
 	
 	private int key;
 	private char character;
-	private boolean repeat;
+	private boolean pressed;
 
 	public InputEvent(int eventKey, char character, boolean repeat) {
 		this.key = eventKey;
 		this.character = character;
-		this.repeat = repeat;
+		this.pressed = repeat;
 	}
 
 	public int getKey() {
@@ -20,7 +20,7 @@ public class InputEvent {
 		return character;
 	}
 
-	public boolean isRepeat() {
-		return repeat;
+	public boolean isPressed() {
+		return pressed;
 	}
 }

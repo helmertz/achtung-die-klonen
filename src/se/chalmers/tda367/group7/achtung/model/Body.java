@@ -10,8 +10,8 @@ import java.util.List;
 public class Body {
 
 	private static final float DEFAULT_WIDTH = 10;
-	private static final float DEFAULT_SPEED = 1;
-	private static final float DEFAULT_ROTATION_SPEED = 0.1f;
+	private static final float DEFAULT_SPEED = 10;
+	private static final float DEFAULT_ROTATION_SPEED = 5f;
 
 	private float speed;
 	private float rotationAngleDeg; // the angle the snake is facing.
@@ -134,11 +134,11 @@ public class Body {
 	}
 
 	public void turnRight() {
-		rotationAngleDeg -= rotationSpeedDeg;
+		rotationAngleDeg += rotationSpeedDeg;
 	}
 
 	public void turnLeft() {
-		rotationAngleDeg += rotationSpeedDeg;
+		rotationAngleDeg -= rotationSpeedDeg;
 	}
 
 	public void setRotationAngleDeg(float angle) {

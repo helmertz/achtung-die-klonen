@@ -22,7 +22,7 @@ public class LWJGLInputService implements InputService {
 	@Override
 	public void update() {
 		while (Keyboard.next()) {
-			fireEvent(Keyboard.getEventKey(), Keyboard.getEventCharacter(), Keyboard.isRepeatEvent());
+			fireEvent(Keyboard.getEventKey(), Keyboard.getEventCharacter(), Keyboard.getEventKeyState());
 		}
 	}
 

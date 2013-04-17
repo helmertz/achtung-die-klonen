@@ -2,6 +2,8 @@ package se.chalmers.tda367.group7.achtung.controller;
 
 import org.lwjgl.LWJGLException;
 
+import se.chalmers.tda367.group7.achtung.input.InputService;
+import se.chalmers.tda367.group7.achtung.input.LWJGLInputService;
 import se.chalmers.tda367.group7.achtung.model.World;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.LWJGLRenderService;
@@ -13,16 +15,17 @@ import se.chalmers.tda367.group7.achtung.view.WorldView;
  */
 public class Game {
 
-	private RenderService renderer;
 	private final int TICKS_PER_SECOND = 25;
 	private final int SKIP_TICKS = 1000000000 / TICKS_PER_SECOND;
 	private final int MAX_FRAMESKIP = 5;
 	
+	private RenderService renderer;
+	private InputService inputService;
 	private int loops;
 	private long nextGameTick = getTickCount();
-	private float interpolation;
 	private World world;
 	private WorldView worldView;
+	private WorldController worldController;
 
 	public Game() {
 		try {
@@ -32,9 +35,14 @@ public class Game {
 			System.exit(1);
 		}
 		
+		this.inputService = new LWJGLInputService();
 		// Hard coded here temporarily
 		this.world = new World(1000,1000);
 		this.worldView = new WorldView(world);
+		
+		this.worldController = new WorldController(world);
+		
+		inputService.addListener(worldController);
 	}
 
 	private long getTickCount() {
@@ -48,15 +56,18 @@ public class Game {
 		// bit more difficult to implement.
 		while (!renderer.isCloseRequested()) {
 			loops = 0;
+
+			// Called as often as possible, so events gets created directly at key press
+			inputService.update();
 			
-			while(getTickCount() > nextGameTick && loops < MAX_FRAMESKIP) {				
+			while(getTickCount() > nextGameTick && loops < MAX_FRAMESKIP) {	
 				logic();
 				
 				nextGameTick += SKIP_TICKS;
 				loops++;
 			}
 			
-			interpolation = (getTickCount() + SKIP_TICKS - nextGameTick) / (float)SKIP_TICKS;
+			float interpolation = (getTickCount() + SKIP_TICKS - nextGameTick) / (float)SKIP_TICKS;
 			render(interpolation);
 			
 //			try {
@@ -67,7 +78,8 @@ public class Game {
 	}
 
 	private void logic() {
-		// TODO game logic
+		// TODO controller should probably not at all be used this way
+		worldController.update(inputService);
 		
 		world.update();
 	}

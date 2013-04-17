@@ -135,7 +135,7 @@ public class World {
 		for (Player player : players) {
 			player.update();
 			if(doesPlayerCollide(player)) {
-				player.getBody().kill();
+//				player.getBody().kill();
 			}
 		}
 	}
@@ -244,8 +244,7 @@ public class World {
 	private void createPlayerBodys() {
 		for (Player player : players) {
 			// TODO - fix so that startpoints is different, and not too close, for each snake.
-			
-			player.setBody(new Body(new Position(0, 0), 0));
+			player.setBody(BodyFactory.getBody(width, height));
 		}
 	}
 	
