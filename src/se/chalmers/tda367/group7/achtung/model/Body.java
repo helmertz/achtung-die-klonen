@@ -11,6 +11,7 @@ public class Body {
 	private static final float DEFAULT_WIDTH = 10;
 	private static final float DEFAULT_SPEED = 10;
 	private static final float DEFAULT_ROTATION_SPEED = 5f;
+	private static final double CHANS_OF_HOLE = 0.015;
 
 	private float speed;
 	private float rotationAngleDeg; // the angle the snake is facing.
@@ -18,6 +19,8 @@ public class Body {
 
 	private float width;
 	private boolean dead;
+	private int holeLenthCounter;
+	private Position holeTmpPos;
 	
 	private Head head;
 	private List<BodySegment> bodySegments;
@@ -35,6 +38,7 @@ public class Body {
 		bodySegments = new ArrayList<BodySegment>();
 		
 		dead = false;
+		holeLenthCounter = 0;
 		width = DEFAULT_WIDTH;
 		speed = DEFAULT_SPEED;
 		rotationAngleDeg = rotation;
@@ -97,14 +101,52 @@ public class Body {
 		// duplicated variables.
 		// TODO - This will have to be thought through when holes is
 		// implemented.
+		
+		Position end = new Position(x + dx, y + dy);
 		if (bodySegments.isEmpty()) {
-			addBodySegment(new BodySegment(new Position(x, y), new Position(x
-					+ dx, y + dy), width));
+			addBodySegment(new BodySegment(new Position(x, y), end, width));
+		} else if (generateRandomHole()) {
+			holeTmpPos = end;
+		} else if (holeLenthCounter > 0) {
+			addBodySegment(new BodySegment(holeTmpPos, end, width));
+			holeLenthCounter = 0;
 		} else {
 			Position start = bodySegments.get(bodySegments.size() - 1).getEnd();
-			addBodySegment(new BodySegment(start, new Position(x + dx, y + dy),
-					width));
+			addBodySegment(new BodySegment(start, end, width));
 		}
+	}
+	
+	private boolean generateRandomHole() {
+		double rand = Math.random();
+		double chansMod = 1;
+		
+		// This determines the length of the hole. Could be something simpler.
+		switch (holeLenthCounter) {
+		case 1:
+			chansMod = 1/CHANS_OF_HOLE;
+			break;
+		case 2:
+			chansMod = 0.5/CHANS_OF_HOLE;
+			break;
+		case 3:
+			chansMod = 0.45/CHANS_OF_HOLE;
+			break;
+		case 4:
+			chansMod = 0.4/CHANS_OF_HOLE;
+			break;
+		case 5:
+			chansMod = 0.4/CHANS_OF_HOLE;
+			break;
+
+		default:
+			break;
+		}
+		// Determin if there should be a hole.
+		if (rand <= CHANS_OF_HOLE*chansMod) {
+			holeLenthCounter++;
+			return true;
+		}
+		return false;
 	}
 
 	public float getWidth() {
