@@ -76,6 +76,13 @@ public class World {
 
 	private boolean doesPlayerCollide(Player player) {
 		Body currentBody = player.getBody();
+		
+		Position pos = currentBody.getPosition();
+		
+		// Checks if out of bounds
+		if(pos.getX() < 0 || pos.getX() > width || pos.getY() < 0 || pos.getY() > height) {
+			return true;
+		}
 
 		// Create coordinates for the last bodysegment
 		// of the player being checked
