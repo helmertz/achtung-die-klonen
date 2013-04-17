@@ -148,6 +148,10 @@ public class Body {
 		}
 		return false;
 	}
+	
+	public boolean isGeneratingHole() {
+		return holeLenthCounter != 0;
+	}
 
 	public float getWidth() {
 		return width;
