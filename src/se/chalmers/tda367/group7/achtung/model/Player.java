@@ -46,7 +46,7 @@ public class Player {
 	 * @param points - the amount of points to add
 	 */
 	public void addPoints(int points) {
-		this.points = points;
+		this.points += points;
 	}
 	
 	public int getId() {

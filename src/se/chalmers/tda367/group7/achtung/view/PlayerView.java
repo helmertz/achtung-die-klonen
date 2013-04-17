@@ -52,6 +52,7 @@ public class PlayerView implements View {
 		}
 		
 		renderService.drawStringCentered(player.getName(), headX, headY, 1f);
+		renderService.drawStringCentered(player.getPoints() + "", headX, headY - 20, 3f);
 	}
 
 }

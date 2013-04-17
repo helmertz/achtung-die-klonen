@@ -46,9 +46,32 @@ public class World {
 			player.update();
 
 			if (doesPlayerCollide(player)) {
-				player.getBody().kill();
+				killPlayerAndDistributePoints(player);
 			}
 		}
+	}
+
+	private void killPlayerAndDistributePoints(Player player) {
+		player.getBody().kill();
+		int livingPlayers = 0;
+		for (Player p : players) {
+			if (!p.getBody().isDead()) {
+				livingPlayers++;
+				p.addPoints(1);
+			}
+		}
+		
+		// Checks if one player remains, and kills him as well
+		if(livingPlayers < 2) {
+			for (Player p : players) {
+				if (!p.getBody().isDead()) {
+					p.getBody().kill();
+				}
+			}
+		}
+		
+		// Checks if round is 
+		
 	}
 
 	private boolean doesPlayerCollide(Player player) {
@@ -124,10 +147,9 @@ public class World {
 				// Check if current player's last body
 				// segment is inside the boundaries of
 				// the body segment being checked
-				if(
-						((thisx1 >= otherx1 && thisx1 >= otherx2
-								&& thisx1 <= otherx3 && thisx1 <= otherx4) && (thisy1 >= othery1
-								&& thisy1 <= othery2 && thisy1 <= othery3 && thisy1 >= othery4))
+				if (((thisx1 >= otherx1 && thisx1 >= otherx2
+						&& thisx1 <= otherx3 && thisx1 <= otherx4) && (thisy1 >= othery1
+						&& thisy1 <= othery2 && thisy1 <= othery3 && thisy1 >= othery4))
 
 						|| ((thisx2 >= otherx1 && thisx2 >= otherx2
 								&& thisx2 <= otherx3 && thisx2 <= otherx4) && (thisy2 >= othery1
@@ -138,7 +160,7 @@ public class World {
 								&& thisy3 <= othery2 && thisy3 <= othery3 && thisy3 >= othery4))
 
 						|| ((thisx4 >= otherx1 && thisx4 >= otherx2
-								&& thisx4 <= otherx3 && thisx4 <= otherx4) && (thisy4 >= othery1 
+								&& thisx4 <= otherx3 && thisx4 <= otherx4) && (thisy4 >= othery1
 								&& thisy4 <= othery2 && thisy4 <= othery3 && thisy4 >= othery4))) {
 					System.out.println("collision happened");
 					return true;
@@ -172,7 +194,8 @@ public class World {
 
 	private void createPlayerBodys() {
 		for (Player player : players) {
-			// TODO - fix so that startpoints is different, and not too close, for each snake.
+			// TODO - fix so that startpoints is different, and not too close,
+			// for each snake.
 			player.setBody(BodyFactory.getBody(width, height));
 		}
 	}
