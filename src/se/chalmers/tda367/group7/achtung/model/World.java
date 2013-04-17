@@ -1,7 +1,5 @@
 package se.chalmers.tda367.group7.achtung.model;
 
-import static org.lwjgl.opengl.GL11.glVertex2f;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,19 +35,18 @@ public class World {
 	}
 
 	public void update() {
-		// if (isRoundActive()) {
-		updatePlayers();
-
+		if (isRoundActive()) {
+			updatePlayers();
+		}
 		// TODO - implement collision detection and random power up placement.
 	}
-
 
 	private void updatePlayers() {
 		for (Player player : players) {
 			player.update();
 
 			if (doesPlayerCollide(player)) {
-//				player.getBody().kill();
+				player.getBody().kill();
 			}
 		}
 	}
@@ -143,7 +140,6 @@ public class World {
 						|| ((thisx4 >= otherx1 && thisx4 >= otherx2
 								&& thisx4 <= otherx3 && thisx4 <= otherx4) && (thisy4 >= othery1 
 								&& thisy4 <= othery2 && thisy4 <= othery3 && thisy4 >= othery4))) {
-					player.getBody().kill();
 					System.out.println("collision happened");
 					return true;
 				}
@@ -162,7 +158,7 @@ public class World {
 				deadPlayers++;
 			}
 		}
-		return deadPlayers == players.size() - 1;
+		return deadPlayers < players.size() - 1;
 	}
 
 	/**
