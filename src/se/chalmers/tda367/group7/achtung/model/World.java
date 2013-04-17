@@ -85,35 +85,19 @@ public class World {
 		}
 		BodySegment lastSeg = playerSegments.get(playerSegments.size() - 1);
 
-		float lastx1 = lastSeg.getStart().getX();
-		float lastx2 = lastSeg.getEnd().getX();
-		float lasty1 = lastSeg.getStart().getY();
-		float lasty2 = lastSeg.getEnd().getY();
-
-		float lastlength = (float) Math.sqrt(Math.pow(lastx2 - lastx1, 2)
-				+ Math.pow(lasty2 - lasty1, 2));
-		float lastxadd = lastSeg.getWidth()
-				* ((lasty2 - lasty1) / (lastlength * 2));
-		float lastyadd = lastSeg.getWidth()
-				* ((lastx2 - lastx1) / (lastlength * 2));
-
-		float thisx1 = lastx1 + lastxadd;
-		float thisy1 = lasty1 - lastyadd;
-
-		float thisx2 = lastx1 - lastxadd;
-		float thisy2 = lasty1 + lastyadd;
-
-		float thisx3 = lastx2 - lastxadd;
-		float thisy3 = lasty2 + lastyadd;
-
-		float thisx4 = lastx2 + lastxadd;
-		float thisy4 = lasty2 - lastyadd;
-
 		// Loop through all other players
 		for (Player otherPlayer : players) {
+			
+			// TODO: Hack so that player can't collide with self,
+			// currently dies immediately if this is commented out.
+			if(otherPlayer == player) {
+				continue;
+			}
+			
+			
 			List<BodySegment> otherBodySegments = otherPlayer.getBody()
 					.getBodySegments();
-
+			
 			// Loop through all body segments of the other player
 			// being checked and see if a collision has happened
 			// with either of these
@@ -121,52 +105,14 @@ public class World {
 				if (lastSeg == seg) {
 					continue;
 				}
-
-				float x1 = seg.getStart().getX();
-				float x2 = seg.getEnd().getX();
-				float y1 = seg.getStart().getY();
-				float y2 = seg.getEnd().getY();
-
-				float length = (float) Math.sqrt(Math.pow(x2 - x1, 2)
-						+ Math.pow(y2 - y1, 2));
-				float xadd = seg.getWidth() * ((y2 - y1) / (length * 2));
-				float yadd = seg.getWidth() * ((x2 - x1) / (length * 2));
-
-				float otherx1 = x1 + xadd;
-				float othery1 = y1 - yadd;
-
-				float otherx2 = x1 - xadd;
-				float othery2 = y1 + yadd;
-
-				float otherx3 = x2 - xadd;
-				float othery3 = y2 + yadd;
-
-				float otherx4 = x2 + xadd;
-				float othery4 = y2 - yadd;
-
-				// Check if current player's last body
-				// segment is inside the boundaries of
-				// the body segment being checked
-				if (((thisx1 >= otherx1 && thisx1 >= otherx2
-						&& thisx1 <= otherx3 && thisx1 <= otherx4) && (thisy1 >= othery1
-						&& thisy1 <= othery2 && thisy1 <= othery3 && thisy1 >= othery4))
-
-						|| ((thisx2 >= otherx1 && thisx2 >= otherx2
-								&& thisx2 <= otherx3 && thisx2 <= otherx4) && (thisy2 >= othery1
-								&& thisy2 <= othery2 && thisy2 <= othery3 && thisy2 >= othery4))
-
-						|| ((thisx3 >= otherx1 && thisx3 >= otherx2
-								&& thisx3 <= otherx3 && thisx3 <= otherx4) && (thisy3 >= othery1
-								&& thisy3 <= othery2 && thisy3 <= othery3 && thisy3 >= othery4))
-
-						|| ((thisx4 >= otherx1 && thisx4 >= otherx2
-								&& thisx4 <= otherx3 && thisx4 <= otherx4) && (thisy4 >= othery1
-								&& thisy4 <= othery2 && thisy4 <= othery3 && thisy4 >= othery4))) {
-					System.out.println("collision happened");
+				
+				if(lastSeg.getHitBox().intersects(seg.getHitBox())) {
+					System.out.println("intersection!!!");
 					return true;
 				}
 			}
 		}
+		
 		return false;
 	}
 
