@@ -84,16 +84,13 @@ public class World {
 			return false;
 		}
 		BodySegment lastSeg = playerSegments.get(playerSegments.size() - 1);
-
+		
+		BodySegment segBefLast = null;
+		if (playerSegments.size() > 1) {
+			segBefLast = playerSegments.get(playerSegments.size() - 2);
+		}
 		// Loop through all other players
-		for (Player otherPlayer : players) {
-			
-			// TODO: Hack so that player can't collide with self,
-			// currently dies immediately if this is commented out.
-			if(otherPlayer == player) {
-				continue;
-			}
-			
+		for (Player otherPlayer : players) {			
 			
 			List<BodySegment> otherBodySegments = otherPlayer.getBody()
 					.getBodySegments();
@@ -102,7 +99,9 @@ public class World {
 			// being checked and see if a collision has happened
 			// with either of these
 			for (BodySegment seg : otherBodySegments) {
-				if (lastSeg == seg) {
+				
+				// Allows collision with itself and the one before
+				if (lastSeg == seg || segBefLast == seg) {
 					continue;
 				}
 				
