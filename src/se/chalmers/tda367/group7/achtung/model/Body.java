@@ -1,6 +1,7 @@
 package se.chalmers.tda367.group7.achtung.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -24,7 +25,7 @@ public class Body {
 	private List<PowerUp> powerUps = new ArrayList<PowerUp>();
 	private TurnMode turnMode;
 	
-	// pretty bad names, please change if
+	// TODO better names
 	public enum TurnMode {
 		LEFT, RIGHT, FORWARD
 	}
@@ -73,7 +74,6 @@ public class Body {
 	}
 
 	private void updatePosition() {
-		
 		if(turnMode == TurnMode.LEFT) {
 			turnLeft();
 		} else if (turnMode == TurnMode.RIGHT) {
@@ -127,17 +127,18 @@ public class Body {
 	 * Updates all power ups, removes them if inactive.
 	 */
 	private void updatePowerUps() {
-		for (PowerUp p : powerUps) {
+
+		// Using iterator since removing itself from list in an enhanced for
+		// loop causes exception
+		Iterator<PowerUp> i = powerUps.iterator();
+		while(i.hasNext()) {
+			PowerUp p = i.next();
 			p.update();
 			if (!p.isActive()) {
-				removePowerUpAndEffect(p);
+				p.removeEffect(this);
+				i.remove();
 			}
 		}
-	}
-	
-	private void removePowerUpAndEffect(PowerUp powerUp) {
-		powerUp.removeEffect(this);
-		powerUps.remove(powerUp);
 	}
 
 	public void setWidth(float width) {
