@@ -19,8 +19,8 @@ public class Game {
 	private final long SKIP_TICKS = (long) (1000000000 / TICKS_PER_SECOND);
 	private final int MAX_FRAMESKIP = 5;
 	
-	// Set below 1 to prevent limiting
-	private final double FPS_LIMIT = 60;
+	// Set to zero or below to prevent limiting
+	private final double FPS_LIMIT = 60.1;
 	private final long FRAME_DELAY = (long) (1000000000 / FPS_LIMIT);
 
 	private long lastFrame;
@@ -93,7 +93,7 @@ public class Game {
 				loops++;
 			}
 			
-			if(getTickCount() - lastFrame >= FRAME_DELAY) {
+			if(FPS_LIMIT <= 0 || getTickCount() - lastFrame >= FRAME_DELAY) {
 				lastFrame = getTickCount();
 				float interpolation = (getTickCount() + SKIP_TICKS - nextGameTick) / (float)SKIP_TICKS;
 				render(interpolation);
