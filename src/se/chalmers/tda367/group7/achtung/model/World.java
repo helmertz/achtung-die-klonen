@@ -126,12 +126,6 @@ public class World {
 	 * @return true if there are players still alive
 	 */
 	public boolean isRoundActive() {
-		int deadPlayers = 0;
-		for (Player player : players) {
-			if (player.getBody().isDead()) {
-				deadPlayers++;
-			}
-		}
 		return deadPlayers < players.size() - 1;
 	}
 
