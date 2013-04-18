@@ -8,10 +8,11 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.opengl.GLContext;
 import org.lwjgl.opengl.Pbuffer;
 import org.lwjgl.opengl.PixelFormat;
 
-import se.chalmers.tda367.group7.achtung.rendering.Color;
+import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public class LWJGLRenderService implements RenderService {
@@ -55,9 +56,15 @@ public class LWJGLRenderService implements RenderService {
 		Display.setDisplayMode(new DisplayMode(800, 600));
 
 		// Used to determine anti-aliasing capabilities
-		Pbuffer pb = new Pbuffer(1,1, new PixelFormat(),null);
+		
+		int maxSamples = 0;
+		
+		Pbuffer pb = new Pbuffer(1, 1, new PixelFormat(), null);
 		pb.makeCurrent();
-		int maxSamples = glGetInteger(GL30.GL_MAX_SAMPLES);
+		boolean supported = GLContext.getCapabilities().GL_ARB_multisample;
+		if(supported){
+			maxSamples = glGetInteger(GL30.GL_MAX_SAMPLES);
+		}
 		pb.destroy();
 				
 		PixelFormat pf = new PixelFormat().withSamples(maxSamples);

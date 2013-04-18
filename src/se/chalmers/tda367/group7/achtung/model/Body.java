@@ -41,7 +41,7 @@ public class Body {
 		bodySegments = new ArrayList<BodySegment>();
 		
 		dead = false;
-		immortal = false;
+		immortal = true;
 		sharpTurns = false;
 		holeLenthCounter = 0;
 		width = DEFAULT_WIDTH;
@@ -133,25 +133,10 @@ public class Body {
 		double chansMod = 1;
 		
 		// This determines the length of the hole. Could be something simpler.
-		switch (holeLenthCounter) {
-		case 1:
+		if (holeLenthCounter == 1) {
 			chansMod = 1/CHANCE_OF_HOLE;
-			break;
-		case 2:
+		} else if (holeLenthCounter > 1) {
 			chansMod = 0.5/CHANCE_OF_HOLE;
-			break;
-		case 3:
-			chansMod = 0.45/CHANCE_OF_HOLE;
-			break;
-		case 4:
-			chansMod = 0.4/CHANCE_OF_HOLE;
-			break;
-		case 5:
-			chansMod = 0.4/CHANCE_OF_HOLE;
-			break;
-
-		default:
-			break;
 		}
 		// Determin if there should be a hole.
 		if (rand <= CHANCE_OF_HOLE*chansMod) {
