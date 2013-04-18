@@ -115,7 +115,6 @@ public class World {
 				}
 				
 				if(lastSeg.getHitBox().intersects(seg.getHitBox())) {
-					System.out.println("intersection!!!");
 					return true;
 				}
 			}
