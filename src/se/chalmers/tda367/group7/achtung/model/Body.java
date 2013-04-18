@@ -20,6 +20,7 @@ public class Body {
 
 	private float width;
 	private boolean dead;
+	private boolean immortal;
 	private int holeLenthCounter;
 	private Position holeTmpPos;
 	
@@ -39,6 +40,7 @@ public class Body {
 		bodySegments = new ArrayList<BodySegment>();
 		
 		dead = false;
+		immortal = false;
 		holeLenthCounter = 0;
 		width = DEFAULT_WIDTH;
 		speed = DEFAULT_SPEED;
@@ -99,8 +101,6 @@ public class Body {
 		// Create a new body segment and add to body segment list.
 		// Will use previous body segment end as start, so that there are no
 		// duplicated variables.
-		// TODO - This will have to be thought through when holes is
-		// implemented.
 		
 		Position end = new Position(x + dx, y + dy);
 		if (bodySegments.isEmpty()) {
@@ -217,7 +217,17 @@ public class Body {
 	}
 	
 	public void kill() {
-		dead = true;
+		if (!immortal) {
+			dead = true;
+		}
+	}
+	
+	public void setImmortal(boolean immortal) {
+		this.immortal = immortal;
+	}
+	
+	public boolean isImmortal() {
+		return immortal;
 	}
 
 	public float getRotationAngleDeg() {
