@@ -10,8 +10,10 @@ public class World {
 
 	private final int width;
 	private final int height;
-
+	
 	private List<Player> players;
+
+	private int deadPlayers = 0; 
 
 	public World(int width, int height) {
 		this.width = width;
@@ -44,7 +46,7 @@ public class World {
 	private void updatePlayers() {
 		for (Player player : players) {
 			player.update();
-
+			
 			if (doesPlayerCollide(player)) {
 				killPlayerAndDistributePoints(player);
 			}
@@ -53,6 +55,7 @@ public class World {
 
 	private void killPlayerAndDistributePoints(Player player) {
 		player.getBody().kill();
+		deadPlayers++;
 		int livingPlayers = 0;
 		for (Player p : players) {
 			if (!p.getBody().isDead()) {
@@ -68,10 +71,7 @@ public class World {
 					p.getBody().kill();
 				}
 			}
-		}
-		
-		// Checks if round is 
-		
+		}		
 	}
 
 	private boolean doesPlayerCollide(Player player) {
@@ -140,6 +140,7 @@ public class World {
 	 */
 	public void startRound() {
 		if (!isRoundActive()) {
+			deadPlayers = 0;
 			createPlayerBodys();
 		}
 	}
