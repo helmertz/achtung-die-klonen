@@ -1,5 +1,7 @@
 package se.chalmers.tda367.group7.achtung.rendering;
 
+import java.io.IOException;
+
 import se.chalmers.tda367.group7.achtung.model.Color;
 
 public interface RenderService {
@@ -44,4 +46,9 @@ public interface RenderService {
 	public void drawStringCentered(String name, float x, float y, float scale);
 
 	public boolean isActive();
+
+	// From a path to a PNG file (only supported currently) returns an object
+	// that can be used to render the image. Prevent loading same file multiple
+	// times from the outside.
+	public Image getImage(String path) throws IOException;
 }
