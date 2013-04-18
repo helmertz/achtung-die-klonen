@@ -16,10 +16,18 @@ public class WorldController implements InputListener {
 	
 	public WorldController(World world) {	
 		this.world = world;
+		int i = 0;
 		for(Player p : world.getPlayers()) {
+			
 			PlayerController pc = new PlayerController(p);
-			pc.setLeftKey(Keyboard.KEY_LEFT);
-			pc.setRightKey(Keyboard.KEY_RIGHT);
+			if(i == 0) {
+				pc.setLeftKey(Keyboard.KEY_LEFT);
+				pc.setRightKey(Keyboard.KEY_RIGHT);
+			} else {
+				pc.setLeftKey(Keyboard.KEY_A);
+				pc.setRightKey(Keyboard.KEY_D);
+			}
+			i++;
 			playerControllers.add(pc);
 		}
 	}
