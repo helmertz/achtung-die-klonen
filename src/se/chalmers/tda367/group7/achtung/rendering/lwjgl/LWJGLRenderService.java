@@ -185,4 +185,9 @@ public class LWJGLRenderService implements RenderService {
 		bitMapFont.renderCentered(string, x, y, scale);
 	}
 
+	@Override
+	public boolean isActive() {
+		return Display.isActive();
+	}
+
 }

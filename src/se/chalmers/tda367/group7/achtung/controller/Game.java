@@ -15,14 +15,20 @@ import se.chalmers.tda367.group7.achtung.view.WorldView;
  */
 public class Game {
 
-	private final int TICKS_PER_SECOND = 25;
-	private final int SKIP_TICKS = 1000000000 / TICKS_PER_SECOND;
+	private final double TICKS_PER_SECOND = 25;
+	private final long SKIP_TICKS = (long) (1000000000 / TICKS_PER_SECOND);
 	private final int MAX_FRAMESKIP = 5;
+	
+	// Set below 1 to prevent limiting
+	private final double FPS_LIMIT = 60;
+	private final long FRAME_DELAY = (long) (1000000000 / FPS_LIMIT);
+
+	private long lastFrame;
 	
 	private RenderService renderer;
 	private InputService inputService;
 	private int loops;
-	private long nextGameTick = getTickCount();
+	private long nextGameTick;
 	private World world;
 	private WorldView worldView;
 	private WorldController worldController;
@@ -54,26 +60,43 @@ public class Game {
 		// http://www.koonsolo.com/news/dewitters-gameloop/ for some different
 		// types. Interpolation type renderer would probably work well, but is a
 		// bit more difficult to implement.
+		nextGameTick = getTickCount();
 		while (!renderer.isCloseRequested()) {
-			loops = 0;
-
+			
 			// Called as often as possible, so events gets created directly at key press
 			inputService.update();
 			
-			while(getTickCount() > nextGameTick && loops < MAX_FRAMESKIP) {	
+			boolean doLogic = true; 
+
+			// Essentially pauses the game when not in focus
+			if(!renderer.isActive()) {
+				doLogic = false;
+				
+				// Allow some sleeping to minimize cpu usage
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {}
+				
+				// Needs to be set to now so that no compensation is done
+				nextGameTick = getTickCount();
+			}
+			
+			loops = 0;
+			while(doLogic && getTickCount() > nextGameTick && loops < MAX_FRAMESKIP) {	
+				if(loops > 0) {
+					System.out.println("Logic loop compensating");
+				}
+				
 				logic();
 				
 				nextGameTick += SKIP_TICKS;
 				loops++;
 			}
 			
-			// TODO implement being able to limit fps
-			float interpolation = (getTickCount() + SKIP_TICKS - nextGameTick) / (float)SKIP_TICKS;
-			render(interpolation);
-			
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
+			if(getTickCount() - lastFrame >= FRAME_DELAY) {
+				lastFrame = getTickCount();
+				float interpolation = (getTickCount() + SKIP_TICKS - nextGameTick) / (float)SKIP_TICKS;
+				render(interpolation);
 			}
 		}
 	}
