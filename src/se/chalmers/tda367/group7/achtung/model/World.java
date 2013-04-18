@@ -57,22 +57,23 @@ public class World {
 		player.getBody().kill();
 		if (player.getBody().isDead()) {
 			deadPlayers++;
-		}
-		
-		for (Player p : players) {
-			if (!p.getBody().isDead()) {
-				p.addPoints(1);
-			}
-		}
-		
-		// Checks if one player remains, and kills him as well
-		if(players.size() - deadPlayers < 2) {
+			
 			for (Player p : players) {
 				if (!p.getBody().isDead()) {
-					p.getBody().kill();
+					p.addPoints(1);
 				}
-			}
-		}		
+			}	
+			
+			// Checks if one player remains, and kills him as well
+			if(players.size() - deadPlayers < 2) {
+				for (Player p : players) {
+					if (!p.getBody().isDead()) {
+						p.getBody().kill();
+					}
+				}
+			}	
+		}
+			
 	}
 
 	private boolean doesPlayerCollide(Player player) {
