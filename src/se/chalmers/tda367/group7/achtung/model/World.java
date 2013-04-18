@@ -55,17 +55,18 @@ public class World {
 
 	private void killPlayerAndDistributePoints(Player player) {
 		player.getBody().kill();
-		deadPlayers++;
-		int livingPlayers = 0;
+		if (player.getBody().isDead()) {
+			deadPlayers++;
+		}
+		
 		for (Player p : players) {
 			if (!p.getBody().isDead()) {
-				livingPlayers++;
 				p.addPoints(1);
 			}
 		}
 		
 		// Checks if one player remains, and kills him as well
-		if(livingPlayers < 2) {
+		if(players.size() - deadPlayers < 2) {
 			for (Player p : players) {
 				if (!p.getBody().isDead()) {
 					p.getBody().kill();
