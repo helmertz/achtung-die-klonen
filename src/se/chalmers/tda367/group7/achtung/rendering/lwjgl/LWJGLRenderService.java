@@ -7,6 +7,8 @@ import java.io.IOException;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL30;
+import org.lwjgl.opengl.Pbuffer;
 import org.lwjgl.opengl.PixelFormat;
 
 import se.chalmers.tda367.group7.achtung.rendering.Color;
@@ -52,8 +54,13 @@ public class LWJGLRenderService implements RenderService {
 		Display.setTitle("Achtung");
 		Display.setDisplayMode(new DisplayMode(800, 600));
 
-		// Change 4 to 0 if this causes an exception
-		PixelFormat pf = new PixelFormat().withSamples(4);
+		// Used to determine anti-aliasing capabilities
+		Pbuffer pb = new Pbuffer(1,1, new PixelFormat(),null);
+		pb.makeCurrent();
+		int maxSamples = glGetInteger(GL30.GL_MAX_SAMPLES);
+		pb.destroy();
+				
+		PixelFormat pf = new PixelFormat().withSamples(maxSamples);
 
 		Display.create(pf);
 	}
@@ -109,12 +116,8 @@ public class LWJGLRenderService implements RenderService {
 	@Override
 	public void drawLine(float x1, float y1, float x2, float y2, float width,
 			Color color) {
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
 		bindColor(color);
 		lineRenderer.drawLine(x1, y1, x2, y2, width);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
 	}
 
 	private void bindColor(Color color) {
