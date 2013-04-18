@@ -11,7 +11,7 @@ public class Body {
 
 	private static final float DEFAULT_WIDTH = 10;
 	private static final float DEFAULT_SPEED = 10;
-	private static final float DEFAULT_ROTATION_SPEED = 5f;
+	private static final float DEFAULT_ROTATION_SPEED = 90f;
 	private static final double CHANS_OF_HOLE = 0.015;
 
 	private float speed;
@@ -28,6 +28,7 @@ public class Body {
 	private List<BodySegment> bodySegments;
 	private List<PowerUp> powerUps = new ArrayList<PowerUp>();
 	private TurnMode turnMode;
+	private boolean sharpTurns;
 	
 	// TODO better names
 	public enum TurnMode {
@@ -40,7 +41,8 @@ public class Body {
 		bodySegments = new ArrayList<BodySegment>();
 		
 		dead = false;
-		immortal = false;
+		immortal = true;
+		sharpTurns = true;
 		holeLenthCounter = 0;
 		width = DEFAULT_WIDTH;
 		speed = DEFAULT_SPEED;
@@ -80,11 +82,7 @@ public class Body {
 	}
 
 	private void updatePosition() {
-		if(turnMode == TurnMode.LEFT) {
-			turnLeft();
-		} else if (turnMode == TurnMode.RIGHT) {
-			turnRight();
-		}
+		turn();
 		
 		// Update head with delta positions
 		Position headPosition = head.getPosition();
@@ -114,6 +112,20 @@ public class Body {
 			Position start = bodySegments.get(bodySegments.size() - 1).getEnd();
 			addBodySegment(new BodySegment(start, end, width));
 		}
+	}
+	
+	private void turn() {
+		
+		if(turnMode == TurnMode.LEFT) {
+			turnLeft();
+		} else if (turnMode == TurnMode.RIGHT) {
+			turnRight();
+		}
+
+		if (sharpTurns) {
+			turnMode = TurnMode.FORWARD;
+		}
+		
 	}
 	
 	private boolean generateRandomHole() {
@@ -239,6 +251,10 @@ public class Body {
 	}
 
 	public void setTurnMode(TurnMode turnMode) {
-		this.turnMode = turnMode;
+		this.turnMode = turnMode;	
+	}
+	
+	public void setSharpTurns(boolean sharpTurns) {
+		this.sharpTurns = sharpTurns;
 	}
 }
