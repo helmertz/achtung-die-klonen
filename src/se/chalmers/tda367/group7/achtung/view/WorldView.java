@@ -3,9 +3,9 @@ package se.chalmers.tda367.group7.achtung.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.model.World;
-import se.chalmers.tda367.group7.achtung.rendering.Color;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public class WorldView implements View {

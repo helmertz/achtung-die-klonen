@@ -1,4 +1,4 @@
-package se.chalmers.tda367.group7.achtung.rendering;
+package se.chalmers.tda367.group7.achtung.model;
 
 /**
  * An immutable class for representing a color with red, green, blue and alpha components.

@@ -1,6 +1,5 @@
 package se.chalmers.tda367.group7.achtung.model;
 
-import se.chalmers.tda367.group7.achtung.rendering.Color;
 
 /**
  * A class representing a player, that is persistent over the rounds.

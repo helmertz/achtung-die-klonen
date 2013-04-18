@@ -2,6 +2,7 @@ package se.chalmers.tda367.group7.achtung.rendering;
 
 import org.lwjgl.LWJGLException;
 
+import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.LWJGLRenderService;
 
 public class ExampleUsage {
