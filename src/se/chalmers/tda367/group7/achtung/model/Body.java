@@ -11,8 +11,8 @@ public class Body {
 
 	private static final float DEFAULT_WIDTH = 10;
 	private static final float DEFAULT_SPEED = 10;
-	private static final float DEFAULT_ROTATION_SPEED = 90f;
-	private static final double CHANS_OF_HOLE = 0.015;
+	private static final float DEFAULT_ROTATION_SPEED = 5f;
+	private static final double CHANCE_OF_HOLE = 0.015;
 
 	private float speed;
 	private float rotationAngleDeg; // the angle the snake is facing.
@@ -41,8 +41,8 @@ public class Body {
 		bodySegments = new ArrayList<BodySegment>();
 		
 		dead = false;
-		immortal = true;
-		sharpTurns = true;
+		immortal = false;
+		sharpTurns = false;
 		holeLenthCounter = 0;
 		width = DEFAULT_WIDTH;
 		speed = DEFAULT_SPEED;
@@ -135,26 +135,26 @@ public class Body {
 		// This determines the length of the hole. Could be something simpler.
 		switch (holeLenthCounter) {
 		case 1:
-			chansMod = 1/CHANS_OF_HOLE;
+			chansMod = 1/CHANCE_OF_HOLE;
 			break;
 		case 2:
-			chansMod = 0.5/CHANS_OF_HOLE;
+			chansMod = 0.5/CHANCE_OF_HOLE;
 			break;
 		case 3:
-			chansMod = 0.45/CHANS_OF_HOLE;
+			chansMod = 0.45/CHANCE_OF_HOLE;
 			break;
 		case 4:
-			chansMod = 0.4/CHANS_OF_HOLE;
+			chansMod = 0.4/CHANCE_OF_HOLE;
 			break;
 		case 5:
-			chansMod = 0.4/CHANS_OF_HOLE;
+			chansMod = 0.4/CHANCE_OF_HOLE;
 			break;
 
 		default:
 			break;
 		}
 		// Determin if there should be a hole.
-		if (rand <= CHANS_OF_HOLE*chansMod) {
+		if (rand <= CHANCE_OF_HOLE*chansMod) {
 			holeLenthCounter++;
 			return true;
 		}
