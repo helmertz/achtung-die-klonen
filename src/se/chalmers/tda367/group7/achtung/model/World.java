@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import se.chalmers.tda367.group7.achtung.model.powerups.SpeedPowerUp;
-import se.chalmers.tda367.group7.achtung.view.PowerUpEntityView;
 
 /**
  * Class containing the data for a game currently playing.
@@ -52,7 +51,7 @@ public class World {
 	private void updatePlayers() {
 		for (Player player : players) {
 			player.update();
-			System.out.println("poweruplistSize: " + powerUpEntities.size());
+			
 			if (doesPlayerCollide(player)) {
 				killPlayerAndDistributePoints(player);
 			}
@@ -70,7 +69,7 @@ public class World {
 			if(curX <= powerUp.getPosition().getX() + 10 && curX >= powerUp.getPosition().getX() - 10 &&
 					(curY <= powerUp.getPosition().getY() + 10 && curY >= powerUp.getPosition().getY() - 10)) {
 				player.getBody().addPowerUp(powerUp.getPlayerPowerUpEffect());
-				removePowerUpEntityFromList(powerUp);
+				removePowerUpEntityFromWorld(powerUp);
 				return true;
 			}
 		}
@@ -213,7 +212,7 @@ public class World {
 		return powerUpEntities;
 	}
 	
-	private void removePowerUpEntityFromList(PowerUpEntity entity) {
+	private void removePowerUpEntityFromWorld(PowerUpEntity entity) {
 		Iterator<PowerUpEntity> i = powerUpEntities.iterator();
 		while(i.hasNext()) {
 			PowerUpEntity p = i.next();
