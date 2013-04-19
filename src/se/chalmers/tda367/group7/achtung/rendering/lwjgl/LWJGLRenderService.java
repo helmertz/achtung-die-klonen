@@ -24,6 +24,10 @@ public class LWJGLRenderService implements RenderService {
 	// set as screen size by default
 	private float viewAreaWidth;
 	private float viewAreaHeight;
+	private float xPadding;
+	private float yPadding;
+	
+	private Color backColor;
 
 	public LWJGLRenderService() throws LWJGLException {
 		init();
@@ -40,6 +44,7 @@ public class LWJGLRenderService implements RenderService {
 			e.printStackTrace();
 		}
 		lineRenderer = new QuadLineRenderer();
+		backColor = Color.BLACK;
 	}
 
 	private void initOpenGL() {
@@ -54,21 +59,29 @@ public class LWJGLRenderService implements RenderService {
 	private void initDisplay() throws LWJGLException {
 		Display.setResizable(true);
 		Display.setTitle("Achtung");
-		Display.setDisplayMode(new DisplayMode(800, 600));
 
 		// Used to determine anti-aliasing capabilities
-		
 		int maxSamples = 0;
-		Pbuffer pb = new Pbuffer(1, 1, new PixelFormat(), null);
+
+		PixelFormat format = new PixelFormat(32, 0, 24, 8, 0);
+		Pbuffer pb = new Pbuffer(800, 600, format, null);
 		pb.makeCurrent();
 		boolean supported = GLContext.getCapabilities().GL_ARB_multisample;
-		if(supported){
+		if (supported) {
 			maxSamples = glGetInteger(GL30.GL_MAX_SAMPLES);
 		}
 		pb.destroy();
-		PixelFormat pf = new PixelFormat().withSamples(maxSamples);
 
-		Display.create(pf);
+		// Ugly way to make this work on some setups
+		if (maxSamples <= 1) {
+			maxSamples = 0;
+		} else if (maxSamples >= 4) {
+			maxSamples = 4;
+		}
+
+		Display.setDisplayMode(new DisplayMode(800, 600));
+
+		Display.create(new PixelFormat().withSamples(maxSamples));
 	}
 
 	// TODO: make scaling proportional
@@ -76,8 +89,8 @@ public class LWJGLRenderService implements RenderService {
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		float xPadding = 0;
-		float yPadding = 0;
+		this.xPadding = 0;
+		this.yPadding = 0;
 
 		// for proportional scaling
 		float displayRatio = (float) Display.getWidth() / Display.getHeight();
@@ -85,10 +98,10 @@ public class LWJGLRenderService implements RenderService {
 
 		if (viewRatio < displayRatio) {
 			// Padd on width
-			xPadding = (viewAreaHeight * displayRatio - viewAreaWidth) / 2;
+			this.xPadding = (viewAreaHeight * displayRatio - viewAreaWidth) / 2;
 		} else {
 			// Padd on height
-			yPadding = (viewAreaWidth / displayRatio - viewAreaHeight) / 2;
+			this.yPadding = (viewAreaWidth / displayRatio - viewAreaHeight) / 2;
 		}
 
 		glOrtho(-xPadding, viewAreaWidth + xPadding, viewAreaHeight + yPadding,
@@ -110,6 +123,16 @@ public class LWJGLRenderService implements RenderService {
 
 	@Override
 	public void postDraw() {
+		bindColor(backColor);
+
+		if (xPadding > 0) {
+			drawRect(-xPadding, 0, xPadding, viewAreaHeight);
+			drawRect(viewAreaWidth, 0, xPadding, viewAreaHeight);
+		} else {
+			drawRect(0, -yPadding, viewAreaWidth, yPadding);
+			drawRect(0, viewAreaHeight, viewAreaWidth, yPadding);
+		}
+
 		Display.update();
 	}
 
@@ -166,6 +189,7 @@ public class LWJGLRenderService implements RenderService {
 
 	@Override
 	public void setBackgroundColor(Color color) {
+		this.backColor = color;
 		glClearColor(color.getRed(), color.getGreen(), color.getBlue(),
 				color.getAlpha());
 	}
@@ -200,8 +224,10 @@ public class LWJGLRenderService implements RenderService {
 		return new LWJGLImage(path);
 	}
 
+	// Draws a circle, with the center coordinates x and y, as a polygon with
+	// the number of corners defined by edgeQuality
 	@Override
-	public void drawCircle(float x, float y, float radius, float edgeQuality,
+	public void drawCircleCentered(float x, float y, float radius, int edgeQuality,
 			Color color) {
 		// Lifted from http://www.java-gaming.org/index.php?topic=25245.msg217089#msg217089
 		bindColor(color);
@@ -218,7 +244,7 @@ public class LWJGLRenderService implements RenderService {
 		    glVertex2f((float)Math.cos(angle), (float)Math.sin(angle));
 		}
 		glEnd();
-
+		glPopMatrix();
 	}
 
 }
