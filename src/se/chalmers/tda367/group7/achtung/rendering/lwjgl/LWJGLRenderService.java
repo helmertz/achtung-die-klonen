@@ -13,6 +13,7 @@ import org.lwjgl.opengl.Pbuffer;
 import org.lwjgl.opengl.PixelFormat;
 
 import se.chalmers.tda367.group7.achtung.model.Color;
+import se.chalmers.tda367.group7.achtung.rendering.Image;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public class LWJGLRenderService implements RenderService {
@@ -58,7 +59,6 @@ public class LWJGLRenderService implements RenderService {
 		// Used to determine anti-aliasing capabilities
 		
 		int maxSamples = 0;
-		
 		Pbuffer pb = new Pbuffer(1, 1, new PixelFormat(), null);
 		pb.makeCurrent();
 		boolean supported = GLContext.getCapabilities().GL_ARB_multisample;
@@ -66,7 +66,6 @@ public class LWJGLRenderService implements RenderService {
 			maxSamples = glGetInteger(GL30.GL_MAX_SAMPLES);
 		}
 		pb.destroy();
-				
 		PixelFormat pf = new PixelFormat().withSamples(maxSamples);
 
 		Display.create(pf);
@@ -77,7 +76,6 @@ public class LWJGLRenderService implements RenderService {
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-
 		float xPadding = 0;
 		float yPadding = 0;
 
@@ -195,6 +193,11 @@ public class LWJGLRenderService implements RenderService {
 	@Override
 	public boolean isActive() {
 		return Display.isActive();
+	}
+
+	@Override
+	public Image getImage(String path) throws IOException {
+		return new LWJGLImage(path);
 	}
 
 }

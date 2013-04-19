@@ -1,14 +1,7 @@
 package se.chalmers.tda367.group7.achtung.rendering.lwjgl;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
-
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL13.*;
-import static org.lwjgl.opengl.GL30.*;
-import de.matthiasmann.twl.utils.PNGDecoder;
-import de.matthiasmann.twl.utils.PNGDecoder.Format;
 
 /**
  * Very basic font renderer.
@@ -40,7 +33,7 @@ public class BitMapFont {
 	 * @throws IOException
 	 */
 	public BitMapFont(String filePath) throws IOException {
-		loadTexture(filePath);
+		this.texID = Utils.loadTexture(filePath);
 	}
 	
 	public float getWidth(String string, float scale) {
@@ -57,9 +50,8 @@ public class BitMapFont {
 		glTranslatef(x, y, 0);
 		glScalef(scale, scale, 1);
 
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, texID);
 		glColor3f(1, 1, 1);
 
 		int xadd = 0;
@@ -104,46 +96,6 @@ public class BitMapFont {
 		glDisable(GL_TEXTURE_2D);
 
 		glPopMatrix();
-	}
-
-	// based on code from LWJGL wiki page http://www.lwjgl.org/wiki/index.php?title=The_Quad_textured
-	private void loadTexture(String fileName) throws IOException {		
-		ByteBuffer buf = null;
-
-		// Open the PNG file as an InputStream
-		InputStream in = BitMapFont.class.getResourceAsStream("/" + fileName);
-		// Link the PNG decoder to this stream
-		PNGDecoder decoder = new PNGDecoder(in);
-
-		// Get the width and height of the texture
-		int textureWidth = decoder.getWidth();
-		int textureHeight = decoder.getHeight();
-
-		// Decode the PNG file in a ByteBuffer
-		buf = ByteBuffer.allocateDirect(4 * decoder.getWidth()
-				* decoder.getHeight());
-		decoder.decode(buf, decoder.getWidth() * 4, Format.RGBA);
-		buf.flip();
-
-		in.close();
-
-		// Create a new texture object in memory and bind it
-		texID = glGenTextures();
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texID);
-
-		// All RGB bytes are aligned to each other and each component is 1 byte
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-		// Upload the texture data and generate mip maps (for scaling)
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textureWidth, textureHeight,
-				0, GL_RGBA, GL_UNSIGNED_BYTE, buf);
-		glGenerateMipmap(GL_TEXTURE_2D);
-
-		// Setup what to do when the texture has to be scaled
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
 	}
 
 	public void renderCentered(String string, float x, float y, float scale) {
