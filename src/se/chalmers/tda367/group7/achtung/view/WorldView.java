@@ -5,12 +5,14 @@ import java.util.List;
 
 import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Player;
+import se.chalmers.tda367.group7.achtung.model.PowerUpEntity;
 import se.chalmers.tda367.group7.achtung.model.World;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public class WorldView implements View {
 
 	private List<PlayerView> playerViews = new ArrayList<PlayerView>();
+	private List<PowerUpEntityView> powerUpView = new ArrayList<PowerUpEntityView>();
 	private World world;
 	
 	public WorldView(World world) {
@@ -18,12 +20,20 @@ public class WorldView implements View {
 		for(Player p : world.getPlayers()) {
 			playerViews.add(new PlayerView(p));
 		}
+		
+		for(PowerUpEntity e : world.getPowerUpEntities()) {
+			powerUpView.add(new PowerUpEntityView(e));
+		}
 	}
 	
 	public void render(RenderService renderer, float interpolation) {
 		renderer.setViewAreaSize(world.getWidth(), world.getHeight());
 		renderer.drawLinedRect(0, 0, world.getWidth(), world.getHeight(), 5, Color.WHITE);
-		for(PlayerView view : playerViews) {
+		for(View view : playerViews) {
+			view.render(renderer, interpolation);
+		}
+		
+		for(View view : powerUpView) {
 			view.render(renderer, interpolation);
 		}
 	}

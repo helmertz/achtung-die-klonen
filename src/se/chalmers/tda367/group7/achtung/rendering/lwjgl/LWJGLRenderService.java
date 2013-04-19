@@ -48,7 +48,7 @@ public class LWJGLRenderService implements RenderService {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_ALPHA_TEST);
 		glEnable(GL_BLEND);
-		sizeRefrash();
+		sizeRefresh();
 	}
 
 	private void initDisplay() throws LWJGLException {
@@ -72,7 +72,7 @@ public class LWJGLRenderService implements RenderService {
 	}
 
 	// TODO: make scaling proportional
-	private void sizeRefrash() {
+	private void sizeRefresh() {
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -101,7 +101,7 @@ public class LWJGLRenderService implements RenderService {
 	public void preDraw() {
 		// Some recalculations must be made when screen is resized
 		if (Display.wasResized()) {
-			sizeRefrash();
+			sizeRefresh();
 		}
 
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -134,7 +134,7 @@ public class LWJGLRenderService implements RenderService {
 	public void setViewAreaSize(float width, float height) {
 		this.viewAreaWidth = width;
 		this.viewAreaHeight = height;
-		sizeRefrash();
+		sizeRefresh();
 	}
 
 	@Override
@@ -198,6 +198,27 @@ public class LWJGLRenderService implements RenderService {
 	@Override
 	public Image getImage(String path) throws IOException {
 		return new LWJGLImage(path);
+	}
+
+	@Override
+	public void drawCircle(float x, float y, float radius, float edgeQuality,
+			Color color) {
+		// Lifted from http://www.java-gaming.org/index.php?topic=25245.msg217089#msg217089
+		bindColor(color);
+		glPushMatrix();
+		glTranslatef(x, y, 0);
+		glScalef(radius, radius, 1);
+
+		glBegin(GL_TRIANGLE_FAN);
+		glVertex2f(0, 0);
+		
+		// TODO: Determine how round circle should be, parameter?
+		for(int i = 0; i <= edgeQuality; i++){ // edgeQuality decides how round the circle looks.
+		    double angle = Math.PI * 2 * i / edgeQuality;
+		    glVertex2f((float)Math.cos(angle), (float)Math.sin(angle));
+		}
+		glEnd();
+
 	}
 
 }

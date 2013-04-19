@@ -12,6 +12,7 @@ public class World {
 	private final int height;
 	
 	private List<Player> players;
+	private List<PowerUpEntity> powerUpEntities;
 
 	private int deadPlayers = 0; 
 
@@ -19,7 +20,8 @@ public class World {
 		this.width = width;
 		this.height = height;
 
-		players = new ArrayList<>();
+		players = new ArrayList<Player>();
+		powerUpEntities = new ArrayList<PowerUpEntity>();
 
 		// Hardcoded in at the moment
 		Player p1 = new Player("Player 1", Color.WHITE);
@@ -28,6 +30,27 @@ public class World {
 		Player p2 = new Player("Player 2", Color.WHITE);
 		p2.setBody(BodyFactory.getBody(1000, 1000));
 		addPlayer(p2);
+		
+		powerUpEntities.add(new PowerUpEntity(new Position(100,100), 50, new PlayerPowerUpEffect() {
+			
+			@Override
+			public void removeEffect(Body body) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public int getDuration() {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+			
+			@Override
+			public void applyEffect(Body body) {
+				// TODO Auto-generated method stub
+				
+			}
+		}));
 	}
 
 	public void addPlayer(Player p) {
@@ -181,5 +204,9 @@ public class World {
 
 	public List<Player> getPlayers() {
 		return players;
+	}
+
+	public List<PowerUpEntity> getPowerUpEntities() {
+		return powerUpEntities;
 	}
 }

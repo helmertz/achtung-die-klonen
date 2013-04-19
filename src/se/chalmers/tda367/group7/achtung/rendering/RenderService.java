@@ -32,6 +32,9 @@ public interface RenderService {
 	public void drawLinedRect(float x, float y, float width, float height,
 			float lineWidth, Color color);
 
+	public void drawCircle(float x, float y, float radius, float edgeQuality,
+			Color color);
+
 	// Draws text on the screen where x and y specifies the top left corner of
 	// the first letter
 	public void drawString(String s, float x, float y, float scale);
