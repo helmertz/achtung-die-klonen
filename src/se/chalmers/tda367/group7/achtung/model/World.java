@@ -1,7 +1,11 @@
 package se.chalmers.tda367.group7.achtung.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import se.chalmers.tda367.group7.achtung.model.powerups.SpeedPowerUp;
+import se.chalmers.tda367.group7.achtung.view.PowerUpEntityView;
 
 /**
  * Class containing the data for a game currently playing.
@@ -31,26 +35,7 @@ public class World {
 		p2.setBody(BodyFactory.getBody(1000, 1000));
 		addPlayer(p2);
 		
-		powerUpEntities.add(new PowerUpEntity(new Position(100,100), 50, new PlayerPowerUpEffect() {
-			
-			@Override
-			public void removeEffect(Body body) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public int getDuration() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-			
-			@Override
-			public void applyEffect(Body body) {
-				// TODO Auto-generated method stub
-				
-			}
-		}));
+		powerUpEntities.add(new PowerUpEntity(new Position(100,100), 50, new SpeedPowerUp()));
 	}
 
 	public void addPlayer(Player p) {
@@ -67,11 +52,29 @@ public class World {
 	private void updatePlayers() {
 		for (Player player : players) {
 			player.update();
-			
+			System.out.println("poweruplistSize: " + powerUpEntities.size());
 			if (doesPlayerCollide(player)) {
 				killPlayerAndDistributePoints(player);
 			}
+			if(doesPlayerCollideWithPowerUp(player)) {
+				System.out.println("collided with powerup");
+			}
 		}
+	}
+
+	private boolean doesPlayerCollideWithPowerUp(Player player) {
+		for(PowerUpEntity powerUp : powerUpEntities) {
+			float curX = player.getBody().getHead().getPosition().getX();
+			float curY = player.getBody().getHead().getPosition().getY();
+			
+			if(curX <= powerUp.getPosition().getX() + 10 && curX >= powerUp.getPosition().getX() - 10 &&
+					(curY <= powerUp.getPosition().getY() + 10 && curY >= powerUp.getPosition().getY() - 10)) {
+				player.getBody().addPowerUp(powerUp.getPlayerPowerUpEffect());
+				removePowerUpEntityFromList(powerUp);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void killPlayerAndDistributePoints(Player player) {
@@ -208,5 +211,15 @@ public class World {
 
 	public List<PowerUpEntity> getPowerUpEntities() {
 		return powerUpEntities;
+	}
+	
+	private void removePowerUpEntityFromList(PowerUpEntity entity) {
+		Iterator<PowerUpEntity> i = powerUpEntities.iterator();
+		while(i.hasNext()) {
+			PowerUpEntity p = i.next();
+			if(entity.equals(p)) {
+				i.remove();
+			}
+		}
 	}
 }
