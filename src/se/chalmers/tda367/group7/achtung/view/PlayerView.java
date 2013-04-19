@@ -52,8 +52,14 @@ public class PlayerView implements View {
 					body.getWidth(), player.getColor());
 		}
 		
-		renderService.drawStringCentered(player.getName(), headX, headY, 1f);
-		renderService.drawStringCentered(player.getPoints() + "", headX, headY - 20, 3f);
+		// Drawing of player name and score on the side
+		// TODO replace the hardcoded values
+		
+		float sideX = renderService.getViewAreaWidth() - 150;
+		float sideY = 100 * player.getId();
+		
+		renderService.drawString(player.getName(), sideX, sideY, 1f, player.getColor());
+		renderService.drawString(player.getPoints() + "", sideX, sideY + 20, 3f, player.getColor());
 	}
 
 }

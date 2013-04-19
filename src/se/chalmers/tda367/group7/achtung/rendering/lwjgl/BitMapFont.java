@@ -1,6 +1,8 @@
 package se.chalmers.tda367.group7.achtung.rendering.lwjgl;
 
 import java.io.IOException;
+
+import se.chalmers.tda367.group7.achtung.model.Color;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
@@ -45,6 +47,18 @@ public class BitMapFont {
 	}
 
 	public void render(String s, float x, float y, float scale) {
+		render(s, x, y, scale, Color.WHITE);
+	}
+
+	public void renderCentered(String string, float x, float y, float scale) {
+		render(string, x - getWidth(string, scale)/2, y - getHeight(string, scale)/2, scale);
+	}
+	
+	public void renderCentered(String string, float x, float y, float scale, Color color) {
+		render(string, x - getWidth(string, scale)/2, y - getHeight(string, scale)/2, scale, color);
+	}
+
+	public void render(String s, float x, float y, float scale, Color color) {
 		glPushMatrix();
 		glLoadIdentity();
 		glTranslatef(x, y, 0);
@@ -52,7 +66,8 @@ public class BitMapFont {
 
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texID);
-		glColor3f(1, 1, 1);
+		glColor4f(color.getRed(), color.getGreen(), color.getBlue(),
+				color.getAlpha());
 
 		int xadd = 0;
 		int yadd = 0;
@@ -96,9 +111,5 @@ public class BitMapFont {
 		glDisable(GL_TEXTURE_2D);
 
 		glPopMatrix();
-	}
-
-	public void renderCentered(String string, float x, float y, float scale) {
-		render(string, x - getWidth(string, scale)/2, y - getHeight(string, scale)/2, scale);
 	}
 }

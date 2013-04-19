@@ -46,7 +46,9 @@ public interface RenderService {
 
 	public float getViewAreaWidth();
 
-	public void drawStringCentered(String name, float x, float y, float scale);
+	public void drawStringCentered(String string, float x, float y, float scale);
+	
+	public void drawStringCentered(String string, float x, float y, float scale, Color color);
 
 	public boolean isActive();
 
@@ -54,5 +56,7 @@ public interface RenderService {
 	// that can be used to render the image. Prevent loading same file multiple
 	// times from the outside.
 	public Image getImage(String path) throws IOException;
+
+	public void drawString(String s, float x, float y, float scale, Color color);
 
 }

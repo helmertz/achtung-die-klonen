@@ -41,7 +41,7 @@ public class Body {
 		bodySegments = new ArrayList<BodySegment>();
 		
 		dead = false;
-		immortal = true;
+		immortal = false;
 		sharpTurns = false;
 		holeLenthCounter = 0;
 		width = DEFAULT_WIDTH;

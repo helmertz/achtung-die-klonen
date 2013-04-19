@@ -27,14 +27,23 @@ public class WorldView implements View {
 	}
 	
 	public void render(RenderService renderer, float interpolation) {
-		renderer.setViewAreaSize(world.getWidth(), world.getHeight());
-		renderer.drawLinedRect(0, 0, world.getWidth(), world.getHeight(), 5, Color.WHITE);
-		for(View view : playerViews) {
+		
+		// Adds 200 so that there's a usable area to the right of the world,
+		// should perhaps not be hardcoded later
+		renderer.setBackgroundColor(Color.DARK_GRAY);
+		renderer.setViewAreaSize(world.getWidth() + 200, world.getHeight());
+		
+		renderer.drawFilledRect(0, 0, world.getWidth(), world.getHeight(), world.getColor());
+
+		for (View view : playerViews) {
 			view.render(renderer, interpolation);
 		}
 		
 		for(View view : powerUpView) {
 			view.render(renderer, interpolation);
 		}
+		
+		// Draws line around the world
+		renderer.drawLinedRect(0, 0, world.getWidth(), world.getHeight(), 5, Color.GRAY);
 	}
 }

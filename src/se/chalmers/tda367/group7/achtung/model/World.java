@@ -16,8 +16,12 @@ public class World {
 	
 	private List<Player> players;
 	private List<PowerUpEntity> powerUpEntities;
-
-	private int deadPlayers = 0; 
+	
+	private int deadPlayers = 0;
+	
+	// Color represents the background color of the world. Could potentially be
+	// changed by powerups
+	private Color color;
 
 	public World(int width, int height) {
 		this.width = width;
@@ -26,11 +30,13 @@ public class World {
 		players = new ArrayList<Player>();
 		powerUpEntities = new ArrayList<PowerUpEntity>();
 
+		color = new Color(0x0a0a0a);
+		
 		// Hardcoded in at the moment
-		Player p1 = new Player("Player 1", Color.WHITE);
+		Player p1 = new Player("Player 1", Color.BLUE);
 		p1.setBody(BodyFactory.getBody(1000, 1000));
 		addPlayer(p1);
-		Player p2 = new Player("Player 2", Color.WHITE);
+		Player p2 = new Player("Player 2", Color.RED);
 		p2.setBody(BodyFactory.getBody(1000, 1000));
 		addPlayer(p2);
 		
@@ -220,5 +226,9 @@ public class World {
 				i.remove();
 			}
 		}
+	}
+
+	public Color getColor() {
+		return this.color;
 	}
 }

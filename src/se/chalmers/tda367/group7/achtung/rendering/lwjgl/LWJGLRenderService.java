@@ -140,6 +140,19 @@ public class LWJGLRenderService implements RenderService {
 	public void drawString(String s, float x, float y, float scale) {
 		bitMapFont.render(s, x, y, scale);
 	}
+	
+
+	@Override
+	public void drawString(String s, float x, float y, float scale,
+			Color color) {
+		bitMapFont.render(s, x, y, scale, color);
+	}
+
+	@Override
+	public void drawStringCentered(String string, float x, float y, float scale,
+			Color color) {
+		bitMapFont.renderCentered(string, x, y, scale, color);
+	}
 
 	@Override
 	public void drawLine(float x1, float y1, float x2, float y2, float width,
