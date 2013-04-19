@@ -32,7 +32,7 @@ public interface RenderService {
 	public void drawLinedRect(float x, float y, float width, float height,
 			float lineWidth, Color color);
 
-	public void drawCircle(float x, float y, float radius, float edgeQuality,
+	public void drawCircleCentered(float x, float y, float radius, int edgeQuality,
 			Color color);
 
 	// Draws text on the screen where x and y specifies the top left corner of
@@ -54,4 +54,5 @@ public interface RenderService {
 	// that can be used to render the image. Prevent loading same file multiple
 	// times from the outside.
 	public Image getImage(String path) throws IOException;
+
 }
