@@ -73,7 +73,7 @@ public class World {
 			float curY = player.getBody().getHead().getPosition().getY();
 			
 			if(curX <= powerUp.getPosition().getX() + 10 && curX >= powerUp.getPosition().getX() - 10 &&
-					(curY <= powerUp.getPosition().getY() + 10 && curY >= powerUp.getPosition().getY() - 10)) {
+					(curY <= powerUp.getPosition().getY() + 10 && curY >= powerUp.getPosition().getY() - 10)) {			
 				player.getBody().addPowerUp(powerUp.getPlayerPowerUpEffect());
 				removePowerUpEntityFromWorld(powerUp);
 				return true;
@@ -143,7 +143,7 @@ public class World {
 					continue;
 				}
 				
-				if(lastSeg.getHitBox().intersects(seg.getHitBox())) {
+				if(lastSeg.collidesWith(seg)) {
 					return true;
 				}
 			}
