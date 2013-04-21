@@ -60,7 +60,6 @@ public class BitMapFont {
 
 	public void render(String s, float x, float y, float scale, Color color) {
 		glPushMatrix();
-		glLoadIdentity();
 		glTranslatef(x, y, 0);
 		glScalef(scale, scale, 1);
 

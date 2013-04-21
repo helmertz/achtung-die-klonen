@@ -2,7 +2,6 @@ package se.chalmers.tda367.group7.achtung.rendering.lwjgl;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.*;
-import static org.lwjgl.opengl.GL30.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +17,8 @@ public class Utils {
 	static int loadTexture(String fileName) throws IOException {
 		ByteBuffer buf = null;
 
+		glEnable(GL_TEXTURE_2D);
+		
 		// Open the PNG file as an InputStream
 		InputStream in = BitMapFont.class.getResourceAsStream("/" + fileName);
 		// Link the PNG decoder to this stream
@@ -46,11 +47,13 @@ public class Utils {
 		// Upload the texture data and generate mip maps (for scaling)
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textureWidth, textureHeight, 0,
 				GL_RGBA, GL_UNSIGNED_BYTE, buf);
-		glGenerateMipmap(GL_TEXTURE_2D);
 
 		// Setup what to do when the texture has to be scaled
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		
+		glDisable(GL_TEXTURE_2D);
+
 		return texID;
 	}
 
