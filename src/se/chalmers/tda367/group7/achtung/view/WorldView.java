@@ -21,9 +21,8 @@ public class WorldView implements View {
 			playerViews.add(new PlayerView(p));
 		}
 		
-		for(PowerUpEntity e : world.getPowerUpEntities()) {
-			powerUpView.add(new PowerUpEntityView(e));
-		}
+//		updatePowerUpViews();
+		
 	}
 	
 	public void render(RenderService renderer, float interpolation) {
@@ -35,6 +34,8 @@ public class WorldView implements View {
 		
 		renderer.drawFilledRect(0, 0, world.getWidth(), world.getHeight(), world.getColor());
 
+		updatePowerUpViews();
+
 		for (View view : playerViews) {
 			view.render(renderer, interpolation);
 		}
@@ -45,5 +46,16 @@ public class WorldView implements View {
 		
 		// Draws line around the world
 		renderer.drawLinedRect(0, 0, world.getWidth(), world.getHeight(), 5, Color.GRAY);
+	}
+	
+	private void updatePowerUpViews() {
+
+		if (world.getPowerUpEntities().size() != powerUpView.size()) {
+			powerUpView.clear();
+			
+			for(PowerUpEntity e : world.getPowerUpEntities()) {
+				powerUpView.add(new PowerUpEntityView(e));
+			}
+		}
 	}
 }

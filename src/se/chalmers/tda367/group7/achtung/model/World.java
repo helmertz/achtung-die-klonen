@@ -225,13 +225,14 @@ public class World {
 	}
 	
 	private void removePowerUpEntityFromWorld(PowerUpEntity entity) {
-		Iterator<PowerUpEntity> i = powerUpEntities.iterator();
-		while(i.hasNext()) {
-			PowerUpEntity p = i.next();
-			if(entity.equals(p)) {
-				i.remove();
-			}
-		}
+		powerUpEntities.remove(entity);
+//		Iterator<PowerUpEntity> i = powerUpEntities.iterator();
+//		while(i.hasNext()) {
+//			PowerUpEntity p = i.next();
+//			if(entity.equals(p)) {
+//				i.remove();
+//			}
+//		}
 	}
 
 	public Color getColor() {
