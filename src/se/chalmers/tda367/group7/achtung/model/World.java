@@ -69,11 +69,17 @@ public class World {
 
 	private boolean doesPlayerCollideWithPowerUp(Player player) {
 		for(PowerUpEntity powerUp : powerUpEntities) {
-			float curX = player.getBody().getHead().getPosition().getX();
-			float curY = player.getBody().getHead().getPosition().getY();
+			float headX = player.getBody().getHead().getPosition().getX();
+			float headY = player.getBody().getHead().getPosition().getY();
+			float headDiam = player.getBody().getWidth();
+
+			float powX = powerUp.getPosition().getX();
+			float powY = powerUp.getPosition().getY();
+			float powDiam = powerUp.getDiameter();
 			
-			if(curX <= powerUp.getPosition().getX() + 10 && curX >= powerUp.getPosition().getX() - 10 &&
-					(curY <= powerUp.getPosition().getY() + 10 && curY >= powerUp.getPosition().getY() - 10)) {			
+			// Use pythogorean theorem to calculate the distance between the two points,
+			// then compare that to the diameters.
+			if(Math.sqrt(Math.pow(headX - powX, 2) + Math.pow(headY - powY, 2)) <= headDiam + powDiam) {		
 				player.getBody().addPowerUp(powerUp.getPlayerPowerUpEffect());
 				removePowerUpEntityFromWorld(powerUp);
 				return true;
