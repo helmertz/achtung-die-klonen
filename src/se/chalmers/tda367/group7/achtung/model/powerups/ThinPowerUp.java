@@ -3,16 +3,16 @@ package se.chalmers.tda367.group7.achtung.model.powerups;
 import se.chalmers.tda367.group7.achtung.model.Body;
 import se.chalmers.tda367.group7.achtung.model.PlayerPowerUpEffect;
 
-public class SpeedPowerUp implements PlayerPowerUpEffect {
+public class ThinPowerUp implements PlayerPowerUpEffect{
 
 	@Override
 	public void applyEffect(Body body) {
-		body.setSpeed(body.getSpeed()*2);
+		body.setWidth(body.getWidth()/2);
 	}
 
 	@Override
 	public void removeEffect(Body body) {
-		body.setSpeed(body.getSpeed()/2);
+		body.setWidth(body.getWidth()*2);
 	}
 
 	@Override
@@ -20,5 +20,4 @@ public class SpeedPowerUp implements PlayerPowerUpEffect {
 		return 150;
 	}
 
-	
 }
