@@ -79,7 +79,8 @@ public class World {
 			
 			// Use pythogorean theorem to calculate the distance between the two points,
 			// then compare that to the diameters.
-			if(Math.sqrt(Math.pow(headX - powX, 2) + Math.pow(headY - powY, 2)) <= headDiam + powDiam) {		
+			// Uses powDiam - 2*headDiam because it looks better, don't really know why..
+			if(Math.sqrt(Math.pow(headX - powX, 2) + Math.pow(headY - powY, 2)) < powDiam - 2*headDiam) {		
 				player.getBody().addPowerUp(powerUp.getPlayerPowerUpEffect());
 				removePowerUpEntityFromWorld(powerUp);
 				return true;
@@ -226,13 +227,6 @@ public class World {
 	
 	private void removePowerUpEntityFromWorld(PowerUpEntity entity) {
 		powerUpEntities.remove(entity);
-//		Iterator<PowerUpEntity> i = powerUpEntities.iterator();
-//		while(i.hasNext()) {
-//			PowerUpEntity p = i.next();
-//			if(entity.equals(p)) {
-//				i.remove();
-//			}
-//		}
 	}
 
 	public Color getColor() {
