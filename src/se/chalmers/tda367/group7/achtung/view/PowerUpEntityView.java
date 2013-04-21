@@ -16,6 +16,6 @@ public class PowerUpEntityView implements View {
 	
 	public void render(RenderService renderService, float interpolation) {
 		Position pos = powerUpEntity.getPosition();
-		renderService.drawCircleCentered(pos.getX(), pos.getY(), powerUpEntity.getDiameter(), RENDER_QUALITY, new Color(255,100,255));
+		renderService.drawCircleCentered(pos.getX(), pos.getY(), powerUpEntity.getDiameter()/2, RENDER_QUALITY, new Color(255,100,255));
 	}
 }
