@@ -10,7 +10,7 @@ import java.util.List;
 public class Body {
 
 	public static final float DEFAULT_WIDTH = 10;
-	public static final float DEFAULT_SPEED = 10;
+	public static final float DEFAULT_SPEED = 6;
 	public static final float DEFAULT_ROTATION_SPEED = 6f;
 	private static final double CHANCE_OF_HOLE = 0.015;
 
@@ -21,14 +21,14 @@ public class Body {
 	private float width;
 	private boolean dead;
 	private boolean immortal;
-	private int holeLenthCounter;
+	private int holeLengthCounter;
 	private Position holeTmpPos;
 	
 	private Head head;
 	private List<BodySegment> bodySegments;
 	private List<PowerUp> powerUps = new ArrayList<PowerUp>();
 	private TurnMode turnMode;
-	private boolean sharpTurns;
+	private boolean sharpTurnsActivated;
 	
 	// TODO better names
 	public enum TurnMode {
@@ -42,8 +42,8 @@ public class Body {
 		
 		dead = false;
 		immortal = false;
-		sharpTurns = false;
-		holeLenthCounter = 0;
+		sharpTurnsActivated = false;
+		holeLengthCounter = 0;
 		width = DEFAULT_WIDTH;
 		speed = DEFAULT_SPEED;
 		rotationAngleDeg = rotation;
@@ -105,9 +105,9 @@ public class Body {
 			addBodySegment(new BodySegment(new Position(x, y), end, width));
 		} else if (generateRandomHole()) {
 			holeTmpPos = end;
-		} else if (holeLenthCounter > 0) {
+		} else if (holeLengthCounter > 0) {
 			addBodySegment(new BodySegment(holeTmpPos, end, width));
-			holeLenthCounter = 0;
+			holeLengthCounter = 0;
 		} else {
 			Position start = bodySegments.get(bodySegments.size() - 1).getEnd();
 			addBodySegment(new BodySegment(start, end, width));
@@ -122,7 +122,7 @@ public class Body {
 			turnRight();
 		}
 
-		if (sharpTurns) {
+		if (sharpTurnsActivated) {
 			turnMode = TurnMode.FORWARD;
 		}
 		
@@ -133,21 +133,21 @@ public class Body {
 		double chansMod = 1;
 		
 		// This determines the length of the hole. Could be something simpler.
-		if (holeLenthCounter == 1) {
+		if (holeLengthCounter == 1) {
 			chansMod = 1/CHANCE_OF_HOLE;
-		} else if (holeLenthCounter > 1) {
+		} else if (holeLengthCounter > 1) {
 			chansMod = 0.5/CHANCE_OF_HOLE;
 		}
-		// Determin if there should be a hole.
+		// Determine if there should be a hole.
 		if (rand <= CHANCE_OF_HOLE*chansMod) {
-			holeLenthCounter++;
+			holeLengthCounter++;
 			return true;
 		}
 		return false;
 	}
 	
 	public boolean isGeneratingHole() {
-		return holeLenthCounter != 0;
+		return holeLengthCounter != 0;
 	}
 
 	public float getWidth() {
@@ -243,6 +243,6 @@ public class Body {
 	}
 	
 	public void setSharpTurns(boolean sharpTurns) {
-		this.sharpTurns = sharpTurns;
+		this.sharpTurnsActivated = sharpTurns;
 	}
 }
