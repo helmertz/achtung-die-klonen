@@ -15,7 +15,7 @@ public class TurnPowerUp implements PlayerPowerUpEffect {
 	public void removeEffect(Body body) {
 		body.setSharpTurns(false);
 		// TODO fix this variable some way.
-		body.setRotationSpeedDeg(5);
+		body.setRotationSpeedDeg(Body.DEFAULT_ROTATION_SPEED);
 	}
 
 	@Override

@@ -9,9 +9,9 @@ import java.util.List;
  */
 public class Body {
 
-	private static final float DEFAULT_WIDTH = 10;
-	private static final float DEFAULT_SPEED = 10;
-	private static final float DEFAULT_ROTATION_SPEED = 5f;
+	public static final float DEFAULT_WIDTH = 10;
+	public static final float DEFAULT_SPEED = 10;
+	public static final float DEFAULT_ROTATION_SPEED = 5f;
 	private static final double CHANCE_OF_HOLE = 0.015;
 
 	private float speed;
@@ -199,6 +199,9 @@ public class Body {
 
 	public void setRotationAngleDeg(float angle) {
 		rotationAngleDeg = angle;		
+	}
+	public void setRotationSpeedDeg(float angle) {
+		rotationSpeedDeg = angle;
 	}
 
 	public void setSpeed(float speed) {
