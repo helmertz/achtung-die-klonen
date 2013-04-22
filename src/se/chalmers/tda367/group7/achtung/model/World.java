@@ -1,10 +1,9 @@
 package se.chalmers.tda367.group7.achtung.model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import se.chalmers.tda367.group7.achtung.model.powerups.SpeedPowerUp;
+import se.chalmers.tda367.group7.achtung.model.powerups.*;
 
 /**
  * Class containing the data for a game currently playing.
@@ -40,7 +39,7 @@ public class World {
 		p2.setBody(BodyFactory.getBody(1000, 1000));
 		addPlayer(p2);
 		
-		powerUpEntities.add(new PowerUpEntity(new Position(100,100), 50, new SpeedPowerUp()));
+		powerUpEntities.add(new PowerUpEntity(new Position(100,100), 50, new ThinPowerUp()));
 	}
 
 	public void addPlayer(Player p) {
@@ -51,7 +50,7 @@ public class World {
 		if (isRoundActive()) {
 			updatePlayers();
 		}
-		// TODO - implement collision detection and random power up placement.
+		// TODO - implement random power up placement.
 	}
 
 	private void updatePlayers() {
@@ -78,9 +77,8 @@ public class World {
 			float powDiam = powerUp.getDiameter();
 			
 			// Use pythogorean theorem to calculate the distance between the two points,
-			// then compare that to the diameters.
-			// Uses powDiam - 2*headDiam because it looks better, don't really know why..
-			if(Math.sqrt(Math.pow(headX - powX, 2) + Math.pow(headY - powY, 2)) < powDiam - 2*headDiam) {		
+			// then compare that to the radiuses.
+			if(Math.sqrt(Math.pow(headX - powX, 2) + Math.pow(headY - powY, 2)) < (powDiam/2) + (headDiam/2)) {		
 				player.getBody().addPowerUp(powerUp.getPlayerPowerUpEffect());
 				removePowerUpEntityFromWorld(powerUp);
 				return true;
