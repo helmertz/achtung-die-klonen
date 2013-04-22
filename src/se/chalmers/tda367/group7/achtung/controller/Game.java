@@ -51,7 +51,7 @@ public class Game {
 		}
 		
 		this.inputService = new LWJGLInputService();
-		// Hard coded here temporarily
+		//TODO: Hard coded here temporarily
 		this.world = new World(1000,1000);
 		this.worldView = new WorldView(world);
 		
@@ -96,7 +96,7 @@ public class Game {
 					System.out.println("Logic loop compensating");
 				}
 				
-				logic();
+				doLogic();
 				
 				nextGameTick += SKIP_TICKS;
 				loops++;
@@ -135,7 +135,7 @@ public class Game {
 		}
 	}
 
-	private void logic() {
+	private void doLogic() {
 		world.update();
 	}
 
