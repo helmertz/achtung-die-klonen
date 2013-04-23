@@ -42,6 +42,7 @@ public class World {
 		Player p3 = new Player("Player 3", Color.GREEN);
 		p3.setBody(BodyFactory.getBody(1000, 1000));
 		addPlayer(p3);
+		createPlayerBodiesAtRandomPos();
 		
 		powerUpEntities.add(new PowerUpEntity(new Position(100,100), 50, new ThinPowerUp()));
 	}
@@ -164,7 +165,7 @@ public class World {
 		
 		return false;
 	}
-
+	
 	/**
 	 * @return true if there are players still alive
 	 */
@@ -178,11 +179,11 @@ public class World {
 	public void startRound() {
 		if (!isRoundActive()) {
 			deadPlayers = 0;
-			createPlayerBodys();
+			createPlayerBodiesAtRandomPos();
 		}
 	}
 
-	private void createPlayerBodys() {
+	private void createPlayerBodiesAtRandomPos() {
 		for (Player player : players) {
 			// TODO - fix so that startpoints is different, and not too close,
 			// for each snake.

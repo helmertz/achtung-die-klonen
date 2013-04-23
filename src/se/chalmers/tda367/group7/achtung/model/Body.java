@@ -21,7 +21,7 @@ public class Body {
 	private float width;
 	private boolean dead;
 	private boolean immortal;
-	private int holeLengthCounter;
+	private int holeLengthCount;
 	private Position holeTmpPos;
 	
 	private Head head;
@@ -43,7 +43,7 @@ public class Body {
 		dead = false;
 		immortal = false;
 		sharpTurnsActivated = false;
-		holeLengthCounter = 0;
+		holeLengthCount = 0;
 		width = DEFAULT_WIDTH;
 		speed = DEFAULT_SPEED;
 		rotationAngleDeg = rotation;
@@ -105,9 +105,9 @@ public class Body {
 			addBodySegment(new BodySegment(new Position(x, y), end, width));
 		} else if (generateRandomHole()) {
 			holeTmpPos = end;
-		} else if (holeLengthCounter > 0) {
+		} else if (holeLengthCount > 0) {
 			addBodySegment(new BodySegment(holeTmpPos, end, width));
-			holeLengthCounter = 0;
+			holeLengthCount = 0;
 		} else {
 			Position start = bodySegments.get(bodySegments.size() - 1).getEnd();
 			addBodySegment(new BodySegment(start, end, width));
@@ -130,31 +130,30 @@ public class Body {
 	
 	private boolean generateRandomHole() {
 		double rand = Math.random();
-		double chansMod = 1;
+		double chanceMod = 1;
 		
 		// This determines the length of the hole. Could be something simpler.
-		if (holeLengthCounter == 1) {
-			chansMod = 1/CHANCE_OF_HOLE;
-		} else if (holeLengthCounter > 1) {
-			chansMod = 0.5/CHANCE_OF_HOLE;
+		if (holeLengthCount == 1) {
+			chanceMod = 1/CHANCE_OF_HOLE;
+		} else if (holeLengthCount > 1) {
+			chanceMod = 0.5/CHANCE_OF_HOLE;
 		}
 		// Determine if there should be a hole.
-		if (rand <= CHANCE_OF_HOLE*chansMod) {
-			holeLengthCounter++;
+		if (rand <= CHANCE_OF_HOLE*chanceMod) {
+			holeLengthCount++;
 			return true;
 		}
 		return false;
 	}
 	
 	public boolean isGeneratingHole() {
-		return holeLengthCounter != 0;
+		return holeLengthCount != 0;
 	}
 
 	public float getWidth() {
 		return width;
 	}
 	
-
 	/**
 	 * Adds a power up to the player. When the player collides with a PowerUpEntity
 	 * it will receive an effect using this method.
