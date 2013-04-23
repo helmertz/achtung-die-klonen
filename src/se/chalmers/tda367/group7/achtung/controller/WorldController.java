@@ -23,9 +23,13 @@ public class WorldController implements InputListener {
 			if(i == 0) {
 				pc.setLeftKey(Keyboard.KEY_LEFT);
 				pc.setRightKey(Keyboard.KEY_RIGHT);
-			} else {
+			} else if (i == 1){
 				pc.setLeftKey(Keyboard.KEY_A);
 				pc.setRightKey(Keyboard.KEY_D);
+			} else {
+				pc.setLeftKey(Keyboard.KEY_1);
+				pc.setRightKey(Keyboard.KEY_2);
+				
 			}
 			i++;
 			playerControllers.add(pc);

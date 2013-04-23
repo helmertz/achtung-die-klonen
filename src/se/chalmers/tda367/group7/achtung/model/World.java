@@ -39,6 +39,10 @@ public class World {
 		p2.setBody(BodyFactory.getBody(1000, 1000));
 		addPlayer(p2);
 		
+		Player p3 = new Player("Player 3", Color.GREEN);
+		p3.setBody(BodyFactory.getBody(1000, 1000));
+		addPlayer(p3);
+		
 		powerUpEntities.add(new PowerUpEntity(new Position(100,100), 50, new ThinPowerUp()));
 	}
 
@@ -56,6 +60,10 @@ public class World {
 	private void updatePlayers() {
 		for (Player player : players) {
 			player.update();
+			
+			if(player.getBody().isDead()) {
+				continue;
+			}
 			
 			if (doesPlayerCollide(player)) {
 				killPlayerAndDistributePoints(player);
