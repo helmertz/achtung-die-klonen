@@ -2,8 +2,6 @@ package se.chalmers.tda367.group7.achtung.rendering.lwjgl;
 
 import java.io.IOException;
 
-import org.lwjgl.opengl.GL11;
-
 import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.rendering.Image;
 

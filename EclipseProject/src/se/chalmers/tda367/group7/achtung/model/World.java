@@ -1,9 +1,8 @@
 package se.chalmers.tda367.group7.achtung.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-
-import se.chalmers.tda367.group7.achtung.model.powerups.*;
 
 /**
  * Class containing the data for a game currently playing.
@@ -21,6 +20,11 @@ public class World {
 	// Color represents the background color of the world. Could potentially be
 	// changed by powerups
 	private Color color;
+	
+	// TODO figure out a good constant here
+	private static final float DEFAULT_POWERUP_CHANCE = 0.01f;
+	
+	private float powerUpChance;
 
 	public World(int width, int height) {
 		this.width = width;
@@ -30,6 +34,8 @@ public class World {
 		powerUpEntities = new ArrayList<PowerUpEntity>();
 
 		color = new Color(0x0a0a0a);
+		
+		powerUpChance = DEFAULT_POWERUP_CHANCE;
 		
 		// Hardcoded in at the moment
 		Player p1 = new Player("Player 1", Color.BLUE);
@@ -43,9 +49,7 @@ public class World {
 		p3.setBody(BodyFactory.getBody(1000, 1000));
 		addPlayer(p3);
 		createPlayerBodiesAtRandomPos();
-		
-		powerUpEntities.add(new PowerUpEntity(new Position(100,100), 50, new ThinPowerUp()));
-	}
+			}
 
 	public void addPlayer(Player p) {
 		players.add(p);
@@ -54,8 +58,10 @@ public class World {
 	public void update() {
 		if (isRoundActive()) {
 			updatePlayers();
+			if (Math.random() <= powerUpChance) {
+				powerUpEntities.add(PowerUpEntity.getRandomEntity(width, height));
+			}
 		}
-		// TODO - implement random power up placement.
 	}
 
 	private void updatePlayers() {
@@ -69,31 +75,48 @@ public class World {
 			if (doesPlayerCollide(player)) {
 				killPlayerAndDistributePoints(player);
 			}
-			if(doesPlayerCollideWithPowerUp(player)) {
-				System.out.println("collided with powerup");
+
+			// Checks if player collides with a power-up in the world
+			// Using explicit iterator since an entity itself will be removed
+			// from inside the loop
+			Iterator<PowerUpEntity> iterator = powerUpEntities.iterator();
+			while (iterator.hasNext()) {
+				PowerUpEntity powerUp = iterator.next();
+				if (powerUpCollide(player, powerUp)) {
+					distributePowerup(player, powerUp);
+					
+					// Removes the entity from the list
+					iterator.remove();
+				}
 			}
 		}
 	}
 
-	private boolean doesPlayerCollideWithPowerUp(Player player) {
-		for(PowerUpEntity powerUp : powerUpEntities) {
-			float headX = player.getBody().getHead().getPosition().getX();
-			float headY = player.getBody().getHead().getPosition().getY();
-			float headDiam = player.getBody().getWidth();
+	private boolean powerUpCollide(Player player, PowerUpEntity powerUp) {
+		Head head = player.getBody().getHead();
+		
+		float headDiam = player.getBody().getWidth();
+		float powDiam = powerUp.getDiameter();
 
-			float powX = powerUp.getPosition().getX();
-			float powY = powerUp.getPosition().getY();
-			float powDiam = powerUp.getDiameter();
-			
-			// Use pythogorean theorem to calculate the distance between the two points,
-			// then compare that to the radiuses.
-			if(Math.sqrt(Math.pow(headX - powX, 2) + Math.pow(headY - powY, 2)) < (powDiam/2) + (headDiam/2)) {		
-				player.getBody().addPowerUp(powerUp.getPlayerPowerUpEffect());
-				removePowerUpEntityFromWorld(powerUp);
-				return true;
+		return head.getPosition().distanceFrom(powerUp.getPosition()) < (powDiam / 2)
+				+ (headDiam / 2);
+	}
+	
+	private void distributePowerup(Player pickedUpByPlayer, PowerUpEntity powerUp) {
+		if (powerUp.getType() == PowerUpEntity.Type.SELF) {
+			pickedUpByPlayer.getBody().addPowerUp(powerUp.getPlayerPowerUpEffect());
+		} else if (powerUp.getType() == PowerUpEntity.Type.EVERYONE) {
+			for (Player p : players) {
+				p.getBody().addPowerUp(powerUp.getPlayerPowerUpEffect());
+			}
+		} else {
+			for (Player p : players) {
+				if (p != pickedUpByPlayer) {
+					p.getBody()
+							.addPowerUp(powerUp.getPlayerPowerUpEffect());
+				}
 			}
 		}
-		return false;
 	}
 
 	private void killPlayerAndDistributePoints(Player player) {
@@ -180,6 +203,7 @@ public class World {
 		if (!isRoundActive()) {
 			deadPlayers = 0;
 			createPlayerBodiesAtRandomPos();
+			powerUpEntities.clear();
 		}
 	}
 
@@ -230,10 +254,6 @@ public class World {
 
 	public List<PowerUpEntity> getPowerUpEntities() {
 		return powerUpEntities;
-	}
-	
-	private void removePowerUpEntityFromWorld(PowerUpEntity entity) {
-		powerUpEntities.remove(entity);
 	}
 
 	public Color getColor() {

@@ -34,6 +34,7 @@ public class WorldView implements View {
 		
 		renderer.drawFilledRect(0, 0, world.getWidth(), world.getHeight(), world.getColor());
 
+		// TODO only call this when an event from world is sent
 		updatePowerUpViews();
 
 		for (View view : playerViews) {
