@@ -75,21 +75,13 @@ public class PowerUpEntity {
 		return true;
 	}
 
-	public static PowerUpEntity getRandomEntity(float worldWidth, float worldHeight) {
-		
-		// Gets a random effect
-		PlayerPowerUpEffect effect = PlayerPowerUpEffect.effects[(int)(PlayerPowerUpEffect.effects.length*Math.random())];
 
-		// TODO narrow this down more
-		Position randPos = Position.getRandomPosition(0, worldWidth, 0, worldHeight);
-	
-		Type type = Type.values()[(int) (Type.values().length*Math.random())];
-		
-		PowerUpEntity entity = new PowerUpEntity(randPos, DEFAULT_DIAMETER, effect, type);
-		return entity;
-	}
 
 	public Type getType() {
 		return type;
+	}
+
+	public static float getDefaultDiameter() {
+		return DEFAULT_DIAMETER;
 	}
 }
