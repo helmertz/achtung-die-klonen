@@ -40,7 +40,6 @@ public class LWJGLImage implements Image {
 	@Override
 	protected void finalize() throws Throwable {
 		super.finalize();
-		System.out.println("removing " + texID);
 		glDeleteTextures(texID);
 	}
 }
