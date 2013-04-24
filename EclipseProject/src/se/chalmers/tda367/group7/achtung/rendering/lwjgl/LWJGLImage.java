@@ -2,6 +2,8 @@ package se.chalmers.tda367.group7.achtung.rendering.lwjgl;
 
 import java.io.IOException;
 
+import static org.lwjgl.opengl.GL11.*;
+
 import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.rendering.Image;
 
@@ -35,4 +37,10 @@ public class LWJGLImage implements Image {
 		drawImage(x - width / 2, y - height / 2, width, height, color);
 	}
 
+	@Override
+	protected void finalize() throws Throwable {
+		super.finalize();
+		System.out.println("removing " + texID);
+		glDeleteTextures(texID);
+	}
 }
