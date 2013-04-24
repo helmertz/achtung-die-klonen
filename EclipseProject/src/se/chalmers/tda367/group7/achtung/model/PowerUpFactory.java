@@ -6,7 +6,7 @@ public class PowerUpFactory {
 
 	private PowerUpFactory() {}
 	
-	public static PowerUpEntity getRandomEntity(float worldWidth, float worldHeight, float f) {
+	public static PowerUpEntity getRandomEntity(float worldWidth, float worldHeight) {
 		
 		// Gets a random effect
 		PlayerPowerUpEffect effect = PlayerPowerUpEffect.effects[(int)(PlayerPowerUpEffect.effects.length*Math.random())];
