@@ -49,7 +49,7 @@ public class World {
 		p3.setBody(BodyFactory.getBody(1000, 1000));
 		addPlayer(p3);
 		createPlayerBodiesAtRandomPos();
-			}
+		}
 
 	public void addPlayer(Player p) {
 		players.add(p);
@@ -74,7 +74,7 @@ public class World {
 			
 			if (doesPlayerCollide(player)) {
 				killPlayer(player);
-				distributePoints(player);
+				distributePoints();
 			}
 
 			// Checks if player collides with a power-up in the world
@@ -91,18 +91,25 @@ public class World {
 				}
 			}
 		}
+		
+		if(isOnePlayerLeft()) {
+			killRemainingPlayers();
+		}
+	}
+	
+	private void killPlayer(Player player) {
+		player.getBody().kill();
+		if (player.getBody().isDead()) {
+			deadPlayers++;	
+		}
 	}
 
-	private void distributePoints(Player player) {
+	private void distributePoints() {
 		for (Player p : players) {
 			if (!p.getBody().isDead()) {
 				p.addPoints(1);
 			}
 		}	
-		
-		if(isOnePlayerLeft()) {
-			killRemainingPlayers();
-		}
 	}
 
 	private boolean isOnePlayerLeft() {
@@ -142,14 +149,6 @@ public class World {
 				}
 			}
 		}
-	}
-
-	private void killPlayer(Player player) {
-		player.getBody().kill();
-		if (player.getBody().isDead()) {
-			deadPlayers++;	
-		}
-			
 	}
 
 	private boolean doesPlayerCollide(Player player) {
