@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 
+import se.chalmers.tda367.group7.achtung.model.Color;
+
 import de.matthiasmann.twl.utils.PNGDecoder;
 import de.matthiasmann.twl.utils.PNGDecoder.Format;
 
@@ -60,11 +62,18 @@ public class Utils {
 	// draws the texture, where x and y is the location of the top right corner
 	static void drawTexture(int texID, float x, float y, float width,
 			float height) {
+		drawTexture(texID, x, y, width, height, Color.WHITE);
+	}
+	
+	// draws the texture, where x and y is the location of the top right corner
+	static void drawTexture(int texID, float x, float y, float width,
+			float height, Color color) {
 		glEnable(GL_TEXTURE_2D);
 
 		glBindTexture(GL_TEXTURE_2D, texID);
 
-		glColor3f(1, 1, 1);
+		glColor4f(color.getRed(), color.getGreen(), color.getBlue(),
+				color.getAlpha());
 
 		glBegin(GL_QUADS);
 		glTexCoord2f(0, 0);
