@@ -59,7 +59,7 @@ public class World {
 		if (isRoundActive()) {
 			updatePlayers();
 			if (Math.random() <= powerUpChance) {
-				powerUpEntities.add(PowerUpFactory.getRandomEntity(width, height, PowerUpEntity.getDefaultDiameter()));
+				powerUpEntities.add(PowerUpFactory.getRandomEntity(width, height));
 			}
 		}
 	}
