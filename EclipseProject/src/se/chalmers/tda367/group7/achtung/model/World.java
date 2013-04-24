@@ -73,7 +73,8 @@ public class World {
 			}
 			
 			if (doesPlayerCollide(player)) {
-				killPlayerAndDistributePoints(player);
+				killPlayer(player);
+				distributePoints(player);
 			}
 
 			// Checks if player collides with a power-up in the world
@@ -88,6 +89,30 @@ public class World {
 					// Removes the entity from the list
 					iterator.remove();
 				}
+			}
+		}
+	}
+
+	private void distributePoints(Player player) {
+		for (Player p : players) {
+			if (!p.getBody().isDead()) {
+				p.addPoints(1);
+			}
+		}	
+		
+		if(isOnePlayerLeft()) {
+			killRemainingPlayers();
+		}
+	}
+
+	private boolean isOnePlayerLeft() {
+		return players.size() - deadPlayers < 2;
+	}
+
+	private void killRemainingPlayers() {
+		for (Player p : players) {
+			if (!p.getBody().isDead()) {
+				p.getBody().kill();
 			}
 		}
 	}
@@ -119,25 +144,10 @@ public class World {
 		}
 	}
 
-	private void killPlayerAndDistributePoints(Player player) {
+	private void killPlayer(Player player) {
 		player.getBody().kill();
 		if (player.getBody().isDead()) {
-			deadPlayers++;
-			
-			for (Player p : players) {
-				if (!p.getBody().isDead()) {
-					p.addPoints(1);
-				}
-			}	
-			
-			// Checks if one player remains, and kills him as well
-			if(players.size() - deadPlayers < 2) {
-				for (Player p : players) {
-					if (!p.getBody().isDead()) {
-						p.getBody().kill();
-					}
-				}
-			}	
+			deadPlayers++;	
 		}
 			
 	}

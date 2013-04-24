@@ -29,8 +29,9 @@ public class PositionTest {
 		// complete randomness, have to decide on a number
 		int testIterations = 1000000;
 		double marginError = testIterations * 0.001;
-		List<Position> randomPositions = new ArrayList<Position>();
 		int segmentSplits = 15;
+		
+		List<Position> randomPositions = new ArrayList<Position>();
 
 		// Generate a bunch of positions
 		for(int i = 0; i < testIterations; i++) {
