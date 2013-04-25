@@ -1,6 +1,5 @@
 package se.chalmers.tda367.group7.achtung.model;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,7 +29,7 @@ public class World {
 	
 	// TODO figure out a good constant here
 	private static final float DEFAULT_POWERUP_CHANCE = 0.01f;
-	
+
 	private float powerUpChance;
 
 	public World(int width, int height){
@@ -94,7 +93,7 @@ public class World {
 			while (iterator.hasNext()) {
 				PowerUpEntity powerUp = iterator.next();
 				if (powerUpCollide(player, powerUp)) {
-					pcs.firePropertyChange(powerUp.getType().toString(), false, false);
+					pcs.firePropertyChange(powerUp.getType().toString(), false, true);
 					distributePowerup(player, powerUp);
 					
 					// Removes the entity from the list
