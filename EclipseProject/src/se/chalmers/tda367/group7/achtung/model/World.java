@@ -1,8 +1,12 @@
 package se.chalmers.tda367.group7.achtung.model;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import se.chalmers.tda367.group7.achtung.sound.Sound;
 
 /**
  * Class containing the data for a game currently playing.
@@ -17,6 +21,9 @@ public class World {
 	
 	private int deadPlayers = 0;
 	
+	private PropertyChangeSupport pcs;
+	private Sound sound;
+	
 	// Color represents the background color of the world. Could potentially be
 	// changed by powerups
 	private Color color;
@@ -26,12 +33,16 @@ public class World {
 	
 	private float powerUpChance;
 
-	public World(int width, int height) {
+	public World(int width, int height){
 		this.width = width;
 		this.height = height;
 
 		players = new ArrayList<Player>();
 		powerUpEntities = new ArrayList<PowerUpEntity>();
+		
+		this.pcs = new PropertyChangeSupport(this);
+		this.sound = new Sound();
+		this.pcs.addPropertyChangeListener(sound);
 
 		color = new Color(0x0a0a0a);
 		
@@ -83,6 +94,7 @@ public class World {
 			while (iterator.hasNext()) {
 				PowerUpEntity powerUp = iterator.next();
 				if (powerUpCollide(player, powerUp)) {
+					pcs.firePropertyChange(powerUp.getType().toString(), false, false);
 					distributePowerup(player, powerUp);
 					
 					// Removes the entity from the list
