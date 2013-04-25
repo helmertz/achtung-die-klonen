@@ -7,6 +7,7 @@ import se.chalmers.tda367.group7.achtung.input.LWJGLInputService;
 import se.chalmers.tda367.group7.achtung.model.World;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.LWJGLRenderService;
+import se.chalmers.tda367.group7.achtung.sound.Sound;
 import se.chalmers.tda367.group7.achtung.view.WorldView;
 
 /**
@@ -37,6 +38,7 @@ public class Game {
 	
 	private RenderService renderer;
 	private InputService inputService;
+	private Sound sound;
 
 	private World world;
 	private WorldView worldView;
@@ -54,6 +56,9 @@ public class Game {
 		//TODO: Hard coded here temporarily
 		this.world = new World(1000,1000);
 		this.worldView = new WorldView(world);
+		
+		this.sound = new Sound();
+		world.addPropertyChangeListener(sound);
 		
 		this.worldController = new WorldController(world);
 		
