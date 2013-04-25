@@ -28,7 +28,7 @@ public class CollisionHelper {
 		Body currentBody = player.getBody();
 		Position pos = currentBody.getPosition();
 		
-		if(isPositionOutOfBounds(pos)) {
+		if(isPositionOutOfBounds(player, pos)) {
 			return true;
 		}
 
@@ -47,6 +47,11 @@ public class CollisionHelper {
 			segBeforeLast = playerSegments.get(playerSegments.size() - 2);
 		}
 		
+		return checkCollisionWithOthersSegments(lastSeg, segBeforeLast);
+	}
+
+	private boolean checkCollisionWithOthersSegments(BodySegment lastSeg,
+			BodySegment segBeforeLast) {
 		// Loop through all other players
 		for (Player otherPlayer : activePlayers) {			
 			
@@ -76,8 +81,11 @@ public class CollisionHelper {
 		return playerSegments.isEmpty();
 	}
 	
-	private boolean isPositionOutOfBounds(Position pos) {
-		return (pos.getX() < 0 || pos.getX() > width || pos.getY() < 0 || pos.getY() > height);
+	private boolean isPositionOutOfBounds(Player player, Position pos) {
+		float playerWidth = player.getBody().getWidth(); 
+		
+		// Adding/subtracting by one to not be as harsh
+		return (pos.getX() < 0 + playerWidth - 1 || pos.getX() > width - playerWidth + 1 || pos.getY() < 0 + playerWidth - 1 || pos.getY() > height - playerWidth + 1);
 	}
 	
 }
