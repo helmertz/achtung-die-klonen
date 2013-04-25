@@ -1,7 +1,6 @@
 package se.chalmers.tda367.group7.achtung.model;
 
 import java.awt.Polygon;
-import java.awt.SecondaryLoop;
 
 public class BodySegment {
 	
