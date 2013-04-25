@@ -39,11 +39,11 @@ public class Sound implements PropertyChangeListener{
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propertyName = evt.getPropertyName();
-		if(propertyName.equals("SELF")) {
+		if(propertyName.equals("PowerUpSELF")) {
 			powerupSelf.playAsSoundEffect(1.0f, 1.0f, false);
-		} else if(propertyName.equals("EVERYONE")) {
+		} else if(propertyName.equals("PowerUpEVERYONE")) {
 			powerupEveryone.playAsSoundEffect(1.0f, 1.0f, false);
-		} else if(propertyName.equals("EVERYONE_ELSE"))	{
+		} else if(propertyName.equals("PowerUpEVERYONE_ELSE"))	{
 			powerupEveryoneElse.playAsSoundEffect(1.0f, 1.0f, false);
 		}
 	}

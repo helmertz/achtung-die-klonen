@@ -93,7 +93,7 @@ public class World {
 			while (iterator.hasNext()) {
 				PowerUpEntity powerUp = iterator.next();
 				if (powerUpCollide(player, powerUp)) {
-					pcs.firePropertyChange(powerUp.getType().toString(), false, true);
+					pcs.firePropertyChange("PowerUp" + powerUp.getType().toString(), false, true);
 					distributePowerup(player, powerUp);
 					
 					// Removes the entity from the list
