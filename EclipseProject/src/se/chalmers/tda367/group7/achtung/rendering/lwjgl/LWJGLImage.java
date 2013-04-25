@@ -1,6 +1,8 @@
 package se.chalmers.tda367.group7.achtung.rendering.lwjgl;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -9,12 +11,23 @@ import se.chalmers.tda367.group7.achtung.rendering.Image;
 
 public class LWJGLImage implements Image {
 
+	private static final Map<String, Image> LOADED = new HashMap<String, Image>();
+
 	private int texID;
 
-	public LWJGLImage(String path) throws IOException {
+	private LWJGLImage(String path) throws IOException {
 		this.texID = Utils.loadTexture(path);
 	}
 
+	public static Image getImage(String path) throws IOException {
+		Image image = LOADED.get(path);
+		if (image == null) {
+			image = new LWJGLImage(path);
+			LOADED.put(path, image);
+		}
+		return image;
+	}
+	
 	@Override
 	public void drawImage(float x, float y, float width, float height) {
 		Utils.drawTexture(texID, x, y, width, height);
