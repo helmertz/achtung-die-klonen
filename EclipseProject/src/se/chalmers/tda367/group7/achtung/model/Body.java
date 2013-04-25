@@ -76,7 +76,7 @@ public class Body {
 	}
 
 	private void updatePosition() {
-		turn();
+		doTurn();
 		
 		// Update head with delta positions
 		Position headPosition = head.getPosition();
@@ -113,7 +113,7 @@ public class Body {
 		}
 	}
 	
-	private void turn() {
+	private void doTurn() {
 		
 		if(turnMode == TurnMode.LEFT) {
 			turnLeft();
