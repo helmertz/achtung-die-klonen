@@ -96,7 +96,7 @@ public class World {
 				
 				if (collisionHelper.playerCollidedWithPowerUp(player, powerUp)) {
 					iterator.remove();
-					distributePowerup(player, powerUp);
+					distributePowerUp(player, powerUp);
 				}
 			}
 		}
@@ -129,7 +129,7 @@ public class World {
 		}
 	}
 
-	private void distributePowerup(Player pickedUpByPlayer, PowerUpEntity powerUp) {
+	private void distributePowerUp(Player pickedUpByPlayer, PowerUpEntity powerUp) {
 		Type powerUpType = powerUp.getType();
 		PlayerPowerUpEffect effect = powerUp.getPlayerPowerUpEffect();
 		
@@ -138,7 +138,7 @@ public class World {
 		} else if (powerUpType == PowerUpEntity.Type.EVERYONE) {
 			addPowerUpToEveryone(effect);
 		} else {
-			addPowerupToOthers(pickedUpByPlayer, effect);
+			addPowerUpToOthers(pickedUpByPlayer, effect);
 		}
 	}
 
@@ -152,7 +152,7 @@ public class World {
 		}
 	}
 
-	private void addPowerupToOthers(Player pickedUpByPlayer,
+	private void addPowerUpToOthers(Player pickedUpByPlayer,
 			PlayerPowerUpEffect effect) {
 		for (Player p : players) {
 			if (p != pickedUpByPlayer) {
