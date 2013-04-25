@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
+
 /**
  * Class containing the data for a game currently playing.
  */
@@ -74,29 +76,29 @@ public class World {
 			if(player.getBody().isDead()) {
 				continue;
 			}
-			
-			if (collisionHelper.doesPlayerCollide(player)) {
-				killPlayer(player);
-				distributePoints();
-			}
-
-			// Checks if player collides with a power-up in the world
-			// Using explicit iterator since an entity itself will be removed
-			// from inside the loop
-			Iterator<PowerUpEntity> iterator = powerUpEntities.iterator();
-			while (iterator.hasNext()) {
-				PowerUpEntity powerUp = iterator.next();
-				if (collisionHelper.powerUpCollide(player, powerUp)) {
-					distributePowerup(player, powerUp);
-					
-					// Removes the entity from the list
-					iterator.remove();
-				}
-			}
+			handleCollisions(player);
 		}
 		
 		if(isOnePlayerLeft()) {
 			killRemainingPlayers();
+		}
+	}
+
+	private void handleCollisions(Player player) {
+		if (collisionHelper.playerHasCollidedWithOthers(player)) {
+			killPlayer(player);
+			distributePoints();
+		} else {
+			Iterator<PowerUpEntity> iterator = powerUpEntities.iterator();
+			
+			while (iterator.hasNext()) {
+				PowerUpEntity powerUp = iterator.next();
+				
+				if (collisionHelper.playerCollidedWithPowerUp(player, powerUp)) {
+					iterator.remove();
+					distributePowerup(player, powerUp);
+				}
+			}
 		}
 	}
 	
@@ -127,21 +129,34 @@ public class World {
 		}
 	}
 
-
-	
 	private void distributePowerup(Player pickedUpByPlayer, PowerUpEntity powerUp) {
-		if (powerUp.getType() == PowerUpEntity.Type.SELF) {
-			pickedUpByPlayer.getBody().addPowerUp(powerUp.getPlayerPowerUpEffect());
-		} else if (powerUp.getType() == PowerUpEntity.Type.EVERYONE) {
-			for (Player p : players) {
-				p.getBody().addPowerUp(powerUp.getPlayerPowerUpEffect());
-			}
+		Type powerUpType = powerUp.getType();
+		PlayerPowerUpEffect effect = powerUp.getPlayerPowerUpEffect();
+		
+		if (powerUpType == PowerUpEntity.Type.SELF) {
+			addPowerUpToSelf(pickedUpByPlayer, effect);
+		} else if (powerUpType == PowerUpEntity.Type.EVERYONE) {
+			addPowerUpToEveryone(effect);
 		} else {
-			for (Player p : players) {
-				if (p != pickedUpByPlayer) {
-					p.getBody()
-							.addPowerUp(powerUp.getPlayerPowerUpEffect());
-				}
+			addPowerupToOthers(pickedUpByPlayer, effect);
+		}
+	}
+
+	private void addPowerUpToSelf(Player player, PlayerPowerUpEffect effect) {
+		player.getBody().addPowerUp(effect);
+	}
+
+	private void addPowerUpToEveryone(PlayerPowerUpEffect effect) {
+		for (Player p : players) {
+			p.getBody().addPowerUp(effect);
+		}
+	}
+
+	private void addPowerupToOthers(Player pickedUpByPlayer,
+			PlayerPowerUpEffect effect) {
+		for (Player p : players) {
+			if (p != pickedUpByPlayer) {
+				p.getBody().addPowerUp(effect);
 			}
 		}
 	}

@@ -14,7 +14,7 @@ public class CollisionHelper {
 		this.height = height;
 	}
 
-	boolean powerUpCollide(Player player, PowerUpEntity powerUp) {
+	boolean playerCollidedWithPowerUp(Player player, PowerUpEntity powerUp) {
 		Head head = player.getBody().getHead();
 		
 		float headDiam = player.getBody().getWidth();
@@ -24,7 +24,7 @@ public class CollisionHelper {
 				+ (headDiam / 2);
 	}
 	
-	boolean doesPlayerCollide(Player player) {
+	boolean playerHasCollidedWithOthers(Player player) {
 		Body currentBody = player.getBody();
 		Position pos = currentBody.getPosition();
 		
