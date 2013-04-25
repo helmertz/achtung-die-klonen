@@ -8,43 +8,49 @@ import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
-public class Sound implements PropertyChangeListener{
+public class Sound implements PropertyChangeListener {
 
-	private Audio powerupSelf;
-	private Audio powerupEveryoneElse;
-	private Audio powerupEveryone;
+	private Audio powerUpSelf;
+	private Audio powerUpEveryoneElse;
+	private Audio powerUpEveryone;
+	private Audio playerDied;
 
 	public Sound() {
 		init();
 	}
-	
+
 	public void init() {
 
 		try {
 
-			powerupSelf = AudioLoader.getAudio("WAV", ResourceLoader
+			powerUpSelf = AudioLoader.getAudio("WAV", ResourceLoader
 					.getResourceAsStream("res/sounds/powerup4.wav"));
 
-			powerupEveryoneElse = AudioLoader.getAudio("WAV", ResourceLoader
+			powerUpEveryoneElse = AudioLoader.getAudio("WAV", ResourceLoader
 					.getResourceAsStream("res/sounds/powerup2.wav"));
 
-			powerupEveryone = AudioLoader.getAudio("WAV", ResourceLoader
+			powerUpEveryone = AudioLoader.getAudio("WAV", ResourceLoader
 					.getResourceAsStream("res/sounds/powerup3.wav"));
+
+			playerDied = AudioLoader.getAudio("WAV", ResourceLoader
+					.getResourceAsStream("res/sounds/powerup1.wav"));
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propertyName = evt.getPropertyName();
-		if(propertyName.equals("PowerUpSELF")) {
-			powerupSelf.playAsSoundEffect(1.0f, 1.0f, false);
-		} else if(propertyName.equals("PowerUpEVERYONE")) {
-			powerupEveryone.playAsSoundEffect(1.0f, 1.0f, false);
-		} else if(propertyName.equals("PowerUpEVERYONE_ELSE"))	{
-			powerupEveryoneElse.playAsSoundEffect(1.0f, 1.0f, false);
+		if (propertyName.equals("PowerUpSELF")) {
+			powerUpSelf.playAsSoundEffect(1.0f, 1.0f, false);
+		} else if (propertyName.equals("PowerUpEVERYONE")) {
+			powerUpEveryone.playAsSoundEffect(1.0f, 1.0f, false);
+		} else if (propertyName.equals("PowerUpEVERYONE_ELSE")) {
+			powerUpEveryoneElse.playAsSoundEffect(1.0f, 1.0f, false);
+		} else if (propertyName.equals("PlayerDied")) {
+			playerDied.playAsSoundEffect(1.0f, 1.0f, false);
 		}
 	}
 }

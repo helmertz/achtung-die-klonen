@@ -83,6 +83,7 @@ public class World {
 			}
 			
 			if (doesPlayerCollide(player)) {
+				pcs.firePropertyChange("PlayerDied", false, true);
 				killPlayerAndDistributePoints(player);
 			}
 
