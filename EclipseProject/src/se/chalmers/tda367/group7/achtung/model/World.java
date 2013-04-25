@@ -14,6 +14,7 @@ public class World {
 	
 	private List<Player> players;
 	private List<PowerUpEntity> powerUpEntities;
+	private CollisionHelper collisionHelper;
 	
 	private int deadPlayers = 0;
 	
@@ -49,7 +50,9 @@ public class World {
 		p3.setBody(BodyFactory.getBody(1000, 1000));
 		addPlayer(p3);
 		createPlayerBodiesAtRandomPos();
-		}
+		
+		collisionHelper = new CollisionHelper(width, height, players);
+	}
 
 	public void addPlayer(Player p) {
 		players.add(p);
@@ -72,7 +75,7 @@ public class World {
 				continue;
 			}
 			
-			if (doesPlayerCollide(player)) {
+			if (collisionHelper.doesPlayerCollide(player)) {
 				killPlayer(player);
 				distributePoints();
 			}
@@ -83,7 +86,7 @@ public class World {
 			Iterator<PowerUpEntity> iterator = powerUpEntities.iterator();
 			while (iterator.hasNext()) {
 				PowerUpEntity powerUp = iterator.next();
-				if (powerUpCollide(player, powerUp)) {
+				if (collisionHelper.powerUpCollide(player, powerUp)) {
 					distributePowerup(player, powerUp);
 					
 					// Removes the entity from the list
@@ -124,15 +127,7 @@ public class World {
 		}
 	}
 
-	private boolean powerUpCollide(Player player, PowerUpEntity powerUp) {
-		Head head = player.getBody().getHead();
-		
-		float headDiam = player.getBody().getWidth();
-		float powDiam = powerUp.getDiameter();
 
-		return head.getPosition().distanceFrom(powerUp.getPosition()) < (powDiam / 2)
-				+ (headDiam / 2);
-	}
 	
 	private void distributePowerup(Player pickedUpByPlayer, PowerUpEntity powerUp) {
 		if (powerUp.getType() == PowerUpEntity.Type.SELF) {
@@ -149,53 +144,6 @@ public class World {
 				}
 			}
 		}
-	}
-
-	private boolean doesPlayerCollide(Player player) {
-		Body currentBody = player.getBody();
-		
-		Position pos = currentBody.getPosition();
-		
-		// Checks if out of bounds
-		if(pos.getX() < 0 || pos.getX() > width || pos.getY() < 0 || pos.getY() > height) {
-			return true;
-		}
-
-		// Create coordinates for the last bodysegment
-		// of the player being checked
-		List<BodySegment> playerSegments = currentBody.getBodySegments();
-		if (playerSegments.isEmpty()) {
-			return false;
-		}
-		BodySegment lastSeg = playerSegments.get(playerSegments.size() - 1);
-		
-		BodySegment segBefLast = null;
-		if (playerSegments.size() > 1) {
-			segBefLast = playerSegments.get(playerSegments.size() - 2);
-		}
-		// Loop through all other players
-		for (Player otherPlayer : players) {			
-			
-			List<BodySegment> otherBodySegments = otherPlayer.getBody()
-					.getBodySegments();
-			
-			// Loop through all body segments of the other player
-			// being checked and see if a collision has happened
-			// with either of these
-			for (BodySegment seg : otherBodySegments) {
-				
-				// Allows collision with itself and the one before
-				if (lastSeg == seg || segBefLast == seg) {
-					continue;
-				}
-				
-				if(lastSeg.collidesWith(seg)) {
-					return true;
-				}
-			}
-		}
-		
-		return false;
 	}
 	
 	/**
