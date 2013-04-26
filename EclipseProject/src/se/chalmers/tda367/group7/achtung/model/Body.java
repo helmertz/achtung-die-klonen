@@ -232,6 +232,10 @@ public class Body {
 	public float getRotationAngleDeg() {
 		return rotationAngleDeg;
 	}
+	
+	public float getRotationSpeedDeg() {
+		return rotationSpeedDeg;
+	}
 
 	public float getSpeed() {
 		return speed;
