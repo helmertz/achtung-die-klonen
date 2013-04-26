@@ -3,7 +3,7 @@
 ## Our version of the classical game Achtung, die Kurve
 
 ### Instructions
-Requires LWJGL and PNGDecoder! Before opening project:
+Requires LWJGL, PNGDecoder and slick-util! Before opening project:
 
 1.  Download LWJGL from http://www.lwjgl.org/download.php (select the lwjgl-(version).zip)
 2.  Extract jar files to "lib"
