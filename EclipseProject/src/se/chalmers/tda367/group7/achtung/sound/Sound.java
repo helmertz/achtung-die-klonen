@@ -44,14 +44,18 @@ public class Sound implements PropertyChangeListener {
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propertyName = evt.getPropertyName();
 		
-		if (propertyName.equals("PowerUpSELF")) {
-			powerUpSelf.playAsSoundEffect(1.0f, 1.0f, false);
-		} else if (propertyName.equals("PowerUpEVERYONE")) {
-			powerUpEveryone.playAsSoundEffect(1.0f, 1.0f, false);
-		} else if (propertyName.equals("PowerUpEVERYONE_ELSE")) {
-			powerUpEveryoneElse.playAsSoundEffect(1.0f, 1.0f, false);
-		} else if (propertyName.equals("PlayerDied")) {
-			playerDied.playAsSoundEffect(1.0f, 1.0f, false);
+		if (propertyName.equals("PowerUpSELF")) { 
+			playSound(powerUpSelf);
+		} else if (propertyName.equals("PowerUpEVERYONE")) { 
+			playSound(powerUpEveryone);
+		} else if (propertyName.equals("PowerUpEVERYONE_ELSE")) { 
+			playSound(powerUpEveryoneElse);
+		} else if (propertyName.equals("PlayerDied")) { 
+			playSound(playerDied);
 		}
+	}
+	
+	public void playSound(Audio sound) {
+		sound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
 }
