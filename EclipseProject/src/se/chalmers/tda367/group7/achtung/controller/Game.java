@@ -35,6 +35,8 @@ public class Game {
 	private int dbgGameTickCounter;
 	private String fpsString = "";
 	private String tpsString = "";
+	// Sound enabled
+	private boolean soundEnabled = true;
 	
 	private RenderService renderer;
 	private InputService inputService;
@@ -57,8 +59,10 @@ public class Game {
 		this.world = new World(1000,1000);
 		this.worldView = new WorldView(world);
 		
-		this.sound = new Sound();
-		world.addPropertyChangeListener(sound);
+		if (soundEnabled) {
+			this.sound = new Sound();
+			world.addPropertyChangeListener(sound);
+		}
 		
 		this.worldController = new WorldController(world);
 		
