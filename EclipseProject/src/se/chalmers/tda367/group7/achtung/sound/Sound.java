@@ -55,7 +55,7 @@ public class Sound implements PropertyChangeListener {
 		}
 	}
 	
-	public void playSound(Audio sound) {
+	private void playSound(Audio sound) {
 		sound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
 }
