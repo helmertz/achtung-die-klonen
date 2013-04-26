@@ -29,11 +29,7 @@ public class Body {
 		LEFT, RIGHT, FORWARD
 	}
 	
-	public Body (Position position, float rotation) {		
-		// Width of the body is the same as the diameter of the head.
-		head = new Head(position, width);
-		bodySegments = new ArrayList<BodySegment>();
-		
+	public Body (Position position, float rotation) {
 		dead = false;
 		immortal = false;
 		sharpTurnsActivated = false;
@@ -42,6 +38,11 @@ public class Body {
 		speed = BodyConstants.DEFAULT_SPEED;
 		rotationAngleDeg = rotation;
 		rotationSpeedDeg = BodyConstants.DEFAULT_ROTATION_SPEED;
+		
+
+		// Width of the body is the same as the diameter of the head.
+		head = new Head(position, width);
+		bodySegments = new ArrayList<BodySegment>();
 	}
 	
 	public Head getHead() {
