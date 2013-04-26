@@ -63,6 +63,7 @@ public class Game {
 			this.sound = new Sound();
 			world.addPropertyChangeListener(sound);
 		}
+		world.addPropertyChangeListener(worldView);
 		
 		this.worldController = new WorldController(world);
 		

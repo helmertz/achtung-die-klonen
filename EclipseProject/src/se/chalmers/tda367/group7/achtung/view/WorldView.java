@@ -1,5 +1,8 @@
 package se.chalmers.tda367.group7.achtung.view;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,19 +12,20 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity;
 import se.chalmers.tda367.group7.achtung.model.World;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
-public class WorldView implements View {
+public class WorldView implements View, PropertyChangeListener {
 
 	private List<PlayerView> playerViews = new ArrayList<PlayerView>();
 	private List<PowerUpEntityView> powerUpView = new ArrayList<PowerUpEntityView>();
 	private World world;
+	private PropertyChangeSupport pcs;
 	
 	public WorldView(World world) {
 		this.world = world;
 		for(Player p : world.getPlayers()) {
 			playerViews.add(new PlayerView(p));
 		}
-		
-//		updatePowerUpViews();
+
+		//		updatePowerUpViews();
 		
 	}
 	
@@ -35,7 +39,7 @@ public class WorldView implements View {
 		renderer.drawFilledRect(0, 0, world.getWidth(), world.getHeight(), world.getColor());
 
 		// TODO only call this when an event from world is sent
-		updatePowerUpViews();
+		//updatePowerUpViews();
 
 		for (View view : playerViews) {
 			view.render(renderer, interpolation);
@@ -57,6 +61,13 @@ public class WorldView implements View {
 			for(PowerUpEntity e : world.getPowerUpEntities()) {
 				powerUpView.add(new PowerUpEntityView(e));
 			}
+		}
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if(evt.getPropertyName().equals("PowerUp")) {
+			updatePowerUpViews();
 		}
 	}
 }

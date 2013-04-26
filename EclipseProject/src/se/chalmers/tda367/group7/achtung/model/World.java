@@ -71,6 +71,7 @@ public class World {
 			updatePlayers();
 			if (Math.random() <= powerUpChance) {
 				powerUpEntities.add(PowerUpFactory.getRandomEntity(width, height));
+				pcs.firePropertyChange("PowerUp", false, true);
 			}
 		}
 	}
@@ -106,6 +107,7 @@ public class World {
 					iterator.remove();
 					distributePowerUp(player, powerUp);
 					pcs.firePropertyChange("PowerUp" + powerUp.getType().toString(), false, true);
+					pcs.firePropertyChange("PowerUp", false, true);
 				}
 			}
 		}
