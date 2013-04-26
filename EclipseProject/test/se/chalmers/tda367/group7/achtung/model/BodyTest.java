@@ -8,10 +8,29 @@ import org.junit.Test;
 public class BodyTest {
 	
 	private Body b;
+	private Position startPosition;
 	
 	@Before
 	public void createBody() {
-		b = new Body(new Position(20, 50), 0);
+		startPosition = new Position(20, 50);
+		b = new Body(startPosition, 0);
+	}
+	
+	@Test
+	public void testGetHead() {
+		Head head = b.getHead();
+		assertTrue(startPosition.equals(head.getPosition()));
+		assertTrue(BodyConstants.DEFAULT_WIDTH == head.getDiameter());
+	}
+	
+	@Test
+	public void testGetBodySegments() {
+		assertTrue(b.getBodySegments().size() == 0);
+		int updates = 10;
+		for (int i = 0; i < updates; i++) {
+			b.update();
+		}
+		assertTrue(b.getBodySegments().size() == updates);
 	}
 
 	@Test

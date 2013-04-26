@@ -5,7 +5,7 @@ import org.lwjgl.LWJGLException;
 import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.LWJGLRenderService;
 
-public class ExampleUsage {
+public class RenderingTest {
 
 	public static void main(String[] args) {
 		RenderService renderService = null;

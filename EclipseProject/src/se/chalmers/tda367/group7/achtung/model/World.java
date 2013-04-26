@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
+
 /**
  * Class containing the data for a game currently playing.
  */
@@ -16,6 +18,7 @@ public class World {
 	
 	private List<Player> players;
 	private List<PowerUpEntity> powerUpEntities;
+	private CollisionHelper collisionHelper;
 	
 	private int deadPlayers = 0;
 	
@@ -55,7 +58,9 @@ public class World {
 		p3.setBody(BodyFactory.getBody(1000, 1000));
 		addPlayer(p3);
 		createPlayerBodiesAtRandomPos();
-			}
+		
+		collisionHelper = new CollisionHelper(width, height, players);
+	}
 
 	public void addPlayer(Player p) {
 		players.add(p);
@@ -65,7 +70,7 @@ public class World {
 		if (isRoundActive()) {
 			updatePlayers();
 			if (Math.random() <= powerUpChance) {
-				powerUpEntities.add(PowerUpFactory.getRandomEntity(width, height, PowerUpEntity.getDefaultDiameter()));
+				powerUpEntities.add(PowerUpFactory.getRandomEntity(width, height));
 			}
 		}
 	}
@@ -78,123 +83,92 @@ public class World {
 				continue;
 			}
 			
-			if (doesPlayerCollide(player)) {
-				pcs.firePropertyChange("PlayerDied", false, true);
-				killPlayerAndDistributePoints(player);
-			}
+			handleCollisions(player);
+		}
+		
+		if(isOnePlayerLeft()) {
+			killRemainingPlayers();
+		}
+	}
 
-			// Checks if player collides with a power-up in the world
-			// Using explicit iterator since an entity itself will be removed
-			// from inside the loop
+	private void handleCollisions(Player player) {
+		if (collisionHelper.playerHasCollidedWithOthers(player)) {
+			killPlayer(player);
+			distributePoints();
+		} else {
 			Iterator<PowerUpEntity> iterator = powerUpEntities.iterator();
+			
 			while (iterator.hasNext()) {
 				PowerUpEntity powerUp = iterator.next();
-				if (powerUpCollide(player, powerUp)) {
-					pcs.firePropertyChange("PowerUp" + powerUp.getType().toString(), false, true);
-					distributePowerup(player, powerUp);
-					
-					// Removes the entity from the list
+
+				
+				if (collisionHelper.playerCollidedWithPowerUp(player, powerUp)) {
 					iterator.remove();
+					distributePowerUp(player, powerUp);
+					pcs.firePropertyChange("PowerUp" + powerUp.getType().toString(), false, true);
 				}
 			}
 		}
-	}
-
-	private boolean powerUpCollide(Player player, PowerUpEntity powerUp) {
-		Head head = player.getBody().getHead();
-		
-		float headDiam = player.getBody().getWidth();
-		float powDiam = powerUp.getDiameter();
-
-		return head.getPosition().distanceFrom(powerUp.getPosition()) < (powDiam / 2)
-				+ (headDiam / 2);
 	}
 	
-	private void distributePowerup(Player pickedUpByPlayer, PowerUpEntity powerUp) {
-		if (powerUp.getType() == PowerUpEntity.Type.SELF) {
-			pickedUpByPlayer.getBody().addPowerUp(powerUp.getPlayerPowerUpEffect());
-		} else if (powerUp.getType() == PowerUpEntity.Type.EVERYONE) {
-			for (Player p : players) {
-				p.getBody().addPowerUp(powerUp.getPlayerPowerUpEffect());
-			}
-		} else {
-			for (Player p : players) {
-				if (p != pickedUpByPlayer) {
-					p.getBody()
-							.addPowerUp(powerUp.getPlayerPowerUpEffect());
-				}
-			}
-		}
-	}
-
-	private void killPlayerAndDistributePoints(Player player) {
+	private void killPlayer(Player player) {
 		player.getBody().kill();
+		pcs.firePropertyChange("PlayerDied", false, true);
 		if (player.getBody().isDead()) {
-			deadPlayers++;
-			
-			for (Player p : players) {
-				if (!p.getBody().isDead()) {
-					p.addPoints(1);
-				}
-			}	
-			
-			// Checks if one player remains, and kills him as well
-			if(players.size() - deadPlayers < 2) {
-				for (Player p : players) {
-					if (!p.getBody().isDead()) {
-						p.getBody().kill();
-					}
-				}
-			}	
+			deadPlayers++;	
 		}
-			
 	}
 
-	private boolean doesPlayerCollide(Player player) {
-		Body currentBody = player.getBody();
-		
-		Position pos = currentBody.getPosition();
-		
-		// Checks if out of bounds
-		if(pos.getX() < 0 || pos.getX() > width || pos.getY() < 0 || pos.getY() > height) {
-			return true;
-		}
+	private void distributePoints() {
+		for (Player p : players) {
+			if (!p.getBody().isDead()) {
+				p.addPoints(1);
+			}
+		}	
+	}
 
-		// Create coordinates for the last bodysegment
-		// of the player being checked
-		List<BodySegment> playerSegments = currentBody.getBodySegments();
-		if (playerSegments.isEmpty()) {
-			return false;
-		}
-		BodySegment lastSeg = playerSegments.get(playerSegments.size() - 1);
-		
-		BodySegment segBefLast = null;
-		if (playerSegments.size() > 1) {
-			segBefLast = playerSegments.get(playerSegments.size() - 2);
-		}
-		// Loop through all other players
-		for (Player otherPlayer : players) {			
-			
-			List<BodySegment> otherBodySegments = otherPlayer.getBody()
-					.getBodySegments();
-			
-			// Loop through all body segments of the other player
-			// being checked and see if a collision has happened
-			// with either of these
-			for (BodySegment seg : otherBodySegments) {
-				
-				// Allows collision with itself and the one before
-				if (lastSeg == seg || segBefLast == seg) {
-					continue;
-				}
-				
-				if(lastSeg.collidesWith(seg)) {
-					return true;
-				}
+	private boolean isOnePlayerLeft() {
+		return players.size() - deadPlayers < 2;
+	}
+
+	private void killRemainingPlayers() {
+		for (Player p : players) {
+			if (!p.getBody().isDead()) {
+				p.getBody().kill();
 			}
 		}
+	}
+
+	private void distributePowerUp(Player pickedUpByPlayer, PowerUpEntity powerUp) {
+		Type powerUpType = powerUp.getType();
+		PlayerPowerUpEffect effect = powerUp.getPlayerPowerUpEffect();
 		
-		return false;
+		if (powerUpType == PowerUpEntity.Type.SELF) {
+			addPowerUpToSelf(pickedUpByPlayer, effect);
+		} else if (powerUpType == PowerUpEntity.Type.EVERYONE) {
+			addPowerUpToEveryone(effect);
+		} else {
+			addPowerUpToOthers(pickedUpByPlayer, effect);
+		}
+	}
+
+	private void addPowerUpToSelf(Player player, PlayerPowerUpEffect effect) {
+		player.getBody().addPowerUp(effect);
+	}
+
+	private void addPowerUpToEveryone(PlayerPowerUpEffect effect) {
+		for (Player p : players) {
+			p.getBody().addPowerUp(effect);
+		}
+	}
+
+	private void addPowerUpToOthers(Player pickedUpByPlayer,
+			PlayerPowerUpEffect effect) {
+		for (Player p : players) {
+			if (p != pickedUpByPlayer) {
+				p.getBody().addPowerUp(effect);
+			}
+		}
 	}
 	
 	/**

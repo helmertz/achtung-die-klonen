@@ -234,7 +234,7 @@ public class LWJGLRenderService implements RenderService {
 
 	@Override
 	public Image getImage(String path) throws IOException {
-		return new LWJGLImage(path);
+		return LWJGLImage.getImage(path);
 	}
 
 	// Draws a circle, with the center coordinates x and y, as a polygon with

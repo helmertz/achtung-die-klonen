@@ -53,8 +53,8 @@ public interface RenderService {
 	public boolean isActive();
 
 	// From a path to a PNG file (only supported currently) returns an object
-	// that can be used to render the image. Prevent loading same file multiple
-	// times from the outside.
+	// that can be used to render the image. Image width and height should be a
+	// factor of 2.
 	public Image getImage(String path) throws IOException;
 
 	public void drawString(String s, float x, float y, float scale, Color color);

@@ -17,7 +17,7 @@ public class SpeedPowerUp implements PlayerPowerUpEffect {
 
 	@Override
 	public int getDuration() {
-		return 150;
+		return 100;
 	}
 
 	

@@ -8,12 +8,6 @@ import java.util.List;
  * Class representing the physical state of a player.
  */
 public class Body {
-
-	public static final float DEFAULT_WIDTH = 10;
-	public static final float DEFAULT_SPEED = 6;
-	public static final float DEFAULT_ROTATION_SPEED = 6f;
-	private static final double CHANCE_OF_HOLE = 0.015;
-
 	private float speed;
 	private float rotationAngleDeg; // the angle the snake is facing.
 	private float rotationSpeedDeg;	// the angle the snake is turning with.
@@ -35,19 +29,20 @@ public class Body {
 		LEFT, RIGHT, FORWARD
 	}
 	
-	public Body (Position position, float rotation) {		
-		// Width of the body is the same as the diameter of the head.
-		head = new Head(position, width);
-		bodySegments = new ArrayList<BodySegment>();
-		
+	public Body (Position position, float rotation) {
 		dead = false;
 		immortal = false;
 		sharpTurnsActivated = false;
 		holeLengthCount = 0;
-		width = DEFAULT_WIDTH;
-		speed = DEFAULT_SPEED;
+		width = BodyConstants.DEFAULT_WIDTH;
+		speed = BodyConstants.DEFAULT_SPEED;
 		rotationAngleDeg = rotation;
-		rotationSpeedDeg = DEFAULT_ROTATION_SPEED;
+		rotationSpeedDeg = BodyConstants.DEFAULT_ROTATION_SPEED;
+		
+
+		// Width of the body is the same as the diameter of the head.
+		head = new Head(position, width);
+		bodySegments = new ArrayList<BodySegment>();
 	}
 	
 	public Head getHead() {
@@ -82,7 +77,7 @@ public class Body {
 	}
 
 	private void updatePosition() {
-		turn();
+		doTurn();
 		
 		// Update head with delta positions
 		Position headPosition = head.getPosition();
@@ -101,6 +96,11 @@ public class Body {
 		// duplicated variables.
 		
 		Position end = new Position(x + dx, y + dy);
+		
+		createBodySegment(x, y, end);
+	}
+
+	private void createBodySegment(float x, float y, Position end) {
 		if (bodySegments.isEmpty()) {
 			addBodySegment(new BodySegment(new Position(x, y), end, width));
 		} else if (generateRandomHole()) {
@@ -114,7 +114,7 @@ public class Body {
 		}
 	}
 	
-	private void turn() {
+	private void doTurn() {
 		
 		if(turnMode == TurnMode.LEFT) {
 			turnLeft();
@@ -134,12 +134,12 @@ public class Body {
 		
 		// This determines the length of the hole. Could be something simpler.
 		if (holeLengthCount == 1) {
-			chanceMod = 1/CHANCE_OF_HOLE;
+			chanceMod = 1/BodyConstants.CHANCE_OF_HOLE;
 		} else if (holeLengthCount > 1) {
-			chanceMod = 0.5/CHANCE_OF_HOLE;
+			chanceMod = 0.5/BodyConstants.CHANCE_OF_HOLE;
 		}
 		// Determine if there should be a hole.
-		if (rand <= CHANCE_OF_HOLE*chanceMod) {
+		if (rand <= BodyConstants.CHANCE_OF_HOLE*chanceMod) {
 			holeLengthCount++;
 			return true;
 		}
