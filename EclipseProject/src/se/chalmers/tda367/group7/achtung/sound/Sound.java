@@ -16,10 +16,10 @@ public class Sound implements PropertyChangeListener {
 	private Audio playerDied;
 
 	public Sound() {
-		init();
+		initSounds();
 	}
 
-	public void init() {
+	public void initSounds() {
 
 		try {
 
@@ -33,7 +33,7 @@ public class Sound implements PropertyChangeListener {
 					.getResourceAsStream("res/sounds/powerup3.wav"));
 
 			playerDied = AudioLoader.getAudio("WAV", ResourceLoader
-					.getResourceAsStream("res/sounds/powerup1.wav"));
+					.getResourceAsStream("res/sounds/playerdies.wav"));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -43,6 +43,7 @@ public class Sound implements PropertyChangeListener {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propertyName = evt.getPropertyName();
+		
 		if (propertyName.equals("PowerUpSELF")) {
 			powerUpSelf.playAsSoundEffect(1.0f, 1.0f, false);
 		} else if (propertyName.equals("PowerUpEVERYONE")) {

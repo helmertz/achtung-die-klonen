@@ -30,7 +30,7 @@ public class World {
 
 	private float powerUpChance;
 
-	public World(int width, int height){
+	public World(int width, int height) {
 		this.width = width;
 		this.height = height;
 
