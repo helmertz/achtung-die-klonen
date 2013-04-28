@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import se.chalmers.tda367.group7.achtung.model.powerups.FatPowerUp;
+
 public class BodyTest {
 	
 	private Body b;
@@ -31,6 +33,54 @@ public class BodyTest {
 			b.update();
 		}
 		assertTrue(b.getBodySegments().size() == updates);
+	}
+	
+	@Test
+	public void testGetWidht() {
+		assertTrue(b.getWidth() == BodyConstants.DEFAULT_WIDTH);
+	}
+	
+	@Test
+	public void testAddPowerUp() {
+		PlayerPowerUpEffect effect = new FatPowerUp(); 
+		float widthBefore = b.getWidth();
+		
+		b.addPowerUp(effect);
+		
+		assertTrue(b.getWidth() == 2*widthBefore);
+		
+	}
+	
+	@Test
+	public void testSetWidth () {
+		float width = 54721; 
+		b.setWidth(width);
+		
+		assertTrue(b.getWidth() == width);
+	}
+	
+	@Test
+	public void testIsDead() {
+		assertFalse(b.isDead());
+	}
+	
+	@Test
+	public void testKill() {
+		b.kill();
+		assertTrue(b.isDead());
+	}
+	
+	@Test
+	public void testSetImmortal() {
+		b.setImmortal(true);
+		assertTrue(b.isImmortal());
+		b.kill();
+		assertFalse(b.isDead());
+		
+		b.setImmortal(false);
+		assertFalse(b.isImmortal());
+		b.kill();
+		assertTrue(b.isDead());
 	}
 
 	@Test
