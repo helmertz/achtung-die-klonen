@@ -2,7 +2,6 @@ package se.chalmers.tda367.group7.achtung.view;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,6 @@ public class WorldView implements View, PropertyChangeListener {
 	private List<PlayerView> playerViews = new ArrayList<PlayerView>();
 	private List<PowerUpEntityView> powerUpView = new ArrayList<PowerUpEntityView>();
 	private World world;
-	private PropertyChangeSupport pcs;
 	
 	public WorldView(World world) {
 		this.world = world;

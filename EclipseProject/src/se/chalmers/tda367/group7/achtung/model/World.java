@@ -132,7 +132,7 @@ public class World {
 	private boolean isOnePlayerLeft() {
 		return players.size() - deadPlayers < 2;
 	}
-
+	
 	private void killRemainingPlayers() {
 		for (Player p : players) {
 			if (!p.getBody().isDead()) {
@@ -188,6 +188,7 @@ public class World {
 			deadPlayers = 0;
 			createPlayerBodiesAtRandomPos();
 			powerUpEntities.clear();
+			pcs.firePropertyChange("PowerUp", false, true);
 		}
 	}
 
