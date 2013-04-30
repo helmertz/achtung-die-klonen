@@ -24,6 +24,8 @@ public class Body {
 	private TurnMode turnMode;
 	private boolean sharpTurnsActivated;
 	
+	private boolean generatingBodySegments;
+	
 	// TODO better names
 	public enum TurnMode {
 		LEFT, RIGHT, FORWARD
@@ -38,8 +40,8 @@ public class Body {
 		speed = BodyConstants.DEFAULT_SPEED;
 		rotationAngleDeg = rotation;
 		rotationSpeedDeg = BodyConstants.DEFAULT_ROTATION_SPEED;
+		generatingBodySegments = true;
 		
-
 		// Width of the body is the same as the diameter of the head.
 		head = new Head(position, width);
 		bodySegments = new ArrayList<BodySegment>();
@@ -97,7 +99,9 @@ public class Body {
 		
 		Position end = new Position(x + dx, y + dy);
 		
-		createBodySegment(x, y, end);
+		if(generatingBodySegments) {
+			createBodySegment(x, y, end);
+		}
 	}
 
 	private void createBodySegment(float x, float y, Position end) {
@@ -247,5 +251,13 @@ public class Body {
 	
 	public void setSharpTurns(boolean sharpTurns) {
 		this.sharpTurnsActivated = sharpTurns;
+	}
+
+	public boolean isGeneratingBodySegments() {
+		return generatingBodySegments;
+	}
+
+	public void setGeneratingBodySegments(boolean generatingBodySegments) {
+		this.generatingBodySegments = generatingBodySegments;
 	}
 }

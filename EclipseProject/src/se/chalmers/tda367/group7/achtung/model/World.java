@@ -16,6 +16,8 @@ public class World {
 	private final int width;
 	private final int height;
 	
+	private boolean wallsAreActive;
+	
 	private List<Player> players;
 	private List<PowerUpEntity> powerUpEntities;
 	private CollisionHelper collisionHelper;
@@ -45,6 +47,7 @@ public class World {
 		color = new Color(0x0a0a0a);
 		
 		powerUpChance = DEFAULT_POWERUP_CHANCE;
+		wallsAreActive = true;
 		
 		// Hardcoded in at the moment
 		Player p1 = new Player("Player 1", Color.BLUE);
@@ -83,7 +86,9 @@ public class World {
 			if(player.getBody().isDead()) {
 				continue;
 			}
-			
+			// TODO: don't do this if player is immortal, 
+			// but must still be able to go through walls
+			// (which is done in CollisionHelper as of writing this)
 			handleCollisions(player);
 		}
 		
@@ -93,7 +98,7 @@ public class World {
 	}
 
 	private void handleCollisions(Player player) {
-		if (collisionHelper.playerHasCollidedWithOthers(player)) {
+		if (collisionHelper.playerHasCollidedWithOthers(player, wallsAreActive)) {
 			killPlayer(player);
 			distributePoints();
 		} else {
@@ -142,8 +147,29 @@ public class World {
 	}
 
 	private void distributePowerUp(Player pickedUpByPlayer, PowerUpEntity powerUp) {
+		PowerUpEffect effect = powerUp.getPowerUpEffect();
+		
+		// TODO: this is probably not the best way of doing this
+		if(effect instanceof PlayerPowerUpEffect) {
+			distributePlayerEffect(pickedUpByPlayer, powerUp);
+		} else if(effect instanceof WorldPowerUpEffect) {
+			distributeWorldEffect(powerUp);
+		}
+	}
+
+	private void distributeWorldEffect(PowerUpEntity powerUp) {
+		WorldPowerUpEffect effect = (WorldPowerUpEffect)powerUp.getPowerUpEffect();
+		effect.applyEffect(this);
+	}
+
+	/**
+	 * @pre The effect in powerUp is a PlayerPowerUpEffect.
+	 * @param powerUp The effect to be applied.
+	 */
+	private void distributePlayerEffect(Player pickedUpByPlayer,
+			PowerUpEntity powerUp) {
 		Type powerUpType = powerUp.getType();
-		PlayerPowerUpEffect effect = powerUp.getPlayerPowerUpEffect();
+		PlayerPowerUpEffect effect = (PlayerPowerUpEffect)powerUp.getPowerUpEffect();
 		
 		if (powerUpType == PowerUpEntity.Type.SELF) {
 			addPowerUpToSelf(pickedUpByPlayer, effect);
@@ -247,5 +273,9 @@ public class World {
 
 	public Color getColor() {
 		return this.color;
+	}
+
+	public void setWallsActive(boolean wallsActive) {
+		this.wallsAreActive = wallsActive;
 	}
 }

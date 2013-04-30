@@ -4,7 +4,7 @@ public class PowerUpEntity {
 	
 	private final Position position;
 	private final float diameter;
-	private final PlayerPowerUpEffect playerPowerUpEffect;
+	private final PowerUpEffect powerUpEffect;
 	private Type type;
 	private static final float DEFAULT_DIAMETER = 40;
 	
@@ -13,10 +13,10 @@ public class PowerUpEntity {
 	}
 	
 	public PowerUpEntity(Position position, float diameter,
-			PlayerPowerUpEffect playerPowerUpEffect, Type type) {
+			PowerUpEffect powerUpEffect, Type type) {
 		this.position = position;
 		this.diameter = diameter;
-		this.playerPowerUpEffect = playerPowerUpEffect;
+		this.powerUpEffect = powerUpEffect;
 		this.type = type;
 	}
 
@@ -28,8 +28,8 @@ public class PowerUpEntity {
 		return diameter;
 	}
 
-	public PlayerPowerUpEffect getPlayerPowerUpEffect() {
-		return playerPowerUpEffect;
+	public PowerUpEffect getPowerUpEffect() {
+		return powerUpEffect;
 	}
 
 
@@ -40,7 +40,7 @@ public class PowerUpEntity {
 		result = prime * result + Float.floatToIntBits(diameter);
 		result = prime
 				* result
-				+ ((playerPowerUpEffect == null) ? 0 : playerPowerUpEffect
+				+ ((powerUpEffect == null) ? 0 : powerUpEffect
 						.hashCode());
 		result = prime * result
 				+ ((position == null) ? 0 : position.hashCode());
@@ -60,10 +60,10 @@ public class PowerUpEntity {
 		if (Float.floatToIntBits(diameter) != Float
 				.floatToIntBits(other.diameter))
 			return false;
-		if (playerPowerUpEffect == null) {
-			if (other.playerPowerUpEffect != null)
+		if (powerUpEffect == null) {
+			if (other.powerUpEffect != null)
 				return false;
-		} else if (!playerPowerUpEffect.equals(other.playerPowerUpEffect))
+		} else if (!powerUpEffect.equals(other.powerUpEffect))
 			return false;
 		if (position == null) {
 			if (other.position != null)

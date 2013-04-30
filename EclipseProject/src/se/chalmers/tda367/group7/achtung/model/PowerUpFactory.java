@@ -9,7 +9,7 @@ public class PowerUpFactory {
 	public static PowerUpEntity getRandomEntity(float worldWidth, float worldHeight) {
 		
 		// Gets a random effect
-		PlayerPowerUpEffect effect = PlayerPowerUpEffect.effects[(int)(PlayerPowerUpEffect.effects.length*Math.random())];
+		PowerUpEffect effect = PlayerPowerUpEffect.effects[(int)(PlayerPowerUpEffect.effects.length*Math.random())];
 		
 		float diameter = PowerUpEntity.getDefaultDiameter();
 		
