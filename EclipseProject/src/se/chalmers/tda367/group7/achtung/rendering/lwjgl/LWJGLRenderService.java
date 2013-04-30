@@ -28,6 +28,7 @@ public class LWJGLRenderService implements RenderService {
 	private float yPadding;
 	
 	private Color backColor;
+	private float scaling;
 
 	public LWJGLRenderService() throws LWJGLException {
 		init();
@@ -99,15 +100,19 @@ public class LWJGLRenderService implements RenderService {
 		if (viewRatio < displayRatio) {
 			// Padd on width
 			this.xPadding = (viewAreaHeight * displayRatio - viewAreaWidth) / 2;
+			this.scaling = Display.getHeight() / viewAreaHeight;
 		} else {
 			// Padd on height
 			this.yPadding = (viewAreaWidth / displayRatio - viewAreaHeight) / 2;
-		}
+			this.scaling = Display.getWidth() / viewAreaWidth;
 
-		glOrtho(-xPadding, viewAreaWidth + xPadding, viewAreaHeight + yPadding,
-				-yPadding, 0, 1);
+		}
+		glOrtho(0, Display.getWidth(), Display.getHeight(),
+				0, 0, 1);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
+		glScalef(scaling, scaling, 1);
+		glTranslatef(xPadding, yPadding, 0);
 	}
 
 	@Override
@@ -118,7 +123,6 @@ public class LWJGLRenderService implements RenderService {
 		}
 
 		glClear(GL_COLOR_BUFFER_BIT);
-		glLoadIdentity();
 	}
 
 	@Override
