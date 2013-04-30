@@ -17,7 +17,15 @@ public class PowerUpEntity {
 		this.position = position;
 		this.diameter = diameter;
 		this.powerUpEffect = powerUpEffect;
-		this.type = type;
+		setCorrectType(type);
+	}
+
+	private void setCorrectType(Type type) {
+		if(this.powerUpEffect instanceof WorldPowerUpEffect) {
+			this.type = Type.EVERYONE;
+		} else if(this.powerUpEffect instanceof PlayerPowerUpEffect) {
+			this.type = type;
+		}
 	}
 
 	public Position getPosition() {
@@ -31,7 +39,6 @@ public class PowerUpEntity {
 	public PowerUpEffect getPowerUpEffect() {
 		return powerUpEffect;
 	}
-
 
 	@Override
 	public int hashCode() {
