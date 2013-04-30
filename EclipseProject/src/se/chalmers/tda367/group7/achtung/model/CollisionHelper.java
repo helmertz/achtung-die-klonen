@@ -55,6 +55,8 @@ public class CollisionHelper {
 		return checkCollisionWithOthersSegments(lastSeg, segBeforeLast);
 	}
 
+	// TODO: this is called from the method above, which should return
+	// a boolean but also mutates, not a good solution... how to fix?
 	private void mirrorPlayerPosition(Player player) {
 		Body curBody = player.getBody();
 		Position curPos = curBody.getPosition();
