@@ -5,13 +5,11 @@ import java.util.List;
 public class CollisionHelper {
 
 	private List<Player> activePlayers;
-	private final int width;
-	private final int height;
+	private final Map map;
 
-	public CollisionHelper(int width, int height, List<Player> activePlayers) {
+	public CollisionHelper(Map map, List<Player> activePlayers) {
 		this.activePlayers = activePlayers;
-		this.width = width;
-		this.height = height;
+		this.map = map;
 	}
 
 	boolean playerCollidedWithPowerUp(Player player, PowerUpEntity powerUp) {
@@ -68,13 +66,13 @@ public class CollisionHelper {
 		float newY = curY;
 		
 		if(exitOnLeftSide(curX)) {
-			newX = width;
+			newX = map.getWidth();
 		} else if(exitOnRightSide(curX)) {
 			newX = 0;
 		} else if(exitOnTop(curY)) {
 			newY = 0;
 		} else if(exitOnBottom(curY)) {
-			newY = height;
+			newY = map.getHeight();
 		}
 		
 		curBody.setHeadPosition(new Position(newX, newY));
@@ -85,11 +83,11 @@ public class CollisionHelper {
 	}
 
 	private boolean exitOnTop(float curY) {
-		return curY > height;
+		return curY > map.getHeight();
 	}
 
 	private boolean exitOnRightSide(float curX) {
-		return curX > width;
+		return curX > map.getWidth();
 	}
 
 	private boolean exitOnLeftSide(float curX) {
@@ -132,8 +130,8 @@ public class CollisionHelper {
 
 		// Adding/subtracting by one to not be as harsh
 		return (pos.getX() < 0 + playerWidth - 1
-				|| pos.getX() > width - playerWidth + 1
+				|| pos.getX() > map.getWidth() - playerWidth + 1
 				|| pos.getY() < 0 + playerWidth - 1 
-				|| pos.getY() > height - playerWidth + 1);
+				|| pos.getY() > map.getHeight() - playerWidth + 1);
 	}
 }

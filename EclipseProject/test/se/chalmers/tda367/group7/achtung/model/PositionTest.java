@@ -10,13 +10,13 @@ import org.junit.Test;
 
 public class PositionTest {
 
-	private World world;
+	private Round world;
 	private int worldWidth;
 	private int worldHeight;
 	
 	@Before
 	public void setUpWorld() {
-		this.world = new World(1000,1000);
+		this.world = new Round(1000,1000);
 		this.worldHeight = world.getHeight();
 		this.worldWidth = world.getWidth();
 	}

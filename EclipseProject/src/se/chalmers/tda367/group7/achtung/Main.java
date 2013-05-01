@@ -1,11 +1,11 @@
 package se.chalmers.tda367.group7.achtung;
 
-import se.chalmers.tda367.group7.achtung.controller.Game;
+import se.chalmers.tda367.group7.achtung.controller.MainController;
 
 public class Main {
 
 	public static void main(String[] args) {
-		Game game = new Game();
+		MainController game = new MainController();
 		game.run();
 	}
 }

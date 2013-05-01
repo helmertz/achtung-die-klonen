@@ -8,16 +8,16 @@ import java.util.List;
 import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.model.PowerUpEntity;
-import se.chalmers.tda367.group7.achtung.model.World;
+import se.chalmers.tda367.group7.achtung.model.Round;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public class WorldView implements View, PropertyChangeListener {
 
 	private List<PlayerView> playerViews = new ArrayList<PlayerView>();
 	private List<PowerUpEntityView> powerUpView = new ArrayList<PowerUpEntityView>();
-	private World world;
+	private Round world;
 	
-	public WorldView(World world) {
+	public WorldView(Round world) {
 		this.world = world;
 		for(Player p : world.getPlayers()) {
 			playerViews.add(new PlayerView(p));
@@ -32,9 +32,9 @@ public class WorldView implements View, PropertyChangeListener {
 		// Adds 200 so that there's a usable area to the right of the world,
 		// should perhaps not be hardcoded later
 		renderer.setBackgroundColor(Color.DARK_GRAY);
-		renderer.setViewAreaSize(world.getWidth() + 200, world.getHeight());
+		renderer.setViewAreaSize(world.getMap().getWidth() + 200, world.getMap().getHeight());
 		
-		renderer.drawFilledRect(0, 0, world.getWidth(), world.getHeight(), world.getColor());
+		renderer.drawFilledRect(0, 0, world.getMap().getWidth(), world.getMap().getHeight(), world.getMap().getColor());
 
 		// TODO only call this when an event from world is sent
 		//updatePowerUpViews();
@@ -48,7 +48,7 @@ public class WorldView implements View, PropertyChangeListener {
 		}
 		
 		// Draws line around the world
-		renderer.drawLinedRect(0, 0, world.getWidth(), world.getHeight(), 5, Color.GRAY);
+		renderer.drawLinedRect(0, 0, world.getMap().getWidth(), world.getMap().getHeight(), 5, Color.GRAY);
 	}
 	
 	private void updatePowerUpViews() {

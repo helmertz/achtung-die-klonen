@@ -4,18 +4,18 @@ public class BodyFactory {
 	
 	private BodyFactory(){};
 	
-	public static Body getBody(float worldWidth, float worldHeight) {
+	public static Body getBody(Map map) {
+		// TODO - fix more neat code here
+		int xLimiter = (int) (map.getWidth() * 0.1);
+		int yLimiter = (int) (map.getHeight() * 0.1);
 		
-		int xLimiter = (int) (worldWidth * 0.1);
-		int yLimiter = (int) (worldHeight * 0.1);
-		
-		int maxX = (int) worldWidth - xLimiter;
+		int maxX = (int) map.getWidth() - xLimiter;
 		int minX = xLimiter;
-		int maxY = (int) (worldHeight - yLimiter);
+		int maxY = (int) (map.getHeight() - yLimiter);
 		int minY = yLimiter;
 		
 		float rot = (float) (Math.random() * 360);
-		Position position = Position.getRandomPosition(minX, maxX, minY, maxY);
+		Position position = Position.getRandomPosition(minX, minY, maxX, maxY);
 		Body body = new Body(position, rot);
 		return body;
 	}

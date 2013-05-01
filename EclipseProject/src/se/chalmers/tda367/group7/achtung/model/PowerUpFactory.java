@@ -6,7 +6,7 @@ public class PowerUpFactory {
 
 	private PowerUpFactory() {}
 	
-	public static PowerUpEntity getRandomEntity(float worldWidth, float worldHeight) {
+	public static PowerUpEntity getRandomEntity(Map map) {
 		
 		// Gets a random effect
 		PowerUpEffect effect = PlayerPowerUpEffect.effects[(int)(PlayerPowerUpEffect.effects.length*Math.random())];
@@ -14,9 +14,9 @@ public class PowerUpFactory {
 		float diameter = PowerUpEntity.getDefaultDiameter();
 		
 		float minX = diameter;
-		float maxX = worldWidth - diameter;
+		float maxX = map.getWidth() - diameter;
 		float minY = diameter;
-		float maxY = worldHeight - diameter;
+		float maxY = map.getHeight() - diameter;
 		
 		Position randPos = Position.getRandomPosition(minX, maxX, minY, maxY);
 	

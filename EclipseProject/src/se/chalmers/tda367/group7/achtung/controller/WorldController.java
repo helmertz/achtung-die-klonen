@@ -8,13 +8,13 @@ import org.lwjgl.input.Keyboard;
 import se.chalmers.tda367.group7.achtung.input.InputEvent;
 import se.chalmers.tda367.group7.achtung.input.InputListener;
 import se.chalmers.tda367.group7.achtung.model.Player;
-import se.chalmers.tda367.group7.achtung.model.World;
+import se.chalmers.tda367.group7.achtung.model.Round;
 
 public class WorldController implements InputListener {
-	private World world;
+	private Round world;
 	private List<PlayerController> playerControllers = new ArrayList<>();
 	
-	public WorldController(World world) {	
+	public WorldController(Round world) {	
 		this.world = world;
 		int i = 0;
 		for(Player p : world.getPlayers()) {
