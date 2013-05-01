@@ -14,7 +14,7 @@ public class RemoveWallsPowerUp implements WorldPowerUpEffect {
 
 	@Override
 	public void removeEffect(World world) {
-		world.setWallsActive(false);
+		world.setWallsActive(true);
 	}
 
 	@Override
