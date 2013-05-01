@@ -278,4 +278,12 @@ public class World {
 	public void setWallsActive(boolean wallsActive) {
 		this.wallsAreActive = wallsActive;
 	}
+
+	public float getDefaultPowerUpChance() {
+		return powerUpChance;
+	}
+	
+	public void setPowerUpChance(float powerUpChance) {
+		this.powerUpChance = powerUpChance;
+	}
 }

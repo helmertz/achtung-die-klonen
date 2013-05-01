@@ -12,7 +12,8 @@ public interface PowerUpEffect {
 		new SpeedPowerUp(),
 		new ThinPowerUp(),
 		new TurnPowerUp(),
-		new RemoveWallsPowerUp()
+		new RemoveWallsPowerUp(),
+		new MorePowerUp()
 	};
 	
 	/**
