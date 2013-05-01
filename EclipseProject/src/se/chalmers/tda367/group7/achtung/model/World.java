@@ -220,8 +220,6 @@ public class World {
 
 	private void createPlayerBodiesAtRandomPos() {
 		for (Player player : players) {
-			// TODO - fix so that startpoints is different, and not too close,
-			// for each snake.
 			player.setBody(BodyFactory.getBody(width, height));
 		}
 	}

@@ -26,7 +26,6 @@ public class Body {
 	
 	private boolean generatingBodySegments;
 	
-	// TODO better names
 	public enum TurnMode {
 		LEFT, RIGHT, FORWARD
 	}

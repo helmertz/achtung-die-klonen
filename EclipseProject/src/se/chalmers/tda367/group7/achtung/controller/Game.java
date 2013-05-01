@@ -75,7 +75,6 @@ public class Game {
 	}
 
 	public void run() {
-		// TODO implement a proper game loop. Check
 		// http://www.koonsolo.com/news/dewitters-gameloop/ for some different
 		// types. Interpolation type renderer would probably work well, but is a
 		// bit more difficult to implement.

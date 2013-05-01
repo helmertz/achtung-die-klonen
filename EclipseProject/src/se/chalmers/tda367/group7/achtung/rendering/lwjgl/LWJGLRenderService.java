@@ -255,7 +255,6 @@ public class LWJGLRenderService implements RenderService {
 		glBegin(GL_TRIANGLE_FAN);
 		glVertex2f(0, 0);
 		
-		// TODO: Determine how round circle should be, parameter?
 		for(int i = 0; i <= edgeQuality; i++){ // edgeQuality decides how round the circle looks.
 		    double angle = Math.PI * 2 * i / edgeQuality;
 		    glVertex2f((float)Math.cos(angle), (float)Math.sin(angle));
