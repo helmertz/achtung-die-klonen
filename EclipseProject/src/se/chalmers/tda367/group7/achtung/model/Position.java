@@ -30,10 +30,14 @@ public class Position {
 		return (float) Math.sqrt(Math.pow(this.x - otherPosition.x, 2) + Math.pow(this.y - otherPosition.y, 2));
 	}
 
-	public static Position getRandomPosition(float minX, float maxX, float minY, float maxY) {
+	public static Position getRandomPosition(float minX, float minY, float maxX, float maxY) {
 		float randX = (float) (minX + Math.random() * (maxX - minX));
 		float randY = (float) (minY + Math.random() * (maxY - minY));
 		return new Position(randX, randY);
+	}
+	
+	public static Position getRandomPosition(float maxX, float maxY) {
+		return getRandomPosition(0, 0, maxX, maxY);
 	}
 	
 	@Override
