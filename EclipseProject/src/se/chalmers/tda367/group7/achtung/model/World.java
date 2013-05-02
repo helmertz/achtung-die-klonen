@@ -87,9 +87,10 @@ public class World {
 		Iterator<PowerUp> iter = activeWorldEffects.iterator();
 		
 		while(iter.hasNext()) {
-			PowerUp curEffect = iter.next();
-			if(!curEffect.isActive()) {
-				curEffect.removeEffect(this);
+			PowerUp p = iter.next();
+			p.update();
+			if(!p.isActive()) {
+				p.removeEffect(this);
 				iter.remove();
 			}
 		}
@@ -176,7 +177,7 @@ public class World {
 	private void distributeWorldEffect(PowerUpEntity powerUp) {
 		WorldPowerUpEffect effect = (WorldPowerUpEffect)powerUp.getPowerUpEffect();
 		effect.applyEffect(this);
-		activeWorldEffects.add(new PowerUp(powerUp.getPowerUpEffect()));
+		activeWorldEffects.add(new PowerUp(effect));
 	}
 
 	/**
@@ -295,7 +296,7 @@ public class World {
 	}
 
 	public float getDefaultPowerUpChance() {
-		return powerUpChance;
+		return DEFAULT_POWERUP_CHANCE;
 	}
 	
 	public void setPowerUpChance(float powerUpChance) {
