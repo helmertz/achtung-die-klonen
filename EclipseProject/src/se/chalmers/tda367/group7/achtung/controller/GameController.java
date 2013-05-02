@@ -10,10 +10,13 @@ import se.chalmers.tda367.group7.achtung.input.InputListener;
 import se.chalmers.tda367.group7.achtung.model.Game;
 import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.model.Round;
+import se.chalmers.tda367.group7.achtung.sound.Sound;
 
 public class GameController implements InputListener {
 	private Game game;
 	private List<PlayerController> playerControllers = new ArrayList<>();
+	
+	private boolean soundEnabled = false;
 	
 	public GameController(Game game) {	
 		this.game = game;
@@ -50,5 +53,16 @@ public class GameController implements InputListener {
 			}
 		}
 		return false;
+	}
+	
+	private void startRound() {
+		game.newRound();
+		Round round = game.getCurrentRound();
+		
+		if (soundEnabled) {
+			// TODO- maybe sound should be a singleton?
+			Sound sound = new Sound();
+			round.addPropertyChangeListener(sound);
+		}
 	}
 }

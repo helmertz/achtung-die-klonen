@@ -30,7 +30,7 @@ public class Game {
 	}
 	
 	public void update() {
-		
+		currentRound.update();
 	}
 	
 	public void newRound() {
@@ -52,11 +52,10 @@ public class Game {
 		return players;
 	}
 	
-	
 	/**
 	 * @return true if a player has won.
 	 */
-	public boolean isGameOver() {
+	public boolean isOver() {
 		return playerHasGoalPoints();
 	}
 
@@ -76,5 +75,9 @@ public class Game {
 	 */
 	public int getGoalPoints() {
 		return 10 * (players.size() - 1);
+	}
+
+	public Round getCurrentRound() {
+		return currentRound;
 	}
 }

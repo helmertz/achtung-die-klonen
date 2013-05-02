@@ -22,8 +22,6 @@ public class WorldView implements View, PropertyChangeListener {
 		for(Player p : world.getPlayers()) {
 			playerViews.add(new PlayerView(p));
 		}
-
-		//		updatePowerUpViews();
 		
 	}
 	
@@ -35,7 +33,6 @@ public class WorldView implements View, PropertyChangeListener {
 		renderer.setViewAreaSize(world.getMap().getWidth() + 200, world.getMap().getHeight());
 		
 		renderer.drawFilledRect(0, 0, world.getMap().getWidth(), world.getMap().getHeight(), world.getMap().getColor());
-
 		// TODO only call this when an event from world is sent
 		//updatePowerUpViews();
 
