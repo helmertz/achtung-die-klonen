@@ -2,7 +2,7 @@ package se.chalmers.tda367.group7.achtung.model;
 
 public class Map {
 
-	public static final Color DEFAULT_COLOR =  new Color(0x0a0a0a);
+	public static final Color DEFAULT_COLOR =  Color.DARK_GRAY;
 
 	private final int width;
 	private final int height;

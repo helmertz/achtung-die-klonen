@@ -1,7 +1,10 @@
 package se.chalmers.tda367.group7.achtung.model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Class for setting up everything before starting the game.
@@ -13,10 +16,15 @@ public class Game {
 	private Map map;
 	private Round currentRound;
 	
+	private PropertyChangeSupport pcs;
+	
 	public Game() {
 		
 		rounds = new ArrayList<>();
+		players = new ArrayList<>();
 		map = new Map(1500, 1500);
+		
+		pcs = new PropertyChangeSupport(this);
 		
 
 		// Hardcoded in at the moment
@@ -37,10 +45,12 @@ public class Game {
 		
 		if (currentRound == null) {
 			currentRound = new Round(map, players);
+			pcs.firePropertyChange("newRound", false, true);
 		} else if (!currentRound.isRoundActive()) {
+			currentRound = new Round(map, players);
+			pcs.firePropertyChange("newRound", false, true);
 			
 			rounds.add(currentRound);
-			currentRound = new Round(map, players);
 		}
 	}
 
@@ -79,5 +89,9 @@ public class Game {
 
 	public Round getCurrentRound() {
 		return currentRound;
+	}
+
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		pcs.addPropertyChangeListener(listener);
 	}
 }

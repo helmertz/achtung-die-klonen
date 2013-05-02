@@ -44,7 +44,7 @@ public class GameController implements InputListener {
 	@Override
 	public boolean onInputEvent(InputEvent event) {
 		if(event.isPressed() && event.getKey() == Keyboard.KEY_SPACE) {
-			game.newRound();
+			startRound();
 			return true;
 		}
 		for(PlayerController pc : playerControllers) {
@@ -55,7 +55,7 @@ public class GameController implements InputListener {
 		return false;
 	}
 	
-	private void startRound() {
+	public void startRound() {
 		game.newRound();
 		Round round = game.getCurrentRound();
 		

@@ -60,12 +60,12 @@ public class MainController {
 		//TODO: Hard coded here temporarily
 		this.game = new Game();
 		this.gameController = new GameController(game);
+		gameController.startRound();
+		game.addPropertyChangeListener(worldView);
 		inputService.addListener(gameController);
 		
-		this.worldView = new WorldView(world);
+		this.worldView = new WorldView(game);
 		
-		
-		world.addPropertyChangeListener(worldView);
 		
 	}
 
