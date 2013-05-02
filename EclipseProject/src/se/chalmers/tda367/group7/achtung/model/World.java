@@ -49,7 +49,7 @@ public class World {
 		color = new Color(0x0a0a0a);
 		
 		powerUpChance = DEFAULT_POWERUP_CHANCE;
-		wallsAreActive = true;
+		wallsAreActive = false;
 		
 		// Hardcoded in at the moment
 		Player p1 = new Player("Player 1", Color.BLUE);
@@ -115,9 +115,16 @@ public class World {
 	}
 
 	private void handleCollisions(Player player) {
-		if (collisionHelper.playerHasCollidedWithOthers(player, wallsAreActive)) {
+		if (collisionHelper.collidesWithOthers(player)) {
 			killPlayer(player);
 			distributePoints();
+		} else if (collisionHelper.collidesWithWall(player)) {
+			if (wallsAreActive) {
+				killPlayer(player);
+				distributePoints();
+			} else {
+				collisionHelper.mirrorPlayerPosition(player);
+			}
 		} else {
 			Iterator<PowerUpEntity> iterator = powerUpEntities.iterator();
 			

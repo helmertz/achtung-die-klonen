@@ -24,18 +24,8 @@ public class CollisionHelper {
 				+ (headDiam / 2);
 	}
 
-	boolean playerHasCollidedWithOthers(Player player, boolean wallsAreActive) {
+	boolean collidesWithOthers(Player player) {
 		Body currentBody = player.getBody();
-		Position pos = currentBody.getPosition();
-
-		if (isPositionOutOfBounds(player, pos)) {
-			if(wallsAreActive) {
-				return true;
-			} else {
-				mirrorPlayerPosition(player);
-				return false;
-			}
-		}
 
 		// Create coordinates for the last bodysegment
 		// of the player being checked
@@ -57,7 +47,7 @@ public class CollisionHelper {
 
 	// TODO: this is called from the method above, which should return
 	// a boolean but also mutates, not a good solution... how to fix?
-	private void mirrorPlayerPosition(Player player) {
+	public void mirrorPlayerPosition(Player player) {
 		Body curBody = player.getBody();
 		Position curPos = curBody.getPosition();
 		
@@ -76,8 +66,10 @@ public class CollisionHelper {
 		} else if(exitOnBottom(curY)) {
 			newY = height;
 		}
-		
-		curBody.setHeadPosition(new Position(newX, newY));
+		Position pos = new Position(newX, newY);
+
+		curBody.setHeadPosition(pos);
+		curBody.setLastPosition(pos);
 	}
 
 	private boolean exitOnBottom(float curY) {
@@ -127,13 +119,18 @@ public class CollisionHelper {
 		return playerSegments.isEmpty();
 	}
 
-	private boolean isPositionOutOfBounds(Player player, Position pos) {
+	private boolean isPlayerOutOfBounds(Player player) {
 		float playerWidth = player.getBody().getWidth();
+		Position pos = player.getBody().getPosition();
 
 		// Adding/subtracting by one to not be as harsh
 		return (pos.getX() < 0 + playerWidth - 1
 				|| pos.getX() > width - playerWidth + 1
 				|| pos.getY() < 0 + playerWidth - 1 
 				|| pos.getY() > height - playerWidth + 1);
+	}
+
+	public boolean collidesWithWall(Player player) {
+		return isPlayerOutOfBounds(player);
 	}
 }

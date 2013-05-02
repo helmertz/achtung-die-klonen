@@ -20,6 +20,7 @@ public class PowerUpFactory {
 		
 		Position randPos = Position.getRandomPosition(minX, maxX, minY, maxY);
 	
+		// TODO all power-ups shouldn't be able to be of all types
 		Type type = Type.values()[(int) (Type.values().length*Math.random())];
 		
 		PowerUpEntity entity = new PowerUpEntity(randPos, PowerUpEntity.getDefaultDiameter(), effect, type);

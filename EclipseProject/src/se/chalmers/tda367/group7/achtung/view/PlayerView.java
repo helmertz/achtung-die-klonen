@@ -10,7 +10,7 @@ import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 public class PlayerView implements View {
 
 	private Player player;
-	private boolean drawHitBox = true;
+	private boolean drawHitBox = false;
 	
 	public PlayerView(Player player) {
 		this.player = player;
@@ -64,9 +64,7 @@ public class PlayerView implements View {
 		// Draw line from end of last segment to head position
 		// Only if there isn't a hole currently generating
 		if (!body.getBodySegments().isEmpty() && !body.isGeneratingHole()) {
-			BodySegment lastSegment = body.getBodySegments().get(
-					body.getBodySegments().size() - 1);
-			Position endPos = lastSegment.getEnd();
+			Position endPos = body.getLastPosition();
 			renderService.drawLine(endPos.getX(), endPos.getY(), headX, headY,
 					body.getWidth(), player.getColor());
 			
