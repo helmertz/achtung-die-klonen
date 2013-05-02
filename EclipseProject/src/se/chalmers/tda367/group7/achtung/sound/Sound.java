@@ -36,8 +36,8 @@ public class Sound implements PropertyChangeListener {
 			playerDied = AudioLoader.getAudio("WAV", ResourceLoader
 					.getResourceAsStream("res/sounds/playerdies.wav"));
 
-//			music = AudioLoader.getAudio("WAV",
-//					ResourceLoader.getResourceAsStream("res/sounds/music.wav"));
+			music = AudioLoader.getAudio("WAV",
+					ResourceLoader.getResourceAsStream("res/sounds/music.wav"));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -56,13 +56,13 @@ public class Sound implements PropertyChangeListener {
 			playSound(powerUpEveryoneElse);
 		} else if (propertyName.equals("PlayerDied")) {
 			playSound(playerDied);
-		}/* else if (propertyName.equals("NewRound")) {
+		} else if (propertyName.equals("NewRound")) {
 			music.playAsMusic(1.0f, 1.0f, false);
 		} else if (propertyName.equals("RoundOver")) {
 			if (music.isPlaying()) {
 				music.stop();
 			}
-		} */
+		}
 	}
 
 	private void playSound(Audio sound) {
