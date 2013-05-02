@@ -111,6 +111,7 @@ public class World {
 		
 		if(isOnePlayerLeft()) {
 			killRemainingPlayers();
+			pcs.firePropertyChange("RoundOver", false, true);
 		}
 	}
 

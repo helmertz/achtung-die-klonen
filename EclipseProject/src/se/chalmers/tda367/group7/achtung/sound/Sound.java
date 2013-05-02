@@ -14,6 +14,7 @@ public class Sound implements PropertyChangeListener {
 	private Audio powerUpEveryoneElse;
 	private Audio powerUpEveryone;
 	private Audio playerDied;
+	private Audio music;
 
 	public Sound() {
 		initSounds();
@@ -35,6 +36,9 @@ public class Sound implements PropertyChangeListener {
 			playerDied = AudioLoader.getAudio("WAV", ResourceLoader
 					.getResourceAsStream("res/sounds/playerdies.wav"));
 
+//			music = AudioLoader.getAudio("WAV",
+//					ResourceLoader.getResourceAsStream("res/sounds/music.wav"));
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -43,18 +47,24 @@ public class Sound implements PropertyChangeListener {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propertyName = evt.getPropertyName();
-		
-		if (propertyName.equals("PowerUpSELF")) { 
+
+		if (propertyName.equals("PowerUpSELF")) {
 			playSound(powerUpSelf);
-		} else if (propertyName.equals("PowerUpEVERYONE")) { 
+		} else if (propertyName.equals("PowerUpEVERYONE")) {
 			playSound(powerUpEveryone);
-		} else if (propertyName.equals("PowerUpEVERYONE_ELSE")) { 
+		} else if (propertyName.equals("PowerUpEVERYONE_ELSE")) {
 			playSound(powerUpEveryoneElse);
-		} else if (propertyName.equals("PlayerDied")) { 
+		} else if (propertyName.equals("PlayerDied")) {
 			playSound(playerDied);
-		}
+		}/* else if (propertyName.equals("NewRound")) {
+			music.playAsMusic(1.0f, 1.0f, false);
+		} else if (propertyName.equals("RoundOver")) {
+			if (music.isPlaying()) {
+				music.stop();
+			}
+		} */
 	}
-	
+
 	private void playSound(Audio sound) {
 		sound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
