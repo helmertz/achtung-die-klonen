@@ -15,6 +15,7 @@ public class WorldView implements View, PropertyChangeListener {
 
 	private List<PlayerView> playerViews = new ArrayList<PlayerView>();
 	private List<PowerUpEntityView> powerUpView = new ArrayList<PowerUpEntityView>();
+	private MapView mapView;
 	private Round world;
 	
 	public WorldView(Round world) {
@@ -27,9 +28,11 @@ public class WorldView implements View, PropertyChangeListener {
 	
 	public void render(RenderService renderer, float interpolation) {
 		
+		// TODO - fix mapView update
+		
 		// Adds 200 so that there's a usable area to the right of the world,
 		// should perhaps not be hardcoded later
-		renderer.setBackgroundColor(Color.DARK_GRAY);
+		renderer.setBackgroundColor(world.getMap().getColor());
 		renderer.setViewAreaSize(world.getMap().getWidth() + 200, world.getMap().getHeight());
 		
 		renderer.drawFilledRect(0, 0, world.getMap().getWidth(), world.getMap().getHeight(), world.getMap().getColor());
