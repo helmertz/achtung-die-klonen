@@ -30,10 +30,11 @@ public class Round {
 
 	private float powerUpChance;
 
-	public Round(Map map) {
+	public Round(Map map, List<Player> players) {
 		this.map = map;
-		players = new ArrayList<Player>();
+		this.players = players;
 		powerUpEntities = new ArrayList<PowerUpEntity>();
+		deadPlayers = 0;
 		
 		this.pcs = new PropertyChangeSupport(this);
 
@@ -41,21 +42,9 @@ public class Round {
 		powerUpChance = DEFAULT_POWERUP_CHANCE;
 		wallsAreActive = true;
 		
-		// Hardcoded in at the moment
-		Player p1 = new Player("Player 1", Color.BLUE);
-		addPlayer(p1);
-		Player p2 = new Player("Player 2", Color.RED);
-		addPlayer(p2);
-		
-		Player p3 = new Player("Player 3", Color.GREEN);
-		addPlayer(p3);
 		createPlayerBodiesAtRandomPos();
 		
 		collisionHelper = new CollisionHelper(map, players);
-	}
-
-	public void addPlayer(Player p) {
-		players.add(p);
 	}
 
 	public void update() {
@@ -111,7 +100,7 @@ public class Round {
 		player.getBody().kill();
 		pcs.firePropertyChange("PlayerDied", false, true);
 		if (player.getBody().isDead()) {
-			deadPlayers++;	
+			deadPlayers++;
 		}
 	}
 
@@ -120,7 +109,7 @@ public class Round {
 			if (!p.getBody().isDead()) {
 				p.addPoints(1);
 			}
-		}	
+		}
 	}
 
 	private boolean isOnePlayerLeft() {
@@ -195,18 +184,6 @@ public class Round {
 		return deadPlayers < players.size() - 1;
 	}
 
-	/**
-	 * Starts a new round if there is currently no active round
-	 */
-	public void startRound() {
-		if (!isRoundActive()) {
-			deadPlayers = 0;
-			createPlayerBodiesAtRandomPos();
-			powerUpEntities.clear();
-			pcs.firePropertyChange("PowerUp", false, true);
-		}
-	}
-
 	private void createPlayerBodiesAtRandomPos() {
 		for (Player player : players) {
 			// TODO - fix so that startpoints is different, and not too close,
@@ -215,41 +192,14 @@ public class Round {
 		}
 	}
 
-	/**
-	 * @return true if a player has won.
-	 */
-	public boolean isGameOver() {
-		return playerHasGoalPoints();
-	}
 
-	private boolean playerHasGoalPoints() {
-		int goalPoints = getGoalPoints();
-
-		for (Player player : players) {
-			if (player.getPoints() >= goalPoints) {
-				return true;
-			}
-		}
-		return false;
-	}
 	
 	public void addPropertyChangeListener(PropertyChangeListener pcl) {
 		pcs.addPropertyChangeListener(pcl);
 	}
-
-	/**
-	 * Returns the number of points required to win the game.
-	 */
-	public int getGoalPoints() {
-		return 10 * (players.size() - 1);
-	}
 	
 	public Map getMap() {
 		return map;
-	}
-
-	public List<Player> getPlayers() {
-		return players;
 	}
 
 	public List<PowerUpEntity> getPowerUpEntities() {

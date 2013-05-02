@@ -7,7 +7,7 @@ import org.junit.Test;
 public class WorldTest {
 	@Test
 	public void collisionTest() {
-		Round world = new Round(1000, 1000);
+		Round world = new Round(new Map(1000, 1000));
 
 		Player p1 = new Player("Player 1", null);
 		Body b1 = new Body(new Position(50.5f, 50.5f), 0);

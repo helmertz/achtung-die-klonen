@@ -45,7 +45,7 @@ public class MainController {
 
 	private Round world;
 	private WorldView worldView;
-	private WorldController worldController;
+	private GameController worldController;
 
 	public MainController() {
 		try {
@@ -66,7 +66,7 @@ public class MainController {
 		}
 		world.addPropertyChangeListener(worldView);
 		
-		this.worldController = new WorldController(world);
+		this.worldController = new GameController(world);
 		
 		inputService.addListener(worldController);
 	}

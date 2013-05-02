@@ -141,7 +141,7 @@ public class BodyTest {
 	
 	@Test
 	public void hasMovedOneOfEachCoordinateAtSpeedOne() {
-		b = BodyFactory.getBody(1000, 1000);
+		b = BodyFactory.getBody(new Map(1000, 1000));
 		b.setHeadPosition(new Position(10,10));
 		b.setSpeed(1);
 		b.setRotationAngleDeg(45);

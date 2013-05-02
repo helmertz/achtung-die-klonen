@@ -7,17 +7,18 @@ import org.lwjgl.input.Keyboard;
 
 import se.chalmers.tda367.group7.achtung.input.InputEvent;
 import se.chalmers.tda367.group7.achtung.input.InputListener;
+import se.chalmers.tda367.group7.achtung.model.Game;
 import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.model.Round;
 
-public class WorldController implements InputListener {
-	private Round world;
+public class GameController implements InputListener {
+	private Game game;
 	private List<PlayerController> playerControllers = new ArrayList<>();
 	
-	public WorldController(Round world) {	
-		this.world = world;
+	public GameController(Game game) {	
+		this.game = game;
 		int i = 0;
-		for(Player p : world.getPlayers()) {
+		for(Player p : game.getPlayers()) {
 			
 			PlayerController pc = new PlayerController(p);
 			if(i == 0) {
@@ -40,7 +41,7 @@ public class WorldController implements InputListener {
 	@Override
 	public boolean onInputEvent(InputEvent event) {
 		if(event.isPressed() && event.getKey() == Keyboard.KEY_SPACE) {
-			world.startRound();
+			game.newRound();
 			return true;
 		}
 		for(PlayerController pc : playerControllers) {
