@@ -2,20 +2,28 @@ package se.chalmers.tda367.group7.achtung.model;
 
 public class PowerUp {
 
-	private PlayerPowerUpEffect effect;
+	private PowerUpEffect effect;
 	private int timeElapsed;
 	
 	
-	public PowerUp(PlayerPowerUpEffect effect) {
-		this.effect = effect;
+	public PowerUp(PowerUpEffect powerUpEffect) {
+		this.effect = powerUpEffect;
 	}
 
 	public void applyEffect(Body p) {
-		effect.applyEffect(p);
+		((PlayerPowerUpEffect)effect).applyEffect(p);
 	}
 	
 	public void removeEffect(Body p) {
-		effect.removeEffect(p);
+		((PlayerPowerUpEffect)effect).removeEffect(p);
+	}
+	
+	public void applyEffect(World world) {
+		((WorldPowerUpEffect)effect).applyEffect(world);
+	}
+	
+	public void removeEffect(World world) {
+		((WorldPowerUpEffect)effect).removeEffect(world);
 	}
 	
 	/**

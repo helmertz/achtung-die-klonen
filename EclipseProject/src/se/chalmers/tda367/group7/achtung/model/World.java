@@ -20,6 +20,7 @@ public class World {
 	
 	private List<Player> players;
 	private List<PowerUpEntity> powerUpEntities;
+	private List<PowerUp> activeWorldEffects;
 	private CollisionHelper collisionHelper;
 	
 	private int deadPlayers = 0;
@@ -41,6 +42,7 @@ public class World {
 
 		players = new ArrayList<Player>();
 		powerUpEntities = new ArrayList<PowerUpEntity>();
+		activeWorldEffects = new ArrayList<PowerUp>();
 		
 		this.pcs = new PropertyChangeSupport(this);
 
@@ -75,6 +77,20 @@ public class World {
 			if (Math.random() <= powerUpChance) {
 				powerUpEntities.add(PowerUpFactory.getRandomEntity(width, height));
 				pcs.firePropertyChange("PowerUp", false, true);
+			}
+			
+			updateWorldPowerUps();
+		}
+	}
+
+	private void updateWorldPowerUps() {
+		Iterator<PowerUp> iter = activeWorldEffects.iterator();
+		
+		while(iter.hasNext()) {
+			PowerUp curEffect = iter.next();
+			if(!curEffect.isActive()) {
+				curEffect.removeEffect(this);
+				iter.remove();
 			}
 		}
 	}
@@ -160,6 +176,7 @@ public class World {
 	private void distributeWorldEffect(PowerUpEntity powerUp) {
 		WorldPowerUpEffect effect = (WorldPowerUpEffect)powerUp.getPowerUpEffect();
 		effect.applyEffect(this);
+		activeWorldEffects.add(new PowerUp(powerUp.getPowerUpEffect()));
 	}
 
 	/**
