@@ -3,6 +3,7 @@ package se.chalmers.tda367.group7.achtung.model.powerups;
 import se.chalmers.tda367.group7.achtung.model.Body;
 import se.chalmers.tda367.group7.achtung.model.BodyConstants;
 import se.chalmers.tda367.group7.achtung.model.PlayerPowerUpEffect;
+import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class TurnPowerUp implements PlayerPowerUpEffect {
 
@@ -24,4 +25,8 @@ public class TurnPowerUp implements PlayerPowerUpEffect {
 		return 150;
 	}
 
+	public boolean isTypeOk(Type type) {
+		return type.toString().equals("EVERYONE")?false:true;
+	}
+	
 }
