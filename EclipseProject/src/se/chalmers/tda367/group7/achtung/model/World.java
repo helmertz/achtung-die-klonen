@@ -241,6 +241,7 @@ public class World {
 			createPlayerBodiesAtRandomPos();
 			powerUpEntities.clear();
 			pcs.firePropertyChange("PowerUp", false, true);
+			pcs.firePropertyChange("NewRound", false, true);
 		}
 	}
 
