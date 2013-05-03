@@ -13,17 +13,17 @@ public class MapView implements View{
 	}
 
 	@Override
-	public void render(RenderService renderer, float interpolation) {
-		// Adds 200 so that there's a usable area to the right of the world,
-			// should perhaps not be hardcoded later
-			renderer.setBackgroundColor(map.getColor());
-			renderer.setViewAreaSize(map.getWidth() + 200, map.getHeight());
-			
-			renderer.drawFilledRect(0, 0, map.getWidth(), map.getHeight(), map.getColor());
-				
+	public void render(RenderService renderer, float interpolation) {		
+		// Adds 200 so that there's a usable area to the right of the world
+		// TODO should not be hardcoded later, nor set here
+		renderer.setViewAreaSize(map.getWidth() + 200, map.getHeight());
+		renderer.setBackgroundColor(Color.DARK_GRAY);
+		
+		renderer.drawFilledRect(0, 0, map.getWidth(), map.getHeight(),
+				map.getColor());
 
-			// Draws line around the world
-			renderer.drawLinedRect(0, 0, map.getWidth(), map.getHeight(), 5, Color.GRAY);
+		// Draws line around the world
+		renderer.drawLinedRect(0, 0, map.getWidth(), map.getHeight(), 5,
+				Color.GRAY);
 	}
-
 }
