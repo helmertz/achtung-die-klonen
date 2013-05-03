@@ -18,12 +18,12 @@ public class PowerUp {
 		((PlayerPowerUpEffect)effect).removeEffect(p);
 	}
 	
-	public void applyEffect(World world) {
-		((WorldPowerUpEffect)effect).applyEffect(world);
+	public void applyEffect(Round round) {
+		((WorldPowerUpEffect)effect).applyEffect(round);
 	}
 	
-	public void removeEffect(World world) {
-		((WorldPowerUpEffect)effect).removeEffect(world);
+	public void removeEffect(Round round) {
+		((WorldPowerUpEffect)effect).removeEffect(round);
 	}
 	
 	/**

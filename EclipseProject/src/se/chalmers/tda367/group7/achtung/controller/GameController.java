@@ -7,17 +7,21 @@ import org.lwjgl.input.Keyboard;
 
 import se.chalmers.tda367.group7.achtung.input.InputEvent;
 import se.chalmers.tda367.group7.achtung.input.InputListener;
+import se.chalmers.tda367.group7.achtung.model.Game;
 import se.chalmers.tda367.group7.achtung.model.Player;
-import se.chalmers.tda367.group7.achtung.model.World;
+import se.chalmers.tda367.group7.achtung.model.Round;
+import se.chalmers.tda367.group7.achtung.sound.Sound;
 
-public class WorldController implements InputListener {
-	private World world;
+public class GameController implements InputListener {
+	private Game game;
 	private List<PlayerController> playerControllers = new ArrayList<>();
 	
-	public WorldController(World world) {	
-		this.world = world;
+	private boolean soundEnabled = false;
+	
+	public GameController(Game game) {	
+		this.game = game;
 		int i = 0;
-		for(Player p : world.getPlayers()) {
+		for(Player p : game.getPlayers()) {
 			
 			PlayerController pc = new PlayerController(p);
 			if(i == 0) {
@@ -40,7 +44,7 @@ public class WorldController implements InputListener {
 	@Override
 	public boolean onInputEvent(InputEvent event) {
 		if(event.isPressed() && event.getKey() == Keyboard.KEY_SPACE) {
-			world.startRound();
+			startRound();
 			return true;
 		}
 		for(PlayerController pc : playerControllers) {
@@ -49,5 +53,16 @@ public class WorldController implements InputListener {
 			}
 		}
 		return false;
+	}
+	
+	public void startRound() {
+		game.newRound();
+		Round round = game.getCurrentRound();
+		
+		if (soundEnabled) {
+			// TODO- maybe sound should be a singleton?
+			Sound sound = new Sound();
+			round.addPropertyChangeListener(sound);
+		}
 	}
 }

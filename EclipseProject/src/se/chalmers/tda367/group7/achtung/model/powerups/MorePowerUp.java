@@ -1,18 +1,18 @@
 package se.chalmers.tda367.group7.achtung.model.powerups;
 
-import se.chalmers.tda367.group7.achtung.model.World;
+import se.chalmers.tda367.group7.achtung.model.Round;
 import se.chalmers.tda367.group7.achtung.model.WorldPowerUpEffect;
 
 public class MorePowerUp implements WorldPowerUpEffect {
 
 	@Override
-	public void applyEffect(World world) {
-		world.setPowerUpChance(world.getDefaultPowerUpChance() + (float)0.06);
+	public void applyEffect(Round round) {
+		round.setPowerUpChance(round.getDefaultPowerUpChance() + (float)0.06);
 	}
 
 	@Override
-	public void removeEffect(World world) {
-		world.setPowerUpChance(world.getDefaultPowerUpChance());
+	public void removeEffect(Round round) {
+		round.setPowerUpChance(round.getDefaultPowerUpChance());
 	}
 
 	@Override

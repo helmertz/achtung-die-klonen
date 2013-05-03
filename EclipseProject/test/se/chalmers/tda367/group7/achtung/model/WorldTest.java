@@ -2,12 +2,14 @@ package se.chalmers.tda367.group7.achtung.model;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 public class WorldTest {
 	@Test
 	public void collisionTest() {
-		World world = new World(1000, 1000);
 
 		Player p1 = new Player("Player 1", null);
 		Body b1 = new Body(new Position(50.5f, 50.5f), 0);
@@ -18,8 +20,9 @@ public class WorldTest {
 		b2.setSpeed(1);
 		p2.setBody(b2);
 
-		world.addPlayer(p1);
-		world.addPlayer(p2);
+		List<Player> players = new ArrayList<>();
+		
+		Round world = new Round(new Map(1000, 1000), players);
 
 		assertTrue(!p1.getBody().isDead() && !p2.getBody().isDead());
 

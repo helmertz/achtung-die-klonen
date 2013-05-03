@@ -11,10 +11,7 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 /**
  * Class containing the data for a game currently playing.
  */
-public class World {
-
-	private final int width;
-	private final int height;
+public class Round {
 	
 	private boolean wallsAreActive;
 	
@@ -22,60 +19,41 @@ public class World {
 	private List<PowerUpEntity> powerUpEntities;
 	private List<PowerUp> activeWorldEffects;
 	private CollisionHelper collisionHelper;
+	private Map map;
 	
-	private int deadPlayers = 0;
+	private int deadPlayers;
 	
 	private PropertyChangeSupport pcs;
 	
-	// Color represents the background color of the world. Could potentially be
-	// changed by powerups
-	private Color color;
 	
 	// TODO figure out a good constant here
 	private static final float DEFAULT_POWERUP_CHANCE = 0.01f;
 
 	private float powerUpChance;
 
-	public World(int width, int height) {
-		this.width = width;
-		this.height = height;
-
-		players = new ArrayList<Player>();
+	public Round(Map map, List<Player> players) {
+		this.map = map;
+		this.players = players;
 		powerUpEntities = new ArrayList<PowerUpEntity>();
 		activeWorldEffects = new ArrayList<PowerUp>();
+		deadPlayers = 0;
 		
 		this.pcs = new PropertyChangeSupport(this);
 
-		color = new Color(0x0a0a0a);
 		
 		powerUpChance = DEFAULT_POWERUP_CHANCE;
 		wallsAreActive = false;
 		
-		// Hardcoded in at the moment
-		Player p1 = new Player("Player 1", Color.BLUE);
-		p1.setBody(BodyFactory.getBody(1000, 1000));
-		addPlayer(p1);
-		Player p2 = new Player("Player 2", Color.RED);
-		p2.setBody(BodyFactory.getBody(1000, 1000));
-		addPlayer(p2);
-		
-		Player p3 = new Player("Player 3", Color.GREEN);
-		p3.setBody(BodyFactory.getBody(1000, 1000));
-		addPlayer(p3);
 		createPlayerBodiesAtRandomPos();
 		
-		collisionHelper = new CollisionHelper(width, height, players);
-	}
-
-	public void addPlayer(Player p) {
-		players.add(p);
+		collisionHelper = new CollisionHelper(map, players);
 	}
 
 	public void update() {
 		if (isRoundActive()) {
 			updatePlayers();
 			if (Math.random() <= powerUpChance) {
-				powerUpEntities.add(PowerUpFactory.getRandomEntity(width, height));
+				powerUpEntities.add(PowerUpFactory.getRandomEntity(map));
 				pcs.firePropertyChange("PowerUp", false, true);
 			}
 			
@@ -147,7 +125,7 @@ public class World {
 		player.getBody().kill();
 		pcs.firePropertyChange("PlayerDied", false, true);
 		if (player.getBody().isDead()) {
-			deadPlayers++;	
+			deadPlayers++;
 		}
 	}
 
@@ -156,7 +134,7 @@ public class World {
 			if (!p.getBody().isDead()) {
 				p.addPoints(1);
 			}
-		}	
+		}
 	}
 
 	private boolean isOnePlayerLeft() {
@@ -232,72 +210,26 @@ public class World {
 		return deadPlayers < players.size() - 1;
 	}
 
-	/**
-	 * Starts a new round if there is currently no active round
-	 */
-	public void startRound() {
-		if (!isRoundActive()) {
-			deadPlayers = 0;
-			createPlayerBodiesAtRandomPos();
-			powerUpEntities.clear();
-			pcs.firePropertyChange("PowerUp", false, true);
-			pcs.firePropertyChange("NewRound", false, true);
-		}
-	}
 
 	private void createPlayerBodiesAtRandomPos() {
 		for (Player player : players) {
-			player.setBody(BodyFactory.getBody(width, height));
+
+			player.setBody(BodyFactory.getBody(map));
 		}
 	}
 
-	/**
-	 * @return true if a player has won.
-	 */
-	public boolean isGameOver() {
-		return playerHasGoalPoints();
-	}
 
-	private boolean playerHasGoalPoints() {
-		int goalPoints = getGoalPoints();
-
-		for (Player player : players) {
-			if (player.getPoints() >= goalPoints) {
-				return true;
-			}
-		}
-		return false;
-	}
 	
 	public void addPropertyChangeListener(PropertyChangeListener pcl) {
 		pcs.addPropertyChangeListener(pcl);
 	}
-
-	/**
-	 * Returns the number of points required to win the game.
-	 */
-	public int getGoalPoints() {
-		return 10 * (players.size() - 1);
-	}
-
-	public int getWidth() {
-		return this.width;
-	}
-
-	public int getHeight() {
-		return this.height;
-	}
-
-	public List<Player> getPlayers() {
-		return players;
+	
+	public Map getMap() {
+		return map;
 	}
 
 	public List<PowerUpEntity> getPowerUpEntities() {
 		return powerUpEntities;
-	}
-
-	public Color getColor() {
-		return this.color;
 	}
 
 	public void setWallsActive(boolean wallsActive) {

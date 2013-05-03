@@ -4,7 +4,9 @@ import org.lwjgl.LWJGLException;
 
 import se.chalmers.tda367.group7.achtung.input.InputService;
 import se.chalmers.tda367.group7.achtung.input.LWJGLInputService;
-import se.chalmers.tda367.group7.achtung.model.World;
+import se.chalmers.tda367.group7.achtung.model.Game;
+import se.chalmers.tda367.group7.achtung.model.Map;
+import se.chalmers.tda367.group7.achtung.model.Round;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.LWJGLRenderService;
 import se.chalmers.tda367.group7.achtung.sound.Sound;
@@ -14,7 +16,7 @@ import se.chalmers.tda367.group7.achtung.view.WorldView;
  * A class containing the game loop, responsible for handling the timing of game
  * logic and rendering.
  */
-public class Game {
+public class MainController {
 
 	// Game time related
 	private static final double TICKS_PER_SECOND = 25;
@@ -36,17 +38,17 @@ public class Game {
 	private String fpsString = "";
 	private String tpsString = "";
 	// Sound enabled
-	private boolean soundEnabled = true;
+	private boolean soundEnabled = false;
 	
 	private RenderService renderer;
 	private InputService inputService;
 	private Sound sound;
 
-	private World world;
+	private Game game;
 	private WorldView worldView;
-	private WorldController worldController;
+	private GameController gameController;
 
-	public Game() {
+	public MainController() {
 		try {
 			this.renderer = new LWJGLRenderService();
 		} catch (LWJGLException e) {
@@ -56,18 +58,15 @@ public class Game {
 		
 		this.inputService = new LWJGLInputService();
 		//TODO: Hard coded here temporarily
-		this.world = new World(1000,1000);
-		this.worldView = new WorldView(world);
+		this.game = new Game();
+		this.gameController = new GameController(game);
+		gameController.startRound();
+		game.addPropertyChangeListener(worldView);
+		inputService.addListener(gameController);
 		
-		if (soundEnabled) {
-			this.sound = new Sound();
-			world.addPropertyChangeListener(sound);
-		}
-		world.addPropertyChangeListener(worldView);
+		this.worldView = new WorldView(game);
 		
-		this.worldController = new WorldController(world);
 		
-		inputService.addListener(worldController);
 	}
 
 	private long getTickCount() {
@@ -145,7 +144,7 @@ public class Game {
 	}
 
 	private void doLogic() {
-		world.update();
+		game.update();
 	}
 
 	private void render(float interpolation) {

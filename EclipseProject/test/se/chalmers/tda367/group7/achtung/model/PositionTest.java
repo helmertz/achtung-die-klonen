@@ -10,15 +10,15 @@ import org.junit.Test;
 
 public class PositionTest {
 
-	private World world;
+	private Round round;
 	private int worldWidth;
 	private int worldHeight;
 	
 	@Before
 	public void setUpWorld() {
-		this.world = new World(1000,1000);
-		this.worldHeight = world.getHeight();
-		this.worldWidth = world.getWidth();
+		this.round = new Round(new Map(1000,1000), null);
+		this.worldHeight = round.getMap().getHeight();
+		this.worldWidth = round.getMap().getWidth();
 	}
 	
 	// Currently only tests x position, but y is generated 
