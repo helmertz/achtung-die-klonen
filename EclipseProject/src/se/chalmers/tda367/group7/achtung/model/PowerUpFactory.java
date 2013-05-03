@@ -18,7 +18,7 @@ public class PowerUpFactory {
 		float minY = diameter;
 		float maxY = map.getHeight() - diameter;
 		
-		Position randPos = Position.getRandomPosition(minX, maxX, minY, maxY);
+		Position randPos = Position.getRandomPosition(minX, minY, maxX, maxY);
 
 		// TODO all power-ups shouldn't be able to be of all types
 		// Maybe not the easiest way but should work /Pi
