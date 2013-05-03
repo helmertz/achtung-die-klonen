@@ -97,7 +97,7 @@ public class Round {
 		if (collisionHelper.collidesWithOthers(player)) {
 			killPlayer(player);
 			distributePoints();
-		} else if (collisionHelper.collidesWithWall(player)) {
+		} else if (collisionHelper.isPlayerOutOfBounds(player)) {
 			if (wallsAreActive) {
 				killPlayer(player);
 				distributePoints();
@@ -243,4 +243,5 @@ public class Round {
 	public void setPowerUpChance(float powerUpChance) {
 		this.powerUpChance = powerUpChance;
 	}
+
 }

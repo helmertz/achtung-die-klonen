@@ -29,7 +29,7 @@ public class CollisionHelper {
 		// of the player being checked
 		List<BodySegment> playerSegments = currentBody.getBodySegments();
 
-		if (playerSegmentsAreEmpty(playerSegments)) {
+		if (playerSegments.isEmpty()) {
 			return false;
 		}
 
@@ -112,12 +112,8 @@ public class CollisionHelper {
 
 		return false;
 	}
-
-	private boolean playerSegmentsAreEmpty(List<BodySegment> playerSegments) {
-		return playerSegments.isEmpty();
-	}
-
-	private boolean isPlayerOutOfBounds(Player player) {
+	
+	public boolean isPlayerOutOfBounds(Player player) {
 		float playerWidth = player.getBody().getWidth();
 		Position pos = player.getBody().getPosition();
 
@@ -126,9 +122,5 @@ public class CollisionHelper {
 				|| pos.getX() > map.getWidth() - playerWidth + 1
 				|| pos.getY() < 0 + playerWidth - 1 
 				|| pos.getY() > map.getHeight() - playerWidth + 1);
-	}
-
-	public boolean collidesWithWall(Player player) {
-		return isPlayerOutOfBounds(player);
 	}
 }

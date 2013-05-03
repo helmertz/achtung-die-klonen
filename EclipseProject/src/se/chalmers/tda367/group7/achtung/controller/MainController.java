@@ -5,8 +5,6 @@ import org.lwjgl.LWJGLException;
 import se.chalmers.tda367.group7.achtung.input.InputService;
 import se.chalmers.tda367.group7.achtung.input.LWJGLInputService;
 import se.chalmers.tda367.group7.achtung.model.Game;
-import se.chalmers.tda367.group7.achtung.model.Map;
-import se.chalmers.tda367.group7.achtung.model.Round;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.LWJGLRenderService;
 import se.chalmers.tda367.group7.achtung.sound.Sound;
@@ -59,14 +57,13 @@ public class MainController {
 		this.inputService = new LWJGLInputService();
 		//TODO: Hard coded here temporarily
 		this.game = new Game();
+		
 		this.gameController = new GameController(game);
 		gameController.startRound();
-		game.addPropertyChangeListener(worldView);
 		inputService.addListener(gameController);
 		
 		this.worldView = new WorldView(game);
-		
-		
+		game.addPropertyChangeListener(worldView);
 	}
 
 	private long getTickCount() {
