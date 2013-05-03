@@ -62,6 +62,7 @@ public class WorldView implements View, PropertyChangeListener {
 			updatePowerUpViews();
 		} else if (evt.getPropertyName().equals("newRound")) {
 			updateMapView();
+			updatePowerUpViews();
 		}
 	}
 }
