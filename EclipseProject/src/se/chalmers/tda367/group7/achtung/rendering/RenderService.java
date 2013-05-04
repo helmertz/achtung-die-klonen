@@ -59,4 +59,9 @@ public interface RenderService {
 
 	public void drawString(String s, float x, float y, float scale, Color color);
 
+	// Toggle whether or not to draw in the fixed view area. If true, what's
+	// drawn between 0 and max width/height will be visible and scaled
+	// appropriately.
+	public void setScaled(boolean scaled);
+
 }

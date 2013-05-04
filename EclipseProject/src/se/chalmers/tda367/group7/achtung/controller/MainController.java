@@ -1,6 +1,16 @@
 package se.chalmers.tda367.group7.achtung.controller;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
+
+import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.nulldevice.NullSoundDevice;
+import de.lessvoid.nifty.renderer.lwjgl.input.LwjglInputSystem;
+import de.lessvoid.nifty.renderer.lwjgl.render.LwjglRenderDevice;
+import de.lessvoid.nifty.renderer.lwjgl.time.LWJGLTimeProvider;
+import de.lessvoid.nifty.sound.SoundSystem;
+import de.lessvoid.nifty.tools.TimeProvider;
 
 import se.chalmers.tda367.group7.achtung.input.InputService;
 import se.chalmers.tda367.group7.achtung.input.LWJGLInputService;
@@ -45,6 +55,7 @@ public class MainController {
 	private Game game;
 	private WorldView worldView;
 	private GameController gameController;
+	private Nifty nifty;
 
 	public MainController() {
 		try {
@@ -55,6 +66,15 @@ public class MainController {
 		}
 		
 		this.inputService = new LWJGLInputService();
+		
+		nifty = new Nifty(
+		        new LwjglRenderDevice(),
+		        new NullSoundDevice(),
+		        new LwjglInputSystem(),
+		        new LWJGLTimeProvider());
+
+		nifty.fromXml("menu/helloworld.xml", "start");
+		
 		//TODO: Hard coded here temporarily
 		this.game = new Game();
 		
@@ -81,7 +101,7 @@ public class MainController {
 			inputService.update();
 			
 			boolean doLogic = true; 
-
+			nifty.update();
 			// Essentially pauses the game when not in focus
 			if(!renderer.isActive()) {
 				doLogic = false;
@@ -147,12 +167,21 @@ public class MainController {
 	private void render(float interpolation) {
 		renderer.preDraw();
 		
+		renderer.setScaled(true);
+		
 		worldView.render(renderer, interpolation);
+		
+		renderer.setScaled(false);
 		
 		// Render debug info
 		renderer.drawString(fpsString, 0, 0, 1);
 		renderer.drawString(tpsString, 0, 20, 1);
-		
+				
+		if(Display.wasResized()) {
+			nifty.resolutionChanged();
+		}
+		nifty.render(false);
+
 		renderer.postDraw();
 	}
 }

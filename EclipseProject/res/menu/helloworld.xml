@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nifty>
+	<useStyles filename="nifty-default-styles.xml" />
+	<useControls filename="nifty-default-controls.xml" />
+    
+	<screen id="start" controller="se.chalmers.tda367.group7.achtung.model.menu.MainMenuController">
+		<layer id="layer" childLayout="center">
+			<panel height="25%" width="35%" align="center" valign="center" backgroundColor="#222266"
+			    childLayout="center" visibleToMouse="true">
+				<control name="button" label="Start" id="StartButton" align="center" valign="center" 
+					visibleToMouse="true" > 
+					<interact onClick="test()"/>
+          		</control>
+			</panel>
+		</layer>
+	</screen>
+</nifty>
