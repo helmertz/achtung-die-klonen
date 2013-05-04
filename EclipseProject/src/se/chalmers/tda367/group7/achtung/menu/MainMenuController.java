@@ -1,4 +1,4 @@
-package se.chalmers.tda367.group7.achtung.model.menu;
+package se.chalmers.tda367.group7.achtung.menu;
 
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.screen.Screen;

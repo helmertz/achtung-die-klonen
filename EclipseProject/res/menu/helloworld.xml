@@ -3,7 +3,7 @@
 	<useStyles filename="nifty-default-styles.xml" />
 	<useControls filename="nifty-default-controls.xml" />
     
-	<screen id="start" controller="se.chalmers.tda367.group7.achtung.model.menu.MainMenuController">
+	<screen id="start" controller="se.chalmers.tda367.group7.achtung.menu.MainMenuController">
 		<layer id="layer" childLayout="center">
 			<panel height="25%" width="35%" align="center" valign="center" backgroundColor="#222266"
 			    childLayout="center" visibleToMouse="true">
