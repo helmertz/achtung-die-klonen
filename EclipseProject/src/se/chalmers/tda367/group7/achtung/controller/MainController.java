@@ -1,17 +1,16 @@
 package se.chalmers.tda367.group7.achtung.controller;
 
+import java.util.Locale;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
-
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.nulldevice.NullSoundDevice;
 import de.lessvoid.nifty.renderer.lwjgl.input.LwjglInputSystem;
 import de.lessvoid.nifty.renderer.lwjgl.render.LwjglRenderDevice;
 import de.lessvoid.nifty.renderer.lwjgl.time.LWJGLTimeProvider;
-import de.lessvoid.nifty.sound.SoundSystem;
-import de.lessvoid.nifty.tools.TimeProvider;
-
+import se.chalmers.tda367.group7.achtung.input.InputEvent;
+import se.chalmers.tda367.group7.achtung.input.InputListener;
 import se.chalmers.tda367.group7.achtung.input.InputService;
 import se.chalmers.tda367.group7.achtung.input.LWJGLInputService;
 import se.chalmers.tda367.group7.achtung.model.Game;
@@ -24,7 +23,7 @@ import se.chalmers.tda367.group7.achtung.view.WorldView;
  * A class containing the game loop, responsible for handling the timing of game
  * logic and rendering.
  */
-public class MainController {
+public class MainController implements InputListener {
 
 	// Game time related
 	private static final double TICKS_PER_SECOND = 25;
@@ -56,6 +55,7 @@ public class MainController {
 	private WorldView worldView;
 	private GameController gameController;
 	private Nifty nifty;
+	private boolean atMenu = false;
 
 	public MainController() {
 		try {
@@ -80,7 +80,7 @@ public class MainController {
 		
 		this.gameController = new GameController(game);
 		gameController.startRound();
-		inputService.addListener(gameController);
+		inputService.addListener(this);
 		
 		this.worldView = new WorldView(game);
 		game.addPropertyChangeListener(worldView);
@@ -115,6 +115,11 @@ public class MainController {
 				nextGameTick = getTickCount();
 			}
 			
+			if(atMenu) {
+				doLogic = false;
+				nextGameTick = getTickCount();
+			}
+			
 			loops = 0;
 			while(doLogic && getTickCount() >= nextGameTick && loops < MAX_FRAMESKIP) {	
 				if(loops > 0) {
@@ -146,14 +151,14 @@ public class MainController {
 				
 				// Calculate and print average fps
 				double fps = (dbgFrameCounter * 1000000000l) / (double) deltaDebug;
-				fpsString = "FPS: " + fps;
+				fpsString = "FPS: " + String.format(Locale.US, "%.2f", fps);
 				System.out.println(fpsString);
 				dbgFrameCounter = 0;
 
 				// Calculate and print average game logic (tick) rate
 				double logicRate = (dbgGameTickCounter * 1000000000l)
 						/ (double) deltaDebug;
-				tpsString = "TPS: " + logicRate;
+				tpsString = "TPS: " + String.format(Locale.US, "%.2f", logicRate);
 				System.out.println(tpsString);
 				dbgGameTickCounter = 0;
 			}
@@ -167,21 +172,37 @@ public class MainController {
 	private void render(float interpolation) {
 		renderer.preDraw();
 		
-		renderer.setScaled(true);
-		
-		worldView.render(renderer, interpolation);
-		
+		if (!atMenu) {
+			renderer.setScaled(true);
+
+			worldView.render(renderer, interpolation);
+		}
 		renderer.setScaled(false);
 		
 		// Render debug info
 		renderer.drawString(fpsString, 0, 0, 1);
 		renderer.drawString(tpsString, 0, 20, 1);
-				
-		if(Display.wasResized()) {
-			nifty.resolutionChanged();
+		
+		if (atMenu) {
+			if (Display.wasResized()) {
+				nifty.resolutionChanged();
+			}
+			nifty.render(false);
 		}
-		nifty.render(false);
-
 		renderer.postDraw();
+	}
+
+	@Override
+	public boolean onInputEvent(InputEvent event) {
+		if(event.isPressed() && event.getKey() == Keyboard.KEY_ESCAPE) {
+			toggleMenu();
+			return true;
+		}
+		gameController.onInputEvent(event);
+		return false;
+	}
+
+	public void toggleMenu() {
+		atMenu = !atMenu;
 	}
 }
