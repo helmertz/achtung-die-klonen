@@ -45,13 +45,13 @@ public class Game {
 		
 		if (currentRound == null) {
 			currentRound = new Round(map, players);
-			pcs.firePropertyChange("newRound", false, true);
 		} else if (!currentRound.isRoundActive()) {
 			currentRound = new Round(map, players);
-			pcs.firePropertyChange("newRound", false, true);
 			
 			rounds.add(currentRound);
 		}
+
+		pcs.firePropertyChange("NewRound", false, true);
 	}
 
 	public void addPlayer(Player p) {

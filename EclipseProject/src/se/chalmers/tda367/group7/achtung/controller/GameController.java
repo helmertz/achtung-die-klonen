@@ -16,7 +16,7 @@ public class GameController implements InputListener {
 	private Game game;
 	private List<PlayerController> playerControllers = new ArrayList<>();
 	
-	private boolean soundEnabled = false;
+	private boolean soundEnabled = true;
 	
 	public GameController(Game game) {	
 		this.game = game;
@@ -63,6 +63,7 @@ public class GameController implements InputListener {
 			// TODO- maybe sound should be a singleton?
 			Sound sound = new Sound();
 			round.addPropertyChangeListener(sound);
+			game.addPropertyChangeListener(sound);
 		}
 	}
 }

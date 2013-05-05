@@ -7,7 +7,6 @@ import se.chalmers.tda367.group7.achtung.input.LWJGLInputService;
 import se.chalmers.tda367.group7.achtung.model.Game;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.LWJGLRenderService;
-import se.chalmers.tda367.group7.achtung.sound.Sound;
 import se.chalmers.tda367.group7.achtung.view.WorldView;
 
 /**
@@ -35,12 +34,9 @@ public class MainController {
 	private int dbgGameTickCounter;
 	private String fpsString = "";
 	private String tpsString = "";
-	// Sound enabled
-	private boolean soundEnabled = false;
 	
 	private RenderService renderer;
 	private InputService inputService;
-	private Sound sound;
 
 	private Game game;
 	private WorldView worldView;

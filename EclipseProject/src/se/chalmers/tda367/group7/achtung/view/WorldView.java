@@ -60,7 +60,7 @@ public class WorldView implements View, PropertyChangeListener {
 	public void propertyChange(PropertyChangeEvent evt) {
 		if(evt.getPropertyName().equals("PowerUp")) {
 			updatePowerUpViews();
-		} else if (evt.getPropertyName().equals("newRound")) {
+		} else if (evt.getPropertyName().equals("NewRound")) {
 			updateMapView();
 			updatePowerUpViews();
 		}
