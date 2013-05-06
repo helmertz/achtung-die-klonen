@@ -112,7 +112,7 @@ public class Round {
 	}
 
 	private void handleCollisions(Player player) {
-		if (this.collisionHelper.collidesWithOthers(player)) {
+		if (this.collisionHelper.hasCollidedWithOthers(player)) {
 			killPlayer(player);
 			distributePoints();
 		} else if (this.collisionHelper.isPlayerOutOfBounds(player)) {
@@ -123,19 +123,23 @@ public class Round {
 				this.collisionHelper.mirrorPlayerPosition(player);
 			}
 		} else {
-			Iterator<PowerUpEntity> iterator = this.powerUpEntities.iterator();
+			handleCollisionWithPowerUp(player);
+		}
+	}
 
-			while (iterator.hasNext()) {
-				PowerUpEntity powerUp = iterator.next();
+	private void handleCollisionWithPowerUp(Player player) {
+		Iterator<PowerUpEntity> iterator = this.powerUpEntities.iterator();
 
-				if (this.collisionHelper.playerCollidedWithPowerUp(player,
-						powerUp)) {
-					iterator.remove();
-					distributePowerUp(player, powerUp);
-					this.pcs.firePropertyChange("PowerUp"
-							+ powerUp.getType().toString(), false, true);
-					this.pcs.firePropertyChange("PowerUp", false, true);
-				}
+		while (iterator.hasNext()) {
+			PowerUpEntity powerUp = iterator.next();
+
+			if (this.collisionHelper.hasCollidedWithPowerUp(player,
+					powerUp)) {
+				iterator.remove();
+				distributePowerUp(player, powerUp);
+				this.pcs.firePropertyChange("PowerUp"
+						+ powerUp.getType().toString(), false, true);
+				this.pcs.firePropertyChange("PowerUp", false, true);
 			}
 		}
 	}

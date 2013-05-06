@@ -12,7 +12,7 @@ public class CollisionHelper {
 		this.map = map;
 	}
 
-	boolean playerCollidedWithPowerUp(Player player, PowerUpEntity powerUp) {
+	boolean hasCollidedWithPowerUp(Player player, PowerUpEntity powerUp) {
 		Head head = player.getBody().getHead();
 
 		float headDiam = player.getBody().getWidth();
@@ -22,7 +22,7 @@ public class CollisionHelper {
 				+ (headDiam / 2);
 	}
 
-	boolean collidesWithOthers(Player player) {
+	boolean hasCollidedWithOthers(Player player) {
 		Body currentBody = player.getBody();
 
 		// Create coordinates for the last bodysegment
@@ -40,7 +40,7 @@ public class CollisionHelper {
 			segBeforeLast = playerSegments.get(playerSegments.size() - 2);
 		}
 
-		return checkCollisionWithOthersSegments(lastSeg, segBeforeLast);
+		return hasCollidedWithSegment(lastSeg, segBeforeLast);
 	}
 
 	// TODO: this is called from the method above, which should return
@@ -86,7 +86,7 @@ public class CollisionHelper {
 		return curX < 0;
 	}
 
-	private boolean checkCollisionWithOthersSegments(BodySegment lastSeg,
+	private boolean hasCollidedWithSegment(BodySegment lastSeg,
 			BodySegment segBeforeLast) {
 		// Loop through all other players
 		for (Player otherPlayer : this.activePlayers) {
