@@ -16,7 +16,7 @@ public class GameController implements InputListener {
 	private final Game game;
 	private final List<PlayerController> playerControllers = new ArrayList<>();
 
-	private final boolean soundEnabled = true;
+	private boolean soundEnabled = true;
 
 	public GameController(Game game) {
 		this.game = game;
