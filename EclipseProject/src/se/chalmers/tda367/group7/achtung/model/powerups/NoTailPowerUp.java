@@ -8,7 +8,7 @@ public class NoTailPowerUp implements PlayerPowerUpEffect {
 
 	@Override
 	public int getDuration() {
-		return 100;
+		return 65;
 	}
 
 	@Override
