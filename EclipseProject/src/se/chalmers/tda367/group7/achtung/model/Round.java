@@ -47,6 +47,11 @@ public class Round {
 
 		createPlayerBodiesAtRandomPos();
 
+		PlayerPowerUpEffect noTail = new NoTailPowerUp();
+		for (Player p : players) {
+			p.getBody().addPowerUp(noTail);
+		}
+		
 		this.collisionHelper = new CollisionHelper(map, players);
 	}
 
