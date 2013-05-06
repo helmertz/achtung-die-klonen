@@ -22,6 +22,6 @@ public class SpeedPowerUp implements PlayerPowerUpEffect {
 	}
 
 	public boolean isTypeOk(Type type) {
-		return type.toString().equals("EVERYONE")?false:true;
+		return type == Type.SELF || type == Type.EVERYONE_ELSE;
 	}
 }
