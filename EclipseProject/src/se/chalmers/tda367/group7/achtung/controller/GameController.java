@@ -61,7 +61,7 @@ public class GameController implements InputListener {
 		
 		if (soundEnabled) {
 			// TODO- maybe sound should be a singleton?
-			Sound sound = new Sound();
+			Sound sound = Sound.getInstance();
 			round.addPropertyChangeListener(sound);
 			game.addPropertyChangeListener(sound);
 		}

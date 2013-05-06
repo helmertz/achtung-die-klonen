@@ -9,6 +9,8 @@ import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 public class Sound implements PropertyChangeListener {
+	
+	private static Sound instance;
 
 	private Audio powerUpSelf;
 	private Audio powerUpEveryoneElse;
@@ -16,10 +18,16 @@ public class Sound implements PropertyChangeListener {
 	private Audio playerDied;
 	private Audio music;
 
-	public Sound() {
+	private Sound() {
 		initSounds();
 	}
 
+	public static Sound getInstance() {
+		if(instance == null) {
+			instance = new Sound();
+		}
+		return instance;
+	}
 	public void initSounds() {
 
 		try {
