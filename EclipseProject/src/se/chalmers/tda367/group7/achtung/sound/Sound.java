@@ -22,7 +22,7 @@ public class Sound implements PropertyChangeListener {
 		initSounds();
 	}
 
-	public static Sound getInstance() {
+	public static synchronized Sound getInstance() {
 		if(instance == null) {
 			instance = new Sound();
 		}
