@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
+import se.chalmers.tda367.group7.achtung.model.powerups.NoTailPowerUp;
 
 /**
  * Class containing the data for a game currently playing.
@@ -30,6 +31,8 @@ public class Round {
 
 	private float powerUpChance;
 
+	private Player winner;
+
 	public Round(Map map, List<Player> players) {
 		this.map = map;
 		this.players = players;
@@ -40,7 +43,7 @@ public class Round {
 		this.pcs = new PropertyChangeSupport(this);
 
 		this.powerUpChance = DEFAULT_POWERUP_CHANCE;
-		this.wallsAreActive = false;
+		this.wallsAreActive = true;
 
 		createPlayerBodiesAtRandomPos();
 
@@ -74,21 +77,32 @@ public class Round {
 	}
 
 	private void updatePlayers() {
-		for (Player player : this.players) {
+		// Used for checking who won, could probably be done better
+		Player lastAlive = null;
+		for (Player player : players) {
 			player.update();
-
-			if (player.getBody().isDead()) {
+			if(player.getBody().isDead()) {
 				continue;
 			}
 			// TODO: don't do this if player is immortal,
 			// but must still be able to go through walls
 			// (which is done in CollisionHelper as of writing this)
 			handleCollisions(player);
+			
+			// Allows null to prevent problem with remaining players dying at
+			// the same time
+			if (lastAlive == null || !player.getBody().isDead()) {
+				lastAlive = player;
+			}
 		}
+		
+		if(isOnePlayerLeft()) {
+			winner = lastAlive;
+			
+			// Kills to prevent rendering problem
+			lastAlive.getBody().kill();
 
-		if (isOnePlayerLeft()) {
-			killRemainingPlayers();
-			this.pcs.firePropertyChange("RoundOver", false, true);
+			pcs.firePropertyChange("RoundOver", false, true);
 		}
 	}
 
@@ -140,15 +154,7 @@ public class Round {
 	private boolean isOnePlayerLeft() {
 		return this.players.size() - this.deadPlayers < 2;
 	}
-
-	private void killRemainingPlayers() {
-		for (Player p : this.players) {
-			if (!p.getBody().isDead()) {
-				p.getBody().kill();
-			}
-		}
-	}
-
+	
 	private void distributePowerUp(Player pickedUpByPlayer,
 			PowerUpEntity powerUp) {
 		PowerUpEffect effect = powerUp.getPowerUpEffect();
@@ -243,6 +249,10 @@ public class Round {
 
 	public void setPowerUpChance(float powerUpChance) {
 		this.powerUpChance = powerUpChance;
+	}
+
+	public Player getWinner() {
+		return winner;
 	}
 
 }
