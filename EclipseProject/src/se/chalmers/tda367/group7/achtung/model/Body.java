@@ -20,6 +20,7 @@ public class Body {
 	private boolean dead;
 	private boolean immortal;
 	private boolean sharpTurnsActivated;
+	private boolean invertedControls;
 	private boolean generatingBodySegments;
 	private Position prevPosition;
 	private BodySegment lastSegment;
@@ -140,9 +141,17 @@ public class Body {
 	private void doTurn() {
 
 		if (this.turnMode == TurnMode.LEFT) {
-			turnLeft();
+			if (!invertedControls) {
+				turnLeft();
+			} else {
+				turnRight();
+			}
 		} else if (this.turnMode == TurnMode.RIGHT) {
-			turnRight();
+			if (!invertedControls) {
+				turnRight();
+			} else {
+				turnLeft();
+			}
 		}
 
 		if (this.sharpTurnsActivated) {
@@ -255,6 +264,14 @@ public class Body {
 
 	public void setSharpTurns(boolean sharpTurns) {
 		this.sharpTurnsActivated = sharpTurns;
+	}
+	
+	public void setInvertedControls(boolean invertedControls) {
+		this.invertedControls = invertedControls;
+	}
+	
+	public void toggleInvertedControls() {
+		this.invertedControls = !invertedControls;
 	}
 
 	public boolean isGeneratingBodySegments() {
