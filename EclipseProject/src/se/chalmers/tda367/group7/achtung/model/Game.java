@@ -5,63 +5,61 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * Class for setting up everything before starting the game.
  */
 public class Game {
-	
-	private List<Round> rounds;
-	private List<Player> players;
-	private Map map;
+
+	private final List<Round> rounds;
+	private final List<Player> players;
+	private final Map map;
 	private Round currentRound;
-	
-	private PropertyChangeSupport pcs;
-	
+
+	private final PropertyChangeSupport pcs;
+
 	public Game() {
-		
-		rounds = new ArrayList<>();
-		players = new ArrayList<>();
-		map = new Map(1500, 1500);
-		
-		pcs = new PropertyChangeSupport(this);
-		
+
+		this.rounds = new ArrayList<>();
+		this.players = new ArrayList<>();
+		this.map = new Map(1500, 1500);
+
+		this.pcs = new PropertyChangeSupport(this);
 
 		// Hardcoded in at the moment
 		Player p1 = new Player("Player 1", Color.BLUE);
 		addPlayer(p1);
 		Player p2 = new Player("Player 2", Color.RED);
 		addPlayer(p2);
-		
+
 		Player p3 = new Player("Player 3", Color.GREEN);
 		addPlayer(p3);
 	}
-	
+
 	public void update() {
-		currentRound.update();
+		this.currentRound.update();
 	}
-	
+
 	public void newRound() {
-		
-		if (currentRound == null) {
-			currentRound = new Round(map, players);
-		} else if (!currentRound.isRoundActive()) {
-			currentRound = new Round(map, players);
-			
-			rounds.add(currentRound);
+
+		if (this.currentRound == null) {
+			this.currentRound = new Round(this.map, this.players);
+		} else if (!this.currentRound.isRoundActive()) {
+			this.currentRound = new Round(this.map, this.players);
+
+			this.rounds.add(this.currentRound);
 		}
 
-		pcs.firePropertyChange("NewRound", false, true);
+		this.pcs.firePropertyChange("NewRound", false, true);
 	}
 
 	public void addPlayer(Player p) {
-		players.add(p);
+		this.players.add(p);
 	}
 
 	public List<Player> getPlayers() {
-		return players;
+		return this.players;
 	}
-	
+
 	/**
 	 * @return true if a player has won.
 	 */
@@ -72,7 +70,7 @@ public class Game {
 	private boolean playerHasGoalPoints() {
 		int goalPoints = getGoalPoints();
 
-		for (Player player : players) {
+		for (Player player : this.players) {
 			if (player.getPoints() >= goalPoints) {
 				return true;
 			}
@@ -84,14 +82,14 @@ public class Game {
 	 * Returns the number of points required to win the game.
 	 */
 	public int getGoalPoints() {
-		return 10 * (players.size() - 1);
+		return 10 * (this.players.size() - 1);
 	}
 
 	public Round getCurrentRound() {
-		return currentRound;
+		return this.currentRound;
 	}
 
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		pcs.addPropertyChangeListener(listener);
+		this.pcs.addPropertyChangeListener(listener);
 	}
 }

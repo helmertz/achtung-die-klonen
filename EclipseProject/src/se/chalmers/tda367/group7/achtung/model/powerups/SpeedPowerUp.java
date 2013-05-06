@@ -8,12 +8,12 @@ public class SpeedPowerUp implements PlayerPowerUpEffect {
 
 	@Override
 	public void applyEffect(Body body) {
-		body.setSpeed(body.getSpeed()*2);
+		body.setSpeed(body.getSpeed() * 2);
 	}
 
 	@Override
 	public void removeEffect(Body body) {
-		body.setSpeed(body.getSpeed()/2);
+		body.setSpeed(body.getSpeed() / 2);
 	}
 
 	@Override
@@ -21,6 +21,7 @@ public class SpeedPowerUp implements PlayerPowerUpEffect {
 		return 100;
 	}
 
+	@Override
 	public boolean isTypeOk(Type type) {
 		return type == Type.SELF || type == Type.EVERYONE_ELSE;
 	}

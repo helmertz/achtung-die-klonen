@@ -1,7 +1,8 @@
 package se.chalmers.tda367.group7.achtung.model;
 
 /**
- * An immutable class for representing a color with red, green, blue and alpha components.
+ * An immutable class for representing a color with red, green, blue and alpha
+ * components.
  */
 public class Color {
 	public static final Color WHITE = new Color(1f, 1f, 1f);
@@ -12,10 +13,10 @@ public class Color {
 	public static final Color GRAY = new Color(0.5f, 0.5f, 0.5f);
 	public static final Color DARK_GRAY = new Color(0.25f, 0.25f, 0.25f);
 
-	private float r;
-	private float g;
-	private float b;
-	private float a;
+	private final float r;
+	private final float g;
+	private final float b;
+	private final float a;
 
 	/**
 	 * Creates a color from red, green and blue values given in the range

@@ -13,7 +13,7 @@ public class LWJGLImage implements Image {
 
 	private static final Map<String, Image> LOADED = new HashMap<String, Image>();
 
-	private int texID;
+	private final int texID;
 
 	private LWJGLImage(String path) throws IOException {
 		this.texID = Utils.loadTexture(path);
@@ -27,18 +27,18 @@ public class LWJGLImage implements Image {
 		}
 		return image;
 	}
-	
+
 	@Override
 	public void drawImage(float x, float y, float width, float height) {
-		Utils.drawTexture(texID, x, y, width, height);
+		Utils.drawTexture(this.texID, x, y, width, height);
 	}
 
 	@Override
 	public void drawImage(float x, float y, float width, float height,
 			Color color) {
-		Utils.drawTexture(texID, x, y, width, height, color);
+		Utils.drawTexture(this.texID, x, y, width, height, color);
 	}
-	
+
 	@Override
 	public void drawImageCentered(float x, float y, float width, float height) {
 		drawImage(x - width / 2, y - height / 2, width, height);
@@ -53,6 +53,6 @@ public class LWJGLImage implements Image {
 	@Override
 	protected void finalize() throws Throwable {
 		super.finalize();
-		glDeleteTextures(texID);
+		glDeleteTextures(this.texID);
 	}
 }

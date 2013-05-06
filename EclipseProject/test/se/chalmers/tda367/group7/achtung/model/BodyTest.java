@@ -8,95 +8,95 @@ import org.junit.Test;
 import se.chalmers.tda367.group7.achtung.model.powerups.FatPowerUp;
 
 public class BodyTest {
-	
+
 	private Body b;
 	private Position startPosition;
-	
+
 	@Before
 	public void createBody() {
-		startPosition = new Position(20, 50);
-		b = new Body(startPosition, 0);
+		this.startPosition = new Position(20, 50);
+		this.b = new Body(this.startPosition, 0);
 	}
-	
+
 	@Test
 	public void testGetHead() {
-		Head head = b.getHead();
-		assertTrue(startPosition.equals(head.getPosition()));
+		Head head = this.b.getHead();
+		assertTrue(this.startPosition.equals(head.getPosition()));
 		assertTrue(BodyConstants.DEFAULT_WIDTH == head.getDiameter());
 	}
-	
+
 	@Test
 	public void testGetBodySegments() {
-		assertTrue(b.getBodySegments().size() == 0);
+		assertTrue(this.b.getBodySegments().size() == 0);
 		int updates = 10;
 		for (int i = 0; i < updates; i++) {
-			b.update();
+			this.b.update();
 		}
-		assertTrue(b.getBodySegments().size() == updates);
+		assertTrue(this.b.getBodySegments().size() == updates);
 	}
-	
+
 	@Test
 	public void testGetWidht() {
-		assertTrue(b.getWidth() == BodyConstants.DEFAULT_WIDTH);
+		assertTrue(this.b.getWidth() == BodyConstants.DEFAULT_WIDTH);
 	}
-	
+
 	@Test
 	public void testAddPowerUp() {
-		PlayerPowerUpEffect effect = new FatPowerUp(); 
-		float widthBefore = b.getWidth();
-		
-		b.addPowerUp(effect);
-		
-		assertTrue(b.getWidth() == 2*widthBefore);
-		
+		PlayerPowerUpEffect effect = new FatPowerUp();
+		float widthBefore = this.b.getWidth();
+
+		this.b.addPowerUp(effect);
+
+		assertTrue(this.b.getWidth() == 2 * widthBefore);
+
 	}
-	
+
 	@Test
-	public void testSetWidth () {
-		float width = 54721; 
-		b.setWidth(width);
-		
-		assertTrue(b.getWidth() == width);
+	public void testSetWidth() {
+		float width = 54721;
+		this.b.setWidth(width);
+
+		assertTrue(this.b.getWidth() == width);
 	}
-	
+
 	@Test
 	public void testIsDead() {
-		assertFalse(b.isDead());
+		assertFalse(this.b.isDead());
 	}
-	
+
 	@Test
 	public void testKill() {
-		b.kill();
-		assertTrue(b.isDead());
+		this.b.kill();
+		assertTrue(this.b.isDead());
 	}
-	
+
 	@Test
 	public void testSetImmortal() {
-		b.setImmortal(true);
-		assertTrue(b.isImmortal());
-		b.kill();
-		assertFalse(b.isDead());
-		
-		b.setImmortal(false);
-		assertFalse(b.isImmortal());
-		b.kill();
-		assertTrue(b.isDead());
+		this.b.setImmortal(true);
+		assertTrue(this.b.isImmortal());
+		this.b.kill();
+		assertFalse(this.b.isDead());
+
+		this.b.setImmortal(false);
+		assertFalse(this.b.isImmortal());
+		this.b.kill();
+		assertTrue(this.b.isDead());
 	}
 
 	@Test
 	public void moveTest() {
-		b.setSpeed(1);
+		this.b.setSpeed(1);
 
 		// In degrees, 90 should mean straight up (positive y direction)
-		b.setRotationAngleDeg(90);
+		this.b.setRotationAngleDeg(90);
 
-		Position position = b.getPosition();
+		Position position = this.b.getPosition();
 
 		float oldX = position.getX();
 		float oldY = position.getY();
 
 		// Performs one "game tick".
-		b.update();
+		this.b.update();
 
 		float newX = position.getX();
 		float newY = position.getY();
@@ -107,9 +107,9 @@ public class BodyTest {
 		// Checks if y is increased by one,
 		assertTrue(newX == oldX && Math.round(newY) == Math.round(oldY + 1));
 
-		b.setRotationAngleDeg(0);
+		this.b.setRotationAngleDeg(0);
 
-		b.update();
+		this.b.update();
 
 		newX = position.getX();
 		newY = position.getY();
@@ -118,42 +118,42 @@ public class BodyTest {
 		assertTrue(Math.round(newX) == Math.round(oldX + 1)
 				&& Math.round(newY) == Math.round(oldY + 1));
 	}
-	
+
 	@Test
 	public void hasMovedOneYPixelAtSpeedOne() {
-		b.setHeadPosition(new Position(10,10));
-		b.setSpeed(1);
-		b.setRotationAngleDeg(90);
-		
-		Position position = b.getPosition();
+		this.b.setHeadPosition(new Position(10, 10));
+		this.b.setSpeed(1);
+		this.b.setRotationAngleDeg(90);
+
+		Position position = this.b.getPosition();
 
 		float oldX = position.getX();
 		float oldY = position.getY();
 
 		// Performs one "game tick".
-		b.update();
+		this.b.update();
 
 		float newX = position.getX();
 		float newY = position.getY();
-		
+
 		assertTrue(newX == oldX && Math.round(newY) == Math.round(oldY + 1));
 	}
-	
+
 	@Test
 	public void hasMovedOneOfEachCoordinateAtSpeedOne() {
-		b = BodyFactory.getBody(new Map(1000, 1000));
-		b.setHeadPosition(new Position(10,10));
-		b.setSpeed(1);
-		b.setRotationAngleDeg(45);
-		
-		Position position = b.getPosition();
+		this.b = BodyFactory.getBody(new Map(1000, 1000));
+		this.b.setHeadPosition(new Position(10, 10));
+		this.b.setSpeed(1);
+		this.b.setRotationAngleDeg(45);
+
+		Position position = this.b.getPosition();
 
 		float oldX = position.getX();
 		float oldY = position.getY();
 
 		// Performs one "game tick".
-		b.update();
-		
+		this.b.update();
+
 		float newX = position.getX();
 		float newY = position.getY();
 

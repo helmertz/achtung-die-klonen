@@ -4,7 +4,7 @@ import java.util.List;
 
 public class CollisionHelper {
 
-	private List<Player> activePlayers;
+	private final List<Player> activePlayers;
 	private final Map map;
 
 	public CollisionHelper(Map map, List<Player> activePlayers) {
@@ -48,21 +48,21 @@ public class CollisionHelper {
 	public void mirrorPlayerPosition(Player player) {
 		Body curBody = player.getBody();
 		Position curPos = curBody.getPosition();
-		
+
 		float curX = curPos.getX();
 		float curY = curPos.getY();
-		
+
 		float newX = curX;
 		float newY = curY;
-		
-		if(exitOnLeftSide(curX)) {
-			newX = map.getWidth();
-		} else if(exitOnRightSide(curX)) {
+
+		if (exitOnLeftSide(curX)) {
+			newX = this.map.getWidth();
+		} else if (exitOnRightSide(curX)) {
 			newX = 0;
-		} else if(exitOnTop(curY)) {
+		} else if (exitOnTop(curY)) {
 			newY = 0;
-		} else if(exitOnBottom(curY)) {
-			newY = map.getHeight();
+		} else if (exitOnBottom(curY)) {
+			newY = this.map.getHeight();
 		}
 		Position pos = new Position(newX, newY);
 
@@ -75,11 +75,11 @@ public class CollisionHelper {
 	}
 
 	private boolean exitOnTop(float curY) {
-		return curY > map.getHeight();
+		return curY > this.map.getHeight();
 	}
 
 	private boolean exitOnRightSide(float curX) {
-		return curX > map.getWidth();
+		return curX > this.map.getWidth();
 	}
 
 	private boolean exitOnLeftSide(float curX) {
@@ -89,7 +89,7 @@ public class CollisionHelper {
 	private boolean checkCollisionWithOthersSegments(BodySegment lastSeg,
 			BodySegment segBeforeLast) {
 		// Loop through all other players
-		for (Player otherPlayer : activePlayers) {
+		for (Player otherPlayer : this.activePlayers) {
 
 			List<BodySegment> otherBodySegments = otherPlayer.getBody()
 					.getBodySegments();
@@ -112,15 +112,15 @@ public class CollisionHelper {
 
 		return false;
 	}
-	
+
 	public boolean isPlayerOutOfBounds(Player player) {
 		float playerWidth = player.getBody().getWidth();
 		Position pos = player.getBody().getPosition();
 
 		// Adding/subtracting by one to not be as harsh
 		return (pos.getX() < 0 + playerWidth - 1
-				|| pos.getX() > map.getWidth() - playerWidth + 1
-				|| pos.getY() < 0 + playerWidth - 1 
-				|| pos.getY() > map.getHeight() - playerWidth + 1);
+				|| pos.getX() > this.map.getWidth() - playerWidth + 1
+				|| pos.getY() < 0 + playerWidth - 1 || pos.getY() > this.map
+				.getHeight() - playerWidth + 1);
 	}
 }

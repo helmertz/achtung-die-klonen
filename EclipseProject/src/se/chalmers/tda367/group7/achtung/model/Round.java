@@ -12,20 +12,19 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
  * Class containing the data for a game currently playing.
  */
 public class Round {
-	
+
 	private boolean wallsAreActive;
-	
-	private List<Player> players;
-	private List<PowerUpEntity> powerUpEntities;
-	private List<PowerUp> activeWorldEffects;
-	private CollisionHelper collisionHelper;
-	private Map map;
-	
+
+	private final List<Player> players;
+	private final List<PowerUpEntity> powerUpEntities;
+	private final List<PowerUp> activeWorldEffects;
+	private final CollisionHelper collisionHelper;
+	private final Map map;
+
 	private int deadPlayers;
-	
-	private PropertyChangeSupport pcs;
-	
-	
+
+	private final PropertyChangeSupport pcs;
+
 	// TODO figure out a good constant here
 	private static final float DEFAULT_POWERUP_CHANCE = 0.01f;
 
@@ -34,40 +33,40 @@ public class Round {
 	public Round(Map map, List<Player> players) {
 		this.map = map;
 		this.players = players;
-		powerUpEntities = new ArrayList<PowerUpEntity>();
-		activeWorldEffects = new ArrayList<PowerUp>();
-		deadPlayers = 0;
-		
+		this.powerUpEntities = new ArrayList<PowerUpEntity>();
+		this.activeWorldEffects = new ArrayList<PowerUp>();
+		this.deadPlayers = 0;
+
 		this.pcs = new PropertyChangeSupport(this);
 
-		
-		powerUpChance = DEFAULT_POWERUP_CHANCE;
-		wallsAreActive = false;
-		
+		this.powerUpChance = DEFAULT_POWERUP_CHANCE;
+		this.wallsAreActive = false;
+
 		createPlayerBodiesAtRandomPos();
-		
-		collisionHelper = new CollisionHelper(map, players);
+
+		this.collisionHelper = new CollisionHelper(map, players);
 	}
 
 	public void update() {
 		if (isRoundActive()) {
 			updatePlayers();
-			if (Math.random() <= powerUpChance) {
-				powerUpEntities.add(PowerUpFactory.getRandomEntity(map));
-				pcs.firePropertyChange("PowerUp", false, true);
+			if (Math.random() <= this.powerUpChance) {
+				this.powerUpEntities.add(PowerUpFactory
+						.getRandomEntity(this.map));
+				this.pcs.firePropertyChange("PowerUp", false, true);
 			}
-			
+
 			updateWorldPowerUps();
 		}
 	}
 
 	private void updateWorldPowerUps() {
-		Iterator<PowerUp> iter = activeWorldEffects.iterator();
-		
-		while(iter.hasNext()) {
+		Iterator<PowerUp> iter = this.activeWorldEffects.iterator();
+
+		while (iter.hasNext()) {
 			PowerUp p = iter.next();
 			p.update();
-			if(!p.isActive()) {
+			if (!p.isActive()) {
 				p.removeEffect(this);
 				iter.remove();
 			}
@@ -75,62 +74,63 @@ public class Round {
 	}
 
 	private void updatePlayers() {
-		for (Player player : players) {
+		for (Player player : this.players) {
 			player.update();
-			
-			if(player.getBody().isDead()) {
+
+			if (player.getBody().isDead()) {
 				continue;
 			}
-			// TODO: don't do this if player is immortal, 
+			// TODO: don't do this if player is immortal,
 			// but must still be able to go through walls
 			// (which is done in CollisionHelper as of writing this)
 			handleCollisions(player);
 		}
-		
-		if(isOnePlayerLeft()) {
+
+		if (isOnePlayerLeft()) {
 			killRemainingPlayers();
-			pcs.firePropertyChange("RoundOver", false, true);
+			this.pcs.firePropertyChange("RoundOver", false, true);
 		}
 	}
 
 	private void handleCollisions(Player player) {
-		if (collisionHelper.collidesWithOthers(player)) {
+		if (this.collisionHelper.collidesWithOthers(player)) {
 			killPlayer(player);
 			distributePoints();
-		} else if (collisionHelper.isPlayerOutOfBounds(player)) {
-			if (wallsAreActive) {
+		} else if (this.collisionHelper.isPlayerOutOfBounds(player)) {
+			if (this.wallsAreActive) {
 				killPlayer(player);
 				distributePoints();
 			} else {
-				collisionHelper.mirrorPlayerPosition(player);
+				this.collisionHelper.mirrorPlayerPosition(player);
 			}
 		} else {
-			Iterator<PowerUpEntity> iterator = powerUpEntities.iterator();
-			
+			Iterator<PowerUpEntity> iterator = this.powerUpEntities.iterator();
+
 			while (iterator.hasNext()) {
 				PowerUpEntity powerUp = iterator.next();
 
-				
-				if (collisionHelper.playerCollidedWithPowerUp(player, powerUp)) {
+				if (this.collisionHelper.playerCollidedWithPowerUp(player,
+						powerUp)) {
 					iterator.remove();
 					distributePowerUp(player, powerUp);
-					pcs.firePropertyChange("PowerUp" + powerUp.getType().toString(), false, true);
-					pcs.firePropertyChange("PowerUp", false, true);
+					this.pcs.firePropertyChange("PowerUp"
+							+ powerUp.getType().toString(), false, true);
+					this.pcs.firePropertyChange("PowerUp", false, true);
 				}
 			}
 		}
 	}
-	
+
 	private void killPlayer(Player player) {
 		player.getBody().kill();
-		pcs.firePropertyChange("PlayerDied", false, true);
+		this.pcs.firePropertyChange("PlayerDied", false, true);
 		if (player.getBody().isDead()) {
-			deadPlayers++;
+			this.deadPlayers++;
 		}
 	}
 
 	private void distributePoints() {
-		for (Player p : players) {
+		for (Player p : this.players) {
 			if (!p.getBody().isDead()) {
 				p.addPoints(1);
 			}
@@ -138,43 +138,47 @@ public class Round {
 	}
 
 	private boolean isOnePlayerLeft() {
-		return players.size() - deadPlayers < 2;
+		return this.players.size() - this.deadPlayers < 2;
 	}
-	
+
 	private void killRemainingPlayers() {
-		for (Player p : players) {
+		for (Player p : this.players) {
 			if (!p.getBody().isDead()) {
 				p.getBody().kill();
 			}
 		}
 	}
 
-	private void distributePowerUp(Player pickedUpByPlayer, PowerUpEntity powerUp) {
+	private void distributePowerUp(Player pickedUpByPlayer,
+			PowerUpEntity powerUp) {
 		PowerUpEffect effect = powerUp.getPowerUpEffect();
-		
+
 		// TODO: this is probably not the best way of doing this
-		if(effect instanceof PlayerPowerUpEffect) {
+		if (effect instanceof PlayerPowerUpEffect) {
 			distributePlayerEffect(pickedUpByPlayer, powerUp);
-		} else if(effect instanceof WorldPowerUpEffect) {
+		} else if (effect instanceof WorldPowerUpEffect) {
 			distributeWorldEffect(powerUp);
 		}
 	}
 
 	private void distributeWorldEffect(PowerUpEntity powerUp) {
-		WorldPowerUpEffect effect = (WorldPowerUpEffect)powerUp.getPowerUpEffect();
+		WorldPowerUpEffect effect = (WorldPowerUpEffect) powerUp
+				.getPowerUpEffect();
 		effect.applyEffect(this);
-		activeWorldEffects.add(new PowerUp(effect));
+		this.activeWorldEffects.add(new PowerUp(effect));
 	}
 
 	/**
 	 * @pre The effect in powerUp is a PlayerPowerUpEffect.
-	 * @param powerUp The effect to be applied.
+	 * @param powerUp
+	 *            The effect to be applied.
 	 */
 	private void distributePlayerEffect(Player pickedUpByPlayer,
 			PowerUpEntity powerUp) {
 		Type powerUpType = powerUp.getType();
-		PlayerPowerUpEffect effect = (PlayerPowerUpEffect)powerUp.getPowerUpEffect();
-		
+		PlayerPowerUpEffect effect = (PlayerPowerUpEffect) powerUp
+				.getPowerUpEffect();
+
 		if (powerUpType == PowerUpEntity.Type.SELF) {
 			addPowerUpToSelf(pickedUpByPlayer, effect);
 		} else if (powerUpType == PowerUpEntity.Type.EVERYONE) {
@@ -189,47 +193,44 @@ public class Round {
 	}
 
 	private void addPowerUpToEveryone(PlayerPowerUpEffect effect) {
-		for (Player p : players) {
+		for (Player p : this.players) {
 			p.getBody().addPowerUp(effect);
 		}
 	}
 
 	private void addPowerUpToOthers(Player pickedUpByPlayer,
 			PlayerPowerUpEffect effect) {
-		for (Player p : players) {
+		for (Player p : this.players) {
 			if (p != pickedUpByPlayer) {
 				p.getBody().addPowerUp(effect);
 			}
 		}
 	}
-	
+
 	/**
 	 * @return true if there are players still alive
 	 */
 	public boolean isRoundActive() {
-		return deadPlayers < players.size() - 1;
+		return this.deadPlayers < this.players.size() - 1;
 	}
 
-
 	private void createPlayerBodiesAtRandomPos() {
-		for (Player player : players) {
+		for (Player player : this.players) {
 
-			player.setBody(BodyFactory.getBody(map));
+			player.setBody(BodyFactory.getBody(this.map));
 		}
 	}
 
-
-	
 	public void addPropertyChangeListener(PropertyChangeListener pcl) {
-		pcs.addPropertyChangeListener(pcl);
+		this.pcs.addPropertyChangeListener(pcl);
 	}
-	
+
 	public Map getMap() {
-		return map;
+		return this.map;
 	}
 
 	public List<PowerUpEntity> getPowerUpEntities() {
-		return powerUpEntities;
+		return this.powerUpEntities;
 	}
 
 	public void setWallsActive(boolean wallsActive) {
@@ -239,7 +240,7 @@ public class Round {
 	public float getDefaultPowerUpChance() {
 		return DEFAULT_POWERUP_CHANCE;
 	}
-	
+
 	public void setPowerUpChance(float powerUpChance) {
 		this.powerUpChance = powerUpChance;
 	}

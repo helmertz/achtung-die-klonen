@@ -9,9 +9,9 @@ import java.util.List;
  */
 public class Body {
 	private Head head;
-	private List<BodySegment> bodySegments;
-	private List<PowerUp> powerUps = new ArrayList<PowerUp>();
-	
+	private final List<BodySegment> bodySegments;
+	private final List<PowerUp> powerUps = new ArrayList<PowerUp>();
+
 	private TurnMode turnMode;
 	private float speed;
 	private float rotationAngleDeg; // the angle the snake is facing.
@@ -31,38 +31,38 @@ public class Body {
 	}
 
 	public Body(Position position, float rotation) {
-		dead = false;
-		immortal = false;
-		sharpTurnsActivated = false;
-		width = BodyConstants.DEFAULT_WIDTH;
-		speed = BodyConstants.DEFAULT_SPEED;
-		rotationAngleDeg = rotation;
-		rotationSpeedDeg = BodyConstants.DEFAULT_ROTATION_SPEED;
-		generatingBodySegments = true;
+		this.dead = false;
+		this.immortal = false;
+		this.sharpTurnsActivated = false;
+		this.width = BodyConstants.DEFAULT_WIDTH;
+		this.speed = BodyConstants.DEFAULT_SPEED;
+		this.rotationAngleDeg = rotation;
+		this.rotationSpeedDeg = BodyConstants.DEFAULT_ROTATION_SPEED;
+		this.generatingBodySegments = true;
 
 		// Width of the body is the same as the diameter of the head.
-		head = new Head(position, width);
-		bodySegments = new ArrayList<BodySegment>();
-		prevPosition = position;
+		this.head = new Head(position, this.width);
+		this.bodySegments = new ArrayList<BodySegment>();
+		this.prevPosition = position;
 	}
 
 	public Head getHead() {
-		return head;
+		return this.head;
 	}
 
 	public List<BodySegment> getBodySegments() {
-		return bodySegments;
+		return this.bodySegments;
 	}
 
 	public void addBodySegment(BodySegment bodySegment) {
-		bodySegments.add(bodySegment);
+		this.bodySegments.add(bodySegment);
 	}
 
 	public void setHeadPosition(Position position) {
 		if (this.head == null) {
-			head = new Head(position, width);
+			this.head = new Head(position, this.width);
 		} else {
-			head.setPosition(position);
+			this.head.setPosition(position);
 		}
 	}
 
@@ -72,7 +72,7 @@ public class Body {
 	public void update() {
 		updatePowerUps();
 
-		if (!dead) {
+		if (!this.dead) {
 			updatePosition();
 		}
 	}
@@ -81,89 +81,95 @@ public class Body {
 		doTurn();
 
 		// Update head with delta positions
-		prevPosition = head.getPosition();
-		float x = prevPosition.getX();
-		float y = prevPosition.getY();
+		this.prevPosition = this.head.getPosition();
+		float x = this.prevPosition.getX();
+		float y = this.prevPosition.getY();
 
 		// Calculates the new delta position.
-		float dx = (float) (speed * Math.cos(Math.toRadians(rotationAngleDeg)));
-		float dy = (float) (speed * Math.sin(Math.toRadians(rotationAngleDeg)));
+		float dx = (float) (this.speed * Math.cos(Math
+				.toRadians(this.rotationAngleDeg)));
+		float dy = (float) (this.speed * Math.sin(Math
+				.toRadians(this.rotationAngleDeg)));
 
 		Position newPosition = new Position(x + dx, y + dy);
 
-		head.setPosition(newPosition);
+		this.head.setPosition(newPosition);
 
 		// Create a new body segment and add to body segment list.
 
 		holeUpdate();
-		
-		if (!makeHole) {
+
+		if (!this.makeHole) {
 			createBodySegment();
-			holeCount = 0;
+			this.holeCount = 0;
 		} else {
-			holeCount++;
+			this.holeCount++;
 			// Set to null so that no upcoming segment will be connected over
 			// the hole
-			lastSegment = null;
+			this.lastSegment = null;
 		}
 	}
 
 	private void holeUpdate() {
-		makeHole = !generatingBodySegments
-				|| !makeHole && Math.random() < BodyConstants.CHANCE_OF_HOLE
+		this.makeHole = !this.generatingBodySegments || !this.makeHole
+				&& Math.random() < BodyConstants.CHANCE_OF_HOLE
 				// If a hole was made the previous time, it's often more likely
 				// a hole still will be made.
 				// The subtraction makes it so holes will be longer than the
 				// number subtracted.
-				|| makeHole && Math.random() > (holeCount - 2) / 10d;
+				|| this.makeHole && Math.random() > (this.holeCount - 2) / 10d;
 	}
 
 	private void createBodySegment() {
 		// lastSegment is null after a hole has been made
 		BodySegment segment;
-		if (lastSegment != null) {
+		if (this.lastSegment != null) {
 			// TODO handle differently to properly connect new segment to last
-			segment = new BodySegment(prevPosition, head.getPosition(), width);
+			segment = new BodySegment(this.prevPosition,
+					this.head.getPosition(), this.width);
 		} else {
-			segment = new BodySegment(prevPosition, head.getPosition(), width);
+			segment = new BodySegment(this.prevPosition,
+					this.head.getPosition(), this.width);
 		}
 		addBodySegment(segment);
 
 		// stores so next one can be connected to this
-		lastSegment = segment;
+		this.lastSegment = segment;
 	}
 
 	private void doTurn() {
 
-		if (turnMode == TurnMode.LEFT) {
+		if (this.turnMode == TurnMode.LEFT) {
 			turnLeft();
-		} else if (turnMode == TurnMode.RIGHT) {
+		} else if (this.turnMode == TurnMode.RIGHT) {
 			turnRight();
 		}
 
-		if (sharpTurnsActivated) {
-			turnMode = TurnMode.FORWARD;
+		if (this.sharpTurnsActivated) {
+			this.turnMode = TurnMode.FORWARD;
 		}
 
 	}
 
 	public boolean isGeneratingHole() {
-		return makeHole;
+		return this.makeHole;
 	}
 
 	public float getWidth() {
-		return width;
+		return this.width;
 	}
 
 	/**
-	 * Adds a power-up to the player. When the player collides with a PowerUpEntity 
-	 * it will receive an effect using this method.
-	 * @param effect - the effect to add to the player
+	 * Adds a power-up to the player. When the player collides with a
+	 * PowerUpEntity it will receive an effect using this method.
+	 * 
+	 * @param effect
+	 *            - the effect to add to the player
 	 */
 	public void addPowerUp(PlayerPowerUpEffect effect) {
 		PowerUp p = new PowerUp(effect);
 		p.applyEffect(this);
-		powerUps.add(p);
+		this.powerUps.add(p);
 	}
 
 	/**
@@ -173,7 +179,7 @@ public class Body {
 
 		// Using iterator since removing itself from list in an enhanced for
 		// loop causes exception
-		Iterator<PowerUp> i = powerUps.iterator();
+		Iterator<PowerUp> i = this.powerUps.iterator();
 		while (i.hasNext()) {
 			PowerUp p = i.next();
 			p.update();
@@ -186,23 +192,23 @@ public class Body {
 
 	public void setWidth(float width) {
 		this.width = width;
-		head.setDiameter(width);
+		this.head.setDiameter(width);
 	}
 
 	public void turnRight() {
-		rotationAngleDeg += rotationSpeedDeg;
+		this.rotationAngleDeg += this.rotationSpeedDeg;
 	}
 
 	public void turnLeft() {
-		rotationAngleDeg -= rotationSpeedDeg;
+		this.rotationAngleDeg -= this.rotationSpeedDeg;
 	}
 
 	public void setRotationAngleDeg(float angle) {
-		rotationAngleDeg = angle;
+		this.rotationAngleDeg = angle;
 	}
 
 	public void setRotationSpeedDeg(float angle) {
-		rotationSpeedDeg = angle;
+		this.rotationSpeedDeg = angle;
 	}
 
 	public void setSpeed(float speed) {
@@ -210,16 +216,16 @@ public class Body {
 	}
 
 	public Position getPosition() {
-		return head.getPosition();
+		return this.head.getPosition();
 	}
 
 	public boolean isDead() {
-		return dead;
+		return this.dead;
 	}
 
 	public void kill() {
-		if (!immortal) {
-			dead = true;
+		if (!this.immortal) {
+			this.dead = true;
 		}
 	}
 
@@ -228,19 +234,19 @@ public class Body {
 	}
 
 	public boolean isImmortal() {
-		return immortal;
+		return this.immortal;
 	}
 
 	public float getRotationAngleDeg() {
-		return rotationAngleDeg;
+		return this.rotationAngleDeg;
 	}
 
 	public float getRotationSpeedDeg() {
-		return rotationSpeedDeg;
+		return this.rotationSpeedDeg;
 	}
 
 	public float getSpeed() {
-		return speed;
+		return this.speed;
 	}
 
 	public void setTurnMode(TurnMode turnMode) {
@@ -252,7 +258,7 @@ public class Body {
 	}
 
 	public boolean isGeneratingBodySegments() {
-		return generatingBodySegments;
+		return this.generatingBodySegments;
 	}
 
 	public void setGeneratingBodySegments(boolean generatingBodySegments) {
@@ -260,10 +266,10 @@ public class Body {
 	}
 
 	public void setLastPosition(Position pos) {
-		prevPosition = pos;
+		this.prevPosition = pos;
 	}
 
 	public Position getLastPosition() {
-		return prevPosition;
+		return this.prevPosition;
 	}
 }

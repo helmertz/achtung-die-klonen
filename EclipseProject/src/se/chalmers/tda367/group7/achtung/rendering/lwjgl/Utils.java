@@ -13,14 +13,14 @@ import de.matthiasmann.twl.utils.PNGDecoder;
 import de.matthiasmann.twl.utils.PNGDecoder.Format;
 
 public class Utils {
-	
+
 	// based on code from LWJGL wiki page
 	// http://www.lwjgl.org/wiki/index.php?title=The_Quad_textured
 	static int loadTexture(String fileName) throws IOException {
 		ByteBuffer buf = null;
 
 		glEnable(GL_TEXTURE_2D);
-		
+
 		// Open the PNG file as an InputStream
 		InputStream in = BitMapFont.class.getResourceAsStream("/" + fileName);
 		// Link the PNG decoder to this stream
@@ -53,7 +53,7 @@ public class Utils {
 		// Setup what to do when the texture has to be scaled
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		
+
 		glDisable(GL_TEXTURE_2D);
 
 		return texID;
@@ -64,7 +64,7 @@ public class Utils {
 			float height) {
 		drawTexture(texID, x, y, width, height, Color.WHITE);
 	}
-	
+
 	// draws the texture, where x and y is the location of the top right corner
 	static void drawTexture(int texID, float x, float y, float width,
 			float height, Color color) {

@@ -21,7 +21,7 @@ public class WorldTest {
 		p2.setBody(b2);
 
 		List<Player> players = new ArrayList<>();
-		
+
 		Round world = new Round(new Map(1000, 1000), players);
 
 		assertTrue(!p1.getBody().isDead() && !p2.getBody().isDead());
@@ -32,7 +32,6 @@ public class WorldTest {
 		System.out.println(b2.getPosition().getX());
 		System.out.println(b2.getPosition().getY());
 		assertTrue(p1.getBody().isDead() || p2.getBody().isDead());
-
 
 	}
 

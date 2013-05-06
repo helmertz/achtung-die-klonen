@@ -26,7 +26,7 @@ public class LWJGLRenderService implements RenderService {
 	private float viewAreaHeight;
 	private float xPadding;
 	private float yPadding;
-	
+
 	private Color backColor;
 	private float scaling;
 
@@ -37,15 +37,15 @@ public class LWJGLRenderService implements RenderService {
 	private void init() throws LWJGLException {
 		initDisplay();
 		initOpenGL();
-		viewAreaWidth = Display.getWidth();
-		viewAreaHeight = Display.getHeight();
+		this.viewAreaWidth = Display.getWidth();
+		this.viewAreaHeight = Display.getHeight();
 		try {
-			bitMapFont = new BitMapFont("courier-new.png");
+			this.bitMapFont = new BitMapFont("courier-new.png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		lineRenderer = new QuadLineRenderer();
-		backColor = Color.BLACK;
+		this.lineRenderer = new QuadLineRenderer();
+		this.backColor = Color.BLACK;
 	}
 
 	private void initOpenGL() {
@@ -95,24 +95,23 @@ public class LWJGLRenderService implements RenderService {
 
 		// for proportional scaling
 		float displayRatio = (float) Display.getWidth() / Display.getHeight();
-		float viewRatio = viewAreaWidth / viewAreaHeight;
+		float viewRatio = this.viewAreaWidth / this.viewAreaHeight;
 
 		if (viewRatio < displayRatio) {
 			// Padd on width
-			this.xPadding = (viewAreaHeight * displayRatio - viewAreaWidth) / 2;
-			this.scaling = Display.getHeight() / viewAreaHeight;
+			this.xPadding = (this.viewAreaHeight * displayRatio - this.viewAreaWidth) / 2;
+			this.scaling = Display.getHeight() / this.viewAreaHeight;
 		} else {
 			// Padd on height
-			this.yPadding = (viewAreaWidth / displayRatio - viewAreaHeight) / 2;
-			this.scaling = Display.getWidth() / viewAreaWidth;
+			this.yPadding = (this.viewAreaWidth / displayRatio - this.viewAreaHeight) / 2;
+			this.scaling = Display.getWidth() / this.viewAreaWidth;
 
 		}
-		glOrtho(0, Display.getWidth(), Display.getHeight(),
-				0, 0, 1);
+		glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 0, 1);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-		glScalef(scaling, scaling, 1);
-		glTranslatef(xPadding, yPadding, 0);
+		glScalef(this.scaling, this.scaling, 1);
+		glTranslatef(this.xPadding, this.yPadding, 0);
 	}
 
 	@Override
@@ -127,14 +126,14 @@ public class LWJGLRenderService implements RenderService {
 
 	@Override
 	public void postDraw() {
-		bindColor(backColor);
+		bindColor(this.backColor);
 
-		if (xPadding > 0) {
-			drawRect(-xPadding, 0, xPadding, viewAreaHeight);
-			drawRect(viewAreaWidth, 0, xPadding, viewAreaHeight);
+		if (this.xPadding > 0) {
+			drawRect(-this.xPadding, 0, this.xPadding, this.viewAreaHeight);
+			drawRect(this.viewAreaWidth, 0, this.xPadding, this.viewAreaHeight);
 		} else {
-			drawRect(0, -yPadding, viewAreaWidth, yPadding);
-			drawRect(0, viewAreaHeight, viewAreaWidth, yPadding);
+			drawRect(0, -this.yPadding, this.viewAreaWidth, this.yPadding);
+			drawRect(0, this.viewAreaHeight, this.viewAreaWidth, this.yPadding);
 		}
 
 		Display.update();
@@ -142,27 +141,25 @@ public class LWJGLRenderService implements RenderService {
 
 	@Override
 	public void drawString(String s, float x, float y, float scale) {
-		bitMapFont.render(s, x, y, scale);
-	}
-	
-
-	@Override
-	public void drawString(String s, float x, float y, float scale,
-			Color color) {
-		bitMapFont.render(s, x, y, scale, color);
+		this.bitMapFont.render(s, x, y, scale);
 	}
 
 	@Override
-	public void drawStringCentered(String string, float x, float y, float scale,
-			Color color) {
-		bitMapFont.renderCentered(string, x, y, scale, color);
+	public void drawString(String s, float x, float y, float scale, Color color) {
+		this.bitMapFont.render(s, x, y, scale, color);
+	}
+
+	@Override
+	public void drawStringCentered(String string, float x, float y,
+			float scale, Color color) {
+		this.bitMapFont.renderCentered(string, x, y, scale, color);
 	}
 
 	@Override
 	public void drawLine(float x1, float y1, float x2, float y2, float width,
 			Color color) {
 		bindColor(color);
-		lineRenderer.drawLine(x1, y1, x2, y2, width);
+		this.lineRenderer.drawLine(x1, y1, x2, y2, width);
 	}
 
 	private void bindColor(Color color) {
@@ -218,17 +215,17 @@ public class LWJGLRenderService implements RenderService {
 
 	@Override
 	public float getViewAreaWidth() {
-		return viewAreaWidth;
+		return this.viewAreaWidth;
 	}
 
 	@Override
 	public float getViewAreaHeight() {
-		return viewAreaHeight;
+		return this.viewAreaHeight;
 	}
 
 	@Override
 	public void drawStringCentered(String string, float x, float y, float scale) {
-		bitMapFont.renderCentered(string, x, y, scale);
+		this.bitMapFont.renderCentered(string, x, y, scale);
 	}
 
 	@Override
@@ -244,9 +241,10 @@ public class LWJGLRenderService implements RenderService {
 	// Draws a circle, with the center coordinates x and y, as a polygon with
 	// the number of corners defined by edgeQuality
 	@Override
-	public void drawCircleCentered(float x, float y, float radius, int edgeQuality,
-			Color color) {
-		// Lifted from http://www.java-gaming.org/index.php?topic=25245.msg217089#msg217089
+	public void drawCircleCentered(float x, float y, float radius,
+			int edgeQuality, Color color) {
+		// Lifted from
+		// http://www.java-gaming.org/index.php?topic=25245.msg217089#msg217089
 		bindColor(color);
 		glPushMatrix();
 		glTranslatef(x, y, 0);
@@ -254,10 +252,11 @@ public class LWJGLRenderService implements RenderService {
 
 		glBegin(GL_TRIANGLE_FAN);
 		glVertex2f(0, 0);
-		
-		for(int i = 0; i <= edgeQuality; i++){ // edgeQuality decides how round the circle looks.
-		    double angle = Math.PI * 2 * i / edgeQuality;
-		    glVertex2f((float)Math.cos(angle), (float)Math.sin(angle));
+
+		for (int i = 0; i <= edgeQuality; i++) { // edgeQuality decides how
+													// round the circle looks.
+			double angle = Math.PI * 2 * i / edgeQuality;
+			glVertex2f((float) Math.cos(angle), (float) Math.sin(angle));
 		}
 		glEnd();
 		glPopMatrix();

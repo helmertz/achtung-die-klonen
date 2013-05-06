@@ -13,52 +13,53 @@ import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public class WorldView implements View, PropertyChangeListener {
 
-	private List<PlayerView> playerViews = new ArrayList<PlayerView>();
-	private List<PowerUpEntityView> powerUpView = new ArrayList<PowerUpEntityView>();
+	private final List<PlayerView> playerViews = new ArrayList<PlayerView>();
+	private final List<PowerUpEntityView> powerUpView = new ArrayList<PowerUpEntityView>();
 	private MapView mapView;
-	private Game game;
-	
+	private final Game game;
+
 	public WorldView(Game game) {
 		this.game = game;
-		for(Player p : game.getPlayers()) {
-			playerViews.add(new PlayerView(p));
+		for (Player p : game.getPlayers()) {
+			this.playerViews.add(new PlayerView(p));
 		}
 		updateMapView();
 	}
-	
+
+	@Override
 	public void render(RenderService renderer, float interpolation) {
-		
-		mapView.render(renderer, interpolation);
-		
-		for (View view : playerViews) {
+
+		this.mapView.render(renderer, interpolation);
+
+		for (View view : this.playerViews) {
 			view.render(renderer, interpolation);
 		}
-		
-		for(View view : powerUpView) {
+
+		for (View view : this.powerUpView) {
 			view.render(renderer, interpolation);
 		}
-		
+
 	}
-	
+
 	private void updatePowerUpViews() {
 
-		powerUpView.clear();
-		
-		for(PowerUpEntity e : game.getCurrentRound().getPowerUpEntities()) {
-			powerUpView.add(new PowerUpEntityView(e));
+		this.powerUpView.clear();
+
+		for (PowerUpEntity e : this.game.getCurrentRound().getPowerUpEntities()) {
+			this.powerUpView.add(new PowerUpEntityView(e));
 		}
 	}
-	
+
 	private void updateMapView() {
-		Round round = game.getCurrentRound();
+		Round round = this.game.getCurrentRound();
 		round.addPropertyChangeListener(this);
-		mapView = new MapView(round.getMap());
-		
+		this.mapView = new MapView(round.getMap());
+
 	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if(evt.getPropertyName().equals("PowerUp")) {
+		if (evt.getPropertyName().equals("PowerUp")) {
 			updatePowerUpViews();
 		} else if (evt.getPropertyName().equals("NewRound")) {
 			updateMapView();

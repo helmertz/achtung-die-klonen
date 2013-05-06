@@ -32,8 +32,8 @@ public interface RenderService {
 	public void drawLinedRect(float x, float y, float width, float height,
 			float lineWidth, Color color);
 
-	public void drawCircleCentered(float x, float y, float radius, int edgeQuality,
-			Color color);
+	public void drawCircleCentered(float x, float y, float radius,
+			int edgeQuality, Color color);
 
 	// Draws text on the screen where x and y specifies the top left corner of
 	// the first letter
@@ -47,8 +47,9 @@ public interface RenderService {
 	public float getViewAreaWidth();
 
 	public void drawStringCentered(String string, float x, float y, float scale);
-	
-	public void drawStringCentered(String string, float x, float y, float scale, Color color);
+
+	public void drawStringCentered(String string, float x, float y,
+			float scale, Color color);
 
 	public boolean isActive();
 

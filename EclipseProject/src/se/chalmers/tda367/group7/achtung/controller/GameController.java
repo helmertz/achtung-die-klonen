@@ -13,56 +13,57 @@ import se.chalmers.tda367.group7.achtung.model.Round;
 import se.chalmers.tda367.group7.achtung.sound.Sound;
 
 public class GameController implements InputListener {
-	private Game game;
-	private List<PlayerController> playerControllers = new ArrayList<>();
-	
-	private boolean soundEnabled = true;
-	
-	public GameController(Game game) {	
+	private final Game game;
+	private final List<PlayerController> playerControllers = new ArrayList<>();
+
+	private final boolean soundEnabled = true;
+
+	public GameController(Game game) {
 		this.game = game;
 		int i = 0;
-		for(Player p : game.getPlayers()) {
-			
+		for (Player p : game.getPlayers()) {
+
 			PlayerController pc = new PlayerController(p);
-			if(i == 0) {
+			if (i == 0) {
 				pc.setLeftKey(Keyboard.KEY_LEFT);
 				pc.setRightKey(Keyboard.KEY_RIGHT);
-			} else if (i == 1){
+			} else if (i == 1) {
 				pc.setLeftKey(Keyboard.KEY_A);
 				pc.setRightKey(Keyboard.KEY_D);
 			} else {
 				pc.setLeftKey(Keyboard.KEY_1);
 				pc.setRightKey(Keyboard.KEY_2);
-				
+
 			}
 			i++;
-			playerControllers.add(pc);
+			this.playerControllers.add(pc);
 		}
 	}
-	
-	// Called as quickly as possible after a key is pressed, not in sync with game rate
+
+	// Called as quickly as possible after a key is pressed, not in sync with
+	// game rate
 	@Override
 	public boolean onInputEvent(InputEvent event) {
-		if(event.isPressed() && event.getKey() == Keyboard.KEY_SPACE) {
+		if (event.isPressed() && event.getKey() == Keyboard.KEY_SPACE) {
 			startRound();
 			return true;
 		}
-		for(PlayerController pc : playerControllers) {
-			if(pc.onInputEvent(event)) {
+		for (PlayerController pc : this.playerControllers) {
+			if (pc.onInputEvent(event)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	public void startRound() {
-		game.newRound();
-		Round round = game.getCurrentRound();
-		
-		if (soundEnabled) {
+		this.game.newRound();
+		Round round = this.game.getCurrentRound();
+
+		if (this.soundEnabled) {
 			Sound sound = Sound.getInstance();
 			round.addPropertyChangeListener(sound);
-			game.addPropertyChangeListener(sound);
+			this.game.addPropertyChangeListener(sound);
 		}
 	}
 }

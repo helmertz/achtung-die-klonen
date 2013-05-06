@@ -4,12 +4,14 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class PowerUpFactory {
 
-	private PowerUpFactory() {}
-	
+	private PowerUpFactory() {
+	}
+
 	public static PowerUpEntity getRandomEntity(Map map) {
-		
+
 		// Gets a random effect
-		PowerUpEffect effect = PlayerPowerUpEffect.effects[(int) (PlayerPowerUpEffect.effects.length * Math.random())];
+		PowerUpEffect effect = PowerUpEffect.effects[(int) (PowerUpEffect.effects.length * Math
+				.random())];
 
 		float diameter = PowerUpEntity.getDefaultDiameter();
 
@@ -17,7 +19,7 @@ public class PowerUpFactory {
 		float maxX = map.getWidth() - diameter;
 		float minY = diameter;
 		float maxY = map.getHeight() - diameter;
-		
+
 		Position randPos = Position.getRandomPosition(minX, minY, maxX, maxY);
 
 		// TODO all power-ups shouldn't be able to be of all types

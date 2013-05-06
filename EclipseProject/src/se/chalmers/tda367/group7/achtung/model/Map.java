@@ -6,11 +6,11 @@ public class Map {
 
 	private final int width;
 	private final int height;
-	
+
 	// Color represents the background color of the world. Could potentially be
 	// changed by powerups
-	private Color color;
-	
+	private final Color color;
+
 	public Map(int width, int height, Color color) {
 		this.width = width;
 		this.height = height;
@@ -22,16 +22,15 @@ public class Map {
 	}
 
 	public int getWidth() {
-		return width;
+		return this.width;
 	}
 
 	public int getHeight() {
-		return height;
+		return this.height;
 	}
 
 	public Color getColor() {
-		return color;
+		return this.color;
 	}
 
-	
 }

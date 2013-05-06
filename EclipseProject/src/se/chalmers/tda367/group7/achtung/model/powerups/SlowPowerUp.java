@@ -8,21 +8,22 @@ public class SlowPowerUp implements PlayerPowerUpEffect {
 
 	@Override
 	public void applyEffect(Body body) {
-		body.setSpeed(body.getSpeed()/2);
+		body.setSpeed(body.getSpeed() / 2);
 	}
 
 	@Override
 	public void removeEffect(Body body) {
-		body.setSpeed(body.getSpeed()*2);
+		body.setSpeed(body.getSpeed() * 2);
 	}
 
 	@Override
 	public int getDuration() {
 		return 150;
 	}
-	
+
+	@Override
 	public boolean isTypeOk(Type type) {
 		return type == Type.SELF || type == Type.EVERYONE_ELSE;
 	}
-	
+
 }

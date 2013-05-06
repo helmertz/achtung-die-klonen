@@ -9,26 +9,25 @@ import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public class PlayerView implements View {
 
-	private Player player;
-	private boolean drawHitBox = false;
-	
+	private final Player player;
+	private final boolean drawHitBox = false;
+
 	public PlayerView(Player player) {
 		this.player = player;
 	}
-	
+
 	@Override
 	public void render(RenderService renderService, float interpolation) {
-		
-		Body body = player.getBody();
+
+		Body body = this.player.getBody();
 
 		for (BodySegment b : body.getBodySegments()) {
 
 			renderService.drawLine(b.getStart().getX(), b.getStart().getY(), b
-					.getEnd().getX(), b.getEnd().getY(), b.getWidth(), player
-					.getColor());	
-			
-			
-			if (drawHitBox) {
+					.getEnd().getX(), b.getEnd().getY(), b.getWidth(),
+					this.player.getColor());
+
+			if (this.drawHitBox) {
 				int[] xpoints = b.getHitBox().xpoints;
 				int[] ypoints = b.getHitBox().ypoints;
 
@@ -47,7 +46,7 @@ public class PlayerView implements View {
 
 		float headX = body.getPosition().getX();
 		float headY = body.getPosition().getY();
-		
+
 		// Predict next position to get smoother rendering independent of
 		// tick-rate
 		if (!body.isDead()) {
@@ -60,26 +59,29 @@ public class PlayerView implements View {
 			headX += interpolationX;
 			headY += interpolationY;
 		}
-		
+
 		// Draw line from end of last segment to head position
 		// Only if there isn't a hole currently generating
 		if (!body.getBodySegments().isEmpty() && !body.isGeneratingHole()) {
 			Position endPos = body.getLastPosition();
 			renderService.drawLine(endPos.getX(), endPos.getY(), headX, headY,
-					body.getWidth(), player.getColor());
-			
+					body.getWidth(), this.player.getColor());
+
 		}
-		
-		renderService.drawCircleCentered(headX, headY, body.getWidth()/2, 10, player.getColor());
-		
+
+		renderService.drawCircleCentered(headX, headY, body.getWidth() / 2, 10,
+				this.player.getColor());
+
 		// Drawing of player name and score on the side
 		// TODO replace the hardcoded values
-		
+
 		float sideX = renderService.getViewAreaWidth() - 150;
-		float sideY = 100 * player.getId();
-		
-		renderService.drawString(player.getName(), sideX, sideY, 1f, player.getColor());
-		renderService.drawString(player.getPoints() + "", sideX, sideY + 20, 3f, player.getColor());
+		float sideY = 100 * this.player.getId();
+
+		renderService.drawString(this.player.getName(), sideX, sideY, 1f,
+				this.player.getColor());
+		renderService.drawString(this.player.getPoints() + "", sideX,
+				sideY + 20, 3f, this.player.getColor());
 	}
 
 }

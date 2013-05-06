@@ -7,7 +7,7 @@ public class MorePowerUp implements WorldPowerUpEffect {
 
 	@Override
 	public void applyEffect(Round round) {
-		round.setPowerUpChance(round.getDefaultPowerUpChance() + (float)0.06);
+		round.setPowerUpChance(round.getDefaultPowerUpChance() + (float) 0.06);
 	}
 
 	@Override

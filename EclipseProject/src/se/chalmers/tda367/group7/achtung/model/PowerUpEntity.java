@@ -1,17 +1,17 @@
 package se.chalmers.tda367.group7.achtung.model;
 
 public class PowerUpEntity {
-	
+
 	private final Position position;
 	private final float diameter;
 	private final PowerUpEffect powerUpEffect;
 	private Type type;
 	private static final float DEFAULT_DIAMETER = 40;
-	
+
 	public enum Type {
 		SELF, EVERYONE, EVERYONE_ELSE
 	}
-	
+
 	public PowerUpEntity(Position position, float diameter,
 			PowerUpEffect powerUpEffect, Type type) {
 		this.position = position;
@@ -21,71 +21,79 @@ public class PowerUpEntity {
 	}
 
 	private void setCorrectType(Type type) {
-		if(this.powerUpEffect instanceof WorldPowerUpEffect) {
+		if (this.powerUpEffect instanceof WorldPowerUpEffect) {
 			this.type = Type.EVERYONE;
-		} else if(this.powerUpEffect instanceof PlayerPowerUpEffect) {
+		} else if (this.powerUpEffect instanceof PlayerPowerUpEffect) {
 			this.type = type;
 		}
 	}
 
 	public Position getPosition() {
-		return position;
+		return this.position;
 	}
 
 	public float getDiameter() {
-		return diameter;
+		return this.diameter;
 	}
 
 	public PowerUpEffect getPowerUpEffect() {
-		return powerUpEffect;
+		return this.powerUpEffect;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + Float.floatToIntBits(diameter);
+		result = prime * result + Float.floatToIntBits(this.diameter);
 		result = prime
 				* result
-				+ ((powerUpEffect == null) ? 0 : powerUpEffect
+				+ ((this.powerUpEffect == null) ? 0 : this.powerUpEffect
 						.hashCode());
 		result = prime * result
-				+ ((position == null) ? 0 : position.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
+				+ ((this.position == null) ? 0 : this.position.hashCode());
+		result = prime * result
+				+ ((this.type == null) ? 0 : this.type.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		PowerUpEntity other = (PowerUpEntity) obj;
-		if (Float.floatToIntBits(diameter) != Float
-				.floatToIntBits(other.diameter))
+		if (Float.floatToIntBits(this.diameter) != Float
+				.floatToIntBits(other.diameter)) {
 			return false;
-		if (powerUpEffect == null) {
-			if (other.powerUpEffect != null)
+		}
+		if (this.powerUpEffect == null) {
+			if (other.powerUpEffect != null) {
 				return false;
-		} else if (!powerUpEffect.equals(other.powerUpEffect))
+			}
+		} else if (!this.powerUpEffect.equals(other.powerUpEffect)) {
 			return false;
-		if (position == null) {
-			if (other.position != null)
+		}
+		if (this.position == null) {
+			if (other.position != null) {
 				return false;
-		} else if (!position.equals(other.position))
+			}
+		} else if (!this.position.equals(other.position)) {
 			return false;
-		if (type != other.type)
+		}
+		if (this.type != other.type) {
 			return false;
+		}
 		return true;
 	}
 
-
-
 	public Type getType() {
-		return type;
+		return this.type;
 	}
 
 	public static float getDefaultDiameter() {
