@@ -143,6 +143,7 @@ public class MainController {
 				this.dbgGameTickCounter = 0;
 			}
 		}
+		Sound.closeSound();
 	}
 
 	private void doLogic() {

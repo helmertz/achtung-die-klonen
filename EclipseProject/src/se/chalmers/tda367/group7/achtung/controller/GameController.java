@@ -9,14 +9,11 @@ import se.chalmers.tda367.group7.achtung.input.InputEvent;
 import se.chalmers.tda367.group7.achtung.input.InputListener;
 import se.chalmers.tda367.group7.achtung.model.Game;
 import se.chalmers.tda367.group7.achtung.model.Player;
-import se.chalmers.tda367.group7.achtung.model.Round;
-import se.chalmers.tda367.group7.achtung.sound.Sound;
 
 public class GameController implements InputListener {
 	private final Game game;
 	private final List<PlayerController> playerControllers = new ArrayList<>();
 
-	private boolean soundEnabled = true;
 
 	public GameController(Game game) {
 		this.game = game;
@@ -58,11 +55,5 @@ public class GameController implements InputListener {
 
 	public void startRound() {
 		this.game.newRound();
-		Round round = this.game.getCurrentRound();
-
-		if (this.soundEnabled) {
-			Sound sound = Sound.getInstance();
-			round.addPropertyChangeListener(sound);
-		}
 	}
 }

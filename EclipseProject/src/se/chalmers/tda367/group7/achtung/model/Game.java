@@ -5,6 +5,8 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.chalmers.tda367.group7.achtung.sound.Sound;
+
 /**
  * Class for setting up everything before starting the game.
  */
@@ -43,6 +45,7 @@ public class Game {
 
 		if (this.currentRound == null || !this.currentRound.isRoundActive()) {
 			this.currentRound = new Round(this.map, this.players);
+			this.currentRound.addPropertyChangeListener(Sound.getInstance());
 			this.rounds.add(this.currentRound);
 		}
 

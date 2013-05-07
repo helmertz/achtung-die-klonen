@@ -21,7 +21,7 @@ public class Sound implements PropertyChangeListener {
 	private Audio playerDied;
 	private List<Audio> music;
 	private Audio currentMusic;
-	private boolean soundEnabled;
+	private static boolean soundEnabled;
 
 	private Sound() {
 		soundEnabled = true;
@@ -42,8 +42,9 @@ public class Sound implements PropertyChangeListener {
 			this.powerUpSelf = AudioLoader.getAudio("WAV", ResourceLoader
 					.getResourceAsStream("res/sounds/powerup4.wav"));
 
-			this.powerUpEveryoneElse = AudioLoader.getAudio("WAV", ResourceLoader
-					.getResourceAsStream("res/sounds/powerup2.wav"));
+			this.powerUpEveryoneElse = AudioLoader.getAudio("WAV",
+					ResourceLoader
+							.getResourceAsStream("res/sounds/powerup2.wav"));
 
 			this.powerUpEveryone = AudioLoader.getAudio("WAV", ResourceLoader
 					.getResourceAsStream("res/sounds/powerup3.wav"));
@@ -52,8 +53,12 @@ public class Sound implements PropertyChangeListener {
 					.getResourceAsStream("res/sounds/playerdies.wav"));
 
 			this.music = new ArrayList<Audio>();
-			this.music.add(AudioLoader.getAudio("WAV",
-					ResourceLoader.getResourceAsStream("res/sounds/music.wav")));
+			this.music
+					.add(AudioLoader.getAudio("WAV", ResourceLoader
+							.getResourceAsStream("res/sounds/music.wav")));
+			this.music
+					.add(AudioLoader.getAudio("WAV", ResourceLoader
+							.getResourceAsStream("res/sounds/music2.wav")));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -73,7 +78,8 @@ public class Sound implements PropertyChangeListener {
 			} else if (propertyName.equals("PlayerDied")) {
 				playSound(this.playerDied);
 			} else if (propertyName.equals("NewRound")) {
-				this.currentMusic = this.music.get((int) (music.size()*Math.random()) );
+				this.currentMusic = this.music.get((int) (music.size() * Math
+						.random()));
 				currentMusic.playAsMusic(1.0f, 1.0f, true);
 			} else if (propertyName.equals("RoundOver")) {
 				if (this.currentMusic.isPlaying()) {
@@ -87,12 +93,12 @@ public class Sound implements PropertyChangeListener {
 	private void playSound(Audio sound) {
 		sound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
-	
-	public void closeSound() {
+
+	public static void closeSound() {
 		AL.destroy();
 	}
-	
-	public void setSound(boolean sound) {
+
+	public static void setSound(boolean sound) {
 		soundEnabled = sound;
 	}
 }
