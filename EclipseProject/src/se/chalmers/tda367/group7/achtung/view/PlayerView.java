@@ -15,7 +15,7 @@ public class PlayerView implements View {
 
 	private final Player player;
 	private List<PowerUp> powerUps;
-	private final boolean drawHitBox = false;
+	private final boolean drawHitBox = false; // used for debug
 
 	public PlayerView(Player player) {
 		this.player = player;
@@ -98,7 +98,7 @@ public class PlayerView implements View {
 			for(PowerUp powerUp : powerUps) {
 				int dur = powerUp.getEffect().getDuration();
 				float percentDur = 100*((powerUp.getTimeLeft() - interpolation) / (float)dur);
-				renderService.drawCircleOutlinePercent(headX, headY, 20, (int)(percentDur), 2, new Color(255,255,0));
+				renderService.drawCircleOutlinePercent(headX, headY, 20, percentDur, 2, new Color(255,255,0));
 			}
 		}
 	}

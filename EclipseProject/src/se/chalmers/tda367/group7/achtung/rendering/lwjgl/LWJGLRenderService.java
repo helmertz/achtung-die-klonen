@@ -263,12 +263,12 @@ public class LWJGLRenderService implements RenderService {
 	}
 	
 	@Override
-	public void drawCircleOutlinePercent(float x, float y, float radius, int percent, float outLineWidth, Color color) {
+	public void drawCircleOutlinePercent(float x, float y, float radius, float percent, float outLineWidth, Color color) {
 		bindColor(color);
 		glLineWidth(outLineWidth);
 		glBegin(GL_LINE_STRIP);
 		
-	    for (int i=0; i < (float)(360*(percent/(float)100)); i++) {
+	    for (int i=0; i < (360*(percent/100)); i++) {
 	        float degInRad = (float) Math.toRadians(i);
 	        glVertex2f(x + (float)Math.cos(degInRad)*radius,
 	        		y + (float)Math.sin(degInRad)*radius);
