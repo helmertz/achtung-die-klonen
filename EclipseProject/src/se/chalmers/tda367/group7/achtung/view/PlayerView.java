@@ -24,7 +24,6 @@ public class PlayerView implements View {
 
 	@Override
 	public void render(RenderService renderService, float interpolation) {
-
 		Body body = this.player.getBody();
 
 		for (BodySegment b : body.getBodySegments()) {
@@ -88,7 +87,9 @@ public class PlayerView implements View {
 		renderService.drawString(this.player.getPoints() + "", sideX,
 				sideY + 20, 3f, this.player.getColor());
 		
-		this.drawPowerUpTimer(renderService, interpolation, headX, headY);
+		if(!player.getBody().isDead()) {
+			this.drawPowerUpTimer(renderService, interpolation, headX, headY);
+		}
 	}
 
 	private void drawPowerUpTimer(RenderService renderService,
