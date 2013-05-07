@@ -47,9 +47,9 @@ public class Game {
 			this.currentRound = new Round(this.map, this.players);
 			this.currentRound.addPropertyChangeListener(Sound.getInstance());
 			this.rounds.add(this.currentRound);
+			this.pcs.firePropertyChange("NewRound", false, true);
 		}
 
-		this.pcs.firePropertyChange("NewRound", false, true);
 	}
 
 	public void addPlayer(Player p) {
