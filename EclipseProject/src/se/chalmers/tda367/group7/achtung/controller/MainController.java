@@ -183,10 +183,11 @@ public class MainController implements InputListener {
 		renderer.drawString(fpsString, 0, 0, 1);
 		renderer.drawString(tpsString, 0, 20, 1);
 		
+		if (Display.wasResized()) {
+			nifty.resolutionChanged();
+		}
+		
 		if (atMenu) {
-			if (Display.wasResized()) {
-				nifty.resolutionChanged();
-			}
 			nifty.render(false);
 		}
 		renderer.postDraw();
