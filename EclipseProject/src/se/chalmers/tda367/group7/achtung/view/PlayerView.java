@@ -75,27 +75,11 @@ public class PlayerView implements View {
 					body.getWidth(), this.player.getColor());
 
 		}
-		
-		float percentDur = 0;
-		int dur = 0;
-		this.powerUps = player.getBody().getPowerUps();
-		float timerX = player.getBody().getPosition().getX();
-		float timerY = player.getBody().getPosition().getY();
-		
-		if(powerUps.size() > 0) {
-			for(PowerUp powerUp : powerUps) {
-				dur = powerUp.getEffect().getDuration();
-				percentDur = 100*((powerUp.getTimeLeft() - interpolation) / (float)dur);
-				renderService.drawCircleOutlinePercent(headX, headY, 20, (int)(percentDur), 2, new Color(255,255,0));
-			}
-		}
-
 		renderService.drawCircleCentered(headX, headY, body.getWidth() / 2, 10,
 				this.player.getColor());
 
 		// Drawing of player name and score on the side
 		// TODO replace the hardcoded values
-
 		float sideX = renderService.getViewAreaWidth() - 150;
 		float sideY = 100 * this.player.getId();
 
@@ -103,14 +87,21 @@ public class PlayerView implements View {
 				this.player.getColor());
 		renderService.drawString(this.player.getPoints() + "", sideX,
 				sideY + 20, 3f, this.player.getColor());
-
-//		drawPowerUpTimer(renderService, interpolation);
 		
-		
+		this.drawPowerUpTimer(renderService, interpolation, headX, headY);
 	}
 
-	private void drawPowerUpTimer(RenderService renderService, float interpolation) {
-
+	private void drawPowerUpTimer(RenderService renderService,
+			float interpolation, float headX, float headY) {
+		this.powerUps = player.getBody().getPowerUps();
+		
+		if(powerUps.size() > 0) {
+			for(PowerUp powerUp : powerUps) {
+				int dur = powerUp.getEffect().getDuration();
+				float percentDur = 100*((powerUp.getTimeLeft() - interpolation) / (float)dur);
+				renderService.drawCircleOutlinePercent(headX, headY, 20, (int)(percentDur), 2, new Color(255,255,0));
+			}
+		}
 	}
 
 }
