@@ -9,7 +9,8 @@ public interface PowerUpEffect {
 	public static final PowerUpEffect[] effects = new PowerUpEffect[] {
 			new FatPowerUp(), new SlowPowerUp(), new SpeedPowerUp(),
 			new ThinPowerUp(), new TurnPowerUp(), new RemoveWallsPowerUp(),
-			new MorePowerUp(), new InvertedControlsPowerUp() };
+			new MorePowerUp(), new InvertedControlsPowerUp(),
+			new ClearPowerUp() };
 
 	/**
 	 * @return the duration for this power up

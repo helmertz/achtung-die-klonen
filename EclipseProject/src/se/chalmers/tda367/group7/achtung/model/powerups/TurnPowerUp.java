@@ -27,7 +27,7 @@ public class TurnPowerUp implements PlayerPowerUpEffect {
 
 	@Override
 	public boolean isTypeOk(Type type) {
-		return type == Type.SELF || type == Type.EVERYONE_ELSE;
+		return type == Type.EVERYONE_ELSE;
 	}
 
 }

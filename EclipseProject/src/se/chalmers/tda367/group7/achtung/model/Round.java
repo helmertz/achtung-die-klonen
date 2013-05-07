@@ -209,9 +209,7 @@ public class Round {
 
 	private void addPowerUpToEveryone(PlayerPowerUpEffect effect) {
 		for (Player p : this.players) {
-			if(!p.getBody().isDead()) {
-				p.getBody().addPowerUp(effect);
-			}
+			p.getBody().addPowerUp(effect);
 		}
 	}
 
