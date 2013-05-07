@@ -13,3 +13,6 @@ Requires LWJGL, PNGDecoder and slick-util! Before opening project:
 6.  Download slick-util.jar from https://bitbucket.org/kevglass/slick/src/96a4b840204c/trunk/Slick/lib?at=development
 7.  Put slick-util.jar in "lib"
 8.  Import into Eclipse
+
+## Credits
+Music: Borderline (Fantastic Vamps : 8-Bit Mix) <http://ccmixter.org/files/vamps/8749>
