@@ -268,7 +268,7 @@ public class LWJGLRenderService implements RenderService {
 		glLineWidth(outLineWidth);
 		glBegin(GL_LINE_STRIP);
 		
-	    for (int i=0; i < (360*(percent/100)); i++) {
+	    for (int i=-90; i < (360*(percent/100)) -90; i++) { // -90 to make it start "at the top"
 	        float degInRad = (float) Math.toRadians(i);
 	        glVertex2f(x + (float)Math.cos(degInRad)*radius,
 	        		y + (float)Math.sin(degInRad)*radius);
