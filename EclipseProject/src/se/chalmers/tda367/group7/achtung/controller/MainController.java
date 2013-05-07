@@ -7,6 +7,7 @@ import se.chalmers.tda367.group7.achtung.input.LWJGLInputService;
 import se.chalmers.tda367.group7.achtung.model.Game;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.LWJGLRenderService;
+import se.chalmers.tda367.group7.achtung.sound.Sound;
 import se.chalmers.tda367.group7.achtung.view.WorldView;
 
 /**
@@ -54,6 +55,7 @@ public class MainController {
 		this.inputService = new LWJGLInputService();
 		// TODO: Hard coded here temporarily
 		this.game = new Game();
+		this.game.addPropertyChangeListener(Sound.getInstance());
 
 		this.gameController = new GameController(this.game);
 		this.gameController.startRound();

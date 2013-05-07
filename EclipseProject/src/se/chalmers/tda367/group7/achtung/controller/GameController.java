@@ -63,7 +63,6 @@ public class GameController implements InputListener {
 		if (this.soundEnabled) {
 			Sound sound = Sound.getInstance();
 			round.addPropertyChangeListener(sound);
-			this.game.addPropertyChangeListener(sound);
 		}
 	}
 }

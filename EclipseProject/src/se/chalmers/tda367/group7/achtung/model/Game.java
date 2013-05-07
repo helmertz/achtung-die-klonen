@@ -41,11 +41,8 @@ public class Game {
 
 	public void newRound() {
 
-		if (this.currentRound == null) {
+		if (this.currentRound == null || !this.currentRound.isRoundActive()) {
 			this.currentRound = new Round(this.map, this.players);
-		} else if (!this.currentRound.isRoundActive()) {
-			this.currentRound = new Round(this.map, this.players);
-
 			this.rounds.add(this.currentRound);
 		}
 
