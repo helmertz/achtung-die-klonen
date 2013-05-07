@@ -86,10 +86,8 @@ public class PlayerView implements View {
 				this.player.getColor());
 		renderService.drawString(this.player.getPoints() + "", sideX,
 				sideY + 20, 3f, this.player.getColor());
-		
-		if(!player.getBody().isDead()) {
-			this.drawPowerUpTimer(renderService, interpolation, headX, headY);
-		}
+	
+		this.drawPowerUpTimer(renderService, interpolation, headX, headY);
 	}
 
 	private void drawPowerUpTimer(RenderService renderService,
