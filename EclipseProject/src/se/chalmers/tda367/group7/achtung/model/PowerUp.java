@@ -38,4 +38,12 @@ public class PowerUp {
 	public void update() {
 		this.timeElapsed++;
 	}
+	
+	public PowerUpEffect getEffect() {
+		return this.effect;
+	}
+	
+	public int getTimeLeft() {
+		return this.effect.getDuration() - this.timeElapsed;
+	}
 }

@@ -69,6 +69,7 @@ public class WorldView implements View, PropertyChangeListener {
 			renderer.drawStringCentered(NEXT_ROUND_MESSAGE_3, centerX,
 					centerY + 105, 1f);
 		}
+		
 	}
 
 	private void updatePowerUpViews() {
@@ -84,7 +85,7 @@ public class WorldView implements View, PropertyChangeListener {
 		Round round = this.game.getCurrentRound();
 		round.addPropertyChangeListener(this);
 		this.mapView = new MapView(round.getMap());
-
+		
 	}
 
 	@Override

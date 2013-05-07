@@ -12,6 +12,10 @@ public class Body {
 	private final List<BodySegment> bodySegments;
 	private final List<PowerUp> powerUps = new ArrayList<PowerUp>();
 
+	public List<PowerUp> getPowerUps() {
+		return powerUps;
+	}
+
 	private TurnMode turnMode;
 	private float speed;
 	private float rotationAngleDeg; // the angle the snake is facing.

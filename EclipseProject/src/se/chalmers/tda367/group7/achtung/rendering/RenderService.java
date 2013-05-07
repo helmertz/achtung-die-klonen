@@ -60,4 +60,7 @@ public interface RenderService {
 
 	public void drawString(String s, float x, float y, float scale, Color color);
 
+	void drawCircleOutlinePercent(float x, float y, float radius, int percent,
+			float outlineWidth, Color color);
+
 }

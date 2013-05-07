@@ -1,19 +1,25 @@
 package se.chalmers.tda367.group7.achtung.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import se.chalmers.tda367.group7.achtung.model.Body;
 import se.chalmers.tda367.group7.achtung.model.BodySegment;
 import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.model.Position;
+import se.chalmers.tda367.group7.achtung.model.PowerUp;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public class PlayerView implements View {
 
 	private final Player player;
+	private List<PowerUp> powerUps;
 	private final boolean drawHitBox = false;
 
 	public PlayerView(Player player) {
 		this.player = player;
+		this.powerUps = new ArrayList<PowerUp>();
 	}
 
 	@Override
@@ -42,6 +48,7 @@ public class PlayerView implements View {
 							ypoints[0], 1, Color.WHITE);
 				}
 			}
+			
 		}
 
 		float headX = body.getPosition().getX();
@@ -68,6 +75,20 @@ public class PlayerView implements View {
 					body.getWidth(), this.player.getColor());
 
 		}
+		
+		float percentDur = 0;
+		int dur = 0;
+		this.powerUps = player.getBody().getPowerUps();
+		float timerX = player.getBody().getPosition().getX();
+		float timerY = player.getBody().getPosition().getY();
+		
+		if(powerUps.size() > 0) {
+			for(PowerUp powerUp : powerUps) {
+				dur = powerUp.getEffect().getDuration();
+				percentDur = 100*((powerUp.getTimeLeft() - interpolation) / (float)dur);
+				renderService.drawCircleOutlinePercent(headX, headY, 20, (int)(percentDur), 2, new Color(255,255,0));
+			}
+		}
 
 		renderService.drawCircleCentered(headX, headY, body.getWidth() / 2, 10,
 				this.player.getColor());
@@ -82,6 +103,14 @@ public class PlayerView implements View {
 				this.player.getColor());
 		renderService.drawString(this.player.getPoints() + "", sideX,
 				sideY + 20, 3f, this.player.getColor());
+
+//		drawPowerUpTimer(renderService, interpolation);
+		
+		
+	}
+
+	private void drawPowerUpTimer(RenderService renderService, float interpolation) {
+
 	}
 
 }
