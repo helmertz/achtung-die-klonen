@@ -12,7 +12,6 @@ import de.lessvoid.nifty.renderer.lwjgl.input.LwjglInputSystem;
 import de.lessvoid.nifty.renderer.lwjgl.render.LwjglRenderDevice;
 import de.lessvoid.nifty.renderer.lwjgl.time.LWJGLTimeProvider;
 import de.lessvoid.nifty.screen.Screen;
-import de.lessvoid.nifty.screen.ScreenController;
 import se.chalmers.tda367.group7.achtung.input.InputEvent;
 import se.chalmers.tda367.group7.achtung.input.InputListener;
 import se.chalmers.tda367.group7.achtung.input.InputService;
@@ -29,7 +28,7 @@ import se.chalmers.tda367.group7.achtung.view.GameView;
  * logic and rendering.
  */
 public class MainController implements InputListener, PropertyChangeListener {
-	
+
 	// Game time related
 	private static final double TICKS_PER_SECOND = 25;
 	private static final long SKIP_TICKS = (long) (1000000000d / TICKS_PER_SECOND);
@@ -58,14 +57,14 @@ public class MainController implements InputListener, PropertyChangeListener {
 	private GameView gameView;
 	private GameController gameController;
 
-	private Nifty nifty;
+	private final Nifty nifty;
 	private boolean atMenu = true;
-	private MainMenuController menuController;
+	private final MainMenuController menuController;
 
 	public MainController() {
-		
-		// Only statically stored to make 
-		// TODO find another way of doing this		
+
+		// Only statically stored to make
+		// TODO find another way of doing this
 		try {
 			this.renderer = new LWJGLRenderService();
 		} catch (LWJGLException e) {
@@ -74,21 +73,18 @@ public class MainController implements InputListener, PropertyChangeListener {
 		}
 
 		this.inputService = new LWJGLInputService();
-		
-		nifty = new Nifty(
-		        new LwjglRenderDevice(),
-		        new NullSoundDevice(),
-		        new LwjglInputSystem(),
-		        new LWJGLTimeProvider());
 
-		
-		nifty.fromXml("menu/helloworld.xml", "start");
-		
+		this.nifty = new Nifty(new LwjglRenderDevice(), new NullSoundDevice(),
+				new LwjglInputSystem(), new LWJGLTimeProvider());
+
+		this.nifty.fromXml("menu/helloworld.xml", "start");
+
 		// TODO perhaps do this interaction differently, without this being a
 		// listener
-		Screen niftyScreen = nifty.getScreen("start");
-		menuController = (MainMenuController) niftyScreen.getScreenController();
-		menuController.addListener(this);
+		Screen niftyScreen = this.nifty.getScreen("start");
+		this.menuController = (MainMenuController) niftyScreen
+				.getScreenController();
+		this.menuController.addListener(this);
 	}
 
 	private long getTickCount() {
@@ -107,7 +103,7 @@ public class MainController implements InputListener, PropertyChangeListener {
 			this.inputService.update();
 
 			boolean doLogic = true;
-			nifty.update();
+			this.nifty.update();
 
 			// Essentially pauses the game when not in focus
 			if (!this.renderer.isActive()) {
@@ -122,9 +118,9 @@ public class MainController implements InputListener, PropertyChangeListener {
 				// Needs to be set to now so that no compensation is done
 				this.nextGameTick = getTickCount();
 			}
-			if(atMenu) {
+			if (this.atMenu) {
 				doLogic = false;
-				nextGameTick = getTickCount();
+				this.nextGameTick = getTickCount();
 			}
 			this.loops = 0;
 			while (doLogic && getTickCount() >= this.nextGameTick
@@ -160,14 +156,16 @@ public class MainController implements InputListener, PropertyChangeListener {
 				// Calculate and print average fps
 				double fps = (this.dbgFrameCounter * 1000000000l)
 						/ (double) deltaDebug;
-				this.fpsString = "FPS: " + String.format(Locale.US, "%.2f", fps);
+				this.fpsString = "FPS: "
+						+ String.format(Locale.US, "%.2f", fps);
 				System.out.println(this.fpsString);
 				this.dbgFrameCounter = 0;
 
 				// Calculate and print average game logic (tick) rate
 				double logicRate = (this.dbgGameTickCounter * 1000000000l)
 						/ (double) deltaDebug;
-				this.tpsString = "TPS: " + String.format(Locale.US, "%.2f", logicRate);
+				this.tpsString = "TPS: "
+						+ String.format(Locale.US, "%.2f", logicRate);
 				System.out.println(this.tpsString);
 				this.dbgGameTickCounter = 0;
 			}
@@ -206,34 +204,34 @@ public class MainController implements InputListener, PropertyChangeListener {
 
 	@Override
 	public boolean onInputEvent(InputEvent event) {
-		if(event.isPressed() && event.getKey() == Keyboard.KEY_ESCAPE) {
+		if (event.isPressed() && event.getKey() == Keyboard.KEY_ESCAPE) {
 			toggleMenu();
 			return true;
 		}
-		gameController.onInputEvent(event);
+		this.gameController.onInputEvent(event);
 		return false;
 	}
 
 	public void toggleMenu() {
-		atMenu = !atMenu;
+		this.atMenu = !this.atMenu;
 	}
 
 	public void startGame() {
 		this.game = new Game();
 		this.game.addPropertyChangeListener(Sound.getInstance());
-		
-		this.gameController = new GameController(game);
-		gameController.startRound();
-		inputService.addListener(this);
-		
-		this.gameView = new GameView(game);
-		game.addPropertyChangeListener(gameView);
+
+		this.gameController = new GameController(this.game);
+		this.gameController.startRound();
+		this.inputService.addListener(this);
+
+		this.gameView = new GameView(this.game);
+		this.game.addPropertyChangeListener(this.gameView);
 		toggleMenu();
 	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if(evt.getPropertyName().equals("startPressed")) {
+		if (evt.getPropertyName().equals("startPressed")) {
 			startGame();
 		}
 	}

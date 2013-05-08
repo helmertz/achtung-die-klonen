@@ -110,7 +110,7 @@ public class LWJGLRenderService implements RenderService {
 		glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 0, 1);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-		if (scaled) {
+		if (this.scaled) {
 			glScalef(this.scaling, this.scaling, 1);
 			glTranslatef(this.xPadding, this.yPadding, 0);
 		}
@@ -128,10 +128,10 @@ public class LWJGLRenderService implements RenderService {
 
 	@Override
 	public void postDraw() {
-		if(this.scaled) {
+		if (this.scaled) {
 			clearOutsideViewArea();
 		}
-		
+
 		Display.update();
 	}
 
@@ -257,18 +257,22 @@ public class LWJGLRenderService implements RenderService {
 		glEnd();
 		glPopMatrix();
 	}
-	
+
 	@Override
-	public void drawCircleOutlinePercent(float x, float y, float radius, float percent, float outLineWidth, Color color) {
+	public void drawCircleOutlinePercent(float x, float y, float radius,
+			float percent, float outLineWidth, Color color) {
 		bindColor(color);
 		glLineWidth(outLineWidth);
 		glBegin(GL_LINE_STRIP);
-		
-	    for (int i=-90; i < (360*(percent/100)) -90; i++) { // -90 to make it start "at the top"
-	        float degInRad = (float) Math.toRadians(i);
-	        glVertex2f(x + (float)Math.cos(degInRad)*radius,
-	        		y + (float)Math.sin(degInRad)*radius);
-	    }
+
+		for (int i = -90; i < (360 * (percent / 100)) - 90; i++) { // -90 to
+																	// make it
+																	// start
+																	// "at the top"
+			float degInRad = (float) Math.toRadians(i);
+			glVertex2f(x + (float) Math.cos(degInRad) * radius, y
+					+ (float) Math.sin(degInRad) * radius);
+		}
 
 		glEnd();
 	}
@@ -279,8 +283,8 @@ public class LWJGLRenderService implements RenderService {
 			this.scaled = scaled;
 			if (scaled) {
 				glLoadIdentity();
-				glScalef(scaling, scaling, 1);
-				glTranslatef(xPadding, yPadding, 0);
+				glScalef(this.scaling, this.scaling, 1);
+				glTranslatef(this.xPadding, this.yPadding, 0);
 			} else {
 				clearOutsideViewArea();
 				glLoadIdentity();
@@ -290,13 +294,13 @@ public class LWJGLRenderService implements RenderService {
 
 	// Draws two rectangles to cover up things that have been drawn outside
 	private void clearOutsideViewArea() {
-		bindColor(backColor);
-		if (xPadding > 0) {
-			drawRect(-xPadding, 0, xPadding, viewAreaHeight);
-			drawRect(viewAreaWidth, 0, xPadding, viewAreaHeight);
+		bindColor(this.backColor);
+		if (this.xPadding > 0) {
+			drawRect(-this.xPadding, 0, this.xPadding, this.viewAreaHeight);
+			drawRect(this.viewAreaWidth, 0, this.xPadding, this.viewAreaHeight);
 		} else {
-			drawRect(0, -yPadding, viewAreaWidth, yPadding);
-			drawRect(0, viewAreaHeight, viewAreaWidth, yPadding);
+			drawRect(0, -this.yPadding, this.viewAreaWidth, this.yPadding);
+			drawRect(0, this.viewAreaHeight, this.viewAreaWidth, this.yPadding);
 		}
 	}
 }

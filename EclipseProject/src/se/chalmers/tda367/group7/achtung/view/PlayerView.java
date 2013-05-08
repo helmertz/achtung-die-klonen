@@ -16,12 +16,9 @@ public class PlayerView implements View {
 	private final Player player;
 	private List<PowerUp> powerUps;
 	private final boolean drawHitBox = false; // used for debug
-	private Color powerUpTimerColors[] = new Color[] { 
-			new Color(255, 255, 0),
-			new Color(125, 125, 0), 
-			new Color(125, 255, 0),
-			new Color(255, 125, 0) 
-			};
+	private final Color powerUpTimerColors[] = new Color[] { new Color(255, 255, 0),
+			new Color(125, 125, 0), new Color(125, 255, 0),
+			new Color(255, 125, 0) };
 
 	public PlayerView(Player player) {
 		this.player = player;
@@ -82,28 +79,29 @@ public class PlayerView implements View {
 		}
 		renderService.drawCircleCentered(headX, headY, body.getWidth() / 2, 10,
 				this.player.getColor());
-		
-		if(!player.getBody().isDead())
+
+		if (!this.player.getBody().isDead()) {
 			this.drawPowerUpTimer(renderService, interpolation, headX, headY);
+		}
 	}
 
 	private void drawPowerUpTimer(RenderService renderService,
 			float interpolation, float headX, float headY) {
-		Body body = player.getBody();
+		Body body = this.player.getBody();
 		this.powerUps = body.getPowerUps();
 
 		float lineWidth = 2;
 		float radius = (float) Math.pow(body.getHead().getDiameter(), 1.05) + 8;
 
-		if (powerUps.size() > 0) {
-			for (PowerUp powerUp : powerUps) {
-				int powerUpIndex = powerUps.indexOf(powerUp);
+		if (this.powerUps.size() > 0) {
+			for (PowerUp powerUp : this.powerUps) {
+				int powerUpIndex = this.powerUps.indexOf(powerUp);
 				radius += powerUpIndex + (lineWidth * 4);
 
 				Color color = getCorrectTimerColor(powerUp);
 				int dur = powerUp.getEffect().getDuration();
 
-				float percentDur = 100 * ((powerUp.getTimeLeft() - interpolation) / (float) dur);
+				float percentDur = 100 * ((powerUp.getTimeLeft() - interpolation) / dur);
 				renderService.drawCircleOutlinePercent(headX, headY, radius,
 						percentDur, lineWidth, color);
 			}
@@ -112,10 +110,10 @@ public class PlayerView implements View {
 
 	private Color getCorrectTimerColor(PowerUp powerUp) {
 		Color color;
-		if(powerUps.indexOf(powerUp) < powerUpTimerColors.length) {
-			color = powerUpTimerColors[powerUps.indexOf(powerUp)];
+		if (this.powerUps.indexOf(powerUp) < this.powerUpTimerColors.length) {
+			color = this.powerUpTimerColors[this.powerUps.indexOf(powerUp)];
 		} else {
-			color = new Color(255,255,0);
+			color = new Color(255, 255, 0);
 		}
 		return color;
 	}

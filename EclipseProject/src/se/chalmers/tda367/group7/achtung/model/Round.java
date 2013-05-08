@@ -51,7 +51,7 @@ public class Round {
 		for (Player p : players) {
 			p.getBody().addPowerUp(noTail);
 		}
-		
+
 		this.collisionHelper = new CollisionHelper(map, players);
 	}
 
@@ -84,30 +84,30 @@ public class Round {
 	private void updatePlayers() {
 		// Used for checking who won, could probably be done better
 		Player lastAlive = null;
-		for (Player player : players) {
+		for (Player player : this.players) {
 			player.update();
-			if(player.getBody().isDead()) {
+			if (player.getBody().isDead()) {
 				continue;
 			}
 			// TODO: don't do this if player is immortal,
 			// but must still be able to go through walls
 			// (which is done in CollisionHelper as of writing this)
 			handleCollisions(player);
-			
+
 			// Allows null to prevent problem with remaining players dying at
 			// the same time
 			if (lastAlive == null || !player.getBody().isDead()) {
 				lastAlive = player;
 			}
 		}
-		
-		if(isOnePlayerLeft()) {
-			winner = lastAlive;
-			
+
+		if (isOnePlayerLeft()) {
+			this.winner = lastAlive;
+
 			// Kills to prevent rendering problem
 			lastAlive.getBody().kill();
 
-			pcs.firePropertyChange("RoundOver", false, true);
+			this.pcs.firePropertyChange("RoundOver", false, true);
 		}
 	}
 
@@ -133,8 +133,7 @@ public class Round {
 		while (iterator.hasNext()) {
 			PowerUpEntity powerUp = iterator.next();
 
-			if (this.collisionHelper.hasCollidedWithPowerUp(player,
-					powerUp)) {
+			if (this.collisionHelper.hasCollidedWithPowerUp(player, powerUp)) {
 				iterator.remove();
 				distributePowerUp(player, powerUp);
 				this.pcs.firePropertyChange("PowerUp"
@@ -163,7 +162,7 @@ public class Round {
 	private boolean isOnePlayerLeft() {
 		return this.players.size() - this.deadPlayers < 2;
 	}
-	
+
 	private void distributePowerUp(Player pickedUpByPlayer,
 			PowerUpEntity powerUp) {
 		PowerUpEffect effect = powerUp.getPowerUpEffect();
@@ -261,7 +260,7 @@ public class Round {
 	}
 
 	public Player getWinner() {
-		return winner;
+		return this.winner;
 	}
 
 	public List<Player> getPlayers() {

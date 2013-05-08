@@ -41,9 +41,9 @@ public class Game {
 		this.currentRound.update();
 		sortPlayersByPoints();
 	}
-	
+
 	private void sortPlayersByPoints() {
-		Collections.sort(players, new SortByPointsDescending());
+		Collections.sort(this.players, new SortByPointsDescending());
 	}
 
 	public void newRound() {
@@ -82,12 +82,12 @@ public class Game {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Returns the number of points required to win the game.
 	 */
 	public int getGoalPoints() {
-		return 10 * (players.size() - 1);
+		return 10 * (this.players.size() - 1);
 	}
 
 	public Round getCurrentRound() {

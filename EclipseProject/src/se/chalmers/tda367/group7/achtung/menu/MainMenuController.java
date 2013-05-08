@@ -9,15 +9,10 @@ import de.lessvoid.nifty.screen.ScreenController;
 
 public class MainMenuController implements ScreenController {
 
-	private Nifty nifty;
-	private Screen screen;
-
-	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
 	@Override
 	public void bind(Nifty nifty, Screen screen) {
-		this.nifty = nifty;
-		this.screen = screen;
 	}
 
 	@Override
@@ -31,14 +26,14 @@ public class MainMenuController implements ScreenController {
 	}
 
 	public void addListener(PropertyChangeListener listener) {
-		pcs.addPropertyChangeListener(listener);
+		this.pcs.addPropertyChangeListener(listener);
 	}
 
 	public void removeListener(PropertyChangeListener listener) {
-		pcs.removePropertyChangeListener(listener);
+		this.pcs.removePropertyChangeListener(listener);
 	}
-	
+
 	public void onStartPress() {
-		pcs.firePropertyChange("startPressed", false, true);
+		this.pcs.firePropertyChange("startPressed", false, true);
 	}
 }

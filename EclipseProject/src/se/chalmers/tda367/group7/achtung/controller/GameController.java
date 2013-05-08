@@ -14,7 +14,6 @@ public class GameController implements InputListener {
 	private final Game game;
 	private final List<PlayerController> playerControllers = new ArrayList<>();
 
-
 	public GameController(Game game) {
 		this.game = game;
 		int i = 0;

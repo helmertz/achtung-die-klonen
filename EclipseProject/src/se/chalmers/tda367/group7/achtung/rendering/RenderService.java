@@ -25,15 +25,14 @@ public interface RenderService {
 
 	// Draws a filled rectangle where x and y is the location of the top left
 	// corner
-	void drawFilledRect(float x, float y, float width, float height,
-			Color color);
+	void drawFilledRect(float x, float y, float width, float height, Color color);
 
 	// Draws the outline of the rectangle, with specified width
 	void drawLinedRect(float x, float y, float width, float height,
 			float lineWidth, Color color);
 
-	void drawCircleCentered(float x, float y, float radius,
-			int edgeQuality, Color color);
+	void drawCircleCentered(float x, float y, float radius, int edgeQuality,
+			Color color);
 
 	// Draws text on the screen where x and y specifies the top left corner of
 	// the first letter
@@ -48,8 +47,8 @@ public interface RenderService {
 
 	void drawStringCentered(String string, float x, float y, float scale);
 
-	void drawStringCentered(String string, float x, float y,
-			float scale, Color color);
+	void drawStringCentered(String string, float x, float y, float scale,
+			Color color);
 
 	boolean isActive();
 
@@ -60,8 +59,8 @@ public interface RenderService {
 
 	void drawString(String s, float x, float y, float scale, Color color);
 
-	void drawCircleOutlinePercent(float x, float y, float radius, float percentDur,
-			float outlineWidth, Color color);
+	void drawCircleOutlinePercent(float x, float y, float radius,
+			float percentDur, float outlineWidth, Color color);
 
 	// Toggle whether or not to draw in the fixed view area. If true, what's
 	// drawn between 0 and max width/height will be visible and scaled

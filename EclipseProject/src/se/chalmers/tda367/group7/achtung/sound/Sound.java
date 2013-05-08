@@ -78,9 +78,9 @@ public class Sound implements PropertyChangeListener {
 			} else if (propertyName.equals("PlayerDied")) {
 				playSound(this.playerDied);
 			} else if (propertyName.equals("NewRound")) {
-				this.currentMusic = this.music.get((int) (music.size() * Math
+				this.currentMusic = this.music.get((int) (this.music.size() * Math
 						.random()));
-				currentMusic.playAsMusic(1.0f, 1.0f, true);
+				this.currentMusic.playAsMusic(1.0f, 1.0f, true);
 			} else if (propertyName.equals("RoundOver")) {
 				if (this.currentMusic.isPlaying()) {
 					this.currentMusic.stop();

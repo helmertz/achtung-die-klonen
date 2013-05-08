@@ -16,9 +16,9 @@ public class PlayerScoreView implements View {
 	public void render(RenderService renderService, float interpolation) {
 		// Drawing of player name and score on the side
 		// TODO replace the hardcoded values
-		for (Player player : players) {
+		for (Player player : this.players) {
 			float sideX = renderService.getViewAreaWidth() - 150;
-			float sideY = 100 * players.indexOf(player);
+			float sideY = 100 * this.players.indexOf(player);
 
 			renderService.drawString(player.getName(), sideX, sideY, 1f,
 					player.getColor());
@@ -26,7 +26,7 @@ public class PlayerScoreView implements View {
 					sideY + 20, 3f, player.getColor());
 		}
 	}
-	
+
 	public void updatePlayerScoreViews(List<Player> players) {
 		this.players = players;
 	}

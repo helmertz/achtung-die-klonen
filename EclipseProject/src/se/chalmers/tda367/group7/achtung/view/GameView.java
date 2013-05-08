@@ -14,9 +14,9 @@ import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public class GameView implements View, PropertyChangeListener {
 
-	private List<PlayerView> playerViews = new ArrayList<PlayerView>();
+	private final List<PlayerView> playerViews = new ArrayList<PlayerView>();
 	private final List<PowerUpEntityView> powerUpView = new ArrayList<PowerUpEntityView>();
-	private PlayerScoreView scoreView;
+	private final PlayerScoreView scoreView;
 
 	private MapView mapView;
 	private final Game game;
@@ -39,7 +39,7 @@ public class GameView implements View, PropertyChangeListener {
 	}
 
 	private void addPlayerViews() {
-		for (Player p : game.getPlayers()) {
+		for (Player p : this.game.getPlayers()) {
 			this.playerViews.add(new PlayerView(p));
 		}
 	}
@@ -56,12 +56,12 @@ public class GameView implements View, PropertyChangeListener {
 		for (View view : this.powerUpView) {
 			view.render(renderer, interpolation);
 		}
-		
-		scoreView.render(renderer, interpolation);
-		
+
+		this.scoreView.render(renderer, interpolation);
+
 		// If over draws a box displaying the winner, and instructions on how to
 		// continue.
-		if (game.isOver()) {
+		if (this.game.isOver()) {
 			// TODO perhaps not hardcode as much here. Maybe redo size handling
 			// in font.
 			float viewWidth = renderer.getViewAreaWidth();
@@ -81,7 +81,7 @@ public class GameView implements View, PropertyChangeListener {
 					new Color(255, 255, 0));
 			renderer.drawStringCentered(WON_GAME_MESSAGE_3, centerX,
 					centerY + 105, 1f);
-		} else if (!game.getCurrentRound().isRoundActive()) {
+		} else if (!this.game.getCurrentRound().isRoundActive()) {
 
 			// TODO perhaps not hardcode as much here. Maybe redo size handling
 			// in font.
@@ -91,7 +91,7 @@ public class GameView implements View, PropertyChangeListener {
 			float centerY = viewHeight / 2;
 			float width = 600;
 			float height = 240;
-			Player winner = game.getCurrentRound().getWinner();
+			Player winner = this.game.getCurrentRound().getWinner();
 			String name = winner.getName();
 			renderer.drawFilledRect(centerX - width / 2, centerY - height / 2,
 					width, height, NEXT_ROUND_COLOR);
@@ -131,8 +131,8 @@ public class GameView implements View, PropertyChangeListener {
 		} else if (evt.getPropertyName().equals("NewRound")) {
 			updateMapView();
 			updatePowerUpViews();
-		} else if(evt.getPropertyName().equals("PlayerDied")) {
-			scoreView.updatePlayerScoreViews(game.getPlayers());
+		} else if (evt.getPropertyName().equals("PlayerDied")) {
+			this.scoreView.updatePlayerScoreViews(this.game.getPlayers());
 		}
 	}
 }

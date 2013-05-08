@@ -4,23 +4,24 @@ import se.chalmers.tda367.group7.achtung.model.Body;
 import se.chalmers.tda367.group7.achtung.model.BodyPowerUpEffect;
 import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
-public class FatPowerUp implements BodyPowerUpEffect{
+public class FatPowerUp implements BodyPowerUpEffect {
 
 	@Override
 	public void applyEffect(Body body) {
-		body.setWidth(body.getWidth()*2);
+		body.setWidth(body.getWidth() * 2);
 	}
 
 	@Override
 	public void removeEffect(Body body) {
-		body.setWidth(body.getWidth()/2);
+		body.setWidth(body.getWidth() / 2);
 	}
 
 	@Override
 	public int getDuration() {
 		return 150;
 	}
-	
+
+	@Override
 	public boolean isTypeOk(Type type) {
 		return type == Type.EVERYONE_ELSE;
 	}

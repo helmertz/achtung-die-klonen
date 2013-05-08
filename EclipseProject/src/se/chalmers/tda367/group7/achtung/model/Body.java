@@ -13,7 +13,7 @@ public class Body {
 	private final List<PowerUp> powerUps = new ArrayList<PowerUp>();
 
 	public List<PowerUp> getPowerUps() {
-		return powerUps;
+		return this.powerUps;
 	}
 
 	private TurnMode turnMode;
@@ -145,13 +145,13 @@ public class Body {
 	private void doTurn() {
 
 		if (this.turnMode == TurnMode.LEFT) {
-			if (!invertedControls) {
+			if (!this.invertedControls) {
 				turnLeft();
 			} else {
 				turnRight();
 			}
 		} else if (this.turnMode == TurnMode.RIGHT) {
-			if (!invertedControls) {
+			if (!this.invertedControls) {
 				turnRight();
 			} else {
 				turnLeft();
@@ -269,13 +269,13 @@ public class Body {
 	public void setSharpTurns(boolean sharpTurns) {
 		this.sharpTurnsActivated = sharpTurns;
 	}
-	
+
 	public void setInvertedControls(boolean invertedControls) {
 		this.invertedControls = invertedControls;
 	}
-	
+
 	public void toggleInvertedControls() {
-		this.invertedControls = !invertedControls;
+		this.invertedControls = !this.invertedControls;
 	}
 
 	public boolean isGeneratingBodySegments() {
