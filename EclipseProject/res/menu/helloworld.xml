@@ -9,7 +9,7 @@
 			    childLayout="center" visibleToMouse="true">
 				<control name="button" label="Start" id="StartButton" align="center" valign="center" 
 					visibleToMouse="true" > 
-					<interact onClick="test()"/>
+					<interact onClick="onStartPress()"/>
           		</control>
 			</panel>
 		</layer>

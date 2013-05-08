@@ -1,5 +1,7 @@
 package se.chalmers.tda367.group7.achtung.controller;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Locale;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -9,10 +11,13 @@ import de.lessvoid.nifty.nulldevice.NullSoundDevice;
 import de.lessvoid.nifty.renderer.lwjgl.input.LwjglInputSystem;
 import de.lessvoid.nifty.renderer.lwjgl.render.LwjglRenderDevice;
 import de.lessvoid.nifty.renderer.lwjgl.time.LWJGLTimeProvider;
+import de.lessvoid.nifty.screen.Screen;
+import de.lessvoid.nifty.screen.ScreenController;
 import se.chalmers.tda367.group7.achtung.input.InputEvent;
 import se.chalmers.tda367.group7.achtung.input.InputListener;
 import se.chalmers.tda367.group7.achtung.input.InputService;
 import se.chalmers.tda367.group7.achtung.input.LWJGLInputService;
+import se.chalmers.tda367.group7.achtung.menu.MainMenuController;
 import se.chalmers.tda367.group7.achtung.model.Game;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.LWJGLRenderService;
@@ -23,8 +28,8 @@ import se.chalmers.tda367.group7.achtung.view.WorldView;
  * A class containing the game loop, responsible for handling the timing of game
  * logic and rendering.
  */
-public class MainController implements InputListener {
-
+public class MainController implements InputListener, PropertyChangeListener {
+	
 	// Game time related
 	private static final double TICKS_PER_SECOND = 25;
 	private static final long SKIP_TICKS = (long) (1000000000d / TICKS_PER_SECOND);
@@ -55,9 +60,13 @@ public class MainController implements InputListener {
 	private WorldView worldView;
 	private GameController gameController;
 	private Nifty nifty;
-	private boolean atMenu = false;
+	private boolean atMenu = true;
+	private MainMenuController menuController;
 
 	public MainController() {
+		
+		// Only statically stored to make 
+		// TODO find another way of doing this		
 		try {
 			this.renderer = new LWJGLRenderService();
 		} catch (LWJGLException e) {
@@ -73,17 +82,14 @@ public class MainController implements InputListener {
 		        new LwjglInputSystem(),
 		        new LWJGLTimeProvider());
 
+		
 		nifty.fromXml("menu/helloworld.xml", "start");
 		
-		//TODO: Hard coded here temporarily
-		this.game = new Game();
-		
-		this.gameController = new GameController(game);
-		gameController.startRound();
-		inputService.addListener(this);
-		
-		this.worldView = new WorldView(game);
-		game.addPropertyChangeListener(worldView);
+		// TODO perhaps do this interaction differently, without this being a
+		// listener
+		Screen niftyScreen = nifty.getScreen("start");
+		menuController = (MainMenuController) niftyScreen.getScreenController();
+		menuController.addListener(this);
 	}
 
 	private long getTickCount() {
@@ -139,7 +145,6 @@ public class MainController implements InputListener {
 				lastFrame = getTickCount();
 				float interpolation = (getTickCount() + SKIP_TICKS - nextGameTick) / (float)SKIP_TICKS;
 				render(interpolation);
-				
 				// For fps calculation
 				dbgFrameCounter++;
 			}
@@ -205,5 +210,24 @@ public class MainController implements InputListener {
 
 	public void toggleMenu() {
 		atMenu = !atMenu;
+	}
+
+	public void startGame() {
+		this.game = new Game();
+		
+		this.gameController = new GameController(game);
+		gameController.startRound();
+		inputService.addListener(this);
+		
+		this.worldView = new WorldView(game);
+		game.addPropertyChangeListener(worldView);
+		toggleMenu();
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if(evt.getPropertyName().equals("startPressed")) {
+			startGame();
+		}
 	}
 }
