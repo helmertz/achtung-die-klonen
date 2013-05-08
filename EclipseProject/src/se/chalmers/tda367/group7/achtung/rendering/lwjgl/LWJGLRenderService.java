@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.opengl.Pbuffer;
 import org.lwjgl.opengl.PixelFormat;
+import org.lwjgl.opengl.Util;
 
 import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.rendering.Image;
@@ -80,10 +81,9 @@ public class LWJGLRenderService implements RenderService {
 		} else if (maxSamples >= 4) {
 			maxSamples = 4;
 		}
-
 		Display.setDisplayMode(new DisplayMode(800, 600));
-
 		Display.create(new PixelFormat().withSamples(maxSamples));
+
 	}
 
 	// TODO: make scaling proportional
@@ -133,6 +133,8 @@ public class LWJGLRenderService implements RenderService {
 		}
 
 		Display.update();
+		
+		Util.checkGLError();
 	}
 
 	@Override
@@ -245,7 +247,6 @@ public class LWJGLRenderService implements RenderService {
 		glPushMatrix();
 		glTranslatef(x, y, 0);
 		glScalef(radius, radius, 1);
-
 		glBegin(GL_TRIANGLE_FAN);
 		glVertex2f(0, 0);
 
