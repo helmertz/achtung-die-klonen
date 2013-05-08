@@ -23,7 +23,7 @@ public class PowerUpEntity {
 	private void setCorrectType(Type type) {
 		if (this.powerUpEffect instanceof WorldPowerUpEffect) {
 			this.type = Type.EVERYONE;
-		} else if (this.powerUpEffect instanceof PlayerPowerUpEffect) {
+		} else if (this.powerUpEffect instanceof BodyPowerUpEffect) {
 			this.type = type;
 		}
 	}

@@ -47,7 +47,7 @@ public class Round {
 
 		createPlayerBodiesAtRandomPos();
 
-		PlayerPowerUpEffect noTail = new NoTailPowerUp();
+		BodyPowerUpEffect noTail = new NoTailPowerUp();
 		for (Player p : players) {
 			p.getBody().addPowerUp(noTail);
 		}
@@ -169,7 +169,7 @@ public class Round {
 		PowerUpEffect effect = powerUp.getPowerUpEffect();
 
 		// TODO: this is probably not the best way of doing this
-		if (effect instanceof PlayerPowerUpEffect) {
+		if (effect instanceof BodyPowerUpEffect) {
 			distributePlayerEffect(pickedUpByPlayer, powerUp);
 		} else if (effect instanceof WorldPowerUpEffect) {
 			distributeWorldEffect(powerUp);
@@ -191,7 +191,7 @@ public class Round {
 	private void distributePlayerEffect(Player pickedUpByPlayer,
 			PowerUpEntity powerUp) {
 		Type powerUpType = powerUp.getType();
-		PlayerPowerUpEffect effect = (PlayerPowerUpEffect) powerUp
+		BodyPowerUpEffect effect = (BodyPowerUpEffect) powerUp
 				.getPowerUpEffect();
 
 		if (powerUpType == PowerUpEntity.Type.SELF) {
@@ -203,18 +203,18 @@ public class Round {
 		}
 	}
 
-	private void addPowerUpToSelf(Player player, PlayerPowerUpEffect effect) {
+	private void addPowerUpToSelf(Player player, BodyPowerUpEffect effect) {
 		player.getBody().addPowerUp(effect);
 	}
 
-	private void addPowerUpToEveryone(PlayerPowerUpEffect effect) {
+	private void addPowerUpToEveryone(BodyPowerUpEffect effect) {
 		for (Player p : this.players) {
 			p.getBody().addPowerUp(effect);
 		}
 	}
 
 	private void addPowerUpToOthers(Player pickedUpByPlayer,
-			PlayerPowerUpEffect effect) {
+			BodyPowerUpEffect effect) {
 		for (Player p : this.players) {
 			if (p != pickedUpByPlayer && !p.getBody().isDead()) {
 				p.getBody().addPowerUp(effect);
