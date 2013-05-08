@@ -87,7 +87,7 @@ public class Game {
 	 * Returns the number of points required to win the game.
 	 */
 	public int getGoalPoints() {
-		return 5;
+		return 10 * (players.size() - 1);
 	}
 
 	public Round getCurrentRound() {

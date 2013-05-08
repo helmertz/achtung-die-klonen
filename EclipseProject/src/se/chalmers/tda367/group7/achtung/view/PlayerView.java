@@ -82,8 +82,9 @@ public class PlayerView implements View {
 		}
 		renderService.drawCircleCentered(headX, headY, body.getWidth() / 2, 10,
 				this.player.getColor());
-
-		this.drawPowerUpTimer(renderService, interpolation, headX, headY);
+		
+		if(!player.getBody().isDead())
+			this.drawPowerUpTimer(renderService, interpolation, headX, headY);
 	}
 
 	private void drawPowerUpTimer(RenderService renderService,
