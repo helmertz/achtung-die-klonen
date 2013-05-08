@@ -12,10 +12,12 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity;
 import se.chalmers.tda367.group7.achtung.model.Round;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
-public class WorldView implements View, PropertyChangeListener {
+public class GameView implements View, PropertyChangeListener {
 
-	private final List<PlayerView> playerViews = new ArrayList<PlayerView>();
+	private List<PlayerView> playerViews = new ArrayList<PlayerView>();
 	private final List<PowerUpEntityView> powerUpView = new ArrayList<PowerUpEntityView>();
+	private PlayerScoreView scoreView;
+
 	private MapView mapView;
 	private final Game game;
 
@@ -24,12 +26,22 @@ public class WorldView implements View, PropertyChangeListener {
 	private static final String NEXT_ROUND_MESSAGE_3 = "Press space to continue";
 	private static final Color NEXT_ROUND_COLOR = new Color(0, 0, 0, 0.5f);
 
-	public WorldView(Game game) {
+	private static final String WON_GAME_MESSAGE_1 = "Game over!";
+	private static final String WON_GAME_MESSAGE_2 = "The winner is";
+	private static final String WON_GAME_MESSAGE_3 = "Press space to return to menu";
+	private static final Color WON_GAME_COLOR = new Color(0, 0, 0, 0.5f);
+
+	public GameView(Game game) {
 		this.game = game;
+		this.scoreView = new PlayerScoreView(game.getPlayers());
+		addPlayerViews();
+		updateMapView();
+	}
+
+	private void addPlayerViews() {
 		for (Player p : game.getPlayers()) {
 			this.playerViews.add(new PlayerView(p));
 		}
-		updateMapView();
 	}
 
 	@Override
@@ -44,10 +56,33 @@ public class WorldView implements View, PropertyChangeListener {
 		for (View view : this.powerUpView) {
 			view.render(renderer, interpolation);
 		}
+		
+		scoreView.render(renderer, interpolation);
+		
 		// If over draws a box displaying the winner, and instructions on how to
 		// continue.
-		if (!game.getCurrentRound().isRoundActive()) {
-		
+		if (game.isOver()) {
+			// TODO perhaps not hardcode as much here. Maybe redo size handling
+			// in font.
+			float viewWidth = renderer.getViewAreaWidth();
+			float viewHeight = renderer.getViewAreaHeight();
+			float centerX = viewWidth / 2;
+			float centerY = viewHeight / 2;
+			float width = 600;
+			float height = 240;
+			String name = "Player1!";
+			renderer.drawFilledRect(centerX - width / 2, centerY - height / 2,
+					width, height, WON_GAME_COLOR);
+			renderer.drawStringCentered(WON_GAME_MESSAGE_1, centerX,
+					centerY - 55, 2.5f);
+			renderer.drawStringCentered(WON_GAME_MESSAGE_2, centerX,
+					centerY - 15, 1.5f);
+			renderer.drawStringCentered(name, centerX, centerY + 60, 3,
+					new Color(255, 255, 0));
+			renderer.drawStringCentered(WON_GAME_MESSAGE_3, centerX,
+					centerY + 105, 1f);
+		} else if (!game.getCurrentRound().isRoundActive()) {
+
 			// TODO perhaps not hardcode as much here. Maybe redo size handling
 			// in font.
 			float viewWidth = renderer.getViewAreaWidth();
@@ -68,8 +103,9 @@ public class WorldView implements View, PropertyChangeListener {
 					winner.getColor());
 			renderer.drawStringCentered(NEXT_ROUND_MESSAGE_3, centerX,
 					centerY + 105, 1f);
+
 		}
-		
+
 	}
 
 	private void updatePowerUpViews() {
@@ -85,7 +121,7 @@ public class WorldView implements View, PropertyChangeListener {
 		Round round = this.game.getCurrentRound();
 		round.addPropertyChangeListener(this);
 		this.mapView = new MapView(round.getMap());
-		
+
 	}
 
 	@Override
@@ -95,6 +131,8 @@ public class WorldView implements View, PropertyChangeListener {
 		} else if (evt.getPropertyName().equals("NewRound")) {
 			updateMapView();
 			updatePowerUpViews();
+		} else if(evt.getPropertyName().equals("PlayerDied")) {
+			scoreView.updatePlayerScoreViews(game.getPlayers());
 		}
 	}
 }

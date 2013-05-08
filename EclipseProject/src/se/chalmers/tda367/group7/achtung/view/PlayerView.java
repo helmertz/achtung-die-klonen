@@ -83,16 +83,6 @@ public class PlayerView implements View {
 		renderService.drawCircleCentered(headX, headY, body.getWidth() / 2, 10,
 				this.player.getColor());
 
-		// Drawing of player name and score on the side
-		// TODO replace the hardcoded values
-		float sideX = renderService.getViewAreaWidth() - 150;
-		float sideY = 100 * this.player.getId();
-
-		renderService.drawString(this.player.getName(), sideX, sideY, 1f,
-				this.player.getColor());
-		renderService.drawString(this.player.getPoints() + "", sideX,
-				sideY + 20, 3f, this.player.getColor());
-
 		this.drawPowerUpTimer(renderService, interpolation, headX, headY);
 	}
 

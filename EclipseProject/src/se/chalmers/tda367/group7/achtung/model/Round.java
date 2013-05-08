@@ -264,4 +264,8 @@ public class Round {
 		return winner;
 	}
 
+	public List<Player> getPlayers() {
+		return this.players;
+	}
+
 }

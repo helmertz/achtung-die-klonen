@@ -3,6 +3,7 @@ package se.chalmers.tda367.group7.achtung.model;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import se.chalmers.tda367.group7.achtung.sound.Sound;
@@ -32,13 +33,17 @@ public class Game {
 		addPlayer(p1);
 		Player p2 = new Player("Player 2", Color.RED);
 		addPlayer(p2);
-
 		Player p3 = new Player("Player 3", Color.GREEN);
 		addPlayer(p3);
 	}
 
 	public void update() {
 		this.currentRound.update();
+		sortPlayersByPoints();
+	}
+	
+	private void sortPlayersByPoints() {
+		Collections.sort(players, new SortByPointsDescending());
 	}
 
 	public void newRound() {
@@ -77,12 +82,12 @@ public class Game {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Returns the number of points required to win the game.
 	 */
 	public int getGoalPoints() {
-		return 10 * (this.players.size() - 1);
+		return 5;
 	}
 
 	public Round getCurrentRound() {

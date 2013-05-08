@@ -8,7 +8,7 @@ import se.chalmers.tda367.group7.achtung.model.Game;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.LWJGLRenderService;
 import se.chalmers.tda367.group7.achtung.sound.Sound;
-import se.chalmers.tda367.group7.achtung.view.WorldView;
+import se.chalmers.tda367.group7.achtung.view.GameView;
 
 /**
  * A class containing the game loop, responsible for handling the timing of game
@@ -41,7 +41,7 @@ public class MainController {
 	private final InputService inputService;
 
 	private final Game game;
-	private final WorldView worldView;
+	private final GameView gameView;
 	private final GameController gameController;
 
 	public MainController() {
@@ -61,8 +61,8 @@ public class MainController {
 		this.gameController.startRound();
 		this.inputService.addListener(this.gameController);
 
-		this.worldView = new WorldView(this.game);
-		this.game.addPropertyChangeListener(this.worldView);
+		this.gameView = new GameView(this.game);
+		this.game.addPropertyChangeListener(this.gameView);
 	}
 
 	private long getTickCount() {
@@ -153,7 +153,7 @@ public class MainController {
 	private void render(float interpolation) {
 		this.renderer.preDraw();
 
-		this.worldView.render(this.renderer, interpolation);
+		this.gameView.render(this.renderer, interpolation);
 
 		// Render debug info
 		this.renderer.drawString(this.fpsString, 0, 0, 1);
