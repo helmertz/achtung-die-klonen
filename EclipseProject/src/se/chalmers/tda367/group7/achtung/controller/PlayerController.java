@@ -29,10 +29,10 @@ public class PlayerController {
 	public boolean onInputEvent(InputEvent e) {
 		if (e.getKey() == this.leftKey) {
 			this.leftDown = e.isPressed();
-		}
-
-		if (e.getKey() == this.rightKey) {
+		} else if (e.getKey() == this.rightKey) {
 			this.rightDown = e.isPressed();
+		} else {
+			return false;
 		}
 
 		if (this.leftDown && !this.rightDown) {
