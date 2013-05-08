@@ -1,9 +1,23 @@
 package se.chalmers.tda367.group7.achtung.controller;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Locale;
 import org.lwjgl.LWJGLException;
-
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
+import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.nulldevice.NullSoundDevice;
+import de.lessvoid.nifty.renderer.lwjgl.input.LwjglInputSystem;
+import de.lessvoid.nifty.renderer.lwjgl.render.LwjglRenderDevice;
+import de.lessvoid.nifty.renderer.lwjgl.time.LWJGLTimeProvider;
+import de.lessvoid.nifty.screen.Screen;
+import de.lessvoid.nifty.screen.ScreenController;
+import se.chalmers.tda367.group7.achtung.input.InputEvent;
+import se.chalmers.tda367.group7.achtung.input.InputListener;
 import se.chalmers.tda367.group7.achtung.input.InputService;
 import se.chalmers.tda367.group7.achtung.input.LWJGLInputService;
+import se.chalmers.tda367.group7.achtung.menu.MainMenuController;
 import se.chalmers.tda367.group7.achtung.model.Game;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.LWJGLRenderService;
@@ -14,8 +28,8 @@ import se.chalmers.tda367.group7.achtung.view.GameView;
  * A class containing the game loop, responsible for handling the timing of game
  * logic and rendering.
  */
-public class MainController {
-
+public class MainController implements InputListener, PropertyChangeListener {
+	
 	// Game time related
 	private static final double TICKS_PER_SECOND = 25;
 	private static final long SKIP_TICKS = (long) (1000000000d / TICKS_PER_SECOND);
@@ -40,11 +54,18 @@ public class MainController {
 	private RenderService renderer;
 	private final InputService inputService;
 
-	private final Game game;
-	private final GameView gameView;
-	private final GameController gameController;
+	private Game game;
+	private GameView gameView;
+	private GameController gameController;
+
+	private Nifty nifty;
+	private boolean atMenu = true;
+	private MainMenuController menuController;
 
 	public MainController() {
+		
+		// Only statically stored to make 
+		// TODO find another way of doing this		
 		try {
 			this.renderer = new LWJGLRenderService();
 		} catch (LWJGLException e) {
@@ -53,16 +74,21 @@ public class MainController {
 		}
 
 		this.inputService = new LWJGLInputService();
-		// TODO: Hard coded here temporarily
-		this.game = new Game();
-		this.game.addPropertyChangeListener(Sound.getInstance());
+		
+		nifty = new Nifty(
+		        new LwjglRenderDevice(),
+		        new NullSoundDevice(),
+		        new LwjglInputSystem(),
+		        new LWJGLTimeProvider());
 
-		this.gameController = new GameController(this.game);
-		this.gameController.startRound();
-		this.inputService.addListener(this.gameController);
-
-		this.gameView = new GameView(this.game);
-		this.game.addPropertyChangeListener(this.gameView);
+		
+		nifty.fromXml("menu/helloworld.xml", "start");
+		
+		// TODO perhaps do this interaction differently, without this being a
+		// listener
+		Screen niftyScreen = nifty.getScreen("start");
+		menuController = (MainMenuController) niftyScreen.getScreenController();
+		menuController.addListener(this);
 	}
 
 	private long getTickCount() {
@@ -81,6 +107,7 @@ public class MainController {
 			this.inputService.update();
 
 			boolean doLogic = true;
+			nifty.update();
 
 			// Essentially pauses the game when not in focus
 			if (!this.renderer.isActive()) {
@@ -95,7 +122,10 @@ public class MainController {
 				// Needs to be set to now so that no compensation is done
 				this.nextGameTick = getTickCount();
 			}
-
+			if(atMenu) {
+				doLogic = false;
+				nextGameTick = getTickCount();
+			}
 			this.loops = 0;
 			while (doLogic && getTickCount() >= this.nextGameTick
 					&& this.loops < MAX_FRAMESKIP) {
@@ -118,7 +148,6 @@ public class MainController {
 				float interpolation = (getTickCount() + SKIP_TICKS - this.nextGameTick)
 						/ (float) SKIP_TICKS;
 				render(interpolation);
-
 				// For fps calculation
 				this.dbgFrameCounter++;
 			}
@@ -131,14 +160,14 @@ public class MainController {
 				// Calculate and print average fps
 				double fps = (this.dbgFrameCounter * 1000000000l)
 						/ (double) deltaDebug;
-				this.fpsString = "FPS: " + fps;
+				this.fpsString = "FPS: " + String.format(Locale.US, "%.2f", fps);
 				System.out.println(this.fpsString);
 				this.dbgFrameCounter = 0;
 
 				// Calculate and print average game logic (tick) rate
 				double logicRate = (this.dbgGameTickCounter * 1000000000l)
 						/ (double) deltaDebug;
-				this.tpsString = "TPS: " + logicRate;
+				this.tpsString = "TPS: " + String.format(Locale.US, "%.2f", logicRate);
 				System.out.println(this.tpsString);
 				this.dbgGameTickCounter = 0;
 			}
@@ -153,12 +182,59 @@ public class MainController {
 	private void render(float interpolation) {
 		this.renderer.preDraw();
 
-		this.gameView.render(this.renderer, interpolation);
+		if (!this.atMenu) {
+			this.renderer.setScaled(true);
+
+			this.gameView.render(this.renderer, interpolation);
+		}
+
+		this.renderer.setScaled(false);
 
 		// Render debug info
 		this.renderer.drawString(this.fpsString, 0, 0, 1);
 		this.renderer.drawString(this.tpsString, 0, 20, 1);
 
+		if (Display.wasResized()) {
+			this.nifty.resolutionChanged();
+		}
+
+		if (this.atMenu) {
+			this.nifty.render(false);
+		}
 		this.renderer.postDraw();
+	}
+
+	@Override
+	public boolean onInputEvent(InputEvent event) {
+		if(event.isPressed() && event.getKey() == Keyboard.KEY_ESCAPE) {
+			toggleMenu();
+			return true;
+		}
+		gameController.onInputEvent(event);
+		return false;
+	}
+
+	public void toggleMenu() {
+		atMenu = !atMenu;
+	}
+
+	public void startGame() {
+		this.game = new Game();
+		this.game.addPropertyChangeListener(Sound.getInstance());
+		
+		this.gameController = new GameController(game);
+		gameController.startRound();
+		inputService.addListener(this);
+		
+		this.gameView = new GameView(game);
+		game.addPropertyChangeListener(gameView);
+		toggleMenu();
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if(evt.getPropertyName().equals("startPressed")) {
+			startGame();
+		}
 	}
 }

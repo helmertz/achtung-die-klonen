@@ -29,6 +29,7 @@ public class LWJGLRenderService implements RenderService {
 
 	private Color backColor;
 	private float scaling;
+	private boolean scaled;
 
 	public LWJGLRenderService() throws LWJGLException {
 		init();
@@ -105,13 +106,14 @@ public class LWJGLRenderService implements RenderService {
 			// Padd on height
 			this.yPadding = (this.viewAreaWidth / displayRatio - this.viewAreaHeight) / 2;
 			this.scaling = Display.getWidth() / this.viewAreaWidth;
-
 		}
 		glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 0, 1);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
-		glScalef(this.scaling, this.scaling, 1);
-		glTranslatef(this.xPadding, this.yPadding, 0);
+		if (scaled) {
+			glScalef(this.scaling, this.scaling, 1);
+			glTranslatef(this.xPadding, this.yPadding, 0);
+		}
 	}
 
 	@Override
@@ -126,16 +128,10 @@ public class LWJGLRenderService implements RenderService {
 
 	@Override
 	public void postDraw() {
-		bindColor(this.backColor);
-
-		if (this.xPadding > 0) {
-			drawRect(-this.xPadding, 0, this.xPadding, this.viewAreaHeight);
-			drawRect(this.viewAreaWidth, 0, this.xPadding, this.viewAreaHeight);
-		} else {
-			drawRect(0, -this.yPadding, this.viewAreaWidth, this.yPadding);
-			drawRect(0, this.viewAreaHeight, this.viewAreaWidth, this.yPadding);
+		if(this.scaled) {
+			clearOutsideViewArea();
 		}
-
+		
 		Display.update();
 	}
 
@@ -277,4 +273,30 @@ public class LWJGLRenderService implements RenderService {
 		glEnd();
 	}
 
+	@Override
+	public void setScaled(boolean scaled) {
+		if (this.scaled != scaled) {
+			this.scaled = scaled;
+			if (scaled) {
+				glLoadIdentity();
+				glScalef(scaling, scaling, 1);
+				glTranslatef(xPadding, yPadding, 0);
+			} else {
+				clearOutsideViewArea();
+				glLoadIdentity();
+			}
+		}
+	}
+
+	// Draws two rectangles to cover up things that have been drawn outside
+	private void clearOutsideViewArea() {
+		bindColor(backColor);
+		if (xPadding > 0) {
+			drawRect(-xPadding, 0, xPadding, viewAreaHeight);
+			drawRect(viewAreaWidth, 0, xPadding, viewAreaHeight);
+		} else {
+			drawRect(0, -yPadding, viewAreaWidth, yPadding);
+			drawRect(0, viewAreaHeight, viewAreaWidth, yPadding);
+		}
+	}
 }
