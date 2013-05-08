@@ -153,4 +153,14 @@ public class Color {
 	public Color getOpposite() {
 		return new Color(1f - this.r, 1f - this.g, 1f - this.b, this.a);
 	}
+	
+	/**
+	 * Returns a string representation of the Color.
+	 * 
+	 * @return a string representing the color
+	 */
+	@Override
+	public String toString() {
+		return "Color: red: " + this.r + " green: " + this.g + " blue: " + this.b + " alpha: " + this.a + "";
+	}
 }

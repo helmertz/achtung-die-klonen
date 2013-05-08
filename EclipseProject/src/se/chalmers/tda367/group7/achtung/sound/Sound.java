@@ -93,6 +93,9 @@ public class Sound implements PropertyChangeListener {
 	private void playSound(Audio sound) {
 		sound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
+	
+	public void pauseMusic() {
+	}
 
 	public static void closeSound() {
 		AL.destroy();

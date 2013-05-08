@@ -17,16 +17,17 @@ public class PowerUpEntity {
 		this.position = position;
 		this.diameter = diameter;
 		this.powerUpEffect = powerUpEffect;
-		setCorrectType(type);
+		this.type = type;
 	}
 
-	private void setCorrectType(Type type) {
-		if (this.powerUpEffect instanceof WorldPowerUpEffect) {
-			this.type = Type.EVERYONE;
-		} else if (this.powerUpEffect instanceof BodyPowerUpEffect) {
-			this.type = type;
-		}
-	}
+	// Handled in PowerUpFactory
+//	private void setCorrectType(Type type) {
+//		if (this.powerUpEffect instanceof WorldPowerUpEffect) {
+//			this.type = Type.EVERYONE;
+//		} else if (this.powerUpEffect instanceof PlayerPowerUpEffect) {
+//			this.type = type;
+//		}
+//	}
 
 	public Position getPosition() {
 		return this.position;

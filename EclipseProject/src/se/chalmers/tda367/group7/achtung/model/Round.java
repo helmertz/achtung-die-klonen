@@ -48,6 +48,7 @@ public class Round {
 		createPlayerBodiesAtRandomPos();
 
 		BodyPowerUpEffect noTail = new NoTailPowerUp();
+
 		for (Player p : players) {
 			p.getBody().addPowerUp(noTail);
 		}
@@ -170,7 +171,8 @@ public class Round {
 		// TODO: this is probably not the best way of doing this
 		if (effect instanceof BodyPowerUpEffect) {
 			distributePlayerEffect(pickedUpByPlayer, powerUp);
-		} else if (effect instanceof WorldPowerUpEffect) {
+		}
+		if (effect instanceof WorldPowerUpEffect) {
 			distributeWorldEffect(powerUp);
 		}
 	}
@@ -241,6 +243,11 @@ public class Round {
 
 	public Map getMap() {
 		return this.map;
+	}
+	
+	public void setMapColor(Color color) {
+		this.map.setColor(color);
+		pcs.firePropertyChange("Map", false, true);
 	}
 
 	public List<PowerUpEntity> getPowerUpEntities() {

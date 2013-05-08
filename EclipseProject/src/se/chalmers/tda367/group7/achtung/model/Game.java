@@ -49,6 +49,7 @@ public class Game {
 	public void newRound() {
 
 		if (this.currentRound == null || !this.currentRound.isRoundActive()) {
+			this.map.setColor(Map.DEFAULT_COLOR);
 			this.currentRound = new Round(this.map, this.players);
 			this.currentRound.addPropertyChangeListener(Sound.getInstance());
 			this.rounds.add(this.currentRound);

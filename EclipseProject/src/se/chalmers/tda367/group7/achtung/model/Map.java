@@ -9,7 +9,7 @@ public class Map {
 
 	// Color represents the background color of the world. Could potentially be
 	// changed by powerups
-	private final Color color;
+	private Color color;
 
 	public Map(int width, int height, Color color) {
 		this.width = width;
@@ -31,6 +31,10 @@ public class Map {
 
 	public Color getColor() {
 		return this.color;
+	}
+	
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 }

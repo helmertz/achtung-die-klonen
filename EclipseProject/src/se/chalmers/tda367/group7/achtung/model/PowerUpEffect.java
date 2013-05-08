@@ -10,7 +10,8 @@ public interface PowerUpEffect {
 			new FatPowerUp(), new SlowPowerUp(), new SpeedPowerUp(),
 			new ThinPowerUp(), new TurnPowerUp(), new RemoveWallsPowerUp(),
 			new MorePowerUp(), new InvertedControlsPowerUp(),
-			new ClearPowerUp() };
+			new ClearPowerUp(), new BackgroundColorPowerUp() };
+	
 
 	/**
 	 * @return the duration for this power up

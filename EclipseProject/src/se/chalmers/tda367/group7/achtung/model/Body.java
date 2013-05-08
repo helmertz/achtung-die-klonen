@@ -30,6 +30,7 @@ public class Body {
 	private BodySegment lastSegment;
 	private boolean makeHole;
 	private int holeCount;
+	private Color color;
 
 	public enum TurnMode {
 		LEFT, RIGHT, FORWARD
@@ -292,5 +293,13 @@ public class Body {
 
 	public Position getLastPosition() {
 		return this.prevPosition;
+	}
+	
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	
+	public Color getColor() {
+		return this.color;
 	}
 }
