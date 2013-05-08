@@ -10,7 +10,6 @@ import se.chalmers.tda367.group7.achtung.model.WorldPowerUpEffect;
 
 public class BackgroundColorPowerUp implements BodyPowerUpEffect, WorldPowerUpEffect {
 	
-	private Color oldColor;
 	private Color newColor;
 
 	@Override
@@ -29,7 +28,6 @@ public class BackgroundColorPowerUp implements BodyPowerUpEffect, WorldPowerUpEf
 
 	@Override
 	public void applyEffect(Round round) {
-		this.oldColor = round.getMap().getColor();
 		round.setMapColor(this.newColor);
 	}
 
