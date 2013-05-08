@@ -179,7 +179,7 @@ public class Body {
 	 * @param effect
 	 *            - the effect to add to the player
 	 */
-	public void addPowerUp(PlayerPowerUpEffect effect) {
+	public void addPowerUp(BodyPowerUpEffect effect) {
 		PowerUp p = new PowerUp(effect);
 		p.applyEffect(this);
 		this.powerUps.add(p);

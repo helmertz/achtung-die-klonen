@@ -2,7 +2,7 @@ package se.chalmers.tda367.group7.achtung.model;
 
 import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
-public interface PlayerPowerUpEffect extends PowerUpEffect {
+public interface BodyPowerUpEffect extends PowerUpEffect {
 
 	/**
 	 * Add the effect of the power up to a body.

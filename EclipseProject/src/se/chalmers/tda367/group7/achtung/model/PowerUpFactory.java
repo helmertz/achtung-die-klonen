@@ -25,8 +25,8 @@ public class PowerUpFactory {
 		// TODO all power-ups shouldn't be able to be of all types
 		// Maybe not the easiest way but should work /Pi
 		Type type = Type.values()[(int) (Type.values().length * Math.random())];
-		if (effect instanceof PlayerPowerUpEffect) {
-			while (!((PlayerPowerUpEffect) effect).isTypeOk(type)) {
+		if (effect instanceof BodyPowerUpEffect) {
+			while (!((BodyPowerUpEffect) effect).isTypeOk(type)) {
 				type = Type.values()[(int) (Type.values().length * Math
 						.random())];
 			}

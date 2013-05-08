@@ -10,11 +10,11 @@ public class PowerUp {
 	}
 
 	public void applyEffect(Body p) {
-		((PlayerPowerUpEffect) this.effect).applyEffect(p);
+		((BodyPowerUpEffect) this.effect).applyEffect(p);
 	}
 
 	public void removeEffect(Body p) {
-		((PlayerPowerUpEffect) this.effect).removeEffect(p);
+		((BodyPowerUpEffect) this.effect).removeEffect(p);
 	}
 
 	public void applyEffect(Round round) {

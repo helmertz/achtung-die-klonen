@@ -42,7 +42,7 @@ public class BodyTest {
 
 	@Test
 	public void testAddPowerUp() {
-		PlayerPowerUpEffect effect = new FatPowerUp();
+		BodyPowerUpEffect effect = new FatPowerUp();
 		float widthBefore = this.b.getWidth();
 
 		this.b.addPowerUp(effect);
