@@ -12,6 +12,8 @@ public class BackgroundColorPowerUp implements BodyPowerUpEffect, WorldPowerUpEf
 	
 	private Color newColor;
 
+	private static final String imageName = "";
+
 	@Override
 	public int getDuration() {
 		return 75;
@@ -42,5 +44,11 @@ public class BackgroundColorPowerUp implements BodyPowerUpEffect, WorldPowerUpEf
 	public boolean isTypeOk(Type type) {
 		return type == Type.SELF;
 	}
+	
+	@Override
+	public String getImageName() {
+		return imageName;
+	}
+
 
 }

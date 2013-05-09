@@ -17,5 +17,10 @@ public interface PowerUpEffect {
 	 * @return the duration for this power up
 	 */
 	int getDuration();
+	
+	/**
+	 * @return the name of the image for this power up
+	 */
+	String getImageName();
 
 }

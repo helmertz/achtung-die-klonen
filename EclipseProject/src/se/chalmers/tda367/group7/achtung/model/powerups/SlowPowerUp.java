@@ -6,6 +6,8 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class SlowPowerUp implements BodyPowerUpEffect {
 
+	private static final String imageName = "5"; 
+
 	@Override
 	public void applyEffect(Body body) {
 		body.setSpeed(body.getSpeed() / 2);
@@ -25,5 +27,11 @@ public class SlowPowerUp implements BodyPowerUpEffect {
 	public boolean isTypeOk(Type type) {
 		return type == Type.SELF || type == Type.EVERYONE_ELSE;
 	}
+	
+	@Override
+	public String getImageName() {
+		return imageName;
+	}
+
 
 }

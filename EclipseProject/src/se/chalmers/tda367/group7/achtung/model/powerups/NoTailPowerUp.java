@@ -6,6 +6,8 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class NoTailPowerUp implements BodyPowerUpEffect {
 
+	private static final String imageName = ""; 
+
 	@Override
 	public int getDuration() {
 		return 65;
@@ -25,4 +27,10 @@ public class NoTailPowerUp implements BodyPowerUpEffect {
 	public boolean isTypeOk(Type type) {
 		return type == Type.SELF;
 	}
+	
+	@Override
+	public String getImageName() {
+		return imageName;
+	}
+
 }

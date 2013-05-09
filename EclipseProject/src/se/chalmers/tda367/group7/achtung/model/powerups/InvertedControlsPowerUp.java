@@ -6,6 +6,8 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class InvertedControlsPowerUp implements BodyPowerUpEffect {
 
+	private static final String imageName = "6"; 
+	
 	@Override
 	public int getDuration() {
 		return 150;
@@ -24,6 +26,11 @@ public class InvertedControlsPowerUp implements BodyPowerUpEffect {
 	@Override
 	public boolean isTypeOk(Type type) {
 		return type == Type.EVERYONE_ELSE;
+	}
+
+	@Override
+	public String getImageName() {
+		return imageName;
 	}
 
 }

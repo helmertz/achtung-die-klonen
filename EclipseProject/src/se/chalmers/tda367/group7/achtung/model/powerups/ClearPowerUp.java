@@ -6,6 +6,8 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class ClearPowerUp implements BodyPowerUpEffect {
 
+	private static final String imageName = ""; 
+	
 	@Override
 	public void applyEffect(Body body) {
 		body.getBodySegments().clear();
@@ -25,5 +27,11 @@ public class ClearPowerUp implements BodyPowerUpEffect {
 	public int getDuration() {
 		return 0;
 	}
+	
+	@Override
+	public String getImageName() {
+		return imageName;
+	}
+
 
 }

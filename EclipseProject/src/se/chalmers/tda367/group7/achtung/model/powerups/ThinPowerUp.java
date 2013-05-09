@@ -6,6 +6,9 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class ThinPowerUp implements BodyPowerUpEffect {
 
+	private static final String imageName = "2"; 
+	
+
 	@Override
 	public void applyEffect(Body body) {
 		body.setWidth(body.getWidth() / 2);
@@ -24,6 +27,11 @@ public class ThinPowerUp implements BodyPowerUpEffect {
 	@Override
 	public boolean isTypeOk(Type type) {
 		return type == Type.SELF || type == Type.EVERYONE_ELSE;
+	}
+	
+	@Override
+	public String getImageName() {
+		return imageName;
 	}
 
 }

@@ -42,19 +42,28 @@ public class PowerUpEntityView implements View {
 			}
 		}
 		if (this.image == null) {
-			try {
-				this.image = renderService.getImage("powerups/1.png");
-			} catch (IOException e) {
-				e.printStackTrace();
-				System.exit(1);
+			// TODO check file system if image is there
+			String imgName = powerUpEntity.getPowerUpEffect().getImageName();
+
+			if (imgName != "") {
+				System.out.println("asfgsd");
+				try {
+					this.image = renderService.getImage("powerups/" + imgName + ".png");
+				} catch (IOException e) {
+					e.printStackTrace();
+					System.exit(1);
+				}
 			}
 		}
 
 		powerUpBackground.drawImageCentered(pos.getX(), pos.getY(),
 				this.powerUpEntity.getDiameter(),
 				this.powerUpEntity.getDiameter(), color);
-		this.image.drawImageCentered(pos.getX(), pos.getY(),
-				this.powerUpEntity.getDiameter(),
-				this.powerUpEntity.getDiameter());
+
+		if (this.image != null) {
+			this.image.drawImageCentered(pos.getX(), pos.getY(),
+					this.powerUpEntity.getDiameter(),
+					this.powerUpEntity.getDiameter());
+		}
 	}
 }

@@ -5,6 +5,8 @@ import se.chalmers.tda367.group7.achtung.model.WorldPowerUpEffect;
 
 public class MorePowerUp implements WorldPowerUpEffect {
 
+	private static final String imageName = ""; 
+
 	@Override
 	public void applyEffect(Round round) {
 		round.setPowerUpChance(round.getDefaultPowerUpChance() + (float) 0.06);
@@ -19,4 +21,10 @@ public class MorePowerUp implements WorldPowerUpEffect {
 	public int getDuration() {
 		return 200;
 	}
+	
+	@Override
+	public String getImageName() {
+		return imageName;
+	}
+
 }

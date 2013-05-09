@@ -5,6 +5,8 @@ import se.chalmers.tda367.group7.achtung.model.WorldPowerUpEffect;
 
 public class RemoveWallsPowerUp implements WorldPowerUpEffect {
 
+	private static final String imageName = ""; 
+
 	@Override
 	public void applyEffect(Round round) {
 		round.setWallsActive(false);
@@ -21,4 +23,10 @@ public class RemoveWallsPowerUp implements WorldPowerUpEffect {
 	public int getDuration() {
 		return 150;
 	}
+	
+	@Override
+	public String getImageName() {
+		return imageName;
+	}
+
 }
