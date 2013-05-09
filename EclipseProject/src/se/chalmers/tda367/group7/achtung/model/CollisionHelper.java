@@ -1,5 +1,7 @@
 package se.chalmers.tda367.group7.achtung.model;
 
+import java.awt.Polygon;
+import java.awt.geom.Line2D;
 import java.util.List;
 
 public class CollisionHelper {
@@ -104,7 +106,7 @@ public class CollisionHelper {
 					continue;
 				}
 
-				if (lastSeg.collidesWith(seg)) {
+				if (segmentsCollide(seg, lastSeg)) {
 					return true;
 				}
 			}
@@ -122,5 +124,39 @@ public class CollisionHelper {
 				|| pos.getX() > this.map.getWidth() - playerWidth + 1
 				|| pos.getY() < 0 + playerWidth - 1 || pos.getY() > this.map
 				.getHeight() - playerWidth + 1);
+	}
+
+	public static boolean segmentsCollide(BodySegment b1, BodySegment b2) {
+		// Does a fast bounding box check
+		if (!b1.getHitBox().getBounds().intersects(b2.getHitBox().getBounds())) {
+			return false;
+		}
+		// Does more precise and expensive tests
+		return polygonsIntersect(b1.getHitBox(), b2.getHitBox())
+				|| lineOnlyIntersect(b1, b2);
+	}
+
+	// This intersection test works well, but doesn't take width into account.
+	private static boolean lineOnlyIntersect(BodySegment b1, BodySegment b2) {
+		return Line2D.linesIntersect(b1.getStart().getX(),
+				b1.getStart().getY(), b1.getEnd().getX(), b1.getEnd().getY(),
+				b2.getStart().getX(), b2.getStart().getY(), b2.getEnd().getX(),
+				b2.getEnd().getY());
+	}
+
+	// Checks if a polygon's corner is inside the other polygon. Not perfect,
+	// but does take width into account.
+	private static boolean polygonsIntersect(Polygon p1, Polygon p2) {
+		return isCornerOfFirstInSecond(p1, p2)
+				|| isCornerOfFirstInSecond(p2, p1);
+	}
+
+	private static boolean isCornerOfFirstInSecond(Polygon p1, Polygon p2) {
+		for (int i = 0; i < p1.npoints; i++) {
+			if (p2.contains(p1.xpoints[i], p1.ypoints[i])) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

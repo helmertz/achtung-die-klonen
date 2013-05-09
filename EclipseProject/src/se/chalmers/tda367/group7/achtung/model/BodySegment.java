@@ -63,32 +63,4 @@ public class BodySegment {
 	public Polygon getHitBox() {
 		return this.hitBox;
 	}
-
-	public boolean collidesWith(BodySegment b) {
-		return polygonsIntersect(getHitBox(), b.getHitBox());
-	}
-
-	// Checks for collision by checking if a polygon's corner is inside the
-	// other polygon
-	private static boolean polygonsIntersect(Polygon p1, Polygon p2) {
-		return firstIntersectsSecond(p1, p2) || secondIntersectsFirst(p1, p2);
-	}
-
-	private static boolean secondIntersectsFirst(Polygon p1, Polygon p2) {
-		for (int i = 0; i < p2.npoints; i++) {
-			if (p1.contains(p2.xpoints[i], p2.ypoints[i])) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private static boolean firstIntersectsSecond(Polygon p1, Polygon p2) {
-		for (int i = 0; i < p1.npoints; i++) {
-			if (p2.contains(p1.xpoints[i], p1.ypoints[i])) {
-				return true;
-			}
-		}
-		return false;
-	}
 }
