@@ -4,28 +4,28 @@ public class Map {
 
 	public static final Color DEFAULT_COLOR = new Color(0x0a0a0a);
 
-	private final int width;
-	private final int height;
+	private final float width;
+	private final float height;
 
 	// Color represents the background color of the world. Could potentially be
 	// changed by powerups
 	private Color color;
 
-	public Map(int width, int height, Color color) {
+	public Map(float width, float height, Color color) {
 		this.width = width;
 		this.height = height;
 		this.color = color;
 	}
 
-	public Map(int width, int height) {
+	public Map(float width, float height) {
 		this(width, height, DEFAULT_COLOR);
 	}
 
-	public int getWidth() {
+	public float getWidth() {
 		return this.width;
 	}
 
-	public int getHeight() {
+	public float getHeight() {
 		return this.height;
 	}
 

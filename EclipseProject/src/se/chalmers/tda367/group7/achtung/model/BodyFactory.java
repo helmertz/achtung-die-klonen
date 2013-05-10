@@ -7,13 +7,13 @@ public class BodyFactory {
 
 	public static Body getBody(Map map) {
 		// TODO - fix more neat code here
-		int xLimiter = (int) (map.getWidth() * 0.1);
-		int yLimiter = (int) (map.getHeight() * 0.1);
+		float xLimiter = map.getWidth() * 0.1f;
+		float yLimiter = map.getHeight() * 0.1f;
 
-		int maxX = map.getWidth() - xLimiter;
-		int minX = xLimiter;
-		int maxY = map.getHeight() - yLimiter;
-		int minY = yLimiter;
+		float maxX = map.getWidth() - xLimiter;
+		float minX = xLimiter;
+		float maxY = map.getHeight() - yLimiter;
+		float minY = yLimiter;
 
 		float rot = (float) (Math.random() * 360);
 		Position position = Position.getRandomPosition(minX, minY, maxX, maxY);
