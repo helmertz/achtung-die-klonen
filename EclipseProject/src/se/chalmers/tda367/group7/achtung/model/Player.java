@@ -56,10 +56,6 @@ public class Player {
 		return this.color;
 	}
 
-	public void setPosition(Position position) {
-		this.body.setHeadPosition(position);
-	}
-
 	public Body getBody() {
 		return this.body;
 	}
@@ -71,13 +67,5 @@ public class Player {
 
 	public String getName() {
 		return this.name;
-	}
-
-	public void turnRight() {
-		this.body.turnRight();
-	}
-
-	public void turnLeft() {
-		this.body.turnLeft();
 	}
 }
