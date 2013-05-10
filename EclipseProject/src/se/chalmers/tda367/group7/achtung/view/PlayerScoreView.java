@@ -26,8 +26,4 @@ public class PlayerScoreView implements View {
 					sideY + 20, 3f, player.getColor());
 		}
 	}
-
-	public void updatePlayerScoreViews(List<Player> players) {
-		this.players = players;
-	}
 }
