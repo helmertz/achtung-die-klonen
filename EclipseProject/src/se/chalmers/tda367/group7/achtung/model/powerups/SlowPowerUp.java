@@ -8,7 +8,7 @@ public class SlowPowerUp implements BodyPowerUpEffect {
 
 	private static final String NAME = "slow"; 
 	private static final int DURATION = 150;
-	private static final boolean STACKABLE = false; 
+	private static final boolean STACKABLE = true; 
 
 	@Override
 	public void applyEffect(Body body) {
