@@ -17,11 +17,13 @@ public class NoTailPowerUp implements BodyPowerUpEffect {
 	@Override
 	public void applyEffect(Body body) {
 		body.setGeneratingBodySegments(false);
+		body.setImmortal(true);
 	}
 
 	@Override
 	public void removeEffect(Body body) {
 		body.setGeneratingBodySegments(true);
+		body.setImmortal(false);
 	}
 
 	@Override
