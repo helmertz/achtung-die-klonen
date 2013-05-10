@@ -12,6 +12,13 @@ public interface PowerUpEffect {
 	 */
 	String getName();
 	
+	/**
+	 * If the PowerUpEffect is not stackable and another of the same kind
+	 * is picked up, the timer is reset. Else, the effect is applied again.
+	 * 
+	 * @return if the PowerUpEffect is stackable or not
+	 * 		
+	 */
 	boolean isStackable();
 
 }
