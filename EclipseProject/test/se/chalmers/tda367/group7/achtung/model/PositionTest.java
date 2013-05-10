@@ -11,8 +11,8 @@ import org.junit.Test;
 public class PositionTest {
 
 	private Round round;
-	private int worldWidth;
-	private int worldHeight;
+	private float worldWidth;
+	private float worldHeight;
 
 	@Before
 	public void setUpRound() {
