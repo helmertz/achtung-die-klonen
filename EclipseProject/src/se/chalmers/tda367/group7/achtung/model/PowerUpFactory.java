@@ -1,17 +1,25 @@
 package se.chalmers.tda367.group7.achtung.model;
 
 import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
+import se.chalmers.tda367.group7.achtung.model.powerups.*;
 
 public class PowerUpFactory {
 
+	// TODO possibly not store the effects like this. Would definitely not work
+	// if effects were mutable.
+	public static final PowerUpEffect[] effects = new PowerUpEffect[] {
+			new FatPowerUp(), new SlowPowerUp(), new SpeedPowerUp(),
+			new ThinPowerUp(), new TurnPowerUp(), new RemoveWallsPowerUp(),
+			new MorePowerUp(), new InvertedControlsPowerUp(),
+			new ClearPowerUp(), new BackgroundColorPowerUp() };
+	
 	private PowerUpFactory() {
 	}
 
 	public static PowerUpEntity getRandomEntity(Map map) {
 
 		// Gets a random effect
-		PowerUpEffect effect = PowerUpEffect.effects[(int) (PowerUpEffect.effects.length * Math
-				.random())];
+		PowerUpEffect effect = effects[(int) (effects.length * Math.random())];
 
 		float diameter = PowerUpEntity.getDefaultDiameter();
 
