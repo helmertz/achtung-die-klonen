@@ -62,9 +62,6 @@ public class MainController implements InputListener, PropertyChangeListener {
 	private final MainMenuController menuController;
 
 	public MainController() {
-
-		// Only statically stored to make
-		// TODO find another way of doing this
 		try {
 			this.renderer = new LWJGLRenderService();
 		} catch (LWJGLException e) {
