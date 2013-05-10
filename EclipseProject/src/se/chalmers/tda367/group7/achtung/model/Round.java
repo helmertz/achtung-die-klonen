@@ -115,11 +115,9 @@ public class Round {
 	private void handleCollisions(Player player) {
 		if (this.collisionHelper.hasCollidedWithOthers(player)) {
 			killPlayer(player);
-			distributePoints();
 		} else if (this.collisionHelper.isPlayerOutOfBounds(player)) {
 			if (this.wallsAreActive) {
 				killPlayer(player);
-				distributePoints();
 			} else {
 				this.collisionHelper.mirrorPlayerPosition(player);
 			}
@@ -146,9 +144,10 @@ public class Round {
 
 	private void killPlayer(Player player) {
 		player.getBody().kill();
-		this.pcs.firePropertyChange("PlayerDied", false, true);
 		if (player.getBody().isDead()) {
+			this.pcs.firePropertyChange("PlayerDied", false, true);
 			this.deadPlayers++;
+			distributePoints();
 		}
 	}
 
