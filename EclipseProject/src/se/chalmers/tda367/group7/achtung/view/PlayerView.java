@@ -12,7 +12,7 @@ import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public class PlayerView implements View {
 
-	private static final float LINEWIDTH = 2;
+	private static final float TIMER_LINEWIDTH = 2;
 	private final Player player;
 	private final boolean drawHitBox = false; // used for debug
 	private final Color[] powerUpTimerColors;
@@ -99,14 +99,14 @@ public class PlayerView implements View {
 		if (powerUps.size() > 0) {
 			for (PowerUp powerUp : powerUps) {
 				int powerUpIndex = powerUps.indexOf(powerUp);
-				radius += powerUpIndex + (LINEWIDTH * 4);
+				radius += powerUpIndex + (TIMER_LINEWIDTH * 4);
 
 				Color color = getCorrectTimerColor(powerUps.indexOf(powerUp));
 				int dur = powerUp.getEffect().getDuration();
 
 				float percentDur = 100 * ((powerUp.getTimeLeft() - interpolation) / dur);
 				renderService.drawCircleOutlinePercent(headX, headY, radius,
-						percentDur, LINEWIDTH, color);
+						percentDur, TIMER_LINEWIDTH, color);
 			}
 		}
 	}
