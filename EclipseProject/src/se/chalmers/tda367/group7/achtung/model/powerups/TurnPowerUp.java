@@ -7,7 +7,8 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class TurnPowerUp implements BodyPowerUpEffect {
 
-	private static final String imageName = "sharp-turn"; 
+	private static final String NAME = "sharp-turn"; 
+	private static final int DURATION = 150; 
 	
 	@Override
 	public void applyEffect(Body body) {
@@ -24,7 +25,7 @@ public class TurnPowerUp implements BodyPowerUpEffect {
 
 	@Override
 	public int getDuration() {
-		return 150;
+		return DURATION;
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public class TurnPowerUp implements BodyPowerUpEffect {
 	
 	@Override
 	public String getName() {
-		return imageName;
+		return NAME;
 	}
 
 }
