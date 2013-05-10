@@ -9,14 +9,15 @@ import se.chalmers.tda367.group7.achtung.model.Round;
 import se.chalmers.tda367.group7.achtung.model.RoundPowerUpEffect;
 
 public class BackgroundColorPowerUp implements BodyPowerUpEffect, RoundPowerUpEffect {
-	
+
+	private static final String NAME = "background-change";
+	private static final int DURATION = 75;
+
 	private Color newColor;
-
-	private static final String imageName = "";
-
+	
 	@Override
 	public int getDuration() {
-		return 75;
+		return DURATION;
 	}
 
 	@Override
@@ -46,9 +47,7 @@ public class BackgroundColorPowerUp implements BodyPowerUpEffect, RoundPowerUpEf
 	}
 	
 	@Override
-	public String getImageName() {
-		return imageName;
+	public String getName() {
+		return NAME;
 	}
-
-
 }

@@ -43,14 +43,18 @@ public class PowerUpEntityView implements View {
 		}
 		if (this.image == null) {
 			// TODO check file system if image is there
-			String imgName = powerUpEntity.getPowerUpEffect().getImageName();
-
-			if (imgName != "") {
-				System.out.println("asfgsd");
+			String name = powerUpEntity.getPowerUpEffect().getName();
+			String fileName = "powerups/" + name + ".png";
+			try {
+				this.image = renderService.getImage(fileName);
+			} catch (IOException e1) {
+				System.err.println(fileName + " was not found");
+				
+				// If image not found, load question mark icon instead
 				try {
-					this.image = renderService.getImage("powerups/" + imgName + ".png");
-				} catch (IOException e) {
-					e.printStackTrace();
+					this.image = renderService.getImage("powerups/unknown.png");
+				} catch (IOException e2) {
+					e2.printStackTrace();
 					System.exit(1);
 				}
 			}

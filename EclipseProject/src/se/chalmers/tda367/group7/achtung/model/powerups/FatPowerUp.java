@@ -6,8 +6,9 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class FatPowerUp implements BodyPowerUpEffect {
 
-	private static final String imageName = "1"; 
-
+	private static final String NAME = "fat"; 
+	private static final int DURATION = 150;
+	
 	@Override
 	public void applyEffect(Body body) {
 		body.setWidth(body.getWidth() * 2);
@@ -20,7 +21,7 @@ public class FatPowerUp implements BodyPowerUpEffect {
 
 	@Override
 	public int getDuration() {
-		return 150;
+		return DURATION;
 	}
 
 	@Override
@@ -29,9 +30,7 @@ public class FatPowerUp implements BodyPowerUpEffect {
 	}
 	
 	@Override
-	public String getImageName() {
-		return imageName;
+	public String getName() {
+		return NAME;
 	}
-
-
 }

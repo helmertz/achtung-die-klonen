@@ -6,11 +6,12 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class NoTailPowerUp implements BodyPowerUpEffect {
 
-	private static final String imageName = ""; 
+	private static final String NAME = "immortal"; 
+	private static final int DURATION = 65; 
 
 	@Override
 	public int getDuration() {
-		return 65;
+		return DURATION;
 	}
 
 	@Override
@@ -29,8 +30,8 @@ public class NoTailPowerUp implements BodyPowerUpEffect {
 	}
 	
 	@Override
-	public String getImageName() {
-		return imageName;
+	public String getName() {
+		return NAME;
 	}
 
 }

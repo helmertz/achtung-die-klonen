@@ -21,6 +21,6 @@ public interface PowerUpEffect {
 	/**
 	 * @return the name of the image for this power up
 	 */
-	String getImageName();
+	String getName();
 
 }

@@ -6,7 +6,8 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class SpeedPowerUp implements BodyPowerUpEffect {
 
-	private static final String imageName = "4"; 
+	private static final String NAME = "speed"; 
+	private static final int DURATION = 100; 
 	
 
 	@Override
@@ -21,7 +22,7 @@ public class SpeedPowerUp implements BodyPowerUpEffect {
 
 	@Override
 	public int getDuration() {
-		return 100;
+		return DURATION;
 	}
 
 	@Override
@@ -30,8 +31,8 @@ public class SpeedPowerUp implements BodyPowerUpEffect {
 	}
 	
 	@Override
-	public String getImageName() {
-		return imageName;
+	public String getName() {
+		return NAME;
 	}
 
 }

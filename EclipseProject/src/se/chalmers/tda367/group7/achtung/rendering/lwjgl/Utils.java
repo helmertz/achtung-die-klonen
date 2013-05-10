@@ -23,6 +23,11 @@ public class Utils {
 
 		// Open the PNG file as an InputStream
 		InputStream in = BitMapFont.class.getResourceAsStream("/" + fileName);
+		
+		if(in == null) {
+			throw new IOException(fileName + " not found");
+		}
+		
 		// Link the PNG decoder to this stream
 		PNGDecoder decoder = new PNGDecoder(in);
 

@@ -5,8 +5,9 @@ import se.chalmers.tda367.group7.achtung.model.RoundPowerUpEffect;
 
 public class MorePowerUp implements RoundPowerUpEffect {
 
-	private static final String imageName = ""; 
-
+	private static final String NAME = "more-powerups"; 
+	private static final int DURATION = 200;
+	
 	@Override
 	public void applyEffect(Round round) {
 		round.setPowerUpChance(round.getDefaultPowerUpChance() + (float) 0.06);
@@ -19,12 +20,12 @@ public class MorePowerUp implements RoundPowerUpEffect {
 
 	@Override
 	public int getDuration() {
-		return 200;
+		return DURATION;
 	}
 	
 	@Override
-	public String getImageName() {
-		return imageName;
+	public String getName() {
+		return NAME;
 	}
 
 }

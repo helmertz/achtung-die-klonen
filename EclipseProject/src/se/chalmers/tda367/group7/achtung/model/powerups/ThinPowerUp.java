@@ -6,8 +6,8 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class ThinPowerUp implements BodyPowerUpEffect {
 
-	private static final String imageName = "2"; 
-	
+	private static final String NAME = "thin"; 
+	private static final int DURATION = 150; 	
 
 	@Override
 	public void applyEffect(Body body) {
@@ -21,7 +21,7 @@ public class ThinPowerUp implements BodyPowerUpEffect {
 
 	@Override
 	public int getDuration() {
-		return 150;
+		return DURATION;
 	}
 
 	@Override
@@ -30,8 +30,8 @@ public class ThinPowerUp implements BodyPowerUpEffect {
 	}
 	
 	@Override
-	public String getImageName() {
-		return imageName;
+	public String getName() {
+		return NAME;
 	}
 
 }

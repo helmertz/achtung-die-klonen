@@ -6,11 +6,12 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class InvertedControlsPowerUp implements BodyPowerUpEffect {
 
-	private static final String imageName = "6"; 
+	private static final String NAME = "mirror"; 
+	private static final int DURATION = 150;
 	
 	@Override
 	public int getDuration() {
-		return 150;
+		return DURATION;
 	}
 
 	@Override
@@ -29,8 +30,8 @@ public class InvertedControlsPowerUp implements BodyPowerUpEffect {
 	}
 
 	@Override
-	public String getImageName() {
-		return imageName;
+	public String getName() {
+		return NAME;
 	}
 
 }
