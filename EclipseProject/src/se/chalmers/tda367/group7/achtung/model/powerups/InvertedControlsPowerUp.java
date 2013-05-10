@@ -6,7 +6,7 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class InvertedControlsPowerUp implements BodyPowerUpEffect {
 
-	private static final String NAME = "mirror"; 
+	private static final String NAME = "invert"; 
 	private static final int DURATION = 150;
 	
 	@Override
