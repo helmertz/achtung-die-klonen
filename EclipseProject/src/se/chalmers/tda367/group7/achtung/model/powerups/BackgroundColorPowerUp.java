@@ -6,9 +6,9 @@ import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Map;
 import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 import se.chalmers.tda367.group7.achtung.model.Round;
-import se.chalmers.tda367.group7.achtung.model.WorldPowerUpEffect;
+import se.chalmers.tda367.group7.achtung.model.RoundPowerUpEffect;
 
-public class BackgroundColorPowerUp implements BodyPowerUpEffect, WorldPowerUpEffect {
+public class BackgroundColorPowerUp implements BodyPowerUpEffect, RoundPowerUpEffect {
 	
 	private Color newColor;
 

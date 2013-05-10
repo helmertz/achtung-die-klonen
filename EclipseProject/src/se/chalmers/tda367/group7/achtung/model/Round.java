@@ -18,7 +18,7 @@ public class Round {
 
 	private final List<Player> players;
 	private final List<PowerUpEntity> powerUpEntities;
-	private final List<PowerUp> activeWorldEffects;
+	private final List<PowerUp> activeRoundEffects;
 	private final CollisionHelper collisionHelper;
 	private final Map map;
 
@@ -37,7 +37,7 @@ public class Round {
 		this.map = map;
 		this.players = players;
 		this.powerUpEntities = new ArrayList<PowerUpEntity>();
-		this.activeWorldEffects = new ArrayList<PowerUp>();
+		this.activeRoundEffects = new ArrayList<PowerUp>();
 		this.deadPlayers = 0;
 
 		this.pcs = new PropertyChangeSupport(this);
@@ -65,12 +65,12 @@ public class Round {
 				this.pcs.firePropertyChange("PowerUp", false, true);
 			}
 
-			updateWorldPowerUps();
+			updateRoundPowerUps();
 		}
 	}
 
-	private void updateWorldPowerUps() {
-		Iterator<PowerUp> iter = this.activeWorldEffects.iterator();
+	private void updateRoundPowerUps() {
+		Iterator<PowerUp> iter = this.activeRoundEffects.iterator();
 
 		while (iter.hasNext()) {
 			PowerUp p = iter.next();
@@ -172,16 +172,16 @@ public class Round {
 		if (effect instanceof BodyPowerUpEffect) {
 			distributePlayerEffect(pickedUpByPlayer, powerUp);
 		}
-		if (effect instanceof WorldPowerUpEffect) {
-			distributeWorldEffect(powerUp);
+		if (effect instanceof RoundPowerUpEffect) {
+			distributeRoundEffect(powerUp);
 		}
 	}
 
-	private void distributeWorldEffect(PowerUpEntity powerUp) {
-		WorldPowerUpEffect effect = (WorldPowerUpEffect) powerUp
+	private void distributeRoundEffect(PowerUpEntity powerUp) {
+		RoundPowerUpEffect effect = (RoundPowerUpEffect) powerUp
 				.getPowerUpEffect();
 		effect.applyEffect(this);
-		this.activeWorldEffects.add(new PowerUp(effect));
+		this.activeRoundEffects.add(new PowerUp(effect));
 	}
 
 	/**

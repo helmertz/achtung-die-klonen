@@ -1,6 +1,6 @@
 package se.chalmers.tda367.group7.achtung.model;
 
-public interface WorldPowerUpEffect extends PowerUpEffect {
+public interface RoundPowerUpEffect extends PowerUpEffect {
 
 	void applyEffect(Round round);
 

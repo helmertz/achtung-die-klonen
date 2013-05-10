@@ -15,7 +15,7 @@ public class PositionTest {
 	private int worldHeight;
 
 	@Before
-	public void setUpWorld() {
+	public void setUpRound() {
 		this.round = new Round(new Map(1000, 1000), null);
 		this.worldHeight = this.round.getMap().getHeight();
 		this.worldWidth = this.round.getMap().getWidth();

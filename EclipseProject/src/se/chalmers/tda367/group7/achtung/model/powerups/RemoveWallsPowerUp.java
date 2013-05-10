@@ -1,9 +1,9 @@
 package se.chalmers.tda367.group7.achtung.model.powerups;
 
 import se.chalmers.tda367.group7.achtung.model.Round;
-import se.chalmers.tda367.group7.achtung.model.WorldPowerUpEffect;
+import se.chalmers.tda367.group7.achtung.model.RoundPowerUpEffect;
 
-public class RemoveWallsPowerUp implements WorldPowerUpEffect {
+public class RemoveWallsPowerUp implements RoundPowerUpEffect {
 
 	private static final String imageName = ""; 
 

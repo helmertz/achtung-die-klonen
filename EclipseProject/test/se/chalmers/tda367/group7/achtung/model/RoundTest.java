@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-public class WorldTest {
+public class RoundTest {
 	@Test
 	public void collisionTest() {
 
@@ -22,11 +22,11 @@ public class WorldTest {
 
 		List<Player> players = new ArrayList<>();
 
-		Round world = new Round(new Map(1000, 1000), players);
+		Round round = new Round(new Map(1000, 1000), players);
 
 		assertTrue(!p1.getBody().isDead() && !p2.getBody().isDead());
 
-		world.update();
+		round.update();
 		System.out.println(b1.getPosition().getX());
 		System.out.println(b1.getPosition().getY());
 		System.out.println(b2.getPosition().getX());

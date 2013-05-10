@@ -18,11 +18,11 @@ public class PowerUp {
 	}
 
 	public void applyEffect(Round round) {
-		((WorldPowerUpEffect) this.effect).applyEffect(round);
+		((RoundPowerUpEffect) this.effect).applyEffect(round);
 	}
 
 	public void removeEffect(Round round) {
-		((WorldPowerUpEffect) this.effect).removeEffect(round);
+		((RoundPowerUpEffect) this.effect).removeEffect(round);
 	}
 
 	/**

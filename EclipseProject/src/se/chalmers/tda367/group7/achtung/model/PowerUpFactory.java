@@ -24,7 +24,7 @@ public class PowerUpFactory {
 
 		Type type = Type.values()[(int) (Type.values().length * Math.random())];
 
-		if (effect instanceof WorldPowerUpEffect) {
+		if (effect instanceof RoundPowerUpEffect) {
 			type = Type.EVERYONE;
 		}
 		if (effect instanceof BodyPowerUpEffect) {
