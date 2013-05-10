@@ -12,6 +12,7 @@ import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public class PlayerView implements View {
 
+	private static final float LINEWIDTH = 2;
 	private final Player player;
 	private final boolean drawHitBox = false; // used for debug
 	private final Color[] powerUpTimerColors;
@@ -93,20 +94,19 @@ public class PlayerView implements View {
 		Body body = this.player.getBody();
 		List<PowerUp> powerUps = body.getPowerUps();
 
-		float lineWidth = 2;
 		float radius = (float) Math.pow(body.getHead().getDiameter(), 1.05) + 8;
 
 		if (powerUps.size() > 0) {
 			for (PowerUp powerUp : powerUps) {
 				int powerUpIndex = powerUps.indexOf(powerUp);
-				radius += powerUpIndex + (lineWidth * 4);
+				radius += powerUpIndex + (LINEWIDTH * 4);
 
 				Color color = getCorrectTimerColor(powerUps.indexOf(powerUp));
 				int dur = powerUp.getEffect().getDuration();
 
 				float percentDur = 100 * ((powerUp.getTimeLeft() - interpolation) / dur);
 				renderService.drawCircleOutlinePercent(headX, headY, radius,
-						percentDur, lineWidth, color);
+						percentDur, LINEWIDTH, color);
 			}
 		}
 	}
