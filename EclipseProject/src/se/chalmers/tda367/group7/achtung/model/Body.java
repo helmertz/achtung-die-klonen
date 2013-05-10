@@ -181,6 +181,16 @@ public class Body {
 	 *            - the effect to add to the player
 	 */
 	public void addPowerUp(BodyPowerUpEffect effect) {
+
+		if (!effect.isStackable()) {
+			for (PowerUp powerUp : powerUps) {
+				if (powerUp.getEffect().getClass() == effect.getClass()) {
+					powerUp.resetTimer();
+					return;
+				}
+			}
+		}
+		
 		PowerUp p = new PowerUp(effect);
 		p.applyEffect(this);
 		this.powerUps.add(p);
@@ -294,11 +304,11 @@ public class Body {
 	public Position getLastPosition() {
 		return this.prevPosition;
 	}
-	
+
 	public void setColor(Color color) {
 		this.color = color;
 	}
-	
+
 	public Color getColor() {
 		return this.color;
 	}
