@@ -21,10 +21,9 @@ public class Sound implements PropertyChangeListener {
 	private Audio playerDied;
 	private List<Audio> music;
 	private Audio currentMusic;
-	private static boolean soundEnabled;
+	private boolean soundEnabled = true;
 
 	private Sound() {
-		soundEnabled = true;
 		initSounds();
 	}
 
@@ -101,7 +100,7 @@ public class Sound implements PropertyChangeListener {
 		AL.destroy();
 	}
 
-	public static void setSound(boolean sound) {
-		soundEnabled = sound;
+	public void setSound(boolean sound) {
+		this.soundEnabled = sound;
 	}
 }
