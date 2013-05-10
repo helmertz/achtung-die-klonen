@@ -7,7 +7,8 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 public class SlowPowerUp implements BodyPowerUpEffect {
 
 	private static final String NAME = "slow"; 
-	private static final int DURATION = 150; 
+	private static final int DURATION = 150;
+	private static final boolean STACKABLE = false; 
 
 	@Override
 	public void applyEffect(Body body) {
@@ -32,6 +33,11 @@ public class SlowPowerUp implements BodyPowerUpEffect {
 	@Override
 	public String getName() {
 		return NAME;
+	}
+
+	@Override
+	public boolean isStackable() {
+		return STACKABLE;
 	}
 
 

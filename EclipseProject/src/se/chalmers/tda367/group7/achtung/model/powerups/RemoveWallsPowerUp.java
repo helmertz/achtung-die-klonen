@@ -6,7 +6,8 @@ import se.chalmers.tda367.group7.achtung.model.RoundPowerUpEffect;
 public class RemoveWallsPowerUp implements RoundPowerUpEffect {
 
 	private static final String NAME = "wall-remove"; 
-	private static final int DURATION = 150; 
+	private static final int DURATION = 150;
+	private static final boolean STACKABLE = false; 
 
 	@Override
 	public void applyEffect(Round round) {
@@ -28,6 +29,11 @@ public class RemoveWallsPowerUp implements RoundPowerUpEffect {
 	@Override
 	public String getName() {
 		return NAME;
+	}
+
+	@Override
+	public boolean isStackable() {
+		return STACKABLE;
 	}
 
 }

@@ -8,6 +8,7 @@ public class FatPowerUp implements BodyPowerUpEffect {
 
 	private static final String NAME = "fat"; 
 	private static final int DURATION = 150;
+	private static final boolean STACKABLE = true;
 	
 	@Override
 	public void applyEffect(Body body) {
@@ -32,5 +33,10 @@ public class FatPowerUp implements BodyPowerUpEffect {
 	@Override
 	public String getName() {
 		return NAME;
+	}
+
+	@Override
+	public boolean isStackable() {
+		return STACKABLE;
 	}
 }

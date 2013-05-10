@@ -8,6 +8,7 @@ public class InvertedControlsPowerUp implements BodyPowerUpEffect {
 
 	private static final String NAME = "invert"; 
 	private static final int DURATION = 150;
+	private static final boolean STACKABLE = true;
 	
 	@Override
 	public int getDuration() {
@@ -33,5 +34,12 @@ public class InvertedControlsPowerUp implements BodyPowerUpEffect {
 	public String getName() {
 		return NAME;
 	}
+
+	@Override
+	public boolean isStackable() {
+		return STACKABLE;
+	}
+	
+	
 
 }

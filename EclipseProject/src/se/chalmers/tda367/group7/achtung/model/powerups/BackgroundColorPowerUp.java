@@ -12,6 +12,7 @@ public class BackgroundColorPowerUp implements BodyPowerUpEffect, RoundPowerUpEf
 
 	private static final String NAME = "background-change";
 	private static final int DURATION = 75;
+	private static final boolean STACKABLE = false;
 
 	private Color newColor;
 	
@@ -49,5 +50,10 @@ public class BackgroundColorPowerUp implements BodyPowerUpEffect, RoundPowerUpEf
 	@Override
 	public String getName() {
 		return NAME;
+	}
+
+	@Override
+	public boolean isStackable() {
+		return STACKABLE;
 	}
 }

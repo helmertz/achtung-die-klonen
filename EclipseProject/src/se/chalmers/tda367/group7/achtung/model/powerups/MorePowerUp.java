@@ -7,6 +7,7 @@ public class MorePowerUp implements RoundPowerUpEffect {
 
 	private static final String NAME = "more-powerups"; 
 	private static final int DURATION = 200;
+	private static final boolean STACKABLE = false;
 	
 	@Override
 	public void applyEffect(Round round) {
@@ -26,6 +27,11 @@ public class MorePowerUp implements RoundPowerUpEffect {
 	@Override
 	public String getName() {
 		return NAME;
+	}
+
+	@Override
+	public boolean isStackable() {
+		return STACKABLE ;
 	}
 
 }

@@ -7,7 +7,8 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 public class NoTailPowerUp implements BodyPowerUpEffect {
 
 	private static final String NAME = "immortal"; 
-	private static final int DURATION = 65; 
+	private static final int DURATION = 65;
+	private static final boolean STACKABLE = false; 
 
 	@Override
 	public int getDuration() {
@@ -34,6 +35,11 @@ public class NoTailPowerUp implements BodyPowerUpEffect {
 	@Override
 	public String getName() {
 		return NAME;
+	}
+
+	@Override
+	public boolean isStackable() {
+		return STACKABLE;
 	}
 
 }
