@@ -6,7 +6,7 @@ public class PowerUpEntity {
 	private final float diameter;
 	private final PowerUpEffect powerUpEffect;
 	private Type type;
-	private static final float DEFAULT_DIAMETER = 40;
+	private static final float DEFAULT_DIAMETER = 50;
 
 	public enum Type {
 		SELF, EVERYONE, EVERYONE_ELSE
