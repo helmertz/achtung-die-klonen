@@ -46,4 +46,10 @@ public class PowerUp {
 	public int getTimeLeft() {
 		return this.effect.getDuration() - this.timeElapsed;
 	}
+	
+	public void resetTimer() {
+		this.timeElapsed = 0;
+	}
+	
+	
 }
