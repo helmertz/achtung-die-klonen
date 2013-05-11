@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.lwjgl.input.Keyboard;
-
 import se.chalmers.tda367.group7.achtung.input.KeyInputEvent;
 import se.chalmers.tda367.group7.achtung.input.MouseInputEvent;
 
@@ -43,8 +41,7 @@ public class CustomInputSystem implements InputSystem {
 
 	public void addKeyEvent(KeyInputEvent e) {
 		KeyboardInputEvent event = this.eventCreator.createEvent(
-				Keyboard.getEventKey(), Keyboard.getEventCharacter(),
-				Keyboard.getEventKeyState());
+				e.getKey(), e.getCharacter(),e.isPressed());
 		this.keyEventQueue.add(event);
 	}
 
