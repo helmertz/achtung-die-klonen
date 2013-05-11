@@ -5,13 +5,13 @@ import java.util.List;
 
 import org.lwjgl.input.Keyboard;
 
-import se.chalmers.tda367.group7.achtung.input.InputEvent;
-import se.chalmers.tda367.group7.achtung.input.InputListener;
+import se.chalmers.tda367.group7.achtung.input.KeyInputEvent;
+import se.chalmers.tda367.group7.achtung.input.KeyInputListener;
 import se.chalmers.tda367.group7.achtung.model.Game;
 import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.sound.Sound;
 
-public class GameController implements InputListener {
+public class GameController implements KeyInputListener {
 	private final Game game;
 	private final List<PlayerController> playerControllers = new ArrayList<>();
 
@@ -40,8 +40,9 @@ public class GameController implements InputListener {
 	// Called as quickly as possible after a key is pressed, not in sync with
 	// game rate
 	@Override
-	public boolean onInputEvent(InputEvent event) {
-		if (event.isPressed() && event.getKey() == Keyboard.KEY_SPACE) {
+	public boolean onKeyInputEvent(KeyInputEvent event) {
+		if (!event.isRepeat() && event.isPressed()
+				&& event.getKey() == Keyboard.KEY_SPACE) {
 			startRound();
 			return true;
 		}
@@ -55,6 +56,7 @@ public class GameController implements InputListener {
 
 	public void startRound() {
 		this.game.newRound();
-		this.game.getCurrentRound().addPropertyChangeListener(Sound.getInstance());
+		this.game.getCurrentRound().addPropertyChangeListener(
+				Sound.getInstance());
 	}
 }

@@ -2,9 +2,13 @@ package se.chalmers.tda367.group7.achtung.input;
 
 public interface InputService {
 
-	public void addListener(InputListener listener);
+	public void addKeyListener(KeyInputListener listener);
 
-	public void removeListener(InputListener listener);
+	public void removeKeyListener(KeyInputListener listener);
+
+	public void addMouseListener(MouseInputListener listener);
+
+	public void removeMouseListener(MouseInputListener listener);
 
 	public void update();
 }

@@ -2,20 +2,27 @@ package se.chalmers.tda367.group7.achtung.controller;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.Locale;
+import java.util.logging.Level;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.nulldevice.NullSoundDevice;
-import de.lessvoid.nifty.renderer.lwjgl.input.LwjglInputSystem;
 import de.lessvoid.nifty.renderer.lwjgl.render.LwjglRenderDevice;
 import de.lessvoid.nifty.renderer.lwjgl.time.LWJGLTimeProvider;
 import de.lessvoid.nifty.screen.Screen;
-import se.chalmers.tda367.group7.achtung.input.InputEvent;
-import se.chalmers.tda367.group7.achtung.input.InputListener;
+import de.lessvoid.nifty.spi.render.MouseCursor;
+import de.lessvoid.nifty.spi.render.RenderDevice;
+import se.chalmers.tda367.group7.achtung.input.KeyInputEvent;
+import se.chalmers.tda367.group7.achtung.input.KeyInputListener;
 import se.chalmers.tda367.group7.achtung.input.InputService;
 import se.chalmers.tda367.group7.achtung.input.LWJGLInputService;
+import se.chalmers.tda367.group7.achtung.input.MouseInputEvent;
+import se.chalmers.tda367.group7.achtung.input.MouseInputListener;
+import se.chalmers.tda367.group7.achtung.menu.CustomInputSystem;
 import se.chalmers.tda367.group7.achtung.menu.MainMenuController;
 import se.chalmers.tda367.group7.achtung.model.Game;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
@@ -27,7 +34,8 @@ import se.chalmers.tda367.group7.achtung.view.GameView;
  * A class containing the game loop, responsible for handling the timing of game
  * logic and rendering.
  */
-public class MainController implements InputListener, PropertyChangeListener {
+public class MainController implements PropertyChangeListener,
+		KeyInputListener, MouseInputListener {
 
 	// Game time related
 	private static final double TICKS_PER_SECOND = 25;
@@ -60,8 +68,12 @@ public class MainController implements InputListener, PropertyChangeListener {
 	private final Nifty nifty;
 	private boolean atMenu = true;
 	private final MainMenuController menuController;
+	private final CustomInputSystem inputSystem;
 
 	public MainController() {
+		// The service that handles the rendering
+		// TODO make service factories, so LWJGLRenderService isn't referenced
+		// for example
 		try {
 			this.renderer = new LWJGLRenderService();
 		} catch (LWJGLException e) {
@@ -69,13 +81,37 @@ public class MainController implements InputListener, PropertyChangeListener {
 			System.exit(1);
 		}
 
+		// The service for supplying mouse and keyboard events
 		this.inputService = new LWJGLInputService();
 
-		this.nifty = new Nifty(new LwjglRenderDevice(), new NullSoundDevice(),
-				new LwjglInputSystem(), new LWJGLTimeProvider());
+		// Sets this as "root" handler of keyboard and mouse events. Here it's
+		// decided where they are passed along to.
+		this.inputService.addKeyListener(this);
+		this.inputService.addMouseListener(this);
 
-		this.nifty.fromXml("menu/helloworld.xml", "start");
+		// Limit nifty output
+		java.util.logging.Logger.getLogger("de.lessvoid.nifty").setLevel(
+				Level.WARNING);
 
+		// Uses custom nifty InputSystem to control which events are forwarded
+		// to nifty
+		this.inputSystem = new CustomInputSystem();
+
+		// Small modification to LwjglRenderDevice because of cursor problems.
+		RenderDevice renderDevice = new LwjglRenderDevice() {
+			@Override
+			public MouseCursor createMouseCursor(String filename, int hotspotX,
+					int hotspotY) throws IOException {
+				return null;
+			}
+		};
+		this.nifty = new Nifty(renderDevice, new NullSoundDevice(),
+				this.inputSystem, new LWJGLTimeProvider());
+
+		// Load main menu from xml
+		this.nifty.fromXml("menu/main-menu.xml", "start");
+
+		// To know when something happens, observe the nifty screen controller
 		// TODO perhaps do this interaction differently, without this being a
 		// listener
 		Screen niftyScreen = this.nifty.getScreen("start");
@@ -89,9 +125,6 @@ public class MainController implements InputListener, PropertyChangeListener {
 	}
 
 	public void run() {
-		// http://www.koonsolo.com/news/dewitters-gameloop/ for some different
-		// types. Interpolation type renderer would probably work well, but is a
-		// bit more difficult to implement.
 		this.nextGameTick = getTickCount();
 		while (!this.renderer.isCloseRequested()) {
 
@@ -100,7 +133,6 @@ public class MainController implements InputListener, PropertyChangeListener {
 			this.inputService.update();
 
 			boolean doLogic = true;
-			this.nifty.update();
 
 			// Essentially pauses the game when not in focus
 			if (!this.renderer.isActive()) {
@@ -116,6 +148,7 @@ public class MainController implements InputListener, PropertyChangeListener {
 				this.nextGameTick = getTickCount();
 			}
 			if (this.atMenu) {
+				this.nifty.update();
 				doLogic = false;
 				this.nextGameTick = getTickCount();
 			}
@@ -200,18 +233,38 @@ public class MainController implements InputListener, PropertyChangeListener {
 	}
 
 	@Override
-	public boolean onInputEvent(InputEvent event) {
-		if (event.isPressed() && event.getKey() == Keyboard.KEY_ESCAPE) {
-			toggleMenu();
+	public boolean onKeyInputEvent(KeyInputEvent event) {
+		if (!event.isRepeat() && event.isPressed()
+				&& event.getKey() == Keyboard.KEY_ESCAPE) {
+			setAtMenu(true);
 			return true;
 		}
-		this.gameController.onInputEvent(event);
+		if (this.atMenu) {
+			this.inputSystem.addKeyEvent(event);
+		} else if (this.gameController != null) {
+			this.gameController.onKeyInputEvent(event);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean onMouseInputEvent(MouseInputEvent event) {
+		if (this.atMenu) {
+			this.inputSystem.addMouseEvent(event);
+		}
 		return false;
 	}
 
 	public void toggleMenu() {
-		this.atMenu = !this.atMenu;
-		this.nifty.setIgnoreMouseEvents(!this.atMenu);
+		setAtMenu(!this.atMenu);
+	}
+
+	private void setAtMenu(boolean atMenu) {
+		if (this.atMenu != atMenu) {
+			this.atMenu = atMenu;
+
+			// TODO probably do stuff here
+		}
 	}
 
 	public void startGame() {
@@ -220,11 +273,10 @@ public class MainController implements InputListener, PropertyChangeListener {
 
 		this.gameController = new GameController(this.game);
 		this.gameController.startRound();
-		this.inputService.addListener(this);
 
 		this.gameView = new GameView(this.game);
 		this.game.addPropertyChangeListener(this.gameView);
-		toggleMenu();
+		setAtMenu(false);
 	}
 
 	@Override

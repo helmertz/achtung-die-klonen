@@ -1,15 +1,18 @@
 package se.chalmers.tda367.group7.achtung.input;
 
-public class InputEvent {
+public class KeyInputEvent {
 
 	private final int key;
 	private final char character;
 	private final boolean pressed;
+	private final boolean repeat;
 
-	public InputEvent(int eventKey, char character, boolean repeat) {
+	public KeyInputEvent(int eventKey, char character, boolean pressed,
+			boolean repeat) {
 		this.key = eventKey;
 		this.character = character;
-		this.pressed = repeat;
+		this.pressed = pressed;
+		this.repeat = repeat;
 	}
 
 	public int getKey() {
@@ -22,5 +25,9 @@ public class InputEvent {
 
 	public boolean isPressed() {
 		return this.pressed;
+	}
+
+	public boolean isRepeat() {
+		return this.repeat;
 	}
 }

@@ -1,6 +1,6 @@
 package se.chalmers.tda367.group7.achtung.controller;
 
-import se.chalmers.tda367.group7.achtung.input.InputEvent;
+import se.chalmers.tda367.group7.achtung.input.KeyInputEvent;
 import se.chalmers.tda367.group7.achtung.model.Body;
 import se.chalmers.tda367.group7.achtung.model.Player;
 
@@ -26,8 +26,10 @@ public class PlayerController {
 		this.leftKey = key;
 	}
 
-	public boolean onInputEvent(InputEvent e) {
-		if (e.getKey() == this.leftKey) {
+	public boolean onInputEvent(KeyInputEvent e) {
+		if (e.isRepeat()) {
+			return false;
+		} else if (e.getKey() == this.leftKey) {
 			this.leftDown = e.isPressed();
 		} else if (e.getKey() == this.rightKey) {
 			this.rightDown = e.isPressed();

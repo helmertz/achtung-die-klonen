@@ -3,14 +3,16 @@
 	<useStyles filename="nifty-default-styles.xml" />
 	<useControls filename="nifty-default-controls.xml" />
     
-	<screen id="start" controller="se.chalmers.tda367.group7.achtung.menu.MainMenuController">
+	<screen id="start" controller="se.chalmers.tda367.group7.achtung.menu.MainMenuController" defaultFocusElement="button">
 		<layer id="layer" childLayout="center">
 			<panel height="25%" width="35%" align="center" valign="center" backgroundColor="#222266"
-			    childLayout="center" visibleToMouse="true">
+			    childLayout="vertical" visibleToMouse="true">
+			    <panel height="25%" />
 				<control name="button" label="Start" id="StartButton" align="center" valign="center" 
 					visibleToMouse="true" > 
 					<interact onClick="onStartPress()"/>
-          		</control>
+				</control>
+				<control name="textfield" align="center" id="text_input" width="70%" />
 			</panel>
 		</layer>
 	</screen>
