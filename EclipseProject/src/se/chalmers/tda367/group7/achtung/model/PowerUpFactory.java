@@ -11,7 +11,7 @@ public class PowerUpFactory {
 			new FatPowerUp(), new SlowPowerUp(), new SpeedPowerUp(),
 			new ThinPowerUp(), new TurnPowerUp(), new RemoveWallsPowerUp(),
 			new MorePowerUp(), new InvertedControlsPowerUp(),
-			new ClearPowerUp(), new BackgroundColorPowerUp() };
+			new ClearPowerUp(), new BackgroundColorPowerUp(), new NoTailPowerUp() };
 	
 	private PowerUpFactory() {
 	}
