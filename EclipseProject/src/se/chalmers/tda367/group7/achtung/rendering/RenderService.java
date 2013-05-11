@@ -66,4 +66,10 @@ public interface RenderService {
 	// drawn between 0 and max width/height will be visible and scaled
 	// appropriately.
 	void setScaled(boolean scaled);
+
+	void drawFourCornered(float x, float y, float x2, float y2, float x3,
+			float y3, float x4, float y4, Color color);
+
+	void drawFourCornered(float x1, float y1, float x2, float y2, float x3,
+			float y3, float x4, float y4);
 }

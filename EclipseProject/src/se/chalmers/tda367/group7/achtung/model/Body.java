@@ -27,7 +27,7 @@ public class Body {
 	private boolean invertedControls;
 	private boolean generatingBodySegments;
 	private Position prevPosition;
-	private BodySegment lastSegment;
+	private BodySegment previousSegment;
 	private boolean makeHole;
 	private int holeCount;
 	private Color color;
@@ -112,7 +112,7 @@ public class Body {
 			this.holeCount++;
 			// Set to null so that no upcoming segment will be connected over
 			// the hole
-			this.lastSegment = null;
+			this.previousSegment = null;
 		}
 	}
 
@@ -127,11 +127,11 @@ public class Body {
 	}
 
 	private void createBodySegment() {
-		// lastSegment is null after a hole has been made
+		// previousSegment is null after a hole has been made
 		BodySegment segment;
-		if (this.lastSegment != null) {
+		if (this.previousSegment != null) {
 			// TODO handle differently to properly connect new segment to last
-			segment = new BodySegment(this.prevPosition,
+			segment = new BodySegment(this.previousSegment,
 					this.head.getPosition(), this.width);
 		} else {
 			segment = new BodySegment(this.prevPosition,
@@ -140,7 +140,7 @@ public class Body {
 		addBodySegment(segment);
 
 		// stores so next one can be connected to this
-		this.lastSegment = segment;
+		this.previousSegment = segment;
 	}
 
 	private void doTurn() {
@@ -190,7 +190,7 @@ public class Body {
 				}
 			}
 		}
-		
+
 		PowerUp p = new PowerUp(effect);
 		p.applyEffect(this);
 		this.powerUps.add(p);
@@ -311,5 +311,9 @@ public class Body {
 
 	public Color getColor() {
 		return this.color;
+	}
+
+	public void setPreviousSegment(BodySegment previousSegment) {
+		this.previousSegment = previousSegment;
 	}
 }

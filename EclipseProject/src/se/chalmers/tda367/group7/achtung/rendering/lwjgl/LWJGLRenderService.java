@@ -133,7 +133,7 @@ public class LWJGLRenderService implements RenderService {
 		}
 
 		Display.update();
-		
+
 		Util.checkGLError();
 	}
 
@@ -191,12 +191,8 @@ public class LWJGLRenderService implements RenderService {
 	}
 
 	private void drawRect(float x, float y, float width, float height) {
-		glBegin(GL_QUADS);
-		glVertex2f(x, y);
-		glVertex2f(x + width, y);
-		glVertex2f(x + width, y + height);
-		glVertex2f(x, y + height);
-		glEnd();
+		drawFourCornered(x, y, x + width, y, x + width, y + height, x, y
+				+ height);
 	}
 
 	@Override
@@ -250,8 +246,7 @@ public class LWJGLRenderService implements RenderService {
 		glBegin(GL_TRIANGLE_FAN);
 		glVertex2f(0, 0);
 
-		for (int i = 0; i <= edgeQuality; i++) { // edgeQuality decides how
-													// round the circle looks.
+		for (int i = 0; i <= edgeQuality; i++) {
 			double angle = Math.PI * 2 * i / edgeQuality;
 			glVertex2f((float) Math.cos(angle), (float) Math.sin(angle));
 		}
@@ -266,10 +261,8 @@ public class LWJGLRenderService implements RenderService {
 		glLineWidth(outLineWidth);
 		glBegin(GL_LINE_STRIP);
 
-		for (int i = -90; i < (360 * (percent / 100)) - 90; i++) { // -90 to
-																	// make it
-																	// start
-																	// "at the top"
+		// -90 to make it start "at the top"
+		for (int i = -90; i < (360 * (percent / 100)) - 90; i++) {
 			float degInRad = (float) Math.toRadians(i);
 			glVertex2f(x + (float) Math.cos(degInRad) * radius, y
 					+ (float) Math.sin(degInRad) * radius);
@@ -303,5 +296,23 @@ public class LWJGLRenderService implements RenderService {
 			drawRect(0, -this.yPadding, this.viewAreaWidth, this.yPadding);
 			drawRect(0, this.viewAreaHeight, this.viewAreaWidth, this.yPadding);
 		}
+	}
+
+	@Override
+	public void drawFourCornered(float x1, float y1, float x2, float y2,
+			float x3, float y3, float x4, float y4, Color color) {
+		bindColor(color);
+		drawFourCornered(x1, y1, x2, y2, x3, y3, x4, y4);
+	}
+
+	@Override
+	public void drawFourCornered(float x1, float y1, float x2, float y2,
+			float x3, float y3, float x4, float y4) {
+		glBegin(GL_QUADS);
+		glVertex2f(x1, y1);
+		glVertex2f(x2, y2);
+		glVertex2f(x3, y3);
+		glVertex2f(x4, y4);
+		glEnd();
 	}
 }

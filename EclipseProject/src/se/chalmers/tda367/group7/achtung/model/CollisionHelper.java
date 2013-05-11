@@ -68,8 +68,11 @@ public class CollisionHelper {
 		}
 		Position pos = new Position(newX, newY);
 
+		// Sets some values to make sure new segments won't be connected across
+		// the world
 		curBody.setHeadPosition(pos);
 		curBody.setLastPosition(pos);
+		curBody.setPreviousSegment(null);
 	}
 
 	private boolean exitOnBottom(float curY) {

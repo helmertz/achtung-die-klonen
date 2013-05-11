@@ -14,7 +14,6 @@ public class PlayerView implements View {
 
 	private static final float TIMER_LINEWIDTH = 2;
 	private final Player player;
-	private final boolean drawHitBox = false; // used for debug
 	private final Color[] powerUpTimerColors;
 
 	public PlayerView(Player player) {
@@ -34,27 +33,7 @@ public class PlayerView implements View {
 		Body body = this.player.getBody();
 
 		for (BodySegment b : body.getBodySegments()) {
-
-			renderService.drawLine(b.getStart().getX(), b.getStart().getY(), b
-					.getEnd().getX(), b.getEnd().getY(), b.getWidth(),
-					this.player.getColor());
-
-			if (this.drawHitBox) {
-				int[] xpoints = b.getHitBox().xpoints;
-				int[] ypoints = b.getHitBox().ypoints;
-
-				if (xpoints.length == 4 && ypoints.length == 4) {
-					renderService.drawLine(xpoints[0], ypoints[0], xpoints[1],
-							ypoints[1], 1, Color.WHITE);
-					renderService.drawLine(xpoints[1], ypoints[1], xpoints[2],
-							ypoints[2], 1, Color.WHITE);
-					renderService.drawLine(xpoints[2], ypoints[2], xpoints[3],
-							ypoints[3], 1, Color.WHITE);
-					renderService.drawLine(xpoints[3], ypoints[3], xpoints[0],
-							ypoints[0], 1, Color.WHITE);
-				}
-			}
-
+			drawSegment(renderService, b);
 		}
 
 		float headX = body.getPosition().getX();
@@ -81,11 +60,24 @@ public class PlayerView implements View {
 					body.getWidth(), this.player.getColor());
 
 		}
-		renderService.drawCircleCentered(headX, headY, body.getWidth() / 2, 10,
+		renderService.drawCircleCentered(headX, headY, body.getWidth() / 2, 18,
 				this.player.getColor());
 
 		if (!this.player.getBody().isDead()) {
 			this.drawPowerUpTimer(renderService, interpolation, headX, headY);
+		}
+	}
+
+	private void drawSegment(RenderService renderService, BodySegment b) {
+		Position[] corners = b.getCorners();
+		if (corners.length == 4) {
+			renderService.drawFourCornered(corners[0].getX(),
+					corners[0].getY(), corners[1].getX(), corners[1].getY(),
+					corners[2].getX(), corners[2].getY(), corners[3].getX(),
+					corners[3].getY(), this.player.getColor());
+		} else {
+			throw new IllegalArgumentException(
+					"Segment doesn't have four corners");
 		}
 	}
 
