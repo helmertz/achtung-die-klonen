@@ -211,6 +211,7 @@ public class MainController implements InputListener, PropertyChangeListener {
 
 	public void toggleMenu() {
 		this.atMenu = !this.atMenu;
+		this.nifty.setIgnoreMouseEvents(!this.atMenu);
 	}
 
 	public void startGame() {
