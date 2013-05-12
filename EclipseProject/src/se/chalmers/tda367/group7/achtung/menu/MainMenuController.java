@@ -73,7 +73,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 			
 			// Shows character if font can display it, otherwise the key's name
 			String buttonText;
-			if (this.element.getFont().getWidth(s) > 0) {
+			if (!Character.isWhitespace(c) && this.element.getFont().getWidth(s) > 0) {
 				buttonText = s;
 			} else {
 				buttonText = event.getKeyName();
