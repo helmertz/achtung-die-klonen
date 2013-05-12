@@ -7,10 +7,10 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class TurnPowerUp implements BodyPowerUpEffect {
 
-	private static final String NAME = "sharp-turn"; 
+	private static final String NAME = "sharp-turn";
 	private static final int DURATION = 150;
-	private static final boolean STACKABLE = false; 
-	
+	private static final boolean STACKABLE = false;
+
 	@Override
 	public void applyEffect(Body body) {
 		body.setSharpTurns(true);
@@ -33,7 +33,7 @@ public class TurnPowerUp implements BodyPowerUpEffect {
 	public boolean isTypeOk(Type type) {
 		return type == Type.EVERYONE_ELSE;
 	}
-	
+
 	@Override
 	public String getName() {
 		return NAME;

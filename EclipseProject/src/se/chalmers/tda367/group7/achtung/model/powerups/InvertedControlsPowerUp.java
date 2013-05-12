@@ -6,10 +6,10 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class InvertedControlsPowerUp implements BodyPowerUpEffect {
 
-	private static final String NAME = "invert"; 
+	private static final String NAME = "invert";
 	private static final int DURATION = 150;
 	private static final boolean STACKABLE = true;
-	
+
 	@Override
 	public int getDuration() {
 		return DURATION;
@@ -39,7 +39,5 @@ public class InvertedControlsPowerUp implements BodyPowerUpEffect {
 	public boolean isStackable() {
 		return STACKABLE;
 	}
-	
-	
 
 }

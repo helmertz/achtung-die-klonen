@@ -13,8 +13,8 @@ public class LWJGLInputService implements InputService {
 	private final List<KeyInputListener> keyListeners = new ArrayList<KeyInputListener>();
 	private final List<MouseInputListener> mouseListeners = new ArrayList<MouseInputListener>();
 
-	public LWJGLInputService () {
-	    try {
+	public LWJGLInputService() {
+		try {
 			Mouse.create();
 			Keyboard.create();
 		} catch (LWJGLException e) {
@@ -22,7 +22,7 @@ public class LWJGLInputService implements InputService {
 		}
 		Keyboard.enableRepeatEvents(true);
 	}
-	
+
 	@Override
 	public void addKeyListener(KeyInputListener listener) {
 		this.keyListeners.add(listener);
@@ -40,7 +40,7 @@ public class LWJGLInputService implements InputService {
 
 	@Override
 	public void removeMouseListener(MouseInputListener listener) {
-		this.mouseListeners.remove(listener);	
+		this.mouseListeners.remove(listener);
 	}
 
 	@Override
@@ -67,9 +67,11 @@ public class LWJGLInputService implements InputService {
 			}
 		}
 	}
-	
-	private void fireMouseEvent(int button, int x, int y, int dWheel, boolean pressed) {
-		MouseInputEvent event = new MouseInputEvent(button, x, y, dWheel, pressed);
+
+	private void fireMouseEvent(int button, int x, int y, int dWheel,
+			boolean pressed) {
+		MouseInputEvent event = new MouseInputEvent(button, x, y, dWheel,
+				pressed);
 		for (MouseInputListener l : this.mouseListeners) {
 			if (l.onMouseInputEvent(event)) {
 				break;

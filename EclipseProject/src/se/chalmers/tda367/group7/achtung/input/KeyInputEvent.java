@@ -6,7 +6,7 @@ public class KeyInputEvent {
 	private final char character;
 	private final boolean pressed;
 	private final boolean repeat;
-	private String keyName;
+	private final String keyName;
 
 	public KeyInputEvent(int eventKey, char character, boolean pressed,
 			boolean repeat, String keyName) {

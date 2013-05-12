@@ -6,10 +6,10 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class ClearPowerUp implements BodyPowerUpEffect {
 
-	private static final String NAME = "clear"; 
+	private static final String NAME = "clear";
 	private static final int DURATION = 0;
-	private static final boolean STACKABLE = false; 
-	
+	private static final boolean STACKABLE = false;
+
 	@Override
 	public void applyEffect(Body body) {
 		body.getBodySegments().clear();
@@ -29,7 +29,7 @@ public class ClearPowerUp implements BodyPowerUpEffect {
 	public int getDuration() {
 		return DURATION;
 	}
-	
+
 	@Override
 	public String getName() {
 		return NAME;
@@ -39,6 +39,5 @@ public class ClearPowerUp implements BodyPowerUpEffect {
 	public boolean isStackable() {
 		return STACKABLE;
 	}
-
 
 }

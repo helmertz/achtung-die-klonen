@@ -9,7 +9,6 @@ import se.chalmers.tda367.group7.achtung.input.KeyInputEvent;
 import se.chalmers.tda367.group7.achtung.input.KeyInputListener;
 import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Game;
-import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.sound.Sound;
 
 public class GameController implements KeyInputListener {
@@ -18,10 +17,10 @@ public class GameController implements KeyInputListener {
 
 	public GameController(Game game) {
 		this.game = game;
-		
+
 		// TODO - this should not be hardcoded.
 		for (int i = 0; i < 3; i++) {
-			String name = "Player " + (i+1);
+			String name = "Player " + (i + 1);
 			if (i == 0) {
 				addPlayer(name, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT);
 			} else if (i == 1) {
@@ -31,16 +30,20 @@ public class GameController implements KeyInputListener {
 			}
 		}
 	}
-	
-	 /**
-	  * Adds a player to the current game. 
-	  * 
-	  * @param name - the name of the player
-	  * @param leftKey - left key id
-	  * @param rightKey - right key id
-	  */
+
+	/**
+	 * Adds a player to the current game.
+	 * 
+	 * @param name
+	 *            - the name of the player
+	 * @param leftKey
+	 *            - left key id
+	 * @param rightKey
+	 *            - right key id
+	 */
 	public void addPlayer(String name, int leftKey, int rightKey) {
-		PlayerController pc = new PlayerController(game.getNewPlayer(name, Color.getRandomColor()));
+		PlayerController pc = new PlayerController(this.game.getNewPlayer(name,
+				Color.getRandomColor()));
 		pc.setLeftKey(leftKey);
 		pc.setRightKey(rightKey);
 

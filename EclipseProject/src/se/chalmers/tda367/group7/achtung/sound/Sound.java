@@ -67,7 +67,7 @@ public class Sound implements PropertyChangeListener {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propertyName = evt.getPropertyName();
-		if (soundEnabled) {
+		if (this.soundEnabled) {
 			if (propertyName.equals("PowerUpSELF")) {
 				playSound(this.powerUpSelf);
 			} else if (propertyName.equals("PowerUpEVERYONE")) {
@@ -77,8 +77,8 @@ public class Sound implements PropertyChangeListener {
 			} else if (propertyName.equals("PlayerDied")) {
 				playSound(this.playerDied);
 			} else if (propertyName.equals("NewRound")) {
-				this.currentMusic = this.music.get((int) (this.music.size() * Math
-						.random()));
+				this.currentMusic = this.music
+						.get((int) (this.music.size() * Math.random()));
 				this.currentMusic.playAsMusic(1.0f, 1.0f, true);
 			} else if (propertyName.equals("RoundOver")) {
 				if (this.currentMusic.isPlaying()) {
@@ -92,7 +92,7 @@ public class Sound implements PropertyChangeListener {
 	private void playSound(Audio sound) {
 		sound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
-	
+
 	public void pauseMusic() {
 	}
 

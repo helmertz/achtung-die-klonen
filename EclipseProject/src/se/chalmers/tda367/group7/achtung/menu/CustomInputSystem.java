@@ -40,8 +40,8 @@ public class CustomInputSystem implements InputSystem {
 	}
 
 	public void addKeyEvent(KeyInputEvent e) {
-		KeyboardInputEvent event = this.eventCreator.createEvent(
-				e.getKey(), e.getCharacter(),e.isPressed());
+		KeyboardInputEvent event = this.eventCreator.createEvent(e.getKey(),
+				e.getCharacter(), e.isPressed());
 		this.keyEventQueue.add(event);
 	}
 

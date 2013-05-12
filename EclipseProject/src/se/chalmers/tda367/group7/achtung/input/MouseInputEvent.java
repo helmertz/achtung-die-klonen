@@ -7,7 +7,7 @@ public class MouseInputEvent {
 	private final int y;
 	private final int dWheel;
 	private final boolean pressed;
-	
+
 	public MouseInputEvent(int button, int x, int y, int dWheel, boolean pressed) {
 		this.button = button;
 		this.x = x;
@@ -17,21 +17,21 @@ public class MouseInputEvent {
 	}
 
 	public int getButton() {
-		return button;
+		return this.button;
 	}
 
 	public int getX() {
-		return x;
+		return this.x;
 	}
 
 	public int getY() {
-		return y;
+		return this.y;
 	}
 
 	public int getDWheel() {
-		return dWheel;
+		return this.dWheel;
 	}
-	
+
 	public boolean isPressed() {
 		return this.pressed;
 	}

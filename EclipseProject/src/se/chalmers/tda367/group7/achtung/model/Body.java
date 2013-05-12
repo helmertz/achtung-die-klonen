@@ -183,7 +183,7 @@ public class Body {
 	public void addPowerUp(BodyPowerUpEffect effect) {
 
 		if (!effect.isStackable()) {
-			for (PowerUp powerUp : powerUps) {
+			for (PowerUp powerUp : this.powerUps) {
 				if (powerUp.getEffect().getClass() == effect.getClass()) {
 					powerUp.resetTimer();
 					return;

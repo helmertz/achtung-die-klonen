@@ -8,14 +8,15 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 import se.chalmers.tda367.group7.achtung.model.Round;
 import se.chalmers.tda367.group7.achtung.model.RoundPowerUpEffect;
 
-public class BackgroundColorPowerUp implements BodyPowerUpEffect, RoundPowerUpEffect {
+public class BackgroundColorPowerUp implements BodyPowerUpEffect,
+		RoundPowerUpEffect {
 
 	private static final String NAME = "background-change";
 	private static final int DURATION = 75;
 	private static final boolean STACKABLE = false;
 
 	private Color newColor;
-	
+
 	@Override
 	public int getDuration() {
 		return DURATION;
@@ -37,16 +38,16 @@ public class BackgroundColorPowerUp implements BodyPowerUpEffect, RoundPowerUpEf
 
 	@Override
 	public void removeEffect(Round round) {
-		if(round.getMap().getColor() == newColor) {
+		if (round.getMap().getColor() == this.newColor) {
 			round.setMapColor(Map.DEFAULT_COLOR);
 		}
 	}
-	
+
 	@Override
 	public boolean isTypeOk(Type type) {
 		return type == Type.SELF;
 	}
-	
+
 	@Override
 	public String getName() {
 		return NAME;

@@ -12,14 +12,14 @@ import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 
 public class MainMenuController implements ScreenController, KeyInputListener {
-	
+
 	private Screen screen;
 	private Nifty nifty;
 	private boolean handleKeyIn;
 	private Button element;
 	private String player;
 	private String key;
-	
+
 	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
 	@Override
@@ -53,12 +53,12 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	public void onKeySet(String elementID, String player, String key) {
 		// Mark that it will catch the next key event
 		this.handleKeyIn = true;
-		
+
 		// Key is right now L or R, not key used
 		this.key = key;
 		this.player = player;
 		this.element = this.screen.findNiftyControl(elementID, Button.class);
-		
+
 		// Removes text to signal that user will fill in
 		// TODO perhaps signal with color or popup somehow
 		this.element.setText("");
@@ -70,10 +70,11 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 			this.handleKeyIn = false;
 			char c = Character.toUpperCase(event.getCharacter());
 			String s = Character.toString(c);
-			
+
 			// Shows character if font can display it, otherwise the key's name
 			String buttonText;
-			if (!Character.isWhitespace(c) && this.element.getFont().getWidth(s) > 0) {
+			if (!Character.isWhitespace(c)
+					&& this.element.getFont().getWidth(s) > 0) {
 				buttonText = s;
 			} else {
 				buttonText = event.getKeyName();

@@ -6,7 +6,7 @@ import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public class PlayerScoreView implements View {
-	private List<Player> players;
+	private final List<Player> players;
 
 	public PlayerScoreView(List<Player> players) {
 		this.players = players;

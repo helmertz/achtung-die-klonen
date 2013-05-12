@@ -243,10 +243,10 @@ public class Round {
 	public Map getMap() {
 		return this.map;
 	}
-	
+
 	public void setMapColor(Color color) {
 		this.map.setColor(color);
-		pcs.firePropertyChange("Map", false, true);
+		this.pcs.firePropertyChange("Map", false, true);
 	}
 
 	public List<PowerUpEntity> getPowerUpEntities() {

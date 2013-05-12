@@ -131,7 +131,7 @@ public class GameView implements View, PropertyChangeListener {
 		} else if (evt.getPropertyName().equals("NewRound")) {
 			updateMapView();
 			updatePowerUpViews();
-		} else if(evt.getPropertyName().equals("MapChanged")) {
+		} else if (evt.getPropertyName().equals("MapChanged")) {
 			updateMapView();
 		}
 	}

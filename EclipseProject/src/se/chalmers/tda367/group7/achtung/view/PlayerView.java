@@ -62,8 +62,8 @@ public class PlayerView implements View {
 
 		}
 		// Inverts color of head if inverted controlls
-		Color color = player.getColor();
-		for (PowerUp p : player.getBody().getPowerUps()) {
+		Color color = this.player.getColor();
+		for (PowerUp p : this.player.getBody().getPowerUps()) {
 			if (p.getEffect() instanceof InvertedControlsPowerUp) {
 				color = color.getOpposite();
 			}
@@ -75,7 +75,6 @@ public class PlayerView implements View {
 			this.drawPowerUpTimer(renderService, interpolation, headX, headY);
 		}
 	}
-
 
 	private void drawSegment(RenderService renderService, BodySegment b) {
 		Position[] corners = b.getCorners();

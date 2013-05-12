@@ -5,10 +5,10 @@ import se.chalmers.tda367.group7.achtung.model.RoundPowerUpEffect;
 
 public class MorePowerUp implements RoundPowerUpEffect {
 
-	private static final String NAME = "more-powerups"; 
+	private static final String NAME = "more-powerups";
 	private static final int DURATION = 200;
 	private static final boolean STACKABLE = false;
-	
+
 	@Override
 	public void applyEffect(Round round) {
 		round.setPowerUpChance(round.getDefaultPowerUpChance() + (float) 0.06);
@@ -23,7 +23,7 @@ public class MorePowerUp implements RoundPowerUpEffect {
 	public int getDuration() {
 		return DURATION;
 	}
-	
+
 	@Override
 	public String getName() {
 		return NAME;
@@ -31,7 +31,7 @@ public class MorePowerUp implements RoundPowerUpEffect {
 
 	@Override
 	public boolean isStackable() {
-		return STACKABLE ;
+		return STACKABLE;
 	}
 
 }

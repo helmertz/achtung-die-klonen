@@ -27,7 +27,7 @@ public class Game {
 		this.pcs = new PropertyChangeSupport(this);
 
 	}
-	
+
 	public Player getNewPlayer(String name, Color color) {
 		Player player = new Player(name, color);
 		this.players.add(player);

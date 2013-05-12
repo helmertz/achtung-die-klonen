@@ -6,10 +6,9 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class SpeedPowerUp implements BodyPowerUpEffect {
 
-	private static final String NAME = "speed"; 
+	private static final String NAME = "speed";
 	private static final int DURATION = 100;
-	private static final boolean STACKABLE = true; 
-	
+	private static final boolean STACKABLE = true;
 
 	@Override
 	public void applyEffect(Body body) {
@@ -30,7 +29,7 @@ public class SpeedPowerUp implements BodyPowerUpEffect {
 	public boolean isTypeOk(Type type) {
 		return type == Type.SELF || type == Type.EVERYONE_ELSE;
 	}
-	
+
 	@Override
 	public String getName() {
 		return NAME;
