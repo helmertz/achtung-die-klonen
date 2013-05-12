@@ -98,6 +98,8 @@ public class BodyTest {
 		// Performs one "game tick".
 		this.b.update();
 
+		position = this.b.getPosition();
+
 		float newX = position.getX();
 		float newY = position.getY();
 
@@ -110,6 +112,8 @@ public class BodyTest {
 		this.b.setRotationAngleDeg(0);
 
 		this.b.update();
+
+		position = this.b.getPosition();
 
 		newX = position.getX();
 		newY = position.getY();
@@ -125,18 +129,21 @@ public class BodyTest {
 		this.b.setSpeed(1);
 		this.b.setRotationAngleDeg(90);
 
-		Position position = this.b.getPosition();
+		Position oldPosition = this.b.getPosition();
 
-		float oldX = position.getX();
-		float oldY = position.getY();
+		float oldX = oldPosition.getX();
+		float oldY = oldPosition.getY();
 
 		// Performs one "game tick".
 		this.b.update();
 
-		float newX = position.getX();
-		float newY = position.getY();
+		Position newPosition = this.b.getPosition();
 
-		assertTrue(newX == oldX && Math.round(newY) == Math.round(oldY + 1));
+		float newX = newPosition.getX();
+		float newY = newPosition.getY();
+
+		assertTrue(Math.round(newX) == Math.round(oldX)
+				&& Math.round(newY) == Math.round(oldY + 1));
 	}
 
 	@Test
@@ -146,16 +153,18 @@ public class BodyTest {
 		this.b.setSpeed(1);
 		this.b.setRotationAngleDeg(45);
 
-		Position position = this.b.getPosition();
+		Position oldPosition = this.b.getPosition();
 
-		float oldX = position.getX();
-		float oldY = position.getY();
+		float oldX = oldPosition.getX();
+		float oldY = oldPosition.getY();
 
 		// Performs one "game tick".
 		this.b.update();
 
-		float newX = position.getX();
-		float newY = position.getY();
+		Position newPosition = this.b.getPosition();
+
+		float newX = newPosition.getX();
+		float newY = newPosition.getY();
 
 		// Checks if both x and y has increased by one;
 		assertTrue(Math.round(newX) == Math.round(oldX + 1)
