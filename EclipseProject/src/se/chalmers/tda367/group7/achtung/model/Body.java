@@ -8,14 +8,9 @@ import java.util.List;
  * Class representing the physical state of a player.
  */
 public class Body {
-	private Head head;
+	private final Head head;
 	private final List<BodySegment> bodySegments;
 	private final List<PowerUp> powerUps = new ArrayList<PowerUp>();
-
-	public List<PowerUp> getPowerUps() {
-		return this.powerUps;
-	}
-
 	private TurnMode turnMode;
 	private float speed;
 	private float rotationAngleDeg; // the angle the snake is facing.
@@ -65,16 +60,9 @@ public class Body {
 	}
 
 	public void setHeadPosition(Position position) {
-		if (this.head == null) {
-			this.head = new Head(position, this.width);
-		} else {
-			this.head.setPosition(position);
-		}
+		this.head.setPosition(position);
 	}
 
-	/**
-	 * Moves the body by the delta values.
-	 */
 	public void update() {
 		updatePowerUps();
 
@@ -313,7 +301,15 @@ public class Body {
 		return this.color;
 	}
 
+	public List<PowerUp> getPowerUps() {
+		return this.powerUps;
+	}
+
 	public void setPreviousSegment(BodySegment previousSegment) {
 		this.previousSegment = previousSegment;
+	}
+
+	public boolean hasInvertedControls() {
+		return this.invertedControls;
 	}
 }

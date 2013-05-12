@@ -8,7 +8,6 @@ import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.model.Position;
 import se.chalmers.tda367.group7.achtung.model.PowerUp;
-import se.chalmers.tda367.group7.achtung.model.powerups.InvertedControlsPowerUp;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public class PlayerView implements View {
@@ -16,10 +15,11 @@ public class PlayerView implements View {
 	private static final float TIMER_LINEWIDTH = 2;
 	private final Player player;
 	private final Color[] powerUpTimerColors;
+	private final Color invertedColor;
 
 	public PlayerView(Player player) {
 		this.player = player;
-
+		this.invertedColor = this.player.getColor().getOpposite();
 		// Gets four lighter versions of the player's colors, used for drawing
 		// the power-up time indicators.
 		Color c1 = player.getColor().getLighter();
@@ -62,14 +62,14 @@ public class PlayerView implements View {
 
 		}
 		// Inverts color of head if inverted controlls
-		Color color = this.player.getColor();
-		for (PowerUp p : this.player.getBody().getPowerUps()) {
-			if (p.getEffect() instanceof InvertedControlsPowerUp) {
-				color = color.getOpposite();
-			}
+		Color headColor = this.player.getColor();
+
+		if (this.player.getBody().hasInvertedControls()) {
+			headColor = this.invertedColor;
 		}
+
 		renderService.drawCircleCentered(headX, headY, body.getWidth() / 2, 18,
-				color);
+				headColor);
 
 		if (!this.player.getBody().isDead()) {
 			this.drawPowerUpTimer(renderService, interpolation, headX, headY);
