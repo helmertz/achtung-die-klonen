@@ -6,13 +6,15 @@ public class KeyInputEvent {
 	private final char character;
 	private final boolean pressed;
 	private final boolean repeat;
+	private String keyName;
 
 	public KeyInputEvent(int eventKey, char character, boolean pressed,
-			boolean repeat) {
+			boolean repeat, String keyName) {
 		this.key = eventKey;
 		this.character = character;
 		this.pressed = pressed;
 		this.repeat = repeat;
+		this.keyName = keyName;
 	}
 
 	public int getKey() {
@@ -29,5 +31,9 @@ public class KeyInputEvent {
 
 	public boolean isRepeat() {
 		return this.repeat;
+	}
+
+	public String getKeyName() {
+		return this.keyName;
 	}
 }

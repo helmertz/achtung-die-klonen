@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<nifty>
-	<useStyles filename="nifty-default-styles.xml" />
-	<useControls filename="nifty-default-controls.xml" />
-    
+<nifty xmlns="http://nifty-gui.sourceforge.net/nifty-1.3.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nifty-gui.sourceforge.net/nifty-1.3.xsd http://nifty-gui.sourceforge.net/nifty-1.3.xsd">
+	<useStyles filename="nifty-default-styles.xml"/>
+	<useControls filename="nifty-default-controls.xml"/>
 	<screen id="start" controller="se.chalmers.tda367.group7.achtung.menu.MainMenuController" defaultFocusElement="button">
 		<layer id="layer" childLayout="center">
-			<panel height="25%" width="35%" align="center" valign="center" backgroundColor="#222266"
-			    childLayout="vertical" visibleToMouse="true">
-			    <panel height="25%" />
-				<control name="button" label="Start" id="StartButton" align="center" valign="center" 
-					visibleToMouse="true" > 
-					<interact onClick="onStartPress()"/>
-				</control>
-				<control name="textfield" align="center" id="text_input" width="70%" />
+			<panel height="80%" width="80%" align="center" valign="center" childLayout="center" backgroundColor="#222266">
+				<panel width="50%" height="50%" align="center" valign="top" childLayout="vertical">
+					<control name="label" text="Game Configuration"/>
+					<control name="button" label="Start" align="center">
+						<interact onClick="onStartPress()"/>
+					</control>
+				</panel>
+				<panel width="50%" height="50%" align="right" valign="bottom" childLayout="vertical">
+					<control name="label" text="Power-up Chance"/>
+					<control id="sliderH" name="horizontalSlider" width="100%"/>
+				</panel>
+				<panel width="50%" height="50%" align="left" valign="bottom" childLayout="vertical">
+					<panel height="12%" childLayout="horizontal">
+						<control name="checkbox" checked="true" id="checkboxp1"/>
+						<control name="textfield" text="Player 1" align="center" id="textp1"/>
+						<control name="button" label="L" id="keyP1L" width="60">
+							<interact onClick="onKeySet(keyP1L, 1, L)"/>
+						</control>
+						<control name="button" label="R" id="keyP1R" width="60">
+							<interact onClick="onKeySet(keyP1R, 1, R)"/>
+						</control>
+					</panel>
+				</panel>
 			</panel>
 		</layer>
 	</screen>

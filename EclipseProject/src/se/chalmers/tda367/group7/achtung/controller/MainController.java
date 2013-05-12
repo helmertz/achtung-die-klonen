@@ -240,6 +240,9 @@ public class MainController implements PropertyChangeListener,
 			return true;
 		}
 		if (this.atMenu) {
+			if (this.menuController.onKeyInputEvent(event)) {
+				return true;
+			}
 			this.inputSystem.addKeyEvent(event);
 		} else if (this.gameController != null) {
 			this.gameController.onKeyInputEvent(event);

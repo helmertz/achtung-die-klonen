@@ -47,7 +47,8 @@ public class LWJGLInputService implements InputService {
 	public void update() {
 		while (Keyboard.next()) {
 			fireKeyEvent(Keyboard.getEventKey(), Keyboard.getEventCharacter(),
-					Keyboard.getEventKeyState(), Keyboard.isRepeatEvent());
+					Keyboard.getEventKeyState(), Keyboard.isRepeatEvent(),
+					Keyboard.getKeyName(Keyboard.getEventKey()));
 		}
 		while (Mouse.next()) {
 			fireMouseEvent(Mouse.getEventButton(), Mouse.getEventX(),
@@ -56,8 +57,10 @@ public class LWJGLInputService implements InputService {
 		}
 	}
 
-	private void fireKeyEvent(int eventKey, char character, boolean pressed, boolean repeat) {
-		KeyInputEvent event = new KeyInputEvent(eventKey, character, pressed, repeat);
+	private void fireKeyEvent(int eventKey, char character, boolean pressed,
+			boolean repeat, String keyName) {
+		KeyInputEvent event = new KeyInputEvent(eventKey, character, pressed,
+				repeat, keyName);
 		for (KeyInputListener l : this.keyListeners) {
 			if (l.onKeyInputEvent(event)) {
 				break;
