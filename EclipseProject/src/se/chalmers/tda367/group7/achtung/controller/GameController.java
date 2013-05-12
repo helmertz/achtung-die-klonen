@@ -7,6 +7,7 @@ import org.lwjgl.input.Keyboard;
 
 import se.chalmers.tda367.group7.achtung.input.KeyInputEvent;
 import se.chalmers.tda367.group7.achtung.input.KeyInputListener;
+import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Game;
 import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.sound.Sound;
@@ -17,24 +18,33 @@ public class GameController implements KeyInputListener {
 
 	public GameController(Game game) {
 		this.game = game;
-		int i = 0;
-		for (Player p : game.getPlayers()) {
-
-			PlayerController pc = new PlayerController(p);
+		
+		// TODO - this should not be hardcoded.
+		for (int i = 0; i < 3; i++) {
+			String name = "Player " + (i+1);
 			if (i == 0) {
-				pc.setLeftKey(Keyboard.KEY_LEFT);
-				pc.setRightKey(Keyboard.KEY_RIGHT);
+				addPlayer(name, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT);
 			} else if (i == 1) {
-				pc.setLeftKey(Keyboard.KEY_A);
-				pc.setRightKey(Keyboard.KEY_D);
+				addPlayer(name, Keyboard.KEY_A, Keyboard.KEY_D);
 			} else {
-				pc.setLeftKey(Keyboard.KEY_1);
-				pc.setRightKey(Keyboard.KEY_2);
-
+				addPlayer(name, Keyboard.KEY_1, Keyboard.KEY_2);
 			}
-			i++;
-			this.playerControllers.add(pc);
 		}
+	}
+	
+	 /**
+	  * Adds a player to the current game. 
+	  * 
+	  * @param name - the name of the player
+	  * @param leftKey - left key id
+	  * @param rightKey - right key id
+	  */
+	public void addPlayer(String name, int leftKey, int rightKey) {
+		PlayerController pc = new PlayerController(game.getNewPlayer(name, Color.getRandomColor()));
+		pc.setLeftKey(leftKey);
+		pc.setRightKey(rightKey);
+
+		this.playerControllers.add(pc);
 	}
 
 	// Called as quickly as possible after a key is pressed, not in sync with

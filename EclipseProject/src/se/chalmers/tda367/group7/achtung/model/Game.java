@@ -26,13 +26,12 @@ public class Game {
 
 		this.pcs = new PropertyChangeSupport(this);
 
-		// Hardcoded in at the moment
-		Player p1 = new Player("Player 1", Color.BLUE);
-		addPlayer(p1);
-		Player p2 = new Player("Player 2", Color.RED);
-		addPlayer(p2);
-		Player p3 = new Player("Player 3", Color.GREEN);
-		addPlayer(p3);
+	}
+	
+	public Player getNewPlayer(String name, Color color) {
+		Player player = new Player(name, color);
+		this.players.add(player);
+		return player;
 	}
 
 	public void update() {
