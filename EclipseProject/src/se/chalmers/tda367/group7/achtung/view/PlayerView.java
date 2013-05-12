@@ -8,6 +8,7 @@ import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.model.Position;
 import se.chalmers.tda367.group7.achtung.model.PowerUp;
+import se.chalmers.tda367.group7.achtung.model.powerups.InvertedControlsPowerUp;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public class PlayerView implements View {
@@ -60,13 +61,21 @@ public class PlayerView implements View {
 					body.getWidth(), this.player.getColor());
 
 		}
+		// Inverts color of head if inverted controlls
+		Color color = player.getColor();
+		for (PowerUp p : player.getBody().getPowerUps()) {
+			if (p.getEffect() instanceof InvertedControlsPowerUp) {
+				color = color.getOpposite();
+			}
+		}
 		renderService.drawCircleCentered(headX, headY, body.getWidth() / 2, 18,
-				this.player.getColor());
+				color);
 
 		if (!this.player.getBody().isDead()) {
 			this.drawPowerUpTimer(renderService, interpolation, headX, headY);
 		}
 	}
+
 
 	private void drawSegment(RenderService renderService, BodySegment b) {
 		Position[] corners = b.getCorners();
