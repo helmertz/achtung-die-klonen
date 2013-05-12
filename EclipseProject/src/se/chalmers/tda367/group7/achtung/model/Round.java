@@ -18,7 +18,7 @@ public class Round {
 
 	private final List<Player> players;
 	private final List<PowerUpEntity> powerUpEntities;
-	private final List<PowerUp> activeRoundEffects;
+	private final List<PowerUp<RoundPowerUpEffect>> activeRoundEffects;
 	private final CollisionHelper collisionHelper;
 	private final Map map;
 
@@ -37,7 +37,7 @@ public class Round {
 		this.map = map;
 		this.players = players;
 		this.powerUpEntities = new ArrayList<PowerUpEntity>();
-		this.activeRoundEffects = new ArrayList<PowerUp>();
+		this.activeRoundEffects = new ArrayList<PowerUp<RoundPowerUpEffect>>();
 		this.deadPlayers = 0;
 
 		this.pcs = new PropertyChangeSupport(this);
@@ -70,13 +70,14 @@ public class Round {
 	}
 
 	private void updateRoundPowerUps() {
-		Iterator<PowerUp> iter = this.activeRoundEffects.iterator();
+		Iterator<PowerUp<RoundPowerUpEffect>> iter = this.activeRoundEffects
+				.iterator();
 
 		while (iter.hasNext()) {
-			PowerUp p = iter.next();
+			PowerUp<RoundPowerUpEffect> p = iter.next();
 			p.update();
 			if (!p.isActive()) {
-				p.removeEffect(this);
+				p.getEffect().removeEffect(this);
 				iter.remove();
 			}
 		}
@@ -169,34 +170,24 @@ public class Round {
 
 		// TODO: this is probably not the best way of doing this
 		if (effect instanceof BodyPowerUpEffect) {
-			distributePlayerEffect(pickedUpByPlayer, powerUp);
+			distributePlayerEffect(pickedUpByPlayer,
+					(BodyPowerUpEffect) effect, powerUp.getType());
 		}
 		if (effect instanceof RoundPowerUpEffect) {
-			distributeRoundEffect(powerUp);
+			distributeRoundEffect((RoundPowerUpEffect) effect);
 		}
 	}
 
-	private void distributeRoundEffect(PowerUpEntity powerUp) {
-		RoundPowerUpEffect effect = (RoundPowerUpEffect) powerUp
-				.getPowerUpEffect();
+	private void distributeRoundEffect(RoundPowerUpEffect effect) {
 		effect.applyEffect(this);
-		this.activeRoundEffects.add(new PowerUp(effect));
+		this.activeRoundEffects.add(new PowerUp<>(effect));
 	}
 
-	/**
-	 * @pre The effect in powerUp is a PlayerPowerUpEffect.
-	 * @param powerUp
-	 *            The effect to be applied.
-	 */
 	private void distributePlayerEffect(Player pickedUpByPlayer,
-			PowerUpEntity powerUp) {
-		Type powerUpType = powerUp.getType();
-		BodyPowerUpEffect effect = (BodyPowerUpEffect) powerUp
-				.getPowerUpEffect();
-
-		if (powerUpType == PowerUpEntity.Type.SELF) {
+			BodyPowerUpEffect effect, Type type) {
+		if (type == PowerUpEntity.Type.SELF) {
 			addPowerUpToSelf(pickedUpByPlayer, effect);
-		} else if (powerUpType == PowerUpEntity.Type.EVERYONE) {
+		} else if (type == PowerUpEntity.Type.EVERYONE) {
 			addPowerUpToEveryone(effect);
 		} else {
 			addPowerUpToOthers(pickedUpByPlayer, effect);
@@ -256,7 +247,7 @@ public class Round {
 	public void setWallsActive(boolean wallsActive) {
 		this.wallsAreActive = wallsActive;
 		this.map.setWallsActive(wallsActive);
-		pcs.firePropertyChange("Map", false, true);
+		this.pcs.firePropertyChange("Map", false, true);
 	}
 
 	public float getDefaultPowerUpChance() {

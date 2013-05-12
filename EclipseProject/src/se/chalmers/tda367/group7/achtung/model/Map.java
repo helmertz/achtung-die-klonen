@@ -41,9 +41,9 @@ public class Map {
 	public void setWallsActive(boolean wallsActive) {
 		this.wallsActive = wallsActive;
 	}
-	
+
 	public boolean isWallsActive() {
 		return this.wallsActive;
 	}
-	
+
 }

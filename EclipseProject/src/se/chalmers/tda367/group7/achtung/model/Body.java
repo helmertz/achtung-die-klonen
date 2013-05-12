@@ -10,7 +10,7 @@ import java.util.List;
 public class Body {
 	private final Head head;
 	private final List<BodySegment> bodySegments;
-	private final List<PowerUp> powerUps = new ArrayList<PowerUp>();
+	private final List<PowerUp<BodyPowerUpEffect>> powerUps = new ArrayList<PowerUp<BodyPowerUpEffect>>();
 	private TurnMode turnMode;
 	private float speed;
 	private float rotationAngleDeg; // the angle the snake is facing.
@@ -171,7 +171,7 @@ public class Body {
 	public void addPowerUp(BodyPowerUpEffect effect) {
 
 		if (!effect.isStackable()) {
-			for (PowerUp powerUp : this.powerUps) {
+			for (PowerUp<BodyPowerUpEffect> powerUp : this.powerUps) {
 				if (powerUp.getEffect().getClass() == effect.getClass()) {
 					powerUp.resetTimer();
 					return;
@@ -179,8 +179,8 @@ public class Body {
 			}
 		}
 
-		PowerUp p = new PowerUp(effect);
-		p.applyEffect(this);
+		PowerUp<BodyPowerUpEffect> p = new PowerUp<BodyPowerUpEffect>(effect);
+		p.getEffect().applyEffect(this);
 		this.powerUps.add(p);
 	}
 
@@ -191,12 +191,12 @@ public class Body {
 
 		// Using iterator since removing itself from list in an enhanced for
 		// loop causes exception
-		Iterator<PowerUp> i = this.powerUps.iterator();
+		Iterator<PowerUp<BodyPowerUpEffect>> i = this.powerUps.iterator();
 		while (i.hasNext()) {
-			PowerUp p = i.next();
+			PowerUp<BodyPowerUpEffect> p = i.next();
 			p.update();
 			if (!p.isActive()) {
-				p.removeEffect(this);
+				p.getEffect().removeEffect(this);
 				i.remove();
 			}
 		}
@@ -301,7 +301,7 @@ public class Body {
 		return this.color;
 	}
 
-	public List<PowerUp> getPowerUps() {
+	public List<PowerUp<BodyPowerUpEffect>> getPowerUps() {
 		return this.powerUps;
 	}
 

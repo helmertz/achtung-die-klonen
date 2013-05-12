@@ -3,6 +3,7 @@ package se.chalmers.tda367.group7.achtung.view;
 import java.util.List;
 
 import se.chalmers.tda367.group7.achtung.model.Body;
+import se.chalmers.tda367.group7.achtung.model.BodyPowerUpEffect;
 import se.chalmers.tda367.group7.achtung.model.BodySegment;
 import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Player;
@@ -92,12 +93,12 @@ public class PlayerView implements View {
 	private void drawPowerUpTimer(RenderService renderService,
 			float interpolation, float headX, float headY) {
 		Body body = this.player.getBody();
-		List<PowerUp> powerUps = body.getPowerUps();
+		List<PowerUp<BodyPowerUpEffect>> powerUps = body.getPowerUps();
 
 		float radius = (float) Math.pow(body.getHead().getDiameter(), 1.05) + 8;
 
 		if (powerUps.size() > 0) {
-			for (PowerUp powerUp : powerUps) {
+			for (PowerUp<BodyPowerUpEffect> powerUp : powerUps) {
 				int powerUpIndex = powerUps.indexOf(powerUp);
 				radius += powerUpIndex + (TIMER_LINEWIDTH * 4);
 
