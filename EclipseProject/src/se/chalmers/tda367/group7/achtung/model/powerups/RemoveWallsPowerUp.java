@@ -12,8 +12,6 @@ public class RemoveWallsPowerUp implements RoundPowerUpEffect {
 	@Override
 	public void applyEffect(Round round) {
 		round.setWallsActive(false);
-		// TODO: better way of signaling this
-		System.out.println("you can now pass through walls!");
 	}
 
 	@Override

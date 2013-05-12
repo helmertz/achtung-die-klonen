@@ -255,6 +255,8 @@ public class Round {
 
 	public void setWallsActive(boolean wallsActive) {
 		this.wallsAreActive = wallsActive;
+		this.map.setWallsActive(wallsActive);
+		pcs.firePropertyChange("Map", false, true);
 	}
 
 	public float getDefaultPowerUpChance() {

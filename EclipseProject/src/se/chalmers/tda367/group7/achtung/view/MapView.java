@@ -24,7 +24,12 @@ public class MapView implements View {
 				this.map.getHeight(), this.map.getColor());
 
 		// Draws line around the world
-		renderer.drawLinedRect(0, 0, this.map.getWidth(), this.map.getHeight(),
-				5, Color.GRAY);
+		if (this.map.isWallsActive()) {
+			renderer.drawLinedRect(0, 0, this.map.getWidth(), this.map.getHeight(),
+					5, Color.WHITE);
+		} else {
+			renderer.drawLinedRect(0, 0, this.map.getWidth(), this.map.getHeight(),
+					5, Color.GRAY);
+		}
 	}
 }
