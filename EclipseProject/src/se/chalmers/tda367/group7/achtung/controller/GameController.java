@@ -55,8 +55,10 @@ public class GameController implements KeyInputListener {
 	}
 
 	public void startRound() {
-		this.game.newRound();
-		this.game.getCurrentRound().addPropertyChangeListener(
-				Sound.getInstance());
+		if (!this.game.isOver()) {
+			this.game.newRound();
+			this.game.getCurrentRound().addPropertyChangeListener(
+					Sound.getInstance());
+		}
 	}
 }
