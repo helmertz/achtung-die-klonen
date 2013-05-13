@@ -4,7 +4,7 @@ import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
 
-public class RoundOverMessage extends PopupMessage {
+public class RoundOverMessage extends AbstractPopupMessage {
 
 	private static final String NEXT_ROUND_MESSAGE_1 = "Round over";
 	private static final String NEXT_ROUND_MESSAGE_2 = "The winner is";

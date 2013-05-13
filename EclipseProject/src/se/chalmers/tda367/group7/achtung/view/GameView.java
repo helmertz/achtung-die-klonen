@@ -58,11 +58,11 @@ public class GameView implements View, PropertyChangeListener {
 		// continue.
 		if (this.game.isOver()) {
 			Player winner = this.game.getGameWinner();
-			PopupMessage message = new GameOverMessage(winner);
+			AbstractPopupMessage message = new GameOverMessage(winner);
 			message.render(renderer, interpolation);
 		} else if (!this.game.getCurrentRound().isRoundActive()) {
 			Player winner = this.game.getCurrentRound().getWinner();
-			PopupMessage message = new RoundOverMessage(winner);
+			AbstractPopupMessage message = new RoundOverMessage(winner);
 			message.render(renderer, interpolation);
 		}
 
