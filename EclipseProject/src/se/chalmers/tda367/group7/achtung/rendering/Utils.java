@@ -1,4 +1,4 @@
-package se.chalmers.tda367.group7.achtung.rendering.lwjgl;
+package se.chalmers.tda367.group7.achtung.rendering;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.*;

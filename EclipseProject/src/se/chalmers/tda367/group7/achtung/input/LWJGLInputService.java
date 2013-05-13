@@ -10,10 +10,12 @@ import org.lwjgl.opengl.Display;
 
 class LWJGLInputService implements InputService {
 
+	private static InputService instance;
+
 	private final List<KeyInputListener> keyListeners = new ArrayList<KeyInputListener>();
 	private final List<MouseInputListener> mouseListeners = new ArrayList<MouseInputListener>();
 
-	public LWJGLInputService() {
+	private LWJGLInputService() {
 		try {
 			Mouse.create();
 			Keyboard.create();
@@ -21,6 +23,13 @@ class LWJGLInputService implements InputService {
 			e.printStackTrace();
 		}
 		Keyboard.enableRepeatEvents(true);
+	}
+
+	public synchronized static InputService getInstance() {
+		if (instance == null) {
+			instance = new LWJGLInputService();
+		}
+		return instance;
 	}
 
 	@Override

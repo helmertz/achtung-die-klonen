@@ -1,4 +1,4 @@
-package se.chalmers.tda367.group7.achtung.rendering.lwjgl;
+package se.chalmers.tda367.group7.achtung.rendering;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -17,6 +17,8 @@ import se.chalmers.tda367.group7.achtung.model.Color;
 
 class LWJGLRenderService implements RenderService {
 
+	private static LWJGLRenderService instance;
+
 	private BitMapFont bitMapFont;
 	private LineRenderer lineRenderer;
 
@@ -32,6 +34,18 @@ class LWJGLRenderService implements RenderService {
 
 	public LWJGLRenderService() throws LWJGLException {
 		init();
+	}
+
+	public synchronized static RenderService getInstance() {
+		if (instance == null) {
+			try {
+				instance = new LWJGLRenderService();
+			} catch (LWJGLException e) {
+				e.printStackTrace();
+				System.exit(1);
+			}
+		}
+		return instance;
 	}
 
 	private void init() throws LWJGLException {

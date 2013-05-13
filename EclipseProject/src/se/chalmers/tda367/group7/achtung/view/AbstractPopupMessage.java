@@ -1,7 +1,7 @@
 package se.chalmers.tda367.group7.achtung.view;
 
 import se.chalmers.tda367.group7.achtung.model.Player;
-import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
+import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public abstract class AbstractPopupMessage implements View {
 

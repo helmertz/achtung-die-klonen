@@ -1,8 +1,8 @@
 package se.chalmers.tda367.group7.achtung.rendering;
 
 import se.chalmers.tda367.group7.achtung.model.Color;
-import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
-import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderServiceFactory;
+import se.chalmers.tda367.group7.achtung.rendering.RenderService;
+import se.chalmers.tda367.group7.achtung.rendering.RenderServiceFactory;
 
 /**
  * Not a unit test, but can be run and manually examined.

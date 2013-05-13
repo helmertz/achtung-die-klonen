@@ -2,7 +2,7 @@ package se.chalmers.tda367.group7.achtung.view;
 
 import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Map;
-import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
+import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public class MapView implements View {
 

@@ -9,7 +9,7 @@ import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.model.Position;
 import se.chalmers.tda367.group7.achtung.model.PowerUp;
-import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
+import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public class PlayerView implements View {
 
