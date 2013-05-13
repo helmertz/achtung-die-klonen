@@ -5,7 +5,7 @@ import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
-public class QuadLineRenderer implements LineRenderer {
+class QuadLineRenderer implements LineRenderer {
 
 	@Override
 	public void drawLine(float x1, float y1, float x2, float y2, float width) {

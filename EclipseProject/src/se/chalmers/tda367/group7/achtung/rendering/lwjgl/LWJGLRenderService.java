@@ -15,7 +15,7 @@ import org.lwjgl.opengl.Util;
 
 import se.chalmers.tda367.group7.achtung.model.Color;
 
-public class LWJGLRenderService implements RenderService {
+class LWJGLRenderService implements RenderService {
 
 	private BitMapFont bitMapFont;
 	private LineRenderer lineRenderer;

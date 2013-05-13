@@ -12,7 +12,7 @@ import se.chalmers.tda367.group7.achtung.model.Color;
 import de.matthiasmann.twl.utils.PNGDecoder;
 import de.matthiasmann.twl.utils.PNGDecoder.Format;
 
-public class Utils {
+class Utils {
 
 	// based on code from LWJGL wiki page
 	// http://www.lwjgl.org/wiki/index.php?title=The_Quad_textured

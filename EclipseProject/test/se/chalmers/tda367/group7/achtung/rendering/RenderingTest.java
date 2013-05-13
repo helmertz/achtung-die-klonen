@@ -1,21 +1,13 @@
 package se.chalmers.tda367.group7.achtung.rendering;
 
-import org.lwjgl.LWJGLException;
-
 import se.chalmers.tda367.group7.achtung.model.Color;
-import se.chalmers.tda367.group7.achtung.rendering.lwjgl.LWJGLRenderService;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
+import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderServiceFactory;
 
 public class RenderingTest {
 
 	public static void main(String[] args) {
-		RenderService renderService = null;
-		try {
-			renderService = new LWJGLRenderService();
-		} catch (LWJGLException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
+		RenderService renderService = RenderServiceFactory.getRenderService();
 
 		renderService.setBackgroundColor(Color.BLUE);
 		renderService.setViewAreaSize(800, 500);

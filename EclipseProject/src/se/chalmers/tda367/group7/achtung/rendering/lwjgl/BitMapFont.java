@@ -8,7 +8,7 @@ import static org.lwjgl.opengl.GL11.*;
 /**
  * Very basic font renderer.
  */
-public class BitMapFont {
+class BitMapFont {
 
 	// defines the characters that should be in the texture
 	public static final String CHARACTERS = "0123456789abcdef"

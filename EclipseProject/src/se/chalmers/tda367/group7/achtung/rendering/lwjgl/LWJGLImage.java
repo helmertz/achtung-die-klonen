@@ -8,7 +8,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 import se.chalmers.tda367.group7.achtung.model.Color;
 
-public class LWJGLImage implements Image {
+class LWJGLImage implements Image {
 
 	private static final Map<String, Image> LOADED = new HashMap<String, Image>();
 

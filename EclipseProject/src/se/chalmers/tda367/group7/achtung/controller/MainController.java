@@ -6,9 +6,22 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.logging.Level;
 
-import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
+
+import se.chalmers.tda367.group7.achtung.input.InputService;
+import se.chalmers.tda367.group7.achtung.input.KeyInputEvent;
+import se.chalmers.tda367.group7.achtung.input.KeyInputListener;
+import se.chalmers.tda367.group7.achtung.input.LWJGLInputService;
+import se.chalmers.tda367.group7.achtung.input.MouseInputEvent;
+import se.chalmers.tda367.group7.achtung.input.MouseInputListener;
+import se.chalmers.tda367.group7.achtung.menu.CustomInputSystem;
+import se.chalmers.tda367.group7.achtung.menu.MainMenuController;
+import se.chalmers.tda367.group7.achtung.model.Game;
+import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
+import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderServiceFactory;
+import se.chalmers.tda367.group7.achtung.sound.Sound;
+import se.chalmers.tda367.group7.achtung.view.GameView;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.nulldevice.NullSoundDevice;
 import de.lessvoid.nifty.renderer.lwjgl.render.LwjglRenderDevice;
@@ -16,19 +29,6 @@ import de.lessvoid.nifty.renderer.lwjgl.time.LWJGLTimeProvider;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.spi.render.MouseCursor;
 import de.lessvoid.nifty.spi.render.RenderDevice;
-import se.chalmers.tda367.group7.achtung.input.KeyInputEvent;
-import se.chalmers.tda367.group7.achtung.input.KeyInputListener;
-import se.chalmers.tda367.group7.achtung.input.InputService;
-import se.chalmers.tda367.group7.achtung.input.LWJGLInputService;
-import se.chalmers.tda367.group7.achtung.input.MouseInputEvent;
-import se.chalmers.tda367.group7.achtung.input.MouseInputListener;
-import se.chalmers.tda367.group7.achtung.menu.CustomInputSystem;
-import se.chalmers.tda367.group7.achtung.menu.MainMenuController;
-import se.chalmers.tda367.group7.achtung.model.Game;
-import se.chalmers.tda367.group7.achtung.rendering.lwjgl.LWJGLRenderService;
-import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
-import se.chalmers.tda367.group7.achtung.sound.Sound;
-import se.chalmers.tda367.group7.achtung.view.GameView;
 
 /**
  * A class containing the game loop, responsible for handling the timing of game
@@ -71,16 +71,9 @@ public class MainController implements PropertyChangeListener,
 	private final CustomInputSystem inputSystem;
 
 	public MainController() {
-		// The service that handles the rendering
-		// TODO make service factories, so LWJGLRenderService isn't referenced
-		// for example
-		try {
-			this.renderer = new LWJGLRenderService();
-		} catch (LWJGLException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
-
+		
+		this.renderer = RenderServiceFactory.getRenderService();
+		
 		// The service for supplying mouse and keyboard events
 		this.inputService = new LWJGLInputService();
 
