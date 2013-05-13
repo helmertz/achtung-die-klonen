@@ -7,16 +7,17 @@ public class MorePowerUp implements RoundPowerUpEffect {
 
 	private static final String NAME = "more-powerups";
 	private static final int DURATION = 200;
-	private static final boolean STACKABLE = false;
+	private static final boolean STACKABLE = true;
 
 	@Override
 	public void applyEffect(Round round) {
-		round.setPowerUpChance(round.getDefaultPowerUpChance() + (float) 0.06);
+		// TODO something other than doubling perhaps
+		round.setPowerUpChance(round.getPowerUpChance() * 2);
 	}
 
 	@Override
 	public void removeEffect(Round round) {
-		round.setPowerUpChance(round.getDefaultPowerUpChance());
+		round.setPowerUpChance(round.getPowerUpChance() / 2);
 	}
 
 	@Override

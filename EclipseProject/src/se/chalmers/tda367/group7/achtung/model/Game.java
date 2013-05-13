@@ -17,9 +17,10 @@ public class Game {
 	private Round currentRound;
 
 	private final PropertyChangeSupport pcs;
+	private final float powerUpChance;
 
-	public Game() {
-
+	public Game(float powerUpChance) {
+		this.powerUpChance = powerUpChance;
 		this.rounds = new ArrayList<>();
 		this.players = new ArrayList<>();
 		this.map = new Map(1500, 1500);
@@ -47,7 +48,8 @@ public class Game {
 
 		if (this.currentRound == null || !this.currentRound.isRoundActive()) {
 			this.map.setColor(Map.DEFAULT_COLOR);
-			this.currentRound = new Round(this.map, this.players);
+			this.currentRound = new Round(this.map, this.players,
+					this.powerUpChance);
 			this.rounds.add(this.currentRound);
 			this.pcs.firePropertyChange("NewRound", false, true);
 		}

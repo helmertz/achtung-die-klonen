@@ -22,7 +22,7 @@ public class RoundTest {
 
 		List<Player> players = new ArrayList<>();
 
-		Round round = new Round(new Map(1000, 1000), players);
+		Round round = new Round(new Map(1000, 1000), players, 0);
 
 		assertTrue(!p1.getBody().isDead() && !p2.getBody().isDead());
 

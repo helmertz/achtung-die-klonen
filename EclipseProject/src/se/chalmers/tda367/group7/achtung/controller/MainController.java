@@ -273,14 +273,14 @@ public class MainController implements PropertyChangeListener,
 	}
 
 	public void startGame(GameSetUpHolder gameSetup) {
-		this.game = new Game();
+		this.game = new Game(gameSetup.getPowerUpChance());
 		this.game.addPropertyChangeListener(this.sound);
 
 		this.gameController = new GameController(this.game);
 
 		for (PlayerInfoHolder pih : gameSetup.getPlayerInfo()) {
 			this.gameController.addPlayer(pih.getName(), pih.getLeftKey(),
-					pih.getRightKey());
+					pih.getRightKey(), pih.getColor());
 		}
 
 		this.gameController.startRound();

@@ -29,9 +29,9 @@ public class GameController implements KeyInputListener {
 	 * @param rightKey
 	 *            - right key id
 	 */
-	public void addPlayer(String name, int leftKey, int rightKey) {
+	public void addPlayer(String name, int leftKey, int rightKey, Color color) {
 		PlayerController pc = new PlayerController(this.game.createNewPlayer(name,
-				Color.getRandomColor()));
+				color));
 		pc.setLeftKey(leftKey);
 		pc.setRightKey(rightKey);
 

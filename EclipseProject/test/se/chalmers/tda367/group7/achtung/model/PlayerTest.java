@@ -11,7 +11,7 @@ public class PlayerTest {
 	
 	@Before
 	public void setupGame() {
-		this.game = new Game();
+		this.game = new Game(0);
 	}
 	
 	@Test

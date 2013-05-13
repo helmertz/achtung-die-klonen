@@ -26,14 +26,11 @@ public class Round {
 
 	private final PropertyChangeSupport pcs;
 
-	// TODO figure out a good constant here
-	private static final float DEFAULT_POWERUP_CHANCE = 0.01f;
-
 	private float powerUpChance;
 
 	private Player winner;
 
-	public Round(Map map, List<Player> players) {
+	public Round(Map map, List<Player> players, float powerUpChance) {
 		this.map = map;
 		this.players = players;
 		this.powerUpEntities = new ArrayList<PowerUpEntity>();
@@ -42,7 +39,7 @@ public class Round {
 
 		this.pcs = new PropertyChangeSupport(this);
 
-		this.powerUpChance = DEFAULT_POWERUP_CHANCE;
+		this.powerUpChance = powerUpChance;
 		this.setWallsActive(true);
 
 		createPlayerBodiesAtRandomPos();
@@ -250,10 +247,6 @@ public class Round {
 		this.pcs.firePropertyChange("Map", false, true);
 	}
 
-	public float getDefaultPowerUpChance() {
-		return DEFAULT_POWERUP_CHANCE;
-	}
-
 	public void setPowerUpChance(float powerUpChance) {
 		this.powerUpChance = powerUpChance;
 	}
@@ -264,6 +257,10 @@ public class Round {
 
 	public List<Player> getPlayers() {
 		return this.players;
+	}
+
+	public float getPowerUpChance() {
+		return this.powerUpChance;
 	}
 
 }

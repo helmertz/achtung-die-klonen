@@ -55,12 +55,12 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	}
 
 	public void onStartPress() {
-
 		Slider pu = this.screen.findNiftyControl("puslider", Slider.class);
-		float powerUpChance = pu.getValue();
+
+		// TODO Allow 100? Do something logarithmic?
+		float powerUpChance = pu.getValue() / 100;
 
 		List<PlayerInfoHolder> pInfoList = new ArrayList<PlayerInfoHolder>();
-
 		for (int i = 1; i <= 8; i++) {
 			CheckBox cb = this.screen.findNiftyControl("cbp" + i,
 					CheckBox.class);
@@ -80,11 +80,11 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 
 			Integer lKey = this.buttonKeyMap.get(lButton);
 			Integer rKey = this.buttonKeyMap.get(rButton);
+
+			// TODO more checks and show error response
 			if (lKey == null || rKey == null) {
 				continue;
 			}
-			System.out.println(name);
-			// TODO do some checks and show error response
 
 			PlayerInfoHolder pih = new PlayerInfoHolder(lKey, rKey, Color.RED,
 					name);
@@ -113,6 +113,12 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		if (this.handleKeyIn && event.isPressed()) {
 			this.handleKeyIn = false;
 
+			// TODO check with a blacklist
+			if (event.getKey() == 0) {
+				// Abort, would show up as none
+				return false;
+			}
+
 			char c = Character.toUpperCase(event.getCharacter());
 			String s = Character.toString(c);
 
@@ -125,14 +131,16 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 				buttonText = event.getKeyName();
 			}
 			this.element.setText(buttonText);
+
+			// Bind the selected to a button
 			this.buttonKeyMap.put(this.element, event.getKey());
-			// Here do some event perhaps to signal MainController
 
 			return true;
 		}
 		return false;
 	}
 
+	// A couple of help classes for holding game settings before starting it
 	public class GameSetUpHolder {
 		private final List<PlayerInfoHolder> playerInfo;
 		private final float powerUpChance;
