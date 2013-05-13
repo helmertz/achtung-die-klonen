@@ -43,7 +43,7 @@ public class Round {
 		this.pcs = new PropertyChangeSupport(this);
 
 		this.powerUpChance = DEFAULT_POWERUP_CHANCE;
-		this.wallsAreActive = true;
+		this.setWallsActive(true);
 
 		createPlayerBodiesAtRandomPos();
 
