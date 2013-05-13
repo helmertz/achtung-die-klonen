@@ -9,7 +9,7 @@ public class MapView implements View {
 	private static final Color NORMAL_WALL_COLOR = Color.WHITE;
 	private static final Color PASSTHROUGH_WALL_COLOR = Color.GRAY;
 	private static final Color BACKGROUND_COLOR = Color.DARK_GRAY;
-	
+
 	private final Map map;
 	private final float scoreWidthOffset;
 
@@ -21,7 +21,7 @@ public class MapView implements View {
 	@Override
 	public void render(RenderService renderer, float interpolation) {
 		// Adds 200 so that there's a usable area to the right of the world
-		renderer.setViewAreaSize(this.map.getWidth() + scoreWidthOffset,
+		renderer.setViewAreaSize(this.map.getWidth() + this.scoreWidthOffset,
 				this.map.getHeight());
 		renderer.setBackgroundColor(BACKGROUND_COLOR);
 
@@ -30,11 +30,11 @@ public class MapView implements View {
 
 		// Draws line around the world
 		if (this.map.isWallsActive()) {
-			renderer.drawLinedRect(0, 0, this.map.getWidth(), this.map.getHeight(),
-					5, NORMAL_WALL_COLOR);
+			renderer.drawLinedRect(0, 0, this.map.getWidth(),
+					this.map.getHeight(), 5, NORMAL_WALL_COLOR);
 		} else {
-			renderer.drawLinedRect(0, 0, this.map.getWidth(), this.map.getHeight(),
-					5, PASSTHROUGH_WALL_COLOR);
+			renderer.drawLinedRect(0, 0, this.map.getWidth(),
+					this.map.getHeight(), 5, PASSTHROUGH_WALL_COLOR);
 		}
 	}
 
