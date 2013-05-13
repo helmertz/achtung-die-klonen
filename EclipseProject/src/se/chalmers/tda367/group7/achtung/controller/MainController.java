@@ -136,6 +136,9 @@ public class MainController implements PropertyChangeListener,
 			// Essentially pauses the game when not in focus
 			if (!this.renderer.isActive()) {
 				doLogic = false;
+				
+				//Not active before pause and unPause methods fixed
+				//sound.pauseMusic();
 
 				// Allow some sleeping to minimize cpu usage
 				try {

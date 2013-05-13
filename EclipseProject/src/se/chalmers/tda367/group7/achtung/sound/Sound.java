@@ -18,6 +18,7 @@ class Sound implements SoundService {
 	private Audio playerDied;
 	private List<Audio> music;
 	private Audio currentMusic;
+	private float currentPosition;
 	private boolean soundEnabled = true;
 
 	public Sound() {
@@ -84,9 +85,17 @@ class Sound implements SoundService {
 	}
 
 	public void pauseMusic() {
+		if(currentMusic != null && currentMusic.isPlaying()) {
+		currentPosition = currentMusic.getPosition();
+		currentMusic.stop();
+		}
 	}
 	
 	public void playMusic() {
+		if(currentMusic != null  && !currentMusic.isPlaying()) {
+			currentMusic.playAsMusic(1.0f, 1.0f, true);
+			currentMusic.setPosition(currentPosition);
+		}
 	}
 
 	public void closeSound() {
