@@ -6,8 +6,12 @@ import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
 
 public class MapView implements View {
 
+	private static final Color NORMAL_WALL_COLOR = Color.WHITE;
+	private static final Color PASSTHROUGH_WALL_COLOR = Color.GRAY;
+	private static final Color BACKGROUND_COLOR = Color.DARK_GRAY;
+	
 	private final Map map;
-	private float scoreWidthOffset;
+	private final float scoreWidthOffset;
 
 	public MapView(Map map, float scoreWidthOffset) {
 		this.map = map;
@@ -19,7 +23,7 @@ public class MapView implements View {
 		// Adds 200 so that there's a usable area to the right of the world
 		renderer.setViewAreaSize(this.map.getWidth() + scoreWidthOffset,
 				this.map.getHeight());
-		renderer.setBackgroundColor(Color.DARK_GRAY);
+		renderer.setBackgroundColor(BACKGROUND_COLOR);
 
 		renderer.drawFilledRect(0, 0, this.map.getWidth(),
 				this.map.getHeight(), this.map.getColor());
@@ -27,10 +31,10 @@ public class MapView implements View {
 		// Draws line around the world
 		if (this.map.isWallsActive()) {
 			renderer.drawLinedRect(0, 0, this.map.getWidth(), this.map.getHeight(),
-					5, Color.WHITE);
+					5, NORMAL_WALL_COLOR);
 		} else {
 			renderer.drawLinedRect(0, 0, this.map.getWidth(), this.map.getHeight(),
-					5, Color.GRAY);
+					5, PASSTHROUGH_WALL_COLOR);
 		}
 	}
 
