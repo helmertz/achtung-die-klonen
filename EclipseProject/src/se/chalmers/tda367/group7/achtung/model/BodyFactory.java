@@ -6,7 +6,6 @@ public class BodyFactory {
 	};
 
 	public static Body getBody(Map map) {
-		// TODO - fix more neat code here
 		float xLimiter = map.getWidth() * 0.1f;
 		float yLimiter = map.getHeight() * 0.1f;
 
