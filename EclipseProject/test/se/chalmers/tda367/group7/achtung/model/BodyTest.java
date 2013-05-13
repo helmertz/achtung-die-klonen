@@ -36,7 +36,7 @@ public class BodyTest {
 	}
 
 	@Test
-	public void testGetWidht() {
+	public void testGetWidth() {
 		assertTrue(this.b.getWidth() == BodyConstants.DEFAULT_WIDTH);
 	}
 

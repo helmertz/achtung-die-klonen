@@ -62,7 +62,9 @@ public class Player {
 
 	public void setBody(Body body) {
 		this.body = body;
-		this.body.setColor(this.color);
+		if(this.body != null) {
+			this.body.setColor(this.color);
+		}
 	}
 
 	public String getName() {
