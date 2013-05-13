@@ -3,7 +3,7 @@ package se.chalmers.tda367.group7.achtung.view;
 import java.util.List;
 
 import se.chalmers.tda367.group7.achtung.model.Player;
-import se.chalmers.tda367.group7.achtung.rendering.RenderService;
+import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
 
 public class PlayerScoreView implements View {
 	private final List<Player> players;

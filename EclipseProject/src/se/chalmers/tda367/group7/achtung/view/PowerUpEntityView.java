@@ -5,8 +5,8 @@ import java.io.IOException;
 import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Position;
 import se.chalmers.tda367.group7.achtung.model.PowerUpEntity;
-import se.chalmers.tda367.group7.achtung.rendering.Image;
-import se.chalmers.tda367.group7.achtung.rendering.RenderService;
+import se.chalmers.tda367.group7.achtung.rendering.lwjgl.Image;
+import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
 
 public class PowerUpEntityView implements View {
 

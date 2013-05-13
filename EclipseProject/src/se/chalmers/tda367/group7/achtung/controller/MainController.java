@@ -25,8 +25,8 @@ import se.chalmers.tda367.group7.achtung.input.MouseInputListener;
 import se.chalmers.tda367.group7.achtung.menu.CustomInputSystem;
 import se.chalmers.tda367.group7.achtung.menu.MainMenuController;
 import se.chalmers.tda367.group7.achtung.model.Game;
-import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.LWJGLRenderService;
+import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
 import se.chalmers.tda367.group7.achtung.sound.Sound;
 import se.chalmers.tda367.group7.achtung.view.GameView;
 

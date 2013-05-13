@@ -10,7 +10,7 @@ import se.chalmers.tda367.group7.achtung.model.Game;
 import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.model.PowerUpEntity;
 import se.chalmers.tda367.group7.achtung.model.Round;
-import se.chalmers.tda367.group7.achtung.rendering.RenderService;
+import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
 
 public class GameView implements View, PropertyChangeListener {
 

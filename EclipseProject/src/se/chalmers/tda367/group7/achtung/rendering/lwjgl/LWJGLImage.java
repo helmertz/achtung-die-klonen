@@ -7,7 +7,6 @@ import java.util.Map;
 import static org.lwjgl.opengl.GL11.*;
 
 import se.chalmers.tda367.group7.achtung.model.Color;
-import se.chalmers.tda367.group7.achtung.rendering.Image;
 
 public class LWJGLImage implements Image {
 
