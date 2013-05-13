@@ -16,7 +16,7 @@ public class PlayerTest {
 	
 	@Test
 	public void testErrorIfNoBody() {
-		Player p = game.getNewPlayer("", null);
+		Player p = game.createNewPlayer("", null);
 		p.setBody(null);
 		try {
 			p.update();
@@ -27,7 +27,7 @@ public class PlayerTest {
 	
 	@Test
 	public void testAddPoints() {
-		Player p = game.getNewPlayer("", null);
+		Player p = game.createNewPlayer("", null);
 		p.addPoints(5);
 		
 		assertTrue(p.getPoints() == 5);

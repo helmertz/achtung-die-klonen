@@ -28,7 +28,7 @@ public class Game {
 
 	}
 
-	public Player getNewPlayer(String name, Color color) {
+	public Player createNewPlayer(String name, Color color) {
 		Player player = new Player(name, color);
 		this.players.add(player);
 		return player;

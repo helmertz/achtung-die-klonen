@@ -19,7 +19,7 @@ public class GameTest {
 	
 	@Test
 	public void testGetNewPlayer() {
-		Player p1 = game.getNewPlayer("player1", Color.getRandomColor());
+		Player p1 = game.createNewPlayer("player1", Color.getRandomColor());
 		assertTrue(p1.getName().equals("player1"));
 		
 		assertTrue(game.getPlayers().size() == 1);
@@ -41,8 +41,8 @@ public class GameTest {
 	
 	@Test
 	public void testIsOver() {
-		game.getNewPlayer("player1", Color.getRandomColor());
-		game.getNewPlayer("player2", Color.getRandomColor());
+		game.createNewPlayer("player1", Color.getRandomColor());
+		game.createNewPlayer("player2", Color.getRandomColor());
 		game.newRound();
 		for (int i = 0; i < 3000; i++) {
 			game.update();

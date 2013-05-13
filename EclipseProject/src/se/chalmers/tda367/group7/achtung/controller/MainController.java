@@ -277,7 +277,7 @@ public class MainController implements PropertyChangeListener,
 
 		for (PlayerInfoHolder pih : gameSetup.getPlayerInfo()) {
 			this.gameController.addPlayer(pih.getName(), pih.getLeftKey(),
-					pih.getRightKey(), pih.getColor());
+					pih.getRightKey());
 		}
 
 		this.gameController.startRound();
