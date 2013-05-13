@@ -96,6 +96,10 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 
 		this.pcs.firePropertyChange("startPressed", null, gameSetUpHolder);
 	}
+	
+	public void onContinuePress() {
+		
+	}
 
 	public void onKeySet(String elementID) {
 		// Mark that it will catch the next key event
