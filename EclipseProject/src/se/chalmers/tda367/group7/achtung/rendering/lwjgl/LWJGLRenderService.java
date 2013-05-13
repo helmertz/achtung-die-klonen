@@ -14,8 +14,6 @@ import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.opengl.Util;
 
 import se.chalmers.tda367.group7.achtung.model.Color;
-import se.chalmers.tda367.group7.achtung.rendering.Image;
-import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
 public class LWJGLRenderService implements RenderService {
 

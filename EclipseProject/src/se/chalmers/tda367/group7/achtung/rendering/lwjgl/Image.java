@@ -1,4 +1,4 @@
-package se.chalmers.tda367.group7.achtung.rendering;
+package se.chalmers.tda367.group7.achtung.rendering.lwjgl;
 
 import se.chalmers.tda367.group7.achtung.model.Color;
 
