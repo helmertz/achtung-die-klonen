@@ -23,7 +23,7 @@ public class PlayerScoreView implements View {
 		// Drawing of player name and score on the side
 		// TODO replace the hardcoded values
 		for (Player player : this.players) {
-			float sideX = renderService.getViewAreaWidth() - player.getName().length() * NAME_FONT_SIZE * 16;
+			float sideX = renderService.getViewAreaWidth() - 175;
 			float sideY = this.height * this.players.indexOf(player);
 
 			renderService.drawString(player.getName(), sideX, sideY, NAME_FONT_SIZE,
