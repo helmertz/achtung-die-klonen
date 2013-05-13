@@ -88,9 +88,6 @@ public class Round {
 			if (player.getBody().isDead()) {
 				continue;
 			}
-			// TODO: don't do this if player is immortal,
-			// but must still be able to go through walls
-			// (which is done in CollisionHelper as of writing this)
 			handleCollisions(player);
 
 			// Allows null to prevent problem with remaining players dying at

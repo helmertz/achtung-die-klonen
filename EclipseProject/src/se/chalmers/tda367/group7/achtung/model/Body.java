@@ -120,7 +120,6 @@ public class Body {
 		// previousSegment is null after a hole has been made
 		BodySegment segment;
 		if (this.previousSegment != null) {
-			// TODO handle differently to properly connect new segment to last
 			segment = new BodySegment(this.previousSegment,
 					this.head.getPosition(), this.width);
 		} else {
