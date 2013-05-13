@@ -15,6 +15,7 @@ public class Game {
 	private final List<Player> players;
 	private final Map map;
 	private Round currentRound;
+	private Player gameWinner;
 
 	private final PropertyChangeSupport pcs;
 	private final float powerUpChance;
@@ -76,6 +77,7 @@ public class Game {
 
 		for (Player player : this.players) {
 			if (player.getPoints() >= goalPoints) {
+				this.gameWinner = player;
 				return true;
 			}
 		}
@@ -91,6 +93,10 @@ public class Game {
 
 	public Round getCurrentRound() {
 		return this.currentRound;
+	}
+	
+	public Player getGameWinner() {
+		return this.gameWinner;
 	}
 
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
