@@ -29,10 +29,14 @@ public class BodyTest {
 	public void testGetBodySegments() {
 		assertTrue(this.b.getBodySegments().size() == 0);
 		int updates = 10;
+		int desiredSize = 10;
 		for (int i = 0; i < updates; i++) {
 			this.b.update();
+			if(this.b.isGeneratingHole()) {
+				desiredSize--;
+			}
 		}
-		assertTrue(this.b.getBodySegments().size() == updates);
+		assertTrue(this.b.getBodySegments().size() == desiredSize);
 	}
 
 	@Test
