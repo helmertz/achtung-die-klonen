@@ -282,7 +282,7 @@ public class Body {
 		return this.segmentGenerationEnabled;
 	}
 
-	public void setGeneratingBodySegments(boolean generatingBodySegments) {
+	public void setSegmentGenerationEnabled(boolean generatingBodySegments) {
 		this.segmentGenerationEnabled = generatingBodySegments;
 	}
 
