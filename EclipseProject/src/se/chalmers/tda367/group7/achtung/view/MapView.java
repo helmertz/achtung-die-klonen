@@ -7,16 +7,17 @@ import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
 public class MapView implements View {
 
 	private final Map map;
+	private float scoreWidthOffset;
 
-	public MapView(Map map) {
+	public MapView(Map map, float scoreWidthOffset) {
 		this.map = map;
+		this.scoreWidthOffset = scoreWidthOffset;
 	}
 
 	@Override
 	public void render(RenderService renderer, float interpolation) {
 		// Adds 200 so that there's a usable area to the right of the world
-		// TODO should not be hardcoded later, nor set here
-		renderer.setViewAreaSize(this.map.getWidth() + 200,
+		renderer.setViewAreaSize(this.map.getWidth() + scoreWidthOffset,
 				this.map.getHeight());
 		renderer.setBackgroundColor(Color.DARK_GRAY);
 
@@ -31,5 +32,9 @@ public class MapView implements View {
 			renderer.drawLinedRect(0, 0, this.map.getWidth(), this.map.getHeight(),
 					5, Color.GRAY);
 		}
+	}
+
+	public Map getMap() {
+		return this.map;
 	}
 }

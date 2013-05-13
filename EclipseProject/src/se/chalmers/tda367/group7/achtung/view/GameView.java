@@ -16,7 +16,7 @@ public class GameView implements View, PropertyChangeListener {
 
 	private final List<PlayerView> playerViews = new ArrayList<PlayerView>();
 	private final List<PowerUpEntityView> powerUpView = new ArrayList<PowerUpEntityView>();
-	private final PlayerScoreView scoreView;
+	private PlayerScoreView scoreView;
 
 	private MapView mapView;
 	private final Game game;
@@ -33,9 +33,15 @@ public class GameView implements View, PropertyChangeListener {
 
 	public GameView(Game game) {
 		this.game = game;
-		this.scoreView = new PlayerScoreView(game.getPlayers());
-		addPlayerViews();
 		updateMapView();
+		createScoreView();
+		addPlayerViews();
+	}
+
+	private void createScoreView() {
+		// because 8 is max player amount
+		float scoreViewHeight = mapView.getMap().getHeight() / 8;
+		this.scoreView = new PlayerScoreView(game.getPlayers(), scoreViewHeight);
 	}
 
 	private void addPlayerViews() {
@@ -103,13 +109,10 @@ public class GameView implements View, PropertyChangeListener {
 					winner.getColor());
 			renderer.drawStringCentered(NEXT_ROUND_MESSAGE_3, centerX,
 					centerY + 105, 1f);
-
 		}
-
 	}
 
 	private void updatePowerUpViews() {
-
 		this.powerUpView.clear();
 
 		for (PowerUpEntity e : this.game.getCurrentRound().getPowerUpEntities()) {
@@ -120,8 +123,8 @@ public class GameView implements View, PropertyChangeListener {
 	private void updateMapView() {
 		Round round = this.game.getCurrentRound();
 		round.addPropertyChangeListener(this);
-		this.mapView = new MapView(round.getMap());
-
+		// TODO: this is still hardcoded, how to fix?
+		this.mapView = new MapView(round.getMap(), 200);
 	}
 
 	@Override
