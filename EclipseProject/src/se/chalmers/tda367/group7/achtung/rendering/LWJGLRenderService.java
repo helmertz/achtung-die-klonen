@@ -32,7 +32,7 @@ class LWJGLRenderService implements RenderService {
 	private float scaling;
 	private boolean scaled;
 
-	public LWJGLRenderService() throws LWJGLException {
+	private LWJGLRenderService() throws LWJGLException {
 		init();
 	}
 
