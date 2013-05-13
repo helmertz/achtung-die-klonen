@@ -129,7 +129,7 @@ public class GameView implements View, PropertyChangeListener {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals("PowerUp")) {
+		if (evt.getPropertyName().contains("PowerUp")) {
 			updatePowerUpViews();
 		} else if (evt.getPropertyName().equals("NewRound")) {
 			updateMapView();

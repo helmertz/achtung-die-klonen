@@ -135,7 +135,6 @@ public class Round {
 				distributePowerUp(player, powerUp);
 				this.pcs.firePropertyChange("PowerUp"
 						+ powerUp.getType().toString(), false, true);
-				this.pcs.firePropertyChange("PowerUp", false, true);
 			}
 		}
 	}
