@@ -9,11 +9,11 @@ import se.chalmers.tda367.group7.achtung.model.powerups.FatPowerUp;
 
 public class PowerUpTest {
 	
-	private PowerUp p;
+	private PowerUp<PowerUpEffect> p;
 	
 	@Before
 	public void setup() {
-		p = new PowerUp(new FatPowerUp());
+		p = new PowerUp<PowerUpEffect>(new FatPowerUp());
 	}
 	
 	@Test
