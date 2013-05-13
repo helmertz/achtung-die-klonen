@@ -4,6 +4,9 @@ import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderServiceFactory;
 
+/**
+ * Not a unit test, but can be run and manually examined.
+ */
 public class RenderingTest {
 
 	public static void main(String[] args) {
@@ -11,6 +14,7 @@ public class RenderingTest {
 
 		renderService.setBackgroundColor(Color.BLUE);
 		renderService.setViewAreaSize(800, 500);
+		renderService.setScaled(true);
 
 		while (!renderService.isCloseRequested()) {
 			renderService.preDraw();
