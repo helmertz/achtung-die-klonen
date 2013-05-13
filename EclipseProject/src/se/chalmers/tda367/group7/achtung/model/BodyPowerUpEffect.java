@@ -27,5 +27,5 @@ public interface BodyPowerUpEffect extends PowerUpEffect {
 	 *            - who the power up affects
 	 * @return true - if type is allowed
 	 */
-	boolean isTypeOk(Type type);
+	Type[] getAllowedTypes();
 }

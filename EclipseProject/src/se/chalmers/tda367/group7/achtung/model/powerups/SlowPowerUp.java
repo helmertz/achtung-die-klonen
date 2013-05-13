@@ -26,8 +26,8 @@ public class SlowPowerUp implements BodyPowerUpEffect {
 	}
 
 	@Override
-	public boolean isTypeOk(Type type) {
-		return type == Type.SELF || type == Type.EVERYONE_ELSE;
+	public Type[] getAllowedTypes() {
+		return new Type[] {Type.SELF, Type.EVERYONE_ELSE};
 	}
 
 	@Override

@@ -21,8 +21,8 @@ public class ClearPowerUp implements BodyPowerUpEffect {
 	}
 
 	@Override
-	public boolean isTypeOk(Type type) {
-		return type == Type.EVERYONE;
+	public Type[] getAllowedTypes() {
+		return new Type[] {Type.EVERYONE};
 	}
 
 	@Override

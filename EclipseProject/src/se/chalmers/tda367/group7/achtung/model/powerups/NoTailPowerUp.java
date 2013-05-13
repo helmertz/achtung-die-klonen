@@ -28,8 +28,8 @@ public class NoTailPowerUp implements BodyPowerUpEffect {
 	}
 
 	@Override
-	public boolean isTypeOk(Type type) {
-		return type == Type.SELF;
+	public Type[] getAllowedTypes() {
+		return new Type[] {Type.SELF};
 	}
 
 	@Override

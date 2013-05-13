@@ -30,8 +30,8 @@ public class TurnPowerUp implements BodyPowerUpEffect {
 	}
 
 	@Override
-	public boolean isTypeOk(Type type) {
-		return type == Type.EVERYONE_ELSE;
+	public Type[] getAllowedTypes() {
+		return new Type[] {Type.EVERYONE_ELSE};
 	}
 
 	@Override
