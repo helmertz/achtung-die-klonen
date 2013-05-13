@@ -9,7 +9,7 @@ import se.chalmers.tda367.group7.achtung.input.KeyInputEvent;
 import se.chalmers.tda367.group7.achtung.input.KeyInputListener;
 import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Game;
-import se.chalmers.tda367.group7.achtung.sound.Sound;
+import se.chalmers.tda367.group7.achtung.sound.SoundServiceFactory;
 
 public class GameController implements KeyInputListener {
 	private final Game game;
@@ -71,7 +71,7 @@ public class GameController implements KeyInputListener {
 		if (!this.game.isOver()) {
 			this.game.newRound();
 			this.game.getCurrentRound().addPropertyChangeListener(
-					Sound.getInstance());
+					SoundServiceFactory.getSoundService());
 		}
 	}
 }

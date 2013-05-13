@@ -1,7 +1,6 @@
 package se.chalmers.tda367.group7.achtung.sound;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +10,7 @@ import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
-public class Sound implements PropertyChangeListener {
-
-	private static Sound instance;
+class Sound implements SoundService {
 
 	private Audio powerUpSelf;
 	private Audio powerUpEveryoneElse;
@@ -23,18 +20,11 @@ public class Sound implements PropertyChangeListener {
 	private Audio currentMusic;
 	private boolean soundEnabled = true;
 
-	private Sound() {
+	public Sound() {
 		initSounds();
 	}
 
-	public static synchronized Sound getInstance() {
-		if (instance == null) {
-			instance = new Sound();
-		}
-		return instance;
-	}
-
-	public void initSounds() {
+	private void initSounds() {
 
 		try {
 
@@ -69,13 +59,13 @@ public class Sound implements PropertyChangeListener {
 		String propertyName = evt.getPropertyName();
 		if (this.soundEnabled) {
 			if (propertyName.equals("PowerUpSELF")) {
-				playSound(this.powerUpSelf);
+				playSoundEffect(this.powerUpSelf);
 			} else if (propertyName.equals("PowerUpEVERYONE")) {
-				playSound(this.powerUpEveryone);
+				playSoundEffect(this.powerUpEveryone);
 			} else if (propertyName.equals("PowerUpEVERYONE_ELSE")) {
-				playSound(this.powerUpEveryoneElse);
+				playSoundEffect(this.powerUpEveryoneElse);
 			} else if (propertyName.equals("PlayerDied")) {
-				playSound(this.playerDied);
+				playSoundEffect(this.playerDied);
 			} else if (propertyName.equals("NewRound")) {
 				this.currentMusic = this.music
 						.get((int) (this.music.size() * Math.random()));
@@ -89,14 +79,17 @@ public class Sound implements PropertyChangeListener {
 
 	}
 
-	private void playSound(Audio sound) {
+	private void playSoundEffect(Audio sound) {
 		sound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
 
 	public void pauseMusic() {
 	}
+	
+	public void playMusic() {
+	}
 
-	public static void closeSound() {
+	public void closeSound() {
 		AL.destroy();
 	}
 

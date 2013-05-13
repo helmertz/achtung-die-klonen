@@ -20,7 +20,8 @@ import se.chalmers.tda367.group7.achtung.menu.MainMenuController;
 import se.chalmers.tda367.group7.achtung.model.Game;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderServiceFactory;
-import se.chalmers.tda367.group7.achtung.sound.Sound;
+import se.chalmers.tda367.group7.achtung.sound.SoundService;
+import se.chalmers.tda367.group7.achtung.sound.SoundServiceFactory;
 import se.chalmers.tda367.group7.achtung.view.GameView;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.nulldevice.NullSoundDevice;
@@ -60,6 +61,7 @@ public class MainController implements PropertyChangeListener,
 
 	private RenderService renderer;
 	private final InputService inputService;
+	private SoundService sound;
 
 	private Game game;
 	private GameView gameView;
@@ -76,6 +78,8 @@ public class MainController implements PropertyChangeListener,
 		
 		// The service for supplying mouse and keyboard events
 		this.inputService = InputServiceFactory.getInputService();
+		
+		this.sound = SoundServiceFactory.getSoundService();
 
 		// Sets this as "root" handler of keyboard and mouse events. Here it's
 		// decided where they are passed along to.
@@ -193,7 +197,7 @@ public class MainController implements PropertyChangeListener,
 				this.dbgGameTickCounter = 0;
 			}
 		}
-		Sound.closeSound();
+		this.sound.closeSound();
 	}
 
 	private void doLogic() {
@@ -265,7 +269,7 @@ public class MainController implements PropertyChangeListener,
 
 	public void startGame() {
 		this.game = new Game();
-		this.game.addPropertyChangeListener(Sound.getInstance());
+		this.game.addPropertyChangeListener(this.sound);
 
 		this.gameController = new GameController(this.game);
 		this.gameController.startRound();
