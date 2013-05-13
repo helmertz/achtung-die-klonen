@@ -52,7 +52,7 @@ public class Player {
 
 	public void setBody(Body body) {
 		this.body = body;
-		if(this.body != null) {
+		if (this.body != null) {
 			this.body.setColor(this.color);
 		}
 	}

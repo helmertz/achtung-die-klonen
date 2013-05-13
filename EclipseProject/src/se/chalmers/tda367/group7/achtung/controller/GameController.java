@@ -17,18 +17,6 @@ public class GameController implements KeyInputListener {
 
 	public GameController(Game game) {
 		this.game = game;
-
-		// TODO - this should not be hardcoded.
-		for (int i = 0; i < 3; i++) {
-			String name = "Player " + (i + 1);
-			if (i == 0) {
-				addPlayer(name, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT);
-			} else if (i == 1) {
-				addPlayer(name, Keyboard.KEY_A, Keyboard.KEY_D);
-			} else {
-				addPlayer(name, Keyboard.KEY_1, Keyboard.KEY_2);
-			}
-		}
 	}
 
 	/**
@@ -41,9 +29,9 @@ public class GameController implements KeyInputListener {
 	 * @param rightKey
 	 *            - right key id
 	 */
-	public void addPlayer(String name, int leftKey, int rightKey) {
+	public void addPlayer(String name, int leftKey, int rightKey, Color color) {
 		PlayerController pc = new PlayerController(this.game.getNewPlayer(name,
-				Color.getRandomColor()));
+				color));
 		pc.setLeftKey(leftKey);
 		pc.setRightKey(rightKey);
 

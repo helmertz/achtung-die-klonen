@@ -17,6 +17,8 @@ import se.chalmers.tda367.group7.achtung.input.MouseInputEvent;
 import se.chalmers.tda367.group7.achtung.input.MouseInputListener;
 import se.chalmers.tda367.group7.achtung.menu.CustomInputSystem;
 import se.chalmers.tda367.group7.achtung.menu.MainMenuController;
+import se.chalmers.tda367.group7.achtung.menu.MainMenuController.GameSetUpHolder;
+import se.chalmers.tda367.group7.achtung.menu.MainMenuController.PlayerInfoHolder;
 import se.chalmers.tda367.group7.achtung.model.Game;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderServiceFactory;
@@ -73,12 +75,12 @@ public class MainController implements PropertyChangeListener,
 	private final CustomInputSystem inputSystem;
 
 	public MainController() {
-		
+
 		this.renderer = RenderServiceFactory.getRenderService();
-		
+
 		// The service for supplying mouse and keyboard events
 		this.inputService = InputServiceFactory.getInputService();
-		
+
 		this.sound = SoundServiceFactory.getSoundService();
 
 		// Sets this as "root" handler of keyboard and mouse events. Here it's
@@ -267,11 +269,17 @@ public class MainController implements PropertyChangeListener,
 		}
 	}
 
-	public void startGame() {
+	public void startGame(GameSetUpHolder gameSetup) {
 		this.game = new Game();
 		this.game.addPropertyChangeListener(this.sound);
 
 		this.gameController = new GameController(this.game);
+
+		for (PlayerInfoHolder pih : gameSetup.getPlayerInfo()) {
+			this.gameController.addPlayer(pih.getName(), pih.getLeftKey(),
+					pih.getRightKey(), pih.getColor());
+		}
+
 		this.gameController.startRound();
 
 		this.gameView = new GameView(this.game);
@@ -282,7 +290,10 @@ public class MainController implements PropertyChangeListener,
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().equals("startPressed")) {
-			startGame();
+			if (evt.getNewValue() instanceof MainMenuController.GameSetUpHolder) {
+				GameSetUpHolder gameSetup = (GameSetUpHolder) evt.getNewValue();
+				startGame(gameSetup);
+			}
 		}
 	}
 }

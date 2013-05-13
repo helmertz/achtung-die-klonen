@@ -15,15 +15,6 @@ public class PlayerTest {
 	}
 	
 	@Test
-	public void testIdIncreasing() {
-		Player p = game.getNewPlayer("", null);
-		int firstId = p.getId();
-		Player p1 = game.getNewPlayer("", null);
-		
-		assertTrue(p1.getId() == firstId+1);
-	}
-	
-	@Test
 	public void testErrorIfNoBody() {
 		Player p = game.getNewPlayer("", null);
 		p.setBody(null);

@@ -12,18 +12,90 @@
 					</control>
 				</panel>
 				<panel width="50%" height="50%" align="right" valign="bottom" childLayout="vertical">
-					<control name="label" text="Power-up Chance"/>
-					<control id="sliderH" name="horizontalSlider" width="100%"/>
+					<panel width = "80%" align="center" childLayout="vertical">
+						<control name="label" text="Power-up Chance"/>
+						<control id="puslider" name="horizontalSlider" width="100%"/>
+					</panel>
 				</panel>
 				<panel width="50%" height="50%" align="left" valign="bottom" childLayout="vertical">
-					<panel height="12%" childLayout="horizontal">
-						<control name="checkbox" checked="true" id="checkboxp1"/>
-						<control name="textfield" text="Player 1" align="center" id="textp1"/>
-						<control name="button" label="L" id="keyP1L" width="60">
-							<interact onClick="onKeySet(keyP1L, 1, L)"/>
+					<panel width = "80%" align="center" height="23" childLayout="horizontal">
+						<control name="checkbox" checked="true" id="cbp1"/>
+						<control name="textfield" text="Player 1" align="center" id="namep1"/>
+						<control name="button" label="(L)" id="keylp1" width="60">
+							<interact onClick="onKeySet(keylp1)"/>
 						</control>
-						<control name="button" label="R" id="keyP1R" width="60">
-							<interact onClick="onKeySet(keyP1R, 1, R)"/>
+						<control name="button" label="(R)" id="keyrp1" width="60">
+							<interact onClick="onKeySet(keyrp1)"/>
+						</control>
+					</panel>
+					<panel width = "80%" align="center" height="23" childLayout="horizontal">
+						<control name="checkbox" checked="true" id="cbp2"/>
+						<control name="textfield" text="Player 2" align="center" id="namep2"/>
+						<control name="button" label="(L)" id="keylp2" width="60">
+							<interact onClick="onKeySet(keylp2)"/>
+						</control>
+						<control name="button" label="(R)" id="keyrp2" width="60">
+							<interact onClick="onKeySet(keyrp2)"/>
+						</control>
+					</panel>
+					<panel width = "80%" align="center" height="23" childLayout="horizontal">
+						<control name="checkbox" checked="false" id="cbp3"/>
+						<control name="textfield" text="Player 2" align="center" id="namep3"/>
+						<control name="button" label="(L)" id="keylp3" width="60">
+							<interact onClick="onKeySet(keylp3)"/>
+						</control>
+						<control name="button" label="(R)" id="keyrp3" width="60">
+							<interact onClick="onKeySet(keyrp3)"/>
+						</control>
+					</panel>
+					<panel width = "80%" align="center" height="23" childLayout="horizontal">
+						<control name="checkbox" checked="false" id="cbp4"/>
+						<control name="textfield" text="Player 2" align="center" id="namep4"/>
+						<control name="button" label="(L)" id="keylp4" width="60">
+							<interact onClick="onKeySet(keylp4)"/>
+						</control>
+						<control name="button" label="(R)" id="keyrp4" width="60">
+							<interact onClick="onKeySet(keyrp4)"/>
+						</control>
+					</panel>
+					<panel width = "80%" align="center" height="23" childLayout="horizontal">
+						<control name="checkbox" checked="false" id="cbp5"/>
+						<control name="textfield" text="Player 2" align="center" id="namep5"/>
+						<control name="button" label="(L)" id="keylp5" width="60">
+							<interact onClick="onKeySet(keylp5)"/>
+						</control>
+						<control name="button" label="(R)" id="keyrp5" width="60">
+							<interact onClick="onKeySet(keyrp5)"/>
+						</control>
+					</panel>
+					<panel width = "80%" align="center" height="23" childLayout="horizontal">
+						<control name="checkbox" checked="false" id="cbp6"/>
+						<control name="textfield" text="Player 2" align="center" id="namep6"/>
+						<control name="button" label="(L)" id="keylp6" width="60">
+							<interact onClick="onKeySet(keylp6)"/>
+						</control>
+						<control name="button" label="(R)" id="keyrp6" width="60">
+							<interact onClick="onKeySet(keyrp6)"/>
+						</control>
+					</panel>
+					<panel width = "80%" align="center" height="23" childLayout="horizontal">
+						<control name="checkbox" checked="false" id="cbp7"/>
+						<control name="textfield" text="Player 2" align="center" id="namep7"/>
+						<control name="button" label="(L)" id="keylp7" width="60">
+							<interact onClick="onKeySet(keylp7)"/>
+						</control>
+						<control name="button" label="(R)" id="keyrp7" width="60">
+							<interact onClick="onKeySet(keyrp7)"/>
+						</control>
+					</panel>
+					<panel width = "80%" align="center" height="23" childLayout="horizontal">
+						<control name="checkbox" checked="false" id="cbp8"/>
+						<control name="textfield" text="Player 2" align="center" id="namep8"/>
+						<control name="button" label="(L)" id="keylp8" width="60">
+							<interact onClick="onKeySet(keylp8)"/>
+						</control>
+						<control name="button" label="(R)" id="keyrp8" width="60">
+							<interact onClick="onKeySet(keyrp8)"/>
 						</control>
 					</panel>
 				</panel>
