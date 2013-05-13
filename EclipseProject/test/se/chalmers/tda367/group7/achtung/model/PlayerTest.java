@@ -6,18 +6,25 @@ import org.junit.Test;
 
 public class PlayerTest {
 	
+	private Game game;
+	
+	@Before
+	public void setupGame() {
+		this.game = new Game();
+	}
+	
 	@Test
 	public void testIdIncreasing() {
-		Player p = new Player("", null);
+		Player p = game.getNewPlayer("", null);
 		int firstId = p.getId();
-		Player p1 = new Player("", null);
+		Player p1 = game.getNewPlayer("", null);
 		
 		assertTrue(p1.getId() == firstId+1);
 	}
 	
 	@Test
 	public void testErrorIfNoBody() {
-		Player p = new Player("", null);
+		Player p = game.getNewPlayer("", null);
 		p.setBody(null);
 		try {
 			p.update();
@@ -28,7 +35,7 @@ public class PlayerTest {
 	
 	@Test
 	public void testAddPoints() {
-		Player p = new Player("", null);
+		Player p = game.getNewPlayer("", null);
 		p.addPoints(5);
 		
 		assertTrue(p.getPoints() == 5);
