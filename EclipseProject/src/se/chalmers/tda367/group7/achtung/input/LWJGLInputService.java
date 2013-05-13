@@ -8,7 +8,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
-public class LWJGLInputService implements InputService {
+class LWJGLInputService implements InputService {
 
 	private final List<KeyInputListener> keyListeners = new ArrayList<KeyInputListener>();
 	private final List<MouseInputListener> mouseListeners = new ArrayList<MouseInputListener>();

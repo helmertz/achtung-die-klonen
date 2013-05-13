@@ -10,9 +10,9 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 import se.chalmers.tda367.group7.achtung.input.InputService;
+import se.chalmers.tda367.group7.achtung.input.InputServiceFactory;
 import se.chalmers.tda367.group7.achtung.input.KeyInputEvent;
 import se.chalmers.tda367.group7.achtung.input.KeyInputListener;
-import se.chalmers.tda367.group7.achtung.input.LWJGLInputService;
 import se.chalmers.tda367.group7.achtung.input.MouseInputEvent;
 import se.chalmers.tda367.group7.achtung.input.MouseInputListener;
 import se.chalmers.tda367.group7.achtung.menu.CustomInputSystem;
@@ -75,7 +75,7 @@ public class MainController implements PropertyChangeListener,
 		this.renderer = RenderServiceFactory.getRenderService();
 		
 		// The service for supplying mouse and keyboard events
-		this.inputService = new LWJGLInputService();
+		this.inputService = InputServiceFactory.getInputService();
 
 		// Sets this as "root" handler of keyboard and mouse events. Here it's
 		// decided where they are passed along to.
