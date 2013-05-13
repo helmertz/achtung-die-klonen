@@ -1,10 +1,16 @@
 package se.chalmers.tda367.group7.achtung.view;
 
+import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
 
 public class GameOverMessage extends PopupMessage {
 
+	private static final String WON_GAME_MESSAGE_1 = "Game over!";
+	private static final String WON_GAME_MESSAGE_2 = "The winner is";
+	private static final String WON_GAME_MESSAGE_3 = "Press esc to return to menu";
+	private static final Color WON_GAME_COLOR = new Color(0, 0, 0, 0.5f);
+	
 	public GameOverMessage(Player winner) {
 		super(winner);
 	}
@@ -19,7 +25,7 @@ public class GameOverMessage extends PopupMessage {
 		float centerY = viewHeight / 2;
 		float width = 600;
 		float height = 240;
-		String name = super.winner.getName() + "!";
+		String name = this.winner.getName() + "!";
 
 		renderer.drawFilledRect(centerX - width / 2, centerY - height / 2,
 				width, height, WON_GAME_COLOR);

@@ -1,13 +1,18 @@
 package se.chalmers.tda367.group7.achtung.view;
 
+import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
 
 public class RoundOverMessage extends PopupMessage {
 
+	private static final String NEXT_ROUND_MESSAGE_1 = "Round over";
+	private static final String NEXT_ROUND_MESSAGE_2 = "The winner is";
+	private static final String NEXT_ROUND_MESSAGE_3 = "Press space to continue";
+	private static final Color NEXT_ROUND_COLOR = new Color(0, 0, 0, 0.5f);
+	
 	public RoundOverMessage(Player winner) {
 		super(winner);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -20,7 +25,7 @@ public class RoundOverMessage extends PopupMessage {
 		float centerY = viewHeight / 2;
 		float width = 600;
 		float height = 240;
-		String name = super.winner.getName();
+		String name = this.winner.getName();
 
 		renderer.drawFilledRect(centerX - width / 2, centerY - height / 2,
 				width, height, NEXT_ROUND_COLOR);
