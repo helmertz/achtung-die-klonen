@@ -5,7 +5,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Game;
 import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.model.PowerUpEntity;
@@ -21,16 +20,6 @@ public class GameView implements View, PropertyChangeListener {
 	private MapView mapView;
 	private final Game game;
 
-	private static final String NEXT_ROUND_MESSAGE_1 = "Round over";
-	private static final String NEXT_ROUND_MESSAGE_2 = "The winner is";
-	private static final String NEXT_ROUND_MESSAGE_3 = "Press space to continue";
-	private static final Color NEXT_ROUND_COLOR = new Color(0, 0, 0, 0.5f);
-
-	private static final String WON_GAME_MESSAGE_1 = "Game over!";
-	private static final String WON_GAME_MESSAGE_2 = "The winner is";
-	private static final String WON_GAME_MESSAGE_3 = "Press esc to return to menu";
-	private static final Color WON_GAME_COLOR = new Color(0, 0, 0, 0.5f);
-
 	public GameView(Game game) {
 		this.game = game;
 		updateMapView();
@@ -40,8 +29,8 @@ public class GameView implements View, PropertyChangeListener {
 
 	private void createScoreView() {
 		// because 8 is max player amount
-		float scoreViewHeight = mapView.getMap().getHeight() / 8;
-		this.scoreView = new PlayerScoreView(game.getPlayers(), scoreViewHeight);
+		float scoreViewHeight = this.mapView.getMap().getHeight() / 8;
+		this.scoreView = new PlayerScoreView(this.game.getPlayers(), scoreViewHeight);
 	}
 
 	private void addPlayerViews() {
@@ -68,48 +57,15 @@ public class GameView implements View, PropertyChangeListener {
 		// If over draws a box displaying the winner, and instructions on how to
 		// continue.
 		if (this.game.isOver()) {
-			// TODO perhaps not hardcode as much here. Maybe redo size handling
-			// in font.
-			float viewWidth = renderer.getViewAreaWidth();
-			float viewHeight = renderer.getViewAreaHeight();
-			float centerX = viewWidth / 2;
-			float centerY = viewHeight / 2;
-			float width = 600;
-			float height = 240;
-			String name = "Player1!";
-			renderer.drawFilledRect(centerX - width / 2, centerY - height / 2,
-					width, height, WON_GAME_COLOR);
-			renderer.drawStringCentered(WON_GAME_MESSAGE_1, centerX,
-					centerY - 55, 2.5f);
-			renderer.drawStringCentered(WON_GAME_MESSAGE_2, centerX,
-					centerY - 15, 1.5f);
-			renderer.drawStringCentered(name, centerX, centerY + 60, 3,
-					new Color(255, 255, 0));
-			renderer.drawStringCentered(WON_GAME_MESSAGE_3, centerX,
-					centerY + 105, 1f);
+			Player winner = this.game.getGameWinner();
+			PopupMessage message = new GameOverMessage(winner);
+			message.render(renderer, interpolation);
 		} else if (!this.game.getCurrentRound().isRoundActive()) {
-
-			// TODO perhaps not hardcode as much here. Maybe redo size handling
-			// in font.
-			float viewWidth = renderer.getViewAreaWidth();
-			float viewHeight = renderer.getViewAreaHeight();
-			float centerX = viewWidth / 2;
-			float centerY = viewHeight / 2;
-			float width = 600;
-			float height = 240;
 			Player winner = this.game.getCurrentRound().getWinner();
-			String name = winner.getName();
-			renderer.drawFilledRect(centerX - width / 2, centerY - height / 2,
-					width, height, NEXT_ROUND_COLOR);
-			renderer.drawStringCentered(NEXT_ROUND_MESSAGE_1, centerX,
-					centerY - 55, 2.5f);
-			renderer.drawStringCentered(NEXT_ROUND_MESSAGE_2, centerX,
-					centerY - 15, 1.5f);
-			renderer.drawStringCentered(name, centerX, centerY + 60, 3,
-					winner.getColor());
-			renderer.drawStringCentered(NEXT_ROUND_MESSAGE_3, centerX,
-					centerY + 105, 1f);
+			PopupMessage message = new RoundOverMessage(winner);
+			message.render(renderer, interpolation);
 		}
+
 	}
 
 	private void updatePowerUpViews() {

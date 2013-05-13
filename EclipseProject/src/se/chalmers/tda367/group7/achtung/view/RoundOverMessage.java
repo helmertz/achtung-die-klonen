@@ -1,0 +1,37 @@
+package se.chalmers.tda367.group7.achtung.view;
+
+import se.chalmers.tda367.group7.achtung.model.Player;
+import se.chalmers.tda367.group7.achtung.rendering.lwjgl.RenderService;
+
+public class RoundOverMessage extends PopupMessage {
+
+	public RoundOverMessage(Player winner) {
+		super(winner);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void render(RenderService renderer, float interpolation) {
+		// TODO perhaps not hardcode as much here. Maybe redo size handling
+		// in font.
+		float viewWidth = renderer.getViewAreaWidth();
+		float viewHeight = renderer.getViewAreaHeight();
+		float centerX = viewWidth / 2;
+		float centerY = viewHeight / 2;
+		float width = 600;
+		float height = 240;
+		String name = super.winner.getName();
+
+		renderer.drawFilledRect(centerX - width / 2, centerY - height / 2,
+				width, height, NEXT_ROUND_COLOR);
+		renderer.drawStringCentered(NEXT_ROUND_MESSAGE_1, centerX,
+				centerY - 55, 2.5f);
+		renderer.drawStringCentered(NEXT_ROUND_MESSAGE_2, centerX,
+				centerY - 15, 1.5f);
+		renderer.drawStringCentered(name, centerX, centerY + 60, 3,
+				this.winner.getColor());
+		renderer.drawStringCentered(NEXT_ROUND_MESSAGE_3, centerX,
+				centerY + 105, 1f);
+	}
+
+}
