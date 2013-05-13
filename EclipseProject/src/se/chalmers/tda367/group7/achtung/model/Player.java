@@ -9,18 +9,12 @@ public class Player {
 	private final Color color;
 
 	private int points;
-	private final int id;
-	private static int numberOfPlayers = 0;
 
 	private Body body;
 
 	public Player(String name, Color color) {
 		this.name = name;
 		this.color = color;
-
-		// id mechanism.
-		this.id = numberOfPlayers;
-		numberOfPlayers++;
 	}
 
 	/**
@@ -46,10 +40,6 @@ public class Player {
 	 */
 	public void addPoints(int points) {
 		this.points += points;
-	}
-
-	public int getId() {
-		return this.id;
 	}
 
 	public Color getColor() {
