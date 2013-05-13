@@ -20,7 +20,7 @@ public class Body {
 	private boolean immortal;
 	private boolean sharpTurnsActivated;
 	private boolean invertedControls;
-	private boolean generatingBodySegments;
+	private boolean segmentGenerationEnabled;
 	private Position prevPosition;
 	private BodySegment previousSegment;
 	private boolean makeHole;
@@ -39,7 +39,7 @@ public class Body {
 		this.speed = BodyConstants.DEFAULT_SPEED;
 		this.rotationAngleDeg = rotation;
 		this.rotationSpeedDeg = BodyConstants.DEFAULT_ROTATION_SPEED;
-		this.generatingBodySegments = true;
+		this.segmentGenerationEnabled = true;
 
 		// Width of the body is the same as the diameter of the head.
 		this.head = new Head(position, this.width);
@@ -67,11 +67,27 @@ public class Body {
 		updatePowerUps();
 
 		if (!this.dead) {
-			updatePosition();
+			updateHeadPosition();
+			updateSegments();
 		}
 	}
 
-	private void updatePosition() {
+	private void updateSegments() {
+		// Create a new body segment and add to body segment list.
+		holeUpdate();
+
+		if (!this.makeHole) {
+			createBodySegment();
+			this.holeCount = 0;
+		} else {
+			this.holeCount++;
+			// Set to null so that no upcoming segment will be connected over
+			// the hole
+			this.previousSegment = null;
+		}		
+	}
+
+	private void updateHeadPosition() {
 		doTurn();
 
 		// Update head with delta positions
@@ -88,24 +104,10 @@ public class Body {
 		Position newPosition = new Position(x + dx, y + dy);
 
 		this.head.setPosition(newPosition);
-
-		// Create a new body segment and add to body segment list.
-
-		holeUpdate();
-
-		if (!this.makeHole) {
-			createBodySegment();
-			this.holeCount = 0;
-		} else {
-			this.holeCount++;
-			// Set to null so that no upcoming segment will be connected over
-			// the hole
-			this.previousSegment = null;
-		}
 	}
 
 	private void holeUpdate() {
-		this.makeHole = !this.generatingBodySegments || !this.makeHole
+		this.makeHole = !this.segmentGenerationEnabled || !this.makeHole
 				&& Math.random() < BodyConstants.CHANCE_OF_HOLE
 				// If a hole was made the previous time, it's often more likely
 				// a hole still will be made.
@@ -277,12 +279,12 @@ public class Body {
 		this.invertedControls = !this.invertedControls;
 	}
 
-	public boolean isGeneratingBodySegments() {
-		return this.generatingBodySegments;
+	public boolean isSegmentGenerationEnabled() {
+		return this.segmentGenerationEnabled;
 	}
 
 	public void setGeneratingBodySegments(boolean generatingBodySegments) {
-		this.generatingBodySegments = generatingBodySegments;
+		this.segmentGenerationEnabled = generatingBodySegments;
 	}
 
 	public void setLastPosition(Position pos) {
