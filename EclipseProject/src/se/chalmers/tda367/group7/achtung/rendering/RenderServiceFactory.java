@@ -5,7 +5,7 @@ public class RenderServiceFactory {
 	private RenderServiceFactory() {
 	}
 
-	public static synchronized RenderService getRenderService() {
+	public static RenderService getRenderService() {
 		return LWJGLRenderService.getInstance();
 	}
 }
