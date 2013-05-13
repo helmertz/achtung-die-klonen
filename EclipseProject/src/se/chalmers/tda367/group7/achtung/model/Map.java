@@ -8,14 +8,12 @@ public class Map {
 	private final float height;
 	private boolean wallsActive = true;
 
-	// Color represents the background color of the world. Could potentially be
-	// changed by powerups
-	private Color color;
+	private Color backgroundColor;
 
 	public Map(float width, float height, Color color) {
 		this.width = width;
 		this.height = height;
-		this.color = color;
+		this.backgroundColor = color;
 	}
 
 	public Map(float width, float height) {
@@ -31,11 +29,11 @@ public class Map {
 	}
 
 	public Color getColor() {
-		return this.color;
+		return this.backgroundColor;
 	}
 
 	public void setColor(Color color) {
-		this.color = color;
+		this.backgroundColor = color;
 	}
 
 	public void setWallsActive(boolean wallsActive) {
