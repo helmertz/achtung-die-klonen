@@ -1,8 +1,8 @@
 package se.chalmers.tda367.group7.achtung.model.powerups;
 
 import se.chalmers.tda367.group7.achtung.model.Body;
-import se.chalmers.tda367.group7.achtung.model.BodyConstants;
 import se.chalmers.tda367.group7.achtung.model.BodyPowerUpEffect;
+import se.chalmers.tda367.group7.achtung.model.Settings;
 import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class TurnPowerUp implements BodyPowerUpEffect {
@@ -21,7 +21,7 @@ public class TurnPowerUp implements BodyPowerUpEffect {
 	public void removeEffect(Body body) {
 		body.setSharpTurns(false);
 		// TODO fix this variable some way.
-		body.setRotationSpeedDeg(BodyConstants.DEFAULT_ROTATION_SPEED);
+		body.setRotationSpeedDeg(Settings.getInstance().getRotationSpeed());
 	}
 
 	@Override
