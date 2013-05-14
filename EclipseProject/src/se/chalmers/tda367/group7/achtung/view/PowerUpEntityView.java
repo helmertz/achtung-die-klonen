@@ -7,9 +7,9 @@ import se.chalmers.tda367.group7.achtung.model.Position;
 import se.chalmers.tda367.group7.achtung.model.PowerUpEntity;
 import se.chalmers.tda367.group7.achtung.rendering.Image;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
+import se.chalmers.tda367.group7.achtung.rendering.RenderServiceFactory;
 
 public class PowerUpEntityView implements View {
-
 	private static Image powerUpBackground;
 
 	private final PowerUpEntity powerUpEntity;
@@ -17,6 +17,32 @@ public class PowerUpEntityView implements View {
 
 	public PowerUpEntityView(PowerUpEntity powerUpEntity) {
 		this.powerUpEntity = powerUpEntity;
+
+		// Asks the render service for an image object
+		String name = this.powerUpEntity.getPowerUpEffect().getName();
+		String fileName = "powerups/" + name + ".png";
+		try {
+			this.image = RenderServiceFactory.getRenderService().getImage(fileName);
+		} catch (IOException e1) {
+			System.err.println(fileName + " was not found");
+
+			// If image not found, load question mark icon instead
+			try {
+				this.image = RenderServiceFactory.getRenderService().getImage("powerups/unknown.png");
+			} catch (IOException e2) {
+				e2.printStackTrace();
+				System.exit(1);
+			}
+		}
+
+		if (powerUpBackground == null) {
+			try {
+				powerUpBackground = RenderServiceFactory.getRenderService().getImage("powerup-background.png");
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.exit(1);
+			}
+		}
 	}
 
 	@Override
@@ -29,35 +55,6 @@ public class PowerUpEntityView implements View {
 			color = Color.RED;
 		} else {
 			color = Color.BLUE;
-		}
-
-		// TODO find a better way of loading these
-		if (powerUpBackground == null) {
-			try {
-				powerUpBackground = renderService
-						.getImage("powerup-background.png");
-			} catch (IOException e) {
-				e.printStackTrace();
-				System.exit(1);
-			}
-		}
-		if (this.image == null) {
-			// TODO check file system if image is there
-			String name = this.powerUpEntity.getPowerUpEffect().getName();
-			String fileName = "powerups/" + name + ".png";
-			try {
-				this.image = renderService.getImage(fileName);
-			} catch (IOException e1) {
-				System.err.println(fileName + " was not found");
-
-				// If image not found, load question mark icon instead
-				try {
-					this.image = renderService.getImage("powerups/unknown.png");
-				} catch (IOException e2) {
-					e2.printStackTrace();
-					System.exit(1);
-				}
-			}
 		}
 
 		powerUpBackground.drawImageCentered(pos.getX(), pos.getY(),
