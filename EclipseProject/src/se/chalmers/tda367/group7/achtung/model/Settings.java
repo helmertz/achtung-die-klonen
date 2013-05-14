@@ -5,7 +5,8 @@ public class Settings {
 	private static final float DEFAULT_WIDTH = 10;
 	private static final float DEFAULT_SPEED = 6;
 	private static final float DEFAULT_ROTATION_SPEED = 6f;
-	private static final double CHANCE_OF_HOLE = 0.015;
+	private static final double DEFAULT_CHANCE_OF_HOLE = 0.015;
+	private static final float DEFAULT_POWER_UP_CHANCE = 0.01f;
 	
 	private static Settings instance;
 
@@ -13,6 +14,7 @@ public class Settings {
 	private float speed;
 	private float rotationSpeed;
 	private double chanceOfHole;
+	private float powerUpChance;
 	
 	private Settings() {
 		// TODO - Load settings from file.
@@ -51,6 +53,14 @@ public class Settings {
 		this.chanceOfHole = chanceOfHole;
 	}
 
+	public float getPowerUpChance() {
+		return powerUpChance;
+	}
+
+	public void setPowerUpChance(float powerUpChance) {
+		this.powerUpChance = powerUpChance;
+	}
+
 	public static synchronized Settings getInstance() {
 		if (instance == null) {
 			instance = new Settings();
@@ -74,6 +84,7 @@ public class Settings {
 		width = DEFAULT_WIDTH;
 		speed = DEFAULT_SPEED;
 		rotationSpeed = DEFAULT_ROTATION_SPEED;
-		chanceOfHole = CHANCE_OF_HOLE;
+		chanceOfHole = DEFAULT_CHANCE_OF_HOLE;
+		powerUpChance = DEFAULT_POWER_UP_CHANCE;
 	}
 }
