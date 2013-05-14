@@ -91,8 +91,6 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 					name);
 			pInfoList.add(pih);
 		}
-
-		GameSetUpHolder gameSetUpHolder = new GameSetUpHolder(pInfoList);
 		
 		Settings settings = Settings.getInstance();
 		settings.setPowerUpChance(powerUpChance);
@@ -102,7 +100,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 //		settings.setChanceOfHole(chanceOfHole);
 //		settings.setRotationSpeed(rotationSpeed);
 
-		this.pcs.firePropertyChange("startPressed", null, gameSetUpHolder);
+		this.pcs.firePropertyChange("startPressed", null, pInfoList);
 	}
 	
 	public void onContinuePress() {
@@ -152,15 +150,9 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		return false;
 	}
 
-	// A couple of help classes for holding game settings before starting it
-	public class GameSetUpHolder {
-		private final List<PlayerInfoHolder> playerInfo;
-
-		public GameSetUpHolder(List<PlayerInfoHolder> playerInfo) {
-			this.playerInfo = playerInfo;
-		}
-	}
-
+	/**
+	 * A class that holds info for players that will be created.
+	 */
 	public class PlayerInfoHolder {
 		private final int leftKey;
 		private final int rightKey;

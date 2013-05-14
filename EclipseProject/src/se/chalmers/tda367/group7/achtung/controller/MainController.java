@@ -3,6 +3,7 @@ package se.chalmers.tda367.group7.achtung.controller;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 
@@ -17,7 +18,6 @@ import se.chalmers.tda367.group7.achtung.input.MouseInputEvent;
 import se.chalmers.tda367.group7.achtung.input.MouseInputListener;
 import se.chalmers.tda367.group7.achtung.menu.CustomInputSystem;
 import se.chalmers.tda367.group7.achtung.menu.MainMenuController;
-import se.chalmers.tda367.group7.achtung.menu.MainMenuController.GameSetUpHolder;
 import se.chalmers.tda367.group7.achtung.menu.MainMenuController.PlayerInfoHolder;
 import se.chalmers.tda367.group7.achtung.model.Game;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
@@ -272,13 +272,13 @@ public class MainController implements PropertyChangeListener,
 		}
 	}
 
-	public void startGame(GameSetUpHolder gameSetup) {
-		this.game = new Game(gameSetup.getPowerUpChance());
+	public void startGame(List<PlayerInfoHolder> pInfoList) {
+		this.game = new Game();
 		this.game.addPropertyChangeListener(this.sound);
 
 		this.gameController = new GameController(this.game);
 
-		for (PlayerInfoHolder pih : gameSetup.getPlayerInfo()) {
+		for (PlayerInfoHolder pih : pInfoList) {
 			this.gameController.addPlayer(pih.getName(), pih.getLeftKey(),
 					pih.getRightKey(), pih.getColor());
 		}
@@ -293,9 +293,9 @@ public class MainController implements PropertyChangeListener,
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().equals("startPressed")) {
-			if (evt.getNewValue() instanceof MainMenuController.GameSetUpHolder) {
-				GameSetUpHolder gameSetup = (GameSetUpHolder) evt.getNewValue();
-				startGame(gameSetup);
+			// TODO - Better check here?
+			if (evt.getNewValue() instanceof List<?>) {
+				startGame((List<PlayerInfoHolder>) evt.getNewValue());
 			}
 		}
 	}

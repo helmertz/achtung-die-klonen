@@ -20,8 +20,8 @@ public class Game {
 	private final PropertyChangeSupport pcs;
 	private final float powerUpChance;
 
-	public Game(float powerUpChance) {
-		this.powerUpChance = powerUpChance;
+	public Game() {
+		this.powerUpChance = Settings.getInstance().getPowerUpChance();
 		this.rounds = new ArrayList<>();
 		this.players = new ArrayList<>();
 		this.map = new Map(1500, 1500);
