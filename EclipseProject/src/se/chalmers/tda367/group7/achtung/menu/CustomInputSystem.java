@@ -1,8 +1,8 @@
 package se.chalmers.tda367.group7.achtung.menu;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Queue;
 
 import se.chalmers.tda367.group7.achtung.input.KeyInputEvent;
 import se.chalmers.tda367.group7.achtung.input.MouseInputEvent;
@@ -16,8 +16,8 @@ import de.lessvoid.nifty.tools.resourceloader.NiftyResourceLoader;
 // Class for controlling which events gets forwarded to nifty
 public class CustomInputSystem implements InputSystem {
 
-	private final List<KeyboardInputEvent> keyEventQueue = new ArrayList<KeyboardInputEvent>();
-	private final List<MouseInputEvent> mouseEventQueue = new ArrayList<MouseInputEvent>();
+	private final Queue<KeyboardInputEvent> keyEventQueue = new ArrayDeque<KeyboardInputEvent>();
+	private final Queue<MouseInputEvent> mouseEventQueue = new ArrayDeque<MouseInputEvent>();
 
 	private final LwjglKeyboardInputEventCreator eventCreator = new LwjglKeyboardInputEventCreator();
 
