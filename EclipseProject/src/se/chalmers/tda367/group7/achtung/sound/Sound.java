@@ -12,6 +12,8 @@ import org.newdawn.slick.util.ResourceLoader;
 
 class Sound implements SoundService {
 
+	private static Sound instance;
+	
 	private Audio powerUpSelf;
 	private Audio powerUpEveryoneElse;
 	private Audio powerUpEveryone;
@@ -21,8 +23,15 @@ class Sound implements SoundService {
 	private float currentPosition;
 	private boolean soundEnabled = true;
 
-	public Sound() {
+	private Sound() {
 		initSounds();
+	}
+	
+	public static synchronized Sound getInstance() {
+		if(instance == null) {
+			instance = new Sound();
+		}
+		return instance;
 	}
 
 	private void initSounds() {
