@@ -26,19 +26,21 @@ public class Body {
 	private boolean makeHole;
 	private int holeCount;
 	private Color color;
+	private Settings settings;
 
 	public enum TurnMode {
 		LEFT, RIGHT, FORWARD
 	}
 
 	public Body(Position position, float rotation) {
+		this.settings = Settings.getInstance();
 		this.dead = false;
 		this.immortal = false;
 		this.sharpTurnsActivated = false;
-		this.width = BodyConstants.DEFAULT_WIDTH;
-		this.speed = BodyConstants.DEFAULT_SPEED;
+		this.width = settings.getWidth();
+		this.speed = settings.getSpeed();
 		this.rotationAngleDeg = rotation;
-		this.rotationSpeedDeg = BodyConstants.DEFAULT_ROTATION_SPEED;
+		this.rotationSpeedDeg = settings.getRotationSpeed();
 		this.segmentGenerationEnabled = true;
 
 		// Width of the body is the same as the diameter of the head.
@@ -108,7 +110,7 @@ public class Body {
 
 	private void holeUpdate() {
 		this.makeHole = !this.segmentGenerationEnabled || !this.makeHole
-				&& Math.random() < BodyConstants.CHANCE_OF_HOLE
+				&& Math.random() < settings.getChanceOfHole()
 				// If a hole was made the previous time, it's often more likely
 				// a hole still will be made.
 				// The subtraction makes it so holes will be longer than the

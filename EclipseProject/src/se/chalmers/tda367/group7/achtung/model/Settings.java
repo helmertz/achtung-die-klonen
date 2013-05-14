@@ -49,7 +49,7 @@ public class Settings {
 		this.chanceOfHole = chanceOfHole;
 	}
 
-	public Settings getInstance() {
+	public static synchronized Settings getInstance() {
 		return new Settings();
 	}
 	
