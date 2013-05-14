@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.lwjgl.input.Keyboard;
+
 import se.chalmers.tda367.group7.achtung.input.KeyInputEvent;
 import se.chalmers.tda367.group7.achtung.input.KeyInputListener;
 import se.chalmers.tda367.group7.achtung.model.Color;
@@ -84,11 +86,12 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 
 			// TODO more checks and show error response
 			if (lKey == null || rKey == null) {
-				continue;
+				lKey = Keyboard.KEY_LEFT;
+				rKey = Keyboard.KEY_RIGHT;
 			}
 
-			PlayerInfoHolder pih = new PlayerInfoHolder(lKey, rKey, Color.RED,
-					name);
+			PlayerInfoHolder pih = new PlayerInfoHolder(lKey, rKey,
+					Color.PLAYER_COLORS[i - 1], name);
 			pInfoList.add(pih);
 		}
 		
