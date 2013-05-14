@@ -16,7 +16,16 @@ public class Color {
 
 	// Used in making lighter or darker versions of a color
 	private static final float CHANGE_CONSTANT = 0.2f;
-
+	
+	public static final Color PLAYER_1 = new Color(0xbb2222);
+	public static final Color PLAYER_2 = new Color(0xbb2222);
+	public static final Color PLAYER_3 = new Color(0xbb2222);
+	public static final Color PLAYER_4 = new Color(0xbb2222);
+	public static final Color PLAYER_5 = new Color(0xbb2222);
+	public static final Color PLAYER_6 = new Color(0xbb2222);
+	public static final Color PLAYER_7 = new Color(0xbb2222);
+	public static final Color PLAYER_8 = new Color(0xbb2222);
+	
 	private final float r;
 	private final float g;
 	private final float b;
