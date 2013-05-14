@@ -22,7 +22,7 @@ public class BodyTest {
 	public void testGetHead() {
 		Head head = this.b.getHead();
 		assertTrue(this.startPosition.equals(head.getPosition()));
-		assertTrue(BodyConstants.DEFAULT_WIDTH == head.getDiameter());
+		assertTrue(Settings.getInstance().getWidth() == head.getDiameter());
 	}
 
 	@Test
@@ -41,7 +41,7 @@ public class BodyTest {
 
 	@Test
 	public void testGetWidth() {
-		assertTrue(this.b.getWidth() == BodyConstants.DEFAULT_WIDTH);
+		assertTrue(this.b.getWidth() == Settings.getInstance().getWidth());
 	}
 
 	@Test
