@@ -10,6 +10,8 @@ public interface SoundService extends PropertyChangeListener {
 	
 	void closeSound();
 	
-	void setSound(boolean sound);
+	void setSoundEffectEnabled(boolean sound);
+	
+	void setMusicEnabled(boolean music);
 
 }

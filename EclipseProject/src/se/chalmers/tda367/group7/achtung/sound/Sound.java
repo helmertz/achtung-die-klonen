@@ -20,8 +20,10 @@ class Sound implements SoundService {
 	private Audio playerDied;
 	private List<Audio> music;
 	private Audio currentMusic;
-	private float currentPosition;
-	private boolean soundEnabled = true;
+	private float currentPosition = 0f;
+	private boolean soundEffectsEnabled = true;
+	private boolean musicEnabled = true;
+	
 
 	private Sound() {
 		initSounds();
@@ -67,7 +69,7 @@ class Sound implements SoundService {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propertyName = evt.getPropertyName();
-		if (this.soundEnabled) {
+		if (this.soundEffectsEnabled) {
 			if (propertyName.equals("PowerUpSELF")) {
 				playSoundEffect(this.powerUpSelf);
 			} else if (propertyName.equals("PowerUpEVERYONE")) {
@@ -76,6 +78,9 @@ class Sound implements SoundService {
 				playSoundEffect(this.powerUpEveryoneElse);
 			} else if (propertyName.equals("PlayerDied")) {
 				playSoundEffect(this.playerDied);
+		}
+
+		if (this.musicEnabled) {	
 			} else if (propertyName.equals("NewRound")) {
 				this.currentMusic = this.music
 						.get((int) (this.music.size() * Math.random()));
@@ -83,6 +88,7 @@ class Sound implements SoundService {
 			} else if (propertyName.equals("RoundOver")) {
 				if (this.currentMusic.isPlaying()) {
 					this.currentMusic.stop();
+					currentMusic = null;
 				}
 			}
 		}
@@ -93,6 +99,7 @@ class Sound implements SoundService {
 		sound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
 
+	@Override
 	public void pauseMusic() {
 		if(currentMusic != null && currentMusic.isPlaying()) {
 		currentPosition = currentMusic.getPosition();
@@ -100,18 +107,29 @@ class Sound implements SoundService {
 		}
 	}
 	
+	@Override
 	public void playMusic() {
-		if(currentMusic != null  && !currentMusic.isPlaying()) {
+		if(currentMusic != null  && !currentMusic.isPlaying() && musicEnabled) {
 			currentMusic.playAsMusic(1.0f, 1.0f, true);
 			currentMusic.setPosition(currentPosition);
 		}
 	}
 
+	@Override
 	public void closeSound() {
 		AL.destroy();
 	}
 
-	public void setSound(boolean sound) {
-		this.soundEnabled = sound;
+	@Override
+	public void setSoundEffectEnabled(boolean sound) {
+		this.soundEffectsEnabled = sound;
+	}
+	
+	@Override
+	public void setMusicEnabled(boolean music) {
+		if(!music) {
+			pauseMusic();
+		}
+		this.musicEnabled = music;
 	}
 }

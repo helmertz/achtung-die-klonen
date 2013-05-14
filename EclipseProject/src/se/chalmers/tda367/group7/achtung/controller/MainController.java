@@ -132,13 +132,14 @@ public class MainController implements PropertyChangeListener,
 			this.inputService.update();
 
 			boolean doLogic = true;
+			
+			this.sound.playMusic();
 
 			// Essentially pauses the game when not in focus
 			if (!this.renderer.isActive()) {
 				doLogic = false;
 				
-				//Not active before pause and unPause methods fixed
-				//sound.pauseMusic();
+				this.sound.pauseMusic();
 
 				// Allow some sleeping to minimize cpu usage
 				try {
@@ -152,6 +153,7 @@ public class MainController implements PropertyChangeListener,
 			if (this.atMenu) {
 				this.nifty.update();
 				doLogic = false;
+				this.sound.pauseMusic();
 				this.nextGameTick = getTickCount();
 			}
 			this.loops = 0;
@@ -239,6 +241,7 @@ public class MainController implements PropertyChangeListener,
 		if (!event.isRepeat() && event.isPressed()
 				&& event.getKey() == Keyboard.KEY_ESCAPE) {
 			setAtMenu(true);
+			this.sound.pauseMusic();
 			return true;
 		}
 		if (this.atMenu) {
