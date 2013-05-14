@@ -13,7 +13,7 @@ import org.newdawn.slick.util.ResourceLoader;
 class Sound implements SoundService {
 
 	private static Sound instance;
-	
+
 	private Audio powerUpSelf;
 	private Audio powerUpEveryoneElse;
 	private Audio powerUpEveryone;
@@ -23,14 +23,13 @@ class Sound implements SoundService {
 	private float currentPosition = 0f;
 	private boolean soundEffectsEnabled = true;
 	private boolean musicEnabled = true;
-	
 
 	private Sound() {
 		initSounds();
 	}
-	
+
 	public static synchronized Sound getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new Sound();
 		}
 		return instance;
@@ -69,6 +68,7 @@ class Sound implements SoundService {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propertyName = evt.getPropertyName();
+
 		if (this.soundEffectsEnabled) {
 			if (propertyName.equals("PowerUpSELF")) {
 				playSoundEffect(this.powerUpSelf);
@@ -78,17 +78,17 @@ class Sound implements SoundService {
 				playSoundEffect(this.powerUpEveryoneElse);
 			} else if (propertyName.equals("PlayerDied")) {
 				playSoundEffect(this.playerDied);
+			}
 		}
 
-		if (this.musicEnabled) {	
-			} else if (propertyName.equals("NewRound")) {
-				this.currentMusic = this.music
-						.get((int) (this.music.size() * Math.random()));
-				this.currentMusic.playAsMusic(1.0f, 1.0f, true);
+		if (this.musicEnabled) {
+			if (propertyName.equals("NewRound")) {
+				this.currentMusic = getRandomMusic();
+				playMusic();
 			} else if (propertyName.equals("RoundOver")) {
 				if (this.currentMusic.isPlaying()) {
 					this.currentMusic.stop();
-					currentMusic = null;
+					this.currentMusic = null;
 				}
 			}
 		}
@@ -99,19 +99,27 @@ class Sound implements SoundService {
 		sound.playAsSoundEffect(1.0f, 1.0f, false);
 	}
 
+	private Audio getRandomMusic() {
+		return this.music.get((int) (this.music.size() * Math.random()));
+	}
+
 	@Override
 	public void pauseMusic() {
-		if(currentMusic != null && currentMusic.isPlaying()) {
-		currentPosition = currentMusic.getPosition();
-		currentMusic.stop();
+		if (this.currentMusic != null && this.currentMusic.isPlaying()) {
+			this.currentPosition = this.currentMusic.getPosition();
+			this.currentMusic.stop();
 		}
 	}
-	
+
 	@Override
 	public void playMusic() {
-		if(currentMusic != null  && !currentMusic.isPlaying() && musicEnabled) {
-			currentMusic.playAsMusic(1.0f, 1.0f, true);
-			currentMusic.setPosition(currentPosition);
+		if (!this.currentMusic.isPlaying() && this.musicEnabled) {
+			if (this.currentMusic == null) {
+				this.currentMusic = getRandomMusic();
+			}
+			this.currentMusic.playAsMusic(1.0f, 1.0f, true);
+			this.currentMusic.setPosition(this.currentPosition);
+			this.currentPosition = 0f;
 		}
 	}
 
@@ -124,10 +132,10 @@ class Sound implements SoundService {
 	public void setSoundEffectEnabled(boolean sound) {
 		this.soundEffectsEnabled = sound;
 	}
-	
+
 	@Override
 	public void setMusicEnabled(boolean music) {
-		if(!music) {
+		if (!music) {
 			pauseMusic();
 		}
 		this.musicEnabled = music;
