@@ -10,6 +10,7 @@ import java.util.Map;
 import se.chalmers.tda367.group7.achtung.input.KeyInputEvent;
 import se.chalmers.tda367.group7.achtung.input.KeyInputListener;
 import se.chalmers.tda367.group7.achtung.model.Color;
+import se.chalmers.tda367.group7.achtung.model.Settings;
 
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.controls.Button;
@@ -91,8 +92,15 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 			pInfoList.add(pih);
 		}
 
-		GameSetUpHolder gameSetUpHolder = new GameSetUpHolder(pInfoList,
-				powerUpChance, 10f, 6f);
+		GameSetUpHolder gameSetUpHolder = new GameSetUpHolder(pInfoList);
+		
+		Settings settings = Settings.getInstance();
+		settings.setPowerUpChance(powerUpChance);
+		// TODO - fix sliders for these settings.
+//		settings.setSpeed(6f);
+//		settings.setWidth(10f);
+//		settings.setChanceOfHole(chanceOfHole);
+//		settings.setRotationSpeed(rotationSpeed);
 
 		this.pcs.firePropertyChange("startPressed", null, gameSetUpHolder);
 	}
@@ -147,32 +155,9 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	// A couple of help classes for holding game settings before starting it
 	public class GameSetUpHolder {
 		private final List<PlayerInfoHolder> playerInfo;
-		private final float powerUpChance;
-		private final float snakeSize;
-		private final float snakeSpeed;
 
-		public GameSetUpHolder(List<PlayerInfoHolder> playerInfo,
-				float powerUpChance, float snakeSize, float snakeSpeed) {
+		public GameSetUpHolder(List<PlayerInfoHolder> playerInfo) {
 			this.playerInfo = playerInfo;
-			this.powerUpChance = powerUpChance;
-			this.snakeSize = snakeSize;
-			this.snakeSpeed = snakeSpeed;
-		}
-
-		public List<PlayerInfoHolder> getPlayerInfo() {
-			return this.playerInfo;
-		}
-
-		public float getPowerUpChance() {
-			return this.powerUpChance;
-		}
-
-		public float getSnakeSize() {
-			return this.snakeSize;
-		}
-
-		public float getSnakeSpeed() {
-			return this.snakeSpeed;
 		}
 	}
 
