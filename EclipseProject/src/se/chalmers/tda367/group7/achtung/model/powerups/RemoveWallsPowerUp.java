@@ -8,15 +8,21 @@ public class RemoveWallsPowerUp implements RoundPowerUpEffect {
 	private static final String NAME = "wall-remove";
 	private static final int DURATION = 150;
 	private static final boolean STACKABLE = false;
+	private boolean powerUpActiveAlready = false;
 
 	@Override
 	public void applyEffect(Round round) {
+		if(!round.isWallsActive()) {
+			powerUpActiveAlready = true;
+		}
 		round.setWallsActive(false);
 	}
 
 	@Override
 	public void removeEffect(Round round) {
-		round.setWallsActive(true);
+		if(!powerUpActiveAlready) {
+			round.setWallsActive(true);
+		}
 	}
 
 	@Override

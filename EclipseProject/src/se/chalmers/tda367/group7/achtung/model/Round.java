@@ -242,6 +242,10 @@ public class Round {
 		this.map.setWallsActive(wallsActive);
 		this.pcs.firePropertyChange("Map", false, true);
 	}
+	
+	public boolean isWallsActive() {
+		return this.wallsAreActive;
+	}
 
 	public void setPowerUpChance(float powerUpChance) {
 		this.powerUpChance = powerUpChance;
