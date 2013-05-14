@@ -6,6 +6,8 @@ public class Settings {
 	private static final float DEFAULT_SPEED = 6;
 	private static final float DEFAULT_ROTATION_SPEED = 6f;
 	private static final double CHANCE_OF_HOLE = 0.015;
+	
+	private static Settings instance;
 
 	private float width;
 	private float speed;
@@ -50,7 +52,10 @@ public class Settings {
 	}
 
 	public static synchronized Settings getInstance() {
-		return new Settings();
+		if (instance == null) {
+			instance = new Settings();
+		}
+		return instance;
 	}
 	
 	/**
