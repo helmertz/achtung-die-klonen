@@ -28,8 +28,10 @@
 						</panel>
 					</panel>
 					<panel width="80%" align="center" height="23" childLayout="horizontal">
+						<panel width="23" valign="center" height="23" backgroundColor="#222222" childLayout="center">
+							<panel width="21" align="center" valign="center" height="21" backgroundColor="#3333ff"/>
+						</panel>
 						<control name="checkbox" checked="true" id="cbp1"/>
-						<panel width="22" valign="center" height="22" backgroundColor="#3333ff"/>
 						<control name="textfield" text="Player 1" align="center" id="namep1"/>
 						<control name="button" label="(L)" id="keylp1" width="60">
 							<interact onClick="onKeySet(keylp1)"/>
@@ -39,8 +41,10 @@
 						</control>
 					</panel>
 					<panel width="80%" align="center" height="23" childLayout="horizontal">
+						<panel width="23" valign="center" height="23" backgroundColor="#222222" childLayout="center">
+							<panel width="21" align="center" valign="center" height="21" backgroundColor="#00dd00"/>
+						</panel>
 						<control name="checkbox" checked="true" id="cbp2"/>
-						<panel width="22" valign="center" height="22" backgroundColor="#00dd00"/>
 						<control name="textfield" text="Player 2" align="center" id="namep2"/>
 						<control name="button" label="(L)" id="keylp2" width="60">
 							<interact onClick="onKeySet(keylp2)"/>
@@ -50,8 +54,10 @@
 						</control>
 					</panel>
 					<panel width="80%" align="center" height="23" childLayout="horizontal">
+						<panel width="23" valign="center" height="23" backgroundColor="#222222" childLayout="center">
+							<panel width="21" align="center" valign="center" height="21" backgroundColor="#ff2222"/>
+						</panel>
 						<control name="checkbox" checked="false" id="cbp3"/>
-						<panel width="22" valign="center" height="22" backgroundColor="#ff2222"/>
 						<control name="textfield" text="Player 3" align="center" id="namep3"/>
 						<control name="button" label="(L)" id="keylp3" width="60">
 							<interact onClick="onKeySet(keylp3)"/>
@@ -61,8 +67,10 @@
 						</control>
 					</panel>
 					<panel width="80%" align="center" height="23" childLayout="horizontal">
+						<panel width="23" valign="center" height="23" backgroundColor="#222222" childLayout="center">
+							<panel width="21" align="center" valign="center" height="21" backgroundColor="#ffdf22"/>
+						</panel>
 						<control name="checkbox" checked="false" id="cbp4"/>
-						<panel width="22" valign="center" height="22" backgroundColor="#ffdf22"/>
 						<control name="textfield" text="Player 4" align="center" id="namep4"/>
 						<control name="button" label="(L)" id="keylp4" width="60">
 							<interact onClick="onKeySet(keylp4)"/>
@@ -72,8 +80,10 @@
 						</control>
 					</panel>
 					<panel width="80%" align="center" height="23" childLayout="horizontal">
+						<panel width="23" valign="center" height="23" backgroundColor="#222222" childLayout="center">
+							<panel width="21" align="center" valign="center" height="21" backgroundColor="#5ac1ed"/>
+						</panel>
 						<control name="checkbox" checked="false" id="cbp5"/>
-						<panel width="22" valign="center" height="22" backgroundColor="#5ac1ed"/>
 						<control name="textfield" text="Player 5" align="center" id="namep5"/>
 						<control name="button" label="(L)" id="keylp5" width="60">
 							<interact onClick="onKeySet(keylp5)"/>
@@ -83,8 +93,10 @@
 						</control>
 					</panel>
 					<panel width="80%" align="center" height="23" childLayout="horizontal">
+						<panel width="23" valign="center" height="23" backgroundColor="#222222" childLayout="center">
+							<panel width="21" align="center" valign="center" height="21" backgroundColor="#f9a2c5"/>
+						</panel>
 						<control name="checkbox" checked="false" id="cbp6"/>
-						<panel width="22" valign="center" height="22" backgroundColor="#f9a2c5"/>
 						<control name="textfield" text="Player 6" align="center" id="namep6"/>
 						<control name="button" label="(L)" id="keylp6" width="60">
 							<interact onClick="onKeySet(keylp6)"/>
@@ -94,8 +106,10 @@
 						</control>
 					</panel>
 					<panel width="80%" align="center" height="23" childLayout="horizontal">
+						<panel width="23" valign="center" height="23" backgroundColor="#222222" childLayout="center">
+							<panel width="21" align="center" valign="center" height="21" backgroundColor="#ff7800"/>
+						</panel>
 						<control name="checkbox" checked="false" id="cbp7"/>
-						<panel width="22" valign="center" height="22" backgroundColor="#ff7800"/>
 						<control name="textfield" text="Player 7" align="center" id="namep7"/>
 						<control name="button" label="(L)" id="keylp7" width="60">
 							<interact onClick="onKeySet(keylp7)"/>
@@ -105,8 +119,10 @@
 						</control>
 					</panel>
 					<panel width="80%" align="center" height="23" childLayout="horizontal">
+						<panel width="23" valign="center" height="23" backgroundColor="#222222" childLayout="center">
+							<panel width="21" align="center" valign="center" height="21" backgroundColor="#bb22bb"/>
+						</panel>
 						<control name="checkbox" checked="false" id="cbp8"/>
-						<panel width="22" valign="center" height="22" backgroundColor="#bb22bb"/>
 						<control name="textfield" text="Player 8" align="center" id="namep8"/>
 						<control name="button" label="(L)" id="keylp8" width="60">
 							<interact onClick="onKeySet(keylp8)"/>
