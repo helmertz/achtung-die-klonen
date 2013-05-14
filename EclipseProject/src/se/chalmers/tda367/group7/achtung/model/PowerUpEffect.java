@@ -1,5 +1,7 @@
 package se.chalmers.tda367.group7.achtung.model;
 
+import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
+
 public interface PowerUpEffect {
 
 	/**
@@ -20,5 +22,14 @@ public interface PowerUpEffect {
 	 * 
 	 */
 	boolean isStackable();
+	
+	/**
+	 * Returns true if the type is allowed for the particular power up
+	 * 
+	 * @param type
+	 *            - who the power up affects
+	 * @return true - if type is allowed
+	 */
+	Type[] getAllowedTypes();
 
 }

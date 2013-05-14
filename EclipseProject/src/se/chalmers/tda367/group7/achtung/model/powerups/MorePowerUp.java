@@ -2,6 +2,7 @@ package se.chalmers.tda367.group7.achtung.model.powerups;
 
 import se.chalmers.tda367.group7.achtung.model.Round;
 import se.chalmers.tda367.group7.achtung.model.RoundPowerUpEffect;
+import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class MorePowerUp implements RoundPowerUpEffect {
 
@@ -35,4 +36,8 @@ public class MorePowerUp implements RoundPowerUpEffect {
 		return STACKABLE;
 	}
 
+	@Override
+	public Type[] getAllowedTypes() {
+		return new Type[] {Type.EVERYONE};
+	}
 }

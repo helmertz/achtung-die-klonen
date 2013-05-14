@@ -12,6 +12,7 @@ public class Color {
 	public static final Color BLUE = new Color(0f, 0f, 1f);
 	public static final Color GRAY = new Color(0.5f, 0.5f, 0.5f);
 	public static final Color DARK_GRAY = new Color(0.25f, 0.25f, 0.25f);
+	public static final Color YELLOW = new Color(1.0f, 1.0f, 0f);
 
 	// Used in making lighter or darker versions of a color
 	private static final float CHANGE_CONSTANT = 0.2f;

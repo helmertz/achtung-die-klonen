@@ -2,25 +2,25 @@ package se.chalmers.tda367.group7.achtung.model.powerups;
 
 import se.chalmers.tda367.group7.achtung.model.Round;
 import se.chalmers.tda367.group7.achtung.model.RoundPowerUpEffect;
+import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 
 public class RemoveWallsPowerUp implements RoundPowerUpEffect {
 
 	private static final String NAME = "wall-remove";
 	private static final int DURATION = 150;
 	private static final boolean STACKABLE = false;
-	private boolean powerUpActiveAlready = false;
+	private int stacks = 0;
 
 	@Override
 	public void applyEffect(Round round) {
-		if(!round.isWallsActive()) {
-			powerUpActiveAlready = true;
-		}
+		stacks++;
 		round.setWallsActive(false);
 	}
 
 	@Override
 	public void removeEffect(Round round) {
-		if(!powerUpActiveAlready) {
+		stacks--;
+		if(stacks == 0){
 			round.setWallsActive(true);
 		}
 	}
@@ -38,6 +38,11 @@ public class RemoveWallsPowerUp implements RoundPowerUpEffect {
 	@Override
 	public boolean isStackable() {
 		return STACKABLE;
+	}
+	
+	@Override
+	public Type[] getAllowedTypes() {
+		return new Type[] {Type.EVERYONE};
 	}
 
 }

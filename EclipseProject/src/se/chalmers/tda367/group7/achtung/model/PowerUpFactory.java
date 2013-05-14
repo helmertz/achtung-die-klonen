@@ -29,21 +29,8 @@ public class PowerUpFactory {
 		float maxY = map.getHeight() - diameter;
 
 		Position randPos = Position.getRandomPosition(minX, minY, maxX, maxY);
-		
-		Type type = null;
-		
-		if (effect instanceof RoundPowerUpEffect) {
-			type = Type.EVERYONE;
-		}
-		if (effect instanceof BodyPowerUpEffect) {
-			Type[] allowedTypes = ( (BodyPowerUpEffect) effect).getAllowedTypes();
-			type = allowedTypes[(int) (allowedTypes.length * Math.random())];
-		}
-		
-		//Emergency Solution
-		if (type == null) {
-			type = Type.EVERYONE;
-		}
+
+		Type type = effect.getAllowedTypes()[(int) (effect.getAllowedTypes().length * Math.random())];
 
 		PowerUpEntity entity = new PowerUpEntity(randPos,
 				PowerUpEntity.getDefaultDiameter(), effect, type);
