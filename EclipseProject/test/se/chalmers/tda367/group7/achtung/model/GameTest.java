@@ -14,7 +14,7 @@ public class GameTest {
 	
 	@Before
 	public void createGame() {
-		game = new Game(0);
+		game = new Game();
 	}
 	
 	@Test
