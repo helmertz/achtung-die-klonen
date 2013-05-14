@@ -11,14 +11,14 @@ import org.junit.Test;
 public class PositionTest {
 
 	private Round round;
-	private float worldWidth;
-	private float worldHeight;
+	private float mapWidth;
+	private float mapHeight;
 
 	@Before
 	public void setUpRound() {
-		this.round = new Round(new Map(1000, 1000), null, 0);
-		this.worldHeight = this.round.getMap().getHeight();
-		this.worldWidth = this.round.getMap().getWidth();
+		this.round = new Round(new Map(1000, 1000), new ArrayList<Player>(), 0);
+		this.mapWidth = this.round.getMap().getWidth();
+		this.mapHeight = this.round.getMap().getHeight();
 	}
 
 	// Currently only tests x position, but y is generated
@@ -35,12 +35,12 @@ public class PositionTest {
 
 		// Generate a bunch of positions
 		for (int i = 0; i < testIterations; i++) {
-			randomPositions.add(Position.getRandomPosition(0, this.worldWidth,
-					0, this.worldHeight));
+			randomPositions.add(Position.getRandomPosition(0, 0,
+				this.mapWidth, this.mapHeight));
 		}
 
 		int[] amountPositionsInSplits = new int[segmentSplits];
-		double segmentWidth = this.worldWidth / segmentSplits;
+		double segmentWidth = this.mapWidth / segmentSplits;
 
 		// Count the amount of positions in each segment
 		for (Position pos : randomPositions) {
