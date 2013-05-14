@@ -101,6 +101,7 @@ public class Round {
 			this.winner = lastAlive;
 
 			// Kills to prevent rendering problem
+			lastAlive.getBody().setImmortal(false);
 			lastAlive.getBody().kill();
 
 			this.pcs.firePropertyChange("RoundOver", false, true);
