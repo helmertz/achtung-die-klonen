@@ -45,16 +45,14 @@ public class CollisionHelper {
 			// Calculate number of segments not to test collision with.
 			// When sharp turns are enabled more segments has to be ignored
 			// depending on the width of the body.
-			int NumSegmentIgnore = (int) Math.round((lastSeg.getWidth()/player.getBody().getSpeed()));
+			int numSegmentIgnore = (int) Math.round((lastSeg.getWidth()/player.getBody().getSpeed()));
 
-			for (int i = 0; i < NumSegmentIgnore && i < NumBodySegments - 1; i++) {
+			for (int i = 0; i < numSegmentIgnore && i < NumBodySegments - 1; i++) {
 				segsBeforeLast.add(playerSegments.get(NumBodySegments - (2 + i)));
 			}
 			
 //			segBeforeLast = playerSegments.get(playerSegments.size() - 2);
 		}
-
-		System.out.println(segsBeforeLast.size());
 		
 		return hasCollidedWithSegment(lastSeg, segsBeforeLast);
 	}
