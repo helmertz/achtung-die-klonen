@@ -10,7 +10,7 @@
 					<control name="button" label="Continue" align="center">
 						<interact onClick="onContinuePress()"/>
 					</control>
-					<control name="button" label="Start" align="center">
+					<control name="button" label="New Game" align="center">
 						<interact onClick="onStartPress()"/>
 					</control>
 					<control name="label" width ="100%" id="errtxt" text=""/>
