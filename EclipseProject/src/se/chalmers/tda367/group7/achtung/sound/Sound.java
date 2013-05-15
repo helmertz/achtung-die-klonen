@@ -81,7 +81,6 @@ class Sound implements SoundService {
 			this.currentMusic = getRandomMusic();
 			playMusic();
 		} else if (propertyName.equals("RoundOver")) {
-			System.out.println(propertyName);
 			if (this.currentMusic != null && this.currentMusic.isPlaying()) {
 				this.currentMusic.stop();
 			}
