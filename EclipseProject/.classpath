@@ -25,6 +25,8 @@
 	<classpathentry kind="lib" path="lib/xpp3-1.1.4c.jar"/>
 	<classpathentry kind="lib" path="lib/nifty-style-black-1.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/nifty-default-controls-1.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/jogg-0.0.7.jar"/>
+	<classpathentry kind="lib" path="lib/jorbis-0.0.15.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="src" path="res"/>
 	<classpathentry kind="lib" path="lib/PNGDecoder.jar"/>
@@ -33,7 +35,5 @@
 			<attribute name="javadoc_location" value="http://www.slick2d.org/javadoc/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Lucas/Downloads/jorbis-0.0.15.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Lucas/Downloads/jogg-0.0.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
