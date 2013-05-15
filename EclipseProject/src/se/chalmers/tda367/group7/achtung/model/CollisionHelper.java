@@ -2,6 +2,7 @@ package se.chalmers.tda367.group7.achtung.model;
 
 import java.awt.Polygon;
 import java.awt.geom.Line2D;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CollisionHelper {
@@ -14,7 +15,7 @@ public class CollisionHelper {
 		this.map = map;
 	}
 
-	boolean hasCollidedWithPowerUp(Player player, PowerUpEntity powerUp) {
+	public boolean hasCollidedWithPowerUp(Player player, PowerUpEntity powerUp) {
 		Head head = player.getBody().getHead();
 
 		float headDiam = player.getBody().getWidth();
@@ -24,7 +25,7 @@ public class CollisionHelper {
 				+ (headDiam / 2);
 	}
 
-	boolean hasCollidedWithOthers(Player player) {
+	public boolean hasCollidedWithOthers(Player player) {
 		Body currentBody = player.getBody();
 
 		// Create coordinates for the last bodysegment
@@ -37,12 +38,25 @@ public class CollisionHelper {
 
 		BodySegment lastSeg = playerSegments.get(playerSegments.size() - 1);
 
-		BodySegment segBeforeLast = null;
-		if (playerSegments.size() > 1) {
-			segBeforeLast = playerSegments.get(playerSegments.size() - 2);
+		int NumBodySegments = playerSegments.size();
+		List<BodySegment> segsBeforeLast = new ArrayList<BodySegment>();
+		if (NumBodySegments > 1) {
+			
+			// Calculate number of segments not to test collision with.
+			// When sharp turns are enabled more segments has to be ignored
+			// depending on the width of the body.
+			int NumSegmentIgnore = (int) Math.round((lastSeg.getWidth()/player.getBody().getSpeed()));
+
+			for (int i = 0; i < NumSegmentIgnore && i < NumBodySegments - 1; i++) {
+				segsBeforeLast.add(playerSegments.get(NumBodySegments - (2 + i)));
+			}
+			
+//			segBeforeLast = playerSegments.get(playerSegments.size() - 2);
 		}
 
-		return hasCollidedWithSegment(lastSeg, segBeforeLast);
+		System.out.println(segsBeforeLast.size());
+		
+		return hasCollidedWithSegment(lastSeg, segsBeforeLast);
 	}
 
 	// TODO: this is called from the method above, which should return
@@ -92,7 +106,7 @@ public class CollisionHelper {
 	}
 
 	private boolean hasCollidedWithSegment(BodySegment lastSeg,
-			BodySegment segBeforeLast) {
+			List<BodySegment> segsBeforeLast) {
 		// Loop through all other players
 		for (Player otherPlayer : this.activePlayers) {
 
@@ -105,7 +119,7 @@ public class CollisionHelper {
 			for (BodySegment seg : otherBodySegments) {
 
 				// Allows collision with itself and the one before
-				if (lastSeg == seg || segBeforeLast == seg) {
+				if (lastSeg == seg || segsBeforeLast.contains(seg)) {
 					continue;
 				}
 
