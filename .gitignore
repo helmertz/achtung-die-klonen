@@ -6,12 +6,7 @@ bin
 ###################
 *.com
 *.class
-*.dll
 *.exe
-*.o
-*.so
-*.dylib
-*.jnilib
 
 # Packages #
 ############
@@ -21,7 +16,6 @@ bin
 *.dmg
 *.gz
 *.iso
-*.jar
 *.rar
 *.tar
 *.zip

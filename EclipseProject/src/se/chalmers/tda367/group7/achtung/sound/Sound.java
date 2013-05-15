@@ -40,25 +40,25 @@ class Sound implements SoundService {
 		try {
 
 			this.powerUpSelf = AudioLoader.getAudio("WAV", ResourceLoader
-					.getResourceAsStream("res/sounds/powerup4.wav"));
+					.getResourceAsStream("sounds/powerup4.wav"));
 
 			this.powerUpEveryoneElse = AudioLoader.getAudio("WAV",
 					ResourceLoader
-							.getResourceAsStream("res/sounds/powerup2.wav"));
+							.getResourceAsStream("sounds/powerup2.wav"));
 
 			this.powerUpEveryone = AudioLoader.getAudio("WAV", ResourceLoader
-					.getResourceAsStream("res/sounds/powerup3.wav"));
+					.getResourceAsStream("sounds/powerup3.wav"));
 
 			this.playerDied = AudioLoader.getAudio("WAV", ResourceLoader
-					.getResourceAsStream("res/sounds/playerdies.wav"));
+					.getResourceAsStream("sounds/playerdies.wav"));
 
 			this.music = new ArrayList<Audio>();
 			this.music
 					.add(AudioLoader.getAudio("WAV", ResourceLoader
-							.getResourceAsStream("res/sounds/music.wav")));
+							.getResourceAsStream("sounds/music.wav")));
 			this.music
 					.add(AudioLoader.getAudio("WAV", ResourceLoader
-							.getResourceAsStream("res/sounds/music2.wav")));
+							.getResourceAsStream("sounds/music2.wav")));
 
 		} catch (IOException e) {
 			e.printStackTrace();
