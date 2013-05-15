@@ -17,6 +17,7 @@ import se.chalmers.tda367.group7.achtung.model.Settings;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.controls.Button;
 import de.lessvoid.nifty.controls.CheckBox;
+import de.lessvoid.nifty.controls.Label;
 import de.lessvoid.nifty.controls.Slider;
 import de.lessvoid.nifty.controls.TextField;
 import de.lessvoid.nifty.screen.Screen;
@@ -28,6 +29,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	private Nifty nifty;
 	private boolean handleKeyIn;
 	private Button element;
+	private Label errorLabel;
 
 	private final Map<Button, Integer> buttonKeyMap = new HashMap<Button, Integer>();
 
@@ -37,6 +39,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	public void bind(Nifty nifty, Screen screen) {
 		this.nifty = nifty;
 		this.screen = screen;
+		this.errorLabel = this.screen.findNiftyControl("errtxt", Label.class);
 	}
 
 	@Override
@@ -60,15 +63,18 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	public void onStartPress() {
 		Slider pu = this.screen.findNiftyControl("puslider", Slider.class);
 
-		// TODO Allow 100? Do something logarithmic?
-		float powerUpChance = pu.getValue() / 100;
-
+		// To the left is 0 percent chance, middle little under 1, right 100% 
+		float powerUpChance = (float) Math.pow(pu.getValue() / 100, 7);
+		System.out.println(powerUpChance);
+		int count = 0;
 		List<PlayerInfoHolder> pInfoList = new ArrayList<PlayerInfoHolder>();
 		for (int i = 1; i <= 8; i++) {
 			CheckBox cb = this.screen.findNiftyControl("cbp" + i,
 					CheckBox.class);
 
-			if (!cb.isChecked()) {
+			if (cb.isChecked()) {
+				count++;
+			} else {
 				continue;
 			}
 
@@ -84,30 +90,48 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 			Integer lKey = this.buttonKeyMap.get(lButton);
 			Integer rKey = this.buttonKeyMap.get(rButton);
 
-			// TODO more checks and show error response
+			// TODO more checks
 			if (lKey == null || rKey == null) {
-				lKey = Keyboard.KEY_LEFT;
-				rKey = Keyboard.KEY_RIGHT;
+				// Not a pretty way to set default keys. Possibly not store in
+				// Map as now.
+				if (i == 1) {
+					lKey = Keyboard.KEY_LEFT;
+					rKey = Keyboard.KEY_RIGHT;
+				} else if (i == 2) {
+					lKey = Keyboard.KEY_A;
+					rKey = Keyboard.KEY_D;
+				} else {
+					this.errorLabel.setText("Keys not set or invalid for "
+							+ name);
+					return;
+				}
 			}
 
 			PlayerInfoHolder pih = new PlayerInfoHolder(lKey, rKey,
 					Color.PLAYER_COLORS[i - 1], name);
 			pInfoList.add(pih);
 		}
-		
+		if (count < 2) {
+			this.errorLabel.setText("Too few players");
+			return;
+		}
+
+		// Clears previous message
+		this.errorLabel.setText("");
+
 		Settings settings = Settings.getInstance();
 		settings.setPowerUpChance(powerUpChance);
 		// TODO - fix sliders for these settings.
-//		settings.setSpeed(6f);
-//		settings.setWidth(10f);
-//		settings.setChanceOfHole(chanceOfHole);
-//		settings.setRotationSpeed(rotationSpeed);
+		// settings.setSpeed(6f);
+		// settings.setWidth(10f);
+		// settings.setChanceOfHole(chanceOfHole);
+		// settings.setRotationSpeed(rotationSpeed);
 
 		this.pcs.firePropertyChange("startPressed", null, pInfoList);
 	}
-	
+
 	public void onContinuePress() {
-		
+
 	}
 
 	public void onKeySet(String elementID) {
@@ -156,7 +180,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	/**
 	 * A class that holds info for players that will be created.
 	 */
-	public class PlayerInfoHolder {
+	public static class PlayerInfoHolder {
 		private final int leftKey;
 		private final int rightKey;
 		private final Color color;
