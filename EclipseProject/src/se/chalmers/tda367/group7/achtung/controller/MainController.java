@@ -191,7 +191,6 @@ public class MainController implements PropertyChangeListener,
 						/ (double) deltaDebug;
 				this.fpsString = "FPS: "
 						+ String.format(Locale.US, "%.2f", fps);
-				System.out.println(this.fpsString);
 				this.dbgFrameCounter = 0;
 
 				// Calculate and print average game logic (tick) rate
@@ -199,7 +198,6 @@ public class MainController implements PropertyChangeListener,
 						/ (double) deltaDebug;
 				this.tpsString = "TPS: "
 						+ String.format(Locale.US, "%.2f", logicRate);
-				System.out.println(this.tpsString);
 				this.dbgGameTickCounter = 0;
 			}
 		}
