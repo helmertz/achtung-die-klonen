@@ -33,5 +33,7 @@
 			<attribute name="javadoc_location" value="http://www.slick2d.org/javadoc/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Lucas/Downloads/jorbis-0.0.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Lucas/Downloads/jogg-0.0.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

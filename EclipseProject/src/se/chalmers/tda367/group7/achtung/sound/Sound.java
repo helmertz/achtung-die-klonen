@@ -39,26 +39,26 @@ class Sound implements SoundService {
 
 		try {
 
-			this.powerUpSelf = AudioLoader.getAudio("WAV", ResourceLoader
-					.getResourceAsStream("sounds/powerup4.wav"));
+			this.powerUpSelf = AudioLoader.getAudio("WAV",
+					ResourceLoader.getResourceAsStream("sounds/powerup4.wav"));
 
 			this.powerUpEveryoneElse = AudioLoader.getAudio("WAV",
-					ResourceLoader
-							.getResourceAsStream("sounds/powerup2.wav"));
+					ResourceLoader.getResourceAsStream("sounds/powerup2.wav"));
 
-			this.powerUpEveryone = AudioLoader.getAudio("WAV", ResourceLoader
-					.getResourceAsStream("sounds/powerup3.wav"));
+			this.powerUpEveryone = AudioLoader.getAudio("WAV",
+					ResourceLoader.getResourceAsStream("sounds/powerup3.wav"));
 
-			this.playerDied = AudioLoader.getAudio("WAV", ResourceLoader
-					.getResourceAsStream("sounds/playerdies.wav"));
+			this.playerDied = AudioLoader
+					.getAudio("WAV", ResourceLoader
+							.getResourceAsStream("sounds/playerdies.wav"));
 
 			this.music = new ArrayList<Audio>();
 			this.music
-					.add(AudioLoader.getAudio("WAV", ResourceLoader
-							.getResourceAsStream("sounds/music.wav")));
+					.add(AudioLoader.getAudio("OGG", ResourceLoader
+							.getResourceAsStream("res/sounds/music.ogg")));
 			this.music
-					.add(AudioLoader.getAudio("WAV", ResourceLoader
-							.getResourceAsStream("sounds/music2.wav")));
+					.add(AudioLoader.getAudio("OGG", ResourceLoader
+							.getResourceAsStream("res/sounds/music2.ogg")));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -69,37 +69,34 @@ class Sound implements SoundService {
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propertyName = evt.getPropertyName();
 
-		if (this.soundEffectsEnabled) {
-			if (propertyName.equals("PowerUpSELF")) {
-				playSoundEffect(this.powerUpSelf);
-			} else if (propertyName.equals("PowerUpEVERYONE")) {
-				playSoundEffect(this.powerUpEveryone);
-			} else if (propertyName.equals("PowerUpEVERYONE_ELSE")) {
-				playSoundEffect(this.powerUpEveryoneElse);
-			} else if (propertyName.equals("PlayerDied")) {
-				playSoundEffect(this.playerDied);
-			}
-		}
-
-		if (this.musicEnabled) {
-			if (propertyName.equals("NewRound")) {
-				this.currentMusic = getRandomMusic();
-				playMusic();
-			} else if (propertyName.equals("RoundOver")) {
-				if (this.currentMusic.isPlaying()) {
-					this.currentMusic.stop();
-					this.currentMusic = null;
-				}
+		if (propertyName.equals("PowerUpSELF")) {
+			playSoundEffect(this.powerUpSelf);
+		} else if (propertyName.equals("PowerUpEVERYONE")) {
+			playSoundEffect(this.powerUpEveryone);
+		} else if (propertyName.equals("PowerUpEVERYONE_ELSE")) {
+			playSoundEffect(this.powerUpEveryoneElse);
+		} else if (propertyName.equals("PlayerDied")) {
+			playSoundEffect(this.playerDied);
+		} else if (propertyName.equals("NewRound")) {
+			this.currentMusic = getRandomMusic();
+			playMusic();
+		} else if (propertyName.equals("RoundOver")) {
+			System.out.println(propertyName);
+			if (this.currentMusic != null && this.currentMusic.isPlaying()) {
+				this.currentMusic.stop();
 			}
 		}
 
 	}
 
 	private void playSoundEffect(Audio sound) {
-		sound.playAsSoundEffect(1.0f, 1.0f, false);
+		if (this.soundEffectsEnabled) {
+			sound.playAsSoundEffect(1.0f, 1.0f, false);
+		}
 	}
 
 	private Audio getRandomMusic() {
+		this.currentPosition = 0f;
 		return this.music.get((int) (this.music.size() * Math.random()));
 	}
 
@@ -113,13 +110,13 @@ class Sound implements SoundService {
 
 	@Override
 	public void playMusic() {
+		if (this.currentMusic == null) {
+			this.currentMusic = getRandomMusic();
+		}
 		if (!this.currentMusic.isPlaying() && this.musicEnabled) {
-			if (this.currentMusic == null) {
-				this.currentMusic = getRandomMusic();
-			}
+
 			this.currentMusic.playAsMusic(1.0f, 1.0f, true);
 			this.currentMusic.setPosition(this.currentPosition);
-			this.currentPosition = 0f;
 		}
 	}
 

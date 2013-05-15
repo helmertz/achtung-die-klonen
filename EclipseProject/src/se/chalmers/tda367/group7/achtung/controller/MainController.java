@@ -133,8 +133,6 @@ public class MainController implements PropertyChangeListener,
 
 			boolean doLogic = true;
 			
-//			this.sound.playMusic();
-
 			// Essentially pauses the game when not in focus
 			if (!this.renderer.isActive()) {
 				doLogic = false;

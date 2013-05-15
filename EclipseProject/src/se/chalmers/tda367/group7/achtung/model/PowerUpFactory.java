@@ -33,7 +33,7 @@ public class PowerUpFactory {
 		Type type = effect.getAllowedTypes()[(int) (effect.getAllowedTypes().length * Math.random())];
 
 		PowerUpEntity entity = new PowerUpEntity(randPos,
-				PowerUpEntity.getDefaultDiameter(), effect, type);
+				diameter, effect, type);
 		return entity;
 	}
 }
