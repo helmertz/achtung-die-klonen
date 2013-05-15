@@ -55,10 +55,10 @@ class Sound implements SoundService {
 			this.music = new ArrayList<Audio>();
 			this.music
 					.add(AudioLoader.getAudio("OGG", ResourceLoader
-							.getResourceAsStream("res/sounds/music.ogg")));
+							.getResourceAsStream("sounds/music.ogg")));
 			this.music
 					.add(AudioLoader.getAudio("OGG", ResourceLoader
-							.getResourceAsStream("res/sounds/music2.ogg")));
+							.getResourceAsStream("sounds/music2.ogg")));
 
 		} catch (IOException e) {
 			e.printStackTrace();
