@@ -81,35 +81,41 @@ public class Round {
 	}
 
 	private void updatePlayers() {
-		// Used for checking who won, could probably be done better
-		Player lastAlive = null;
-		for (Player player : this.players) {
-			player.update();
-			if (player.getBody().isDead()) {
-				continue;
-			}
-			handleCollisions(player);
+		for (Player p : this.players) {
+			if (!p.getBody().isDead()) {
+				// Updates movement only
+				p.update();
 
-			// Allows null to prevent problem with remaining players dying at
-			// the same time
-			if (lastAlive == null || !player.getBody().isDead()) {
-				lastAlive = player;
+				// Checks for collisions, kills and distributes points
+				handleCollisions(p);
+
+				// Prevent continuing and killing the last player here
+				if (isOnePlayerLeft()) {
+					break;
+				}
 			}
 		}
-
+		// Goes through the players to find who won
 		if (isOnePlayerLeft()) {
-			this.winner = lastAlive;
+			for (Player p : this.players) {
+				if (!p.getBody().isDead()) {
+					this.winner = p;
 
-			// Kills to prevent rendering problem
-			lastAlive.getBody().setImmortal(false);
-			lastAlive.getBody().kill();
+					// Kills to prevent rendering problem
+					p.getBody().setImmortal(false);
+					p.getBody().kill();
+					this.deadPlayers++;
 
-			this.pcs.firePropertyChange("RoundOver", false, true);
+					this.pcs.firePropertyChange("RoundOver", false, true);
+					break;
+				}
+			}
 		}
 	}
 
 	private void handleCollisions(Player player) {
-		if (this.collisionHelper.hasCollidedWithOthers(player)) {
+		if (!player.getBody().isImmortal()
+				&& this.collisionHelper.hasCollidedWithOthers(player)) {
 			killPlayer(player);
 		} else if (this.collisionHelper.isPlayerOutOfBounds(player)) {
 			if (this.wallsAreActive) {
@@ -155,7 +161,7 @@ public class Round {
 	}
 
 	private boolean isOnePlayerLeft() {
-		return this.players.size() - this.deadPlayers < 2;
+		return this.deadPlayers == this.players.size() - 1;
 	}
 
 	private void distributePowerUp(Player pickedUpByPlayer,
@@ -211,7 +217,7 @@ public class Round {
 	 * @return true if there are players still alive
 	 */
 	public boolean isRoundActive() {
-		return this.deadPlayers < this.players.size() - 1;
+		return this.deadPlayers != this.players.size();
 	}
 
 	private void createPlayerBodiesAtRandomPos() {
@@ -243,7 +249,7 @@ public class Round {
 		this.map.setWallsActive(wallsActive);
 		this.pcs.firePropertyChange("Map", false, true);
 	}
-	
+
 	public boolean isWallsActive() {
 		return this.wallsAreActive;
 	}

@@ -9,6 +9,7 @@ import se.chalmers.tda367.group7.achtung.input.KeyInputEvent;
 import se.chalmers.tda367.group7.achtung.input.KeyInputListener;
 import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Game;
+import se.chalmers.tda367.group7.achtung.model.Round;
 import se.chalmers.tda367.group7.achtung.sound.SoundServiceFactory;
 
 public class GameController implements KeyInputListener {
@@ -30,8 +31,8 @@ public class GameController implements KeyInputListener {
 	 *            - right key id
 	 */
 	public void addPlayer(String name, int leftKey, int rightKey, Color color) {
-		PlayerController pc = new PlayerController(this.game.createNewPlayer(name,
-				color));
+		PlayerController pc = new PlayerController(this.game.createNewPlayer(
+				name, color));
 		pc.setLeftKey(leftKey);
 		pc.setRightKey(rightKey);
 
@@ -56,7 +57,9 @@ public class GameController implements KeyInputListener {
 	}
 
 	public void startRound() {
-		if (!this.game.isOver()) {
+		Round currentRound = this.game.getCurrentRound();
+		if (!this.game.isOver()
+				&& (currentRound == null || !currentRound.isRoundActive())) {
 			this.game.newRound();
 			this.game.getCurrentRound().addPropertyChangeListener(
 					SoundServiceFactory.getSoundService());
