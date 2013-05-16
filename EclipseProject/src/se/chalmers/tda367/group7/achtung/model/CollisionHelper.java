@@ -2,7 +2,6 @@ package se.chalmers.tda367.group7.achtung.model;
 
 import java.awt.Polygon;
 import java.awt.geom.Line2D;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CollisionHelper {
