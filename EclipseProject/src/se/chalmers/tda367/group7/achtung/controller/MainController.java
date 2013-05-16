@@ -132,7 +132,11 @@ public class MainController implements PropertyChangeListener,
 			this.inputService.update();
 
 			boolean doLogic = true;
-
+			
+			if (this.renderer.isActive() && !this.atMenu && this.game.getCurrentRound().isRoundActive()) {
+				this.sound.playMusic();
+			}
+			
 			// Essentially pauses the game when not in focus
 			if (!this.renderer.isActive()) {
 				doLogic = false;
