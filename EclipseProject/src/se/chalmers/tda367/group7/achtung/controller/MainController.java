@@ -294,6 +294,7 @@ public class MainController implements PropertyChangeListener,
 		setAtMenu(false);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().equals("startPressed")) {
