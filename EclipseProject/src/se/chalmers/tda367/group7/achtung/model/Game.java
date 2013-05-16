@@ -78,10 +78,17 @@ public class Game {
 		for (Player player : this.players) {
 			if (player.getPoints() >= goalPoints) {
 				this.gameWinner = player;
-				return true;
+				if(gameWinner != null && gameWinner.getPoints() - player.getPoints() < 2) {
+					this.gameWinner = null;
+				}
 			}
 		}
-		return false;
+		
+		if(this.gameWinner != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
