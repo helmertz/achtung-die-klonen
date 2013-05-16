@@ -60,4 +60,8 @@ public class Player {
 	public String getName() {
 		return this.name;
 	}
+	
+	public String toString() {
+		return getName() + ", " + this.points + " points";
+	}
 }

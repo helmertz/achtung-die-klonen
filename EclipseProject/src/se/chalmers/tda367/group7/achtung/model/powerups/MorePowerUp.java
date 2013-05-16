@@ -40,4 +40,10 @@ public class MorePowerUp implements RoundPowerUpEffect {
 	public Type[] getAllowedTypes() {
 		return new Type[] { Type.EVERYONE };
 	}
+	
+	@Override
+	public String toString() {
+		return NAME;
+	}
+	
 }
