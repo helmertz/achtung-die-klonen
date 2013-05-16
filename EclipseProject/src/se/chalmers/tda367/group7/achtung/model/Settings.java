@@ -42,7 +42,7 @@ public class Settings {
 	}
 
 	public float getWidth() {
-		return Float.parseFloat(prop.getProperty("width", DEFAULT_WIDTH+""));
+		return Float.parseFloat(prop.getProperty("width"));
 	}
 
 	public void setWidth(float width) {
@@ -50,7 +50,7 @@ public class Settings {
 	}
 
 	public float getSpeed() {
-		return Float.parseFloat(prop.getProperty("speed", DEFAULT_SPEED+""));
+		return Float.parseFloat(prop.getProperty("speed"));
 	}
 
 	public void setSpeed(float speed) {
@@ -58,7 +58,7 @@ public class Settings {
 	}
 
 	public float getRotationSpeed() {
-		return Float.parseFloat(prop.getProperty("rotation_speed", DEFAULT_ROTATION_SPEED+""));
+		return Float.parseFloat(prop.getProperty("rotation_speed"));
 	}
 
 	public void setRotationSpeed(float rotationSpeed) {
@@ -66,7 +66,7 @@ public class Settings {
 	}
 
 	public double getChanceOfHole() {
-		return Double.parseDouble(prop.getProperty("chance_of_hole", DEFAULT_CHANCE_OF_HOLE+""));
+		return Double.parseDouble(prop.getProperty("chance_of_hole"));
 	}
 
 	public void setChanceOfHole(double chanceOfHole) {
@@ -74,7 +74,7 @@ public class Settings {
 	}
 
 	public float getPowerUpChance() {
-		return Float.parseFloat(prop.getProperty("power_up_chance", DEFAULT_POWER_UP_CHANCE+""));
+		return Float.parseFloat(prop.getProperty("power_up_chance"));
 	}
 
 	public void setPowerUpChance(float powerUpChance) {
@@ -105,11 +105,12 @@ public class Settings {
 	 * Reset all settings to the default values.
 	 */
 	public void resetToDefaults() {
-
-//		this.width = DEFAULT_WIDTH;
-//		this.speed = DEFAULT_SPEED;
-//		this.rotationSpeed = DEFAULT_ROTATION_SPEED;
-//		this.chanceOfHole = DEFAULT_CHANCE_OF_HOLE;
-//		this.powerUpChance = DEFAULT_POWER_UP_CHANCE;
+		setWidth(DEFAULT_WIDTH);
+		setSpeed(DEFAULT_SPEED);
+		setRotationSpeed(DEFAULT_ROTATION_SPEED);
+		setChanceOfHole(DEFAULT_CHANCE_OF_HOLE);
+		setPowerUpChance(DEFAULT_POWER_UP_CHANCE);
+		
+		save();
 	}
 }
