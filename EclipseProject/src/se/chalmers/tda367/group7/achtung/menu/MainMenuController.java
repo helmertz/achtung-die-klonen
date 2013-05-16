@@ -131,7 +131,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	}
 
 	public void onContinuePress() {
-
+		this.pcs.firePropertyChange("continuePressed", false, true);
 	}
 
 	public void onKeySet(String elementID) {

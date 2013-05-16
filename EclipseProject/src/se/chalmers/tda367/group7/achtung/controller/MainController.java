@@ -239,8 +239,12 @@ public class MainController implements PropertyChangeListener,
 	public boolean onKeyInputEvent(KeyInputEvent event) {
 		if (!event.isRepeat() && event.isPressed()
 				&& event.getKey() == Keyboard.KEY_ESCAPE) {
-			setAtMenu(true);
-			this.sound.pauseMusic();
+			if(this.atMenu) {
+				returnToGame();
+			} else {
+				setAtMenu(true);
+				this.sound.pauseMusic();
+			}
 			return true;
 		}
 		if (this.atMenu) {
@@ -300,6 +304,14 @@ public class MainController implements PropertyChangeListener,
 				startGame((List<PlayerInfoHolder>) evt.getNewValue());
 				this.sound.playMusic();
 			}
+		} else if (evt.getPropertyName().equals("continuePressed")) {
+			returnToGame();
+		}
+	}
+
+	private void returnToGame() {
+		if(this.game != null && !this.game.isOver()) {
+			setAtMenu(false);
 		}
 	}
 }
