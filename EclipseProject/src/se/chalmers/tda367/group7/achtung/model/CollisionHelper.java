@@ -7,11 +7,11 @@ import java.util.List;
 
 public class CollisionHelper {
 
-	private final List<Player> activePlayers;
+	private final List<Player> players;
 	private final Map map;
 
 	public CollisionHelper(Map map, List<Player> activePlayers) {
-		this.activePlayers = activePlayers;
+		this.players = activePlayers;
 		this.map = map;
 	}
 
@@ -35,26 +35,7 @@ public class CollisionHelper {
 		if (playerSegments.isEmpty()) {
 			return false;
 		}
-
-		BodySegment lastSeg = playerSegments.get(playerSegments.size() - 1);
-
-		int NumBodySegments = playerSegments.size();
-		List<BodySegment> segsBeforeLast = new ArrayList<BodySegment>();
-		if (NumBodySegments > 1) {
-			
-			// Calculate number of segments not to test collision with.
-			// When sharp turns are enabled more segments has to be ignored
-			// depending on the width of the body.
-			int numSegmentIgnore = (int) Math.round((lastSeg.getWidth()/player.getBody().getSpeed()));
-
-			for (int i = 0; i < numSegmentIgnore && i < NumBodySegments - 1; i++) {
-				segsBeforeLast.add(playerSegments.get(NumBodySegments - (2 + i)));
-			}
-			
-//			segBeforeLast = playerSegments.get(playerSegments.size() - 2);
-		}
-		
-		return hasCollidedWithSegment(lastSeg, segsBeforeLast);
+		return hasCollidedWithSegment(currentBody);
 	}
 
 	// TODO: this is called from the method above, which should return
@@ -103,24 +84,38 @@ public class CollisionHelper {
 		return curX < 0;
 	}
 
-	private boolean hasCollidedWithSegment(BodySegment lastSeg,
-			List<BodySegment> segsBeforeLast) {
+	private boolean hasCollidedWithSegment(Body currentBody) {
+		BodySegment lastSeg = currentBody.getBodySegments().get(
+				currentBody.getBodySegments().size() - 1);
+
+		// Calculate number of segments not to test collision with.
+		// When sharp turns are enabled more segments has to be ignored
+		// depending on the width of the body.
+		int numSegmentIgnore = (int) (lastSeg.getWidth()
+				/ currentBody.getSpeed() + 0.5f);
+
+		// Sets so that the last 4 are always ignored
+		// TODO too many?
+		if (numSegmentIgnore < 4) {
+			numSegmentIgnore = 4;
+		}
+
+		// Enable to debug deaths that shouldn't happen
+		// System.out.println(numSegmentIgnore);
+
 		// Loop through all other players
-		for (Player otherPlayer : this.activePlayers) {
+		for (Player player : this.players) {
 
-			List<BodySegment> otherBodySegments = otherPlayer.getBody()
-					.getBodySegments();
+			Body body = player.getBody();
 
-			// Loop through all body segments of the other player
-			// being checked and see if a collision has happened
-			// with either of these
-			for (BodySegment seg : otherBodySegments) {
+			int count = body.getBodySegments().size();
 
-				// Allows collision with itself and the one before
-				if (lastSeg == seg || segsBeforeLast.contains(seg)) {
-					continue;
-				}
-
+			// When checking with itself, allow some collisions near head
+			if (currentBody == body) {
+				count -= numSegmentIgnore;
+			}
+			for (int i = 0; i < count; i++) {
+				BodySegment seg = body.getBodySegments().get(i);
 				if (segmentsCollide(seg, lastSeg)) {
 					return true;
 				}
