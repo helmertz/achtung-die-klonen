@@ -25,7 +25,7 @@
 						<control id="widthSlider" name="horizontalSlider" width="100%" initial = "50" buttonStepSize="5"/>
 						<control name="label" text="Hole chance"/>
 						<control id="holeSlider" name="horizontalSlider" width="100%" initial = "50" buttonStepSize="5"/>
-						<control name="label" text="Rotation radius"/>
+						<control name="label" text="Rotation speed"/>
 						<control id="rotSlider" name="horizontalSlider" width="100%" initial = "50" buttonStepSize="5"/>
 					</panel>
 				</panel>

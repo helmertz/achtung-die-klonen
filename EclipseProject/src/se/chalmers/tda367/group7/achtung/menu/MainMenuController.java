@@ -22,7 +22,7 @@ import de.lessvoid.nifty.controls.Slider;
 import de.lessvoid.nifty.controls.TextField;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
- 	
+
 public class MainMenuController implements ScreenController, KeyInputListener {
 
 	private Screen screen;
@@ -62,15 +62,21 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 
 	public void onStartPress() {
 		Slider pu = this.screen.findNiftyControl("puslider", Slider.class);
-		Slider speedSlider = this.screen.findNiftyControl("speedSlider", Slider.class);
-		Slider widthSlider = this.screen.findNiftyControl("widthSlider", Slider.class);
-		Slider holeSlider = this.screen.findNiftyControl("holeSlider", Slider.class);
-		Slider rotSlider = this.screen.findNiftyControl("rotSlider", Slider.class);
-		
+		Slider speedSlider = this.screen.findNiftyControl("speedSlider",
+				Slider.class);
+		Slider widthSlider = this.screen.findNiftyControl("widthSlider",
+				Slider.class);
+		Slider holeSlider = this.screen.findNiftyControl("holeSlider",
+				Slider.class);
+		Slider rotSlider = this.screen.findNiftyControl("rotSlider",
+				Slider.class);
+
 		float powerUpChance = calcPowerUpChance(pu.getValue());
 		float speed = calcSpeed(speedSlider.getValue());
 		float width = calcWidth(widthSlider.getValue());
-		
+		float holeChance = calcHoleChance(holeSlider.getValue());
+		float rotSpeed = calcRotSpeed(rotSlider.getValue());
+
 		int count = 0;
 		List<PlayerInfoHolder> pInfoList = new ArrayList<PlayerInfoHolder>();
 		for (int i = 1; i <= 8; i++) {
@@ -126,53 +132,74 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 
 		Settings settings = Settings.getInstance();
 		settings.setPowerUpChance(powerUpChance);
-		// TODO - fix sliders for these settings.
-		 settings.setSpeed(speed);
-		 settings.setWidth(width);
-		// settings.setChanceOfHole(chanceOfHole);
-		// settings.setRotationSpeed(rotationSpeed);
+		settings.setSpeed(speed);
+		settings.setWidth(width);
+		settings.setChanceOfHole(holeChance);
+		settings.setRotationSpeed(rotSpeed);
 
 		this.pcs.firePropertyChange("startPressed", null, pInfoList);
+	}
+
+	private float calcRotSpeed(float value) {
+		// value = 0 -> 3
+		// value = 50 -> 6
+		// value = 100 -> 10
+
+		float a = 16 / 9f;
+		float b = -6;
+		float c = 9;
+		return calcExp(a, b, c, value);
+	}
+
+	private float calcHoleChance(float value) {
+		// value = 0 -> 0 chance
+		// value = 50 -> 0.015 chance
+		// value = 100 -> 0.2 chance
+		float a = 1369 / 9f;
+		float b = -(9 / 6800f);
+		float c = 9 / 6800f;
+
+		return calcExp(a, b, c, value);
 	}
 
 	private float calcWidth(float value) {
 		// value = 0 -> 3 speed
 		// value = 50 -> 10 speed
 		// value = 100 -> 65 speed
-		
+
 		float a = 3025 / 49f;
 		float b = 95 / 48f;
 		float c = 49 / 48f;
-		
-		return calcExp(a,b,c,value);
+
+		return calcExp(a, b, c, value);
 	}
 
 	private float calcSpeed(float value) {
 		// value = 0 -> 0 speed
 		// value = 50 -> 6 speed
 		// value = 100 -> 12 speed
-		
-		float a = 36/25f;
+
+		float a = 36 / 25f;
 		float b = -24;
 		float c = 25;
-		
-		return calcExp(a,b,c, value);
+
+		return calcExp(a, b, c, value);
 	}
 
 	private float calcPowerUpChance(float value) {
 		// value = 0 -> 0 chance
 		// value = 50 -> 0.01 chance
 		// value = 100 -> 0.1 chance
-		
+
 		float a = 81;
-		float b = -(1/800f);
-		float c = 1/800f;
-		
+		float b = -(1 / 800f);
+		float c = 1 / 800f;
+
 		return calcExp(a, b, c, value);
 	}
-	
+
 	private float calcExp(float a, float b, float c, float value) {
-		return (float) (c * Math.pow(a, value/100) + b);
+		return (float) (c * Math.pow(a, value / 100) + b);
 	}
 
 	public void onContinuePress() {
