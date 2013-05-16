@@ -27,6 +27,10 @@
 						<control id="holeSlider" name="horizontalSlider" width="100%" initial = "50" buttonStepSize="5"/>
 						<control name="label" text="Rotation speed"/>
 						<control id="rotSlider" name="horizontalSlider" width="100%" initial = "50" buttonStepSize="5"/>
+						<control name="checkbox" checked="true" id="music"/>
+						<control name="label" text="Music enabled"/>
+						<control name="checkbox" checked="true" id="sound"/>
+						<control name="label" text="Sound effects enabled"/>
 					</panel>
 				</panel>
 				<panel width="50%" height="80%" align="left" valign="bottom" childLayout="vertical">

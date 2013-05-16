@@ -8,11 +8,13 @@ import java.util.Properties;
 
 public class Settings {
 
-	public static final float DEFAULT_WIDTH = 10;
-	public static final float DEFAULT_SPEED = 6;
-	public static final float DEFAULT_ROTATION_SPEED = 6f;
-	public static final double DEFAULT_CHANCE_OF_HOLE = 0.015;
-	public static final float DEFAULT_POWER_UP_CHANCE = 0.01f;
+	private static final float DEFAULT_WIDTH = 10;
+	private static final float DEFAULT_SPEED = 6;
+	private static final float DEFAULT_ROTATION_SPEED = 6f;
+	private static final double DEFAULT_CHANCE_OF_HOLE = 0.015;
+	private static final float DEFAULT_POWER_UP_CHANCE = 0.01f;
+	private static final boolean DEFAULT_MUSIC_ENABLED = true;
+	private static final boolean DEFAULT_SOUND_EFFECTS_ENABLED = true;
 	private static final String FILENAME = "achtung.conf";
 
 	private static Settings instance;
@@ -77,6 +79,22 @@ public class Settings {
 	public void setPowerUpChance(float powerUpChance) {
 		this.prop.setProperty("power_up_chance", powerUpChance + "");
 	}
+	
+	public boolean isMusicEnabled() {
+		return Boolean.parseBoolean(prop.getProperty("musicEnabled"));
+	}
+	
+	public void setMusicEnabled(boolean musicEnabled) {
+		prop.setProperty("musicEnabled", musicEnabled+"");
+	}
+	
+	public boolean isSoundEffectsEnabled() {
+		return Boolean.parseBoolean(prop.getProperty("soundEffectsEnabled"));
+	}
+
+	public void setSoundEffectsEnabled(boolean soundEffectsEnabled) {
+		prop.setProperty("soundEffectsEnabled", soundEffectsEnabled+"");
+	}
 
 	public static synchronized Settings getInstance() {
 		if (instance == null) {
@@ -107,5 +125,9 @@ public class Settings {
 		setRotationSpeed(DEFAULT_ROTATION_SPEED);
 		setChanceOfHole(DEFAULT_CHANCE_OF_HOLE);
 		setPowerUpChance(DEFAULT_POWER_UP_CHANCE);
+		setMusicEnabled(DEFAULT_MUSIC_ENABLED);
+		setSoundEffectsEnabled(DEFAULT_SOUND_EFFECTS_ENABLED);
+		
+		save();
 	}
 }

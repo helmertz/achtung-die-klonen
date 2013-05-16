@@ -70,12 +70,18 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 				Slider.class);
 		Slider rotSlider = this.screen.findNiftyControl("rotSlider",
 				Slider.class);
+		CheckBox musicCheckBox = this.screen.findNiftyControl("music",
+				CheckBox.class);
+		CheckBox soundEffectsCheckBox = this.screen.findNiftyControl("sound",
+				CheckBox.class);
 
 		float powerUpChance = calcPowerUpChance(pu.getValue());
 		float speed = calcSpeed(speedSlider.getValue());
 		float width = calcWidth(widthSlider.getValue());
 		float holeChance = calcHoleChance(holeSlider.getValue());
 		float rotSpeed = calcRotSpeed(rotSlider.getValue());
+		boolean musicEnabled = musicCheckBox.isChecked();
+		boolean soundEffectsEnabled = soundEffectsCheckBox.isChecked();
 
 		int count = 0;
 		List<PlayerInfoHolder> pInfoList = new ArrayList<PlayerInfoHolder>();
@@ -136,6 +142,8 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		settings.setWidth(width);
 		settings.setChanceOfHole(holeChance);
 		settings.setRotationSpeed(rotSpeed);
+		settings.setMusicEnabled(musicEnabled);
+		settings.setSoundEffectsEnabled(soundEffectsEnabled);
 
 		this.pcs.firePropertyChange("startPressed", null, pInfoList);
 	}
@@ -203,6 +211,18 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	}
 
 	public void onContinuePress() {
+		
+		// Updates sound settings when continuing
+		CheckBox musicCheckBox = this.screen.findNiftyControl("music",
+				CheckBox.class);
+		CheckBox soundEffectsCheckBox = this.screen.findNiftyControl("sound",
+				CheckBox.class);
+
+		Settings settings = Settings.getInstance();
+		
+		settings.setMusicEnabled(musicCheckBox.isChecked());		
+		settings.setSoundEffectsEnabled(soundEffectsCheckBox.isChecked());
+		
 		this.pcs.firePropertyChange("continuePressed", false, true);
 	}
 
