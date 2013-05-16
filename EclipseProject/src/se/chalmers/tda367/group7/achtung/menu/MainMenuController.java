@@ -22,7 +22,7 @@ import de.lessvoid.nifty.controls.Slider;
 import de.lessvoid.nifty.controls.TextField;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
-
+ 	
 public class MainMenuController implements ScreenController, KeyInputListener {
 
 	private Screen screen;
@@ -67,9 +67,10 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		Slider holeSlider = this.screen.findNiftyControl("holeSlider", Slider.class);
 		Slider rotSlider = this.screen.findNiftyControl("rotSlider", Slider.class);
 
-		// To the left is 0 percent chance, middle little under 1, right 100%
-		float powerUpChance = (float) Math.pow(pu.getValue() / 100, 7);
-		System.out.println(powerUpChance);
+		float powerUpChance = calcPowerUpChance(pu.getValue());
+		float speed = calcSpeed(speedSlider.getValue());
+		float width = calcWidth(widthSlider.getValue());
+		
 		int count = 0;
 		List<PlayerInfoHolder> pInfoList = new ArrayList<PlayerInfoHolder>();
 		for (int i = 1; i <= 8; i++) {
@@ -126,12 +127,48 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		Settings settings = Settings.getInstance();
 		settings.setPowerUpChance(powerUpChance);
 		// TODO - fix sliders for these settings.
-		// settings.setSpeed(6f);
-		// settings.setWidth(10f);
+		 settings.setSpeed(speed);
+		 settings.setWidth(width);
 		// settings.setChanceOfHole(chanceOfHole);
 		// settings.setRotationSpeed(rotationSpeed);
 
 		this.pcs.firePropertyChange("startPressed", null, pInfoList);
+	}
+
+	private float calcWidth(float value) {
+		float a = 3025 / 49f;
+		float b = 95 / 48f;
+		float c = 49 / 48f;
+		
+		return calcExp(a,b,c,value);
+	}
+
+	private float calcSpeed(float value) {
+		// value = 0 -> 0 speed
+		// value = 50 -> 6 speed
+		// value = 100 -> 12 speed
+		
+		float a = 36/25f;
+		float b = -24;
+		float c = 25;
+		
+		return calcExp(a,b,c, value);
+	}
+
+	private float calcPowerUpChance(float value) {
+		// value = 0 -> 0 chance
+		// value = 50 -> 0.01 chance
+		// value = 100 -> 0.1 chance
+		
+		float a = 81;
+		float b = -(1/800f);
+		float c = 1/800f;
+		
+		return calcExp(a, b, c, value);
+	}
+	
+	private float calcExp(float a, float b, float c, float value) {
+		return (float) (c * Math.pow(a, value/100) + b);
 	}
 
 	public void onContinuePress() {
