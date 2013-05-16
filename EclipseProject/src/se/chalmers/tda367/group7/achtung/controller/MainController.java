@@ -302,7 +302,6 @@ public class MainController implements PropertyChangeListener,
 			// TODO - Better check here?
 			if (evt.getNewValue() instanceof List<?>) {
 				startGame((List<PlayerInfoHolder>) evt.getNewValue());
-				this.sound.playMusic();
 			}
 		} else if (evt.getPropertyName().equals("continuePressed")) {
 			returnToGame();
