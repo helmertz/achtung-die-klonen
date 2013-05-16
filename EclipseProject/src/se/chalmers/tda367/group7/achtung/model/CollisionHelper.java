@@ -125,13 +125,13 @@ public class CollisionHelper {
 	}
 
 	public boolean isPlayerOutOfBounds(Player player) {
-		float playerWidth = player.getBody().getWidth();
+		float playerWidth = player.getBody().getWidth() / 2;
 		Position pos = player.getBody().getPosition();
 
 		// Adding/subtracting by one to not be as harsh
-		return (pos.getX() < 0 + playerWidth - 1
+		return (pos.getX() < playerWidth - 1
 				|| pos.getX() > this.map.getWidth() - playerWidth + 1
-				|| pos.getY() < 0 + playerWidth - 1 || pos.getY() > this.map
+				|| pos.getY() < playerWidth - 1 || pos.getY() > this.map
 				.getHeight() - playerWidth + 1);
 	}
 
