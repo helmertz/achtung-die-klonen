@@ -136,6 +136,10 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	}
 
 	private float calcWidth(float value) {
+		// value = 0 -> 3 speed
+		// value = 50 -> 10 speed
+		// value = 100 -> 65 speed
+		
 		float a = 3025 / 49f;
 		float b = 95 / 48f;
 		float c = 49 / 48f;
