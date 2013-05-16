@@ -1,27 +1,22 @@
 # Achtung, die Klonen
 
-## Our version of the classical game Achtung, die Kurve
+## Our version of the 1995 classic Achtung, die Kurve
 
-### Instructions
-Before opening project:
+### The game
+Each player has its own snake that it controls by turning left or right using the two assigned keyboard buttons. The player should control it so it doesn't collide with other snakes, or itself. When a player's snake dies, the remaining players get a point. The round is over when only one player remains. The entire game is over when a player reaches a certain score.
 
-1. Download LWJGL from <http://www.lwjgl.org/download.php> (select the lwjgl-(version).zip)
-2. Extract jar files to "lib"
-3. Extract native files for platform (.dll, .so,...) to "native"
-4. Download PNGDecoder.jar by following the link at the top of <http://www.lwjgl.org/wiki/index.php?title=Loading_PNG_images_with_TWL's_PNGDecoder>
-5. Put PNGDecoder.jar in "lib"
-6. Download the following files from <https://bitbucket.org/kevglass/slick/src/96a4b840204c/trunk/Slick/lib?at=development> and put in "lib"
- - slick-util.jar
- - jogg-0.0.7.jar
- - jorbis-0.0.15.jar
-7. Download the following files from <http://sourceforge.net/projects/nifty-gui/files/nifty-gui/1.3.2/> and put in "lib":
- - nifty-1.3.2.jar
- - nifty-lwjgl-renderer-1.3.2.jar
- - nifty-style-black-1.3.2.jar
- - nifty-default-controls-1.3.2.jar
-8. Download eventbus-1.4.jar from <http://repo1.maven.org/maven2/org/bushe/eventbus/1.4/> and put in "lib"
-9. Download xpp3-1.1.4c.jar from <http://mvnrepository.com/artifact/xpp3/xpp3/1.1.4c> and put in "lib"
-10. Import into Eclipse
+### How to start
 
-## Credits
-Music: Borderline (Fantastic Vamps : 8-Bit Mix) <http://ccmixter.org/files/vamps/8749>
+1. Enter the "Distribution" folder
+2. Execute the start script for your platform
+
+### How to play
+
+1. Select players at menu
+2. Choose keys for each player by clicking the button and pressing a key
+3. Press new game
+4. Control the snakes by the selected keys
+
+### Credits
+- Borderline, (Fantastic Vamps : 8-Bit Mix) <http://ccmixter.org/files/vamps/8749>
+- ParagonX9, SM64 - The Alternate Route <http://www.newgrounds.com/audio/listen/11245>
