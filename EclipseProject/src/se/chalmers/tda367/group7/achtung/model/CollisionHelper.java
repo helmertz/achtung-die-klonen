@@ -129,10 +129,10 @@ public class CollisionHelper {
 		Position pos = player.getBody().getPosition();
 
 		// Adding/subtracting by one to not be as harsh
-		return (pos.getX() < playerWidth - 1
-				|| pos.getX() > this.map.getWidth() - playerWidth + 1
-				|| pos.getY() < playerWidth - 1 || pos.getY() > this.map
-				.getHeight() - playerWidth + 1);
+		return (pos.getX() < playerWidth + 4
+				|| pos.getX() > this.map.getWidth() - playerWidth - 4 
+				|| pos.getY() < playerWidth + 4 || pos.getY() > this.map
+				.getHeight() - playerWidth - 4 );
 	}
 
 	public static boolean segmentsCollide(BodySegment b1, BodySegment b2) {
