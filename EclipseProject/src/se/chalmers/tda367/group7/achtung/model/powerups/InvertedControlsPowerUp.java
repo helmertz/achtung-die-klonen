@@ -27,7 +27,7 @@ public class InvertedControlsPowerUp implements BodyPowerUpEffect {
 
 	@Override
 	public Type[] getAllowedTypes() {
-		return new Type[] {Type.EVERYONE_ELSE};
+		return new Type[] { Type.EVERYONE_ELSE };
 	}
 
 	@Override

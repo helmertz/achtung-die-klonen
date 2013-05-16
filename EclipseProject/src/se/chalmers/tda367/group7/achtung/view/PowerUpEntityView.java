@@ -22,13 +22,15 @@ public class PowerUpEntityView implements View {
 		String name = this.powerUpEntity.getPowerUpEffect().getName();
 		String fileName = "powerups/" + name + ".png";
 		try {
-			this.image = RenderServiceFactory.getRenderService().getImage(fileName);
+			this.image = RenderServiceFactory.getRenderService().getImage(
+					fileName);
 		} catch (IOException e1) {
 			System.err.println(fileName + " was not found");
 
 			// If image not found, load question mark icon instead
 			try {
-				this.image = RenderServiceFactory.getRenderService().getImage("powerups/unknown.png");
+				this.image = RenderServiceFactory.getRenderService().getImage(
+						"powerups/unknown.png");
 			} catch (IOException e2) {
 				e2.printStackTrace();
 				System.exit(1);
@@ -37,7 +39,8 @@ public class PowerUpEntityView implements View {
 
 		if (powerUpBackground == null) {
 			try {
-				powerUpBackground = RenderServiceFactory.getRenderService().getImage("powerup-background.png");
+				powerUpBackground = RenderServiceFactory.getRenderService()
+						.getImage("powerup-background.png");
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.exit(1);

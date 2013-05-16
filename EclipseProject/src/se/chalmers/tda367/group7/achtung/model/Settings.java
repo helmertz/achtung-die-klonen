@@ -7,7 +7,7 @@ public class Settings {
 	private static final float DEFAULT_ROTATION_SPEED = 6f;
 	private static final double DEFAULT_CHANCE_OF_HOLE = 0.015;
 	private static final float DEFAULT_POWER_UP_CHANCE = 0.01f;
-	
+
 	private static Settings instance;
 
 	private float width;
@@ -15,14 +15,14 @@ public class Settings {
 	private float rotationSpeed;
 	private double chanceOfHole;
 	private float powerUpChance;
-	
+
 	private Settings() {
 		// TODO - Load settings from file.
 		resetToDefaults();
 	}
 
 	public float getWidth() {
-		return width;
+		return this.width;
 	}
 
 	public void setWidth(float width) {
@@ -30,7 +30,7 @@ public class Settings {
 	}
 
 	public float getSpeed() {
-		return speed;
+		return this.speed;
 	}
 
 	public void setSpeed(float speed) {
@@ -38,7 +38,7 @@ public class Settings {
 	}
 
 	public float getRotationSpeed() {
-		return rotationSpeed;
+		return this.rotationSpeed;
 	}
 
 	public void setRotationSpeed(float rotationSpeed) {
@@ -46,7 +46,7 @@ public class Settings {
 	}
 
 	public double getChanceOfHole() {
-		return chanceOfHole;
+		return this.chanceOfHole;
 	}
 
 	public void setChanceOfHole(double chanceOfHole) {
@@ -54,7 +54,7 @@ public class Settings {
 	}
 
 	public float getPowerUpChance() {
-		return powerUpChance;
+		return this.powerUpChance;
 	}
 
 	public void setPowerUpChance(float powerUpChance) {
@@ -67,24 +67,24 @@ public class Settings {
 		}
 		return instance;
 	}
-	
+
 	/**
-	 * Saves the currently loaded settings to a file.
-	 * These will be accessible next time the game is started.
+	 * Saves the currently loaded settings to a file. These will be accessible
+	 * next time the game is started.
 	 */
 	public void saveSettings() {
 		// TODO - Save current settings to file.
 	}
-	
+
 	/**
 	 * Reset all settings to the default values.
 	 */
 	public void resetToDefaults() {
 
-		width = DEFAULT_WIDTH;
-		speed = DEFAULT_SPEED;
-		rotationSpeed = DEFAULT_ROTATION_SPEED;
-		chanceOfHole = DEFAULT_CHANCE_OF_HOLE;
-		powerUpChance = DEFAULT_POWER_UP_CHANCE;
+		this.width = DEFAULT_WIDTH;
+		this.speed = DEFAULT_SPEED;
+		this.rotationSpeed = DEFAULT_ROTATION_SPEED;
+		this.chanceOfHole = DEFAULT_CHANCE_OF_HOLE;
+		this.powerUpChance = DEFAULT_POWER_UP_CHANCE;
 	}
 }

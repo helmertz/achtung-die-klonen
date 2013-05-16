@@ -11,46 +11,47 @@ import org.junit.Test;
 public class GameTest {
 
 	private Game game;
-	
+
 	@Before
 	public void createGame() {
-		game = new Game();
+		this.game = new Game();
 	}
-	
+
 	@Test
 	public void testGetNewPlayer() {
-		Player p1 = game.createNewPlayer("player1", Color.getRandomColor());
+		Player p1 = this.game
+				.createNewPlayer("player1", Color.getRandomColor());
 		assertTrue(p1.getName().equals("player1"));
-		
-		assertTrue(game.getPlayers().size() == 1);
+
+		assertTrue(this.game.getPlayers().size() == 1);
 	}
-	
+
 	@Test
 	public void testNewRound() {
-		game.addPropertyChangeListener(new PropertyChangeListener() {
+		this.game.addPropertyChangeListener(new PropertyChangeListener() {
 
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				assertTrue(evt.getPropertyName().equals("NewRound"));
-				
+
 			}
-			
+
 		});
-		game.newRound();
+		this.game.newRound();
 	}
-	
+
 	@Test
 	public void testIsOver() {
-		game.createNewPlayer("player1", Color.getRandomColor());
-		game.createNewPlayer("player2", Color.getRandomColor());
-		game.newRound();
+		this.game.createNewPlayer("player1", Color.getRandomColor());
+		this.game.createNewPlayer("player2", Color.getRandomColor());
+		this.game.newRound();
 		for (int i = 0; i < 3000; i++) {
-			game.update();
+			this.game.update();
 			// only creates round if none active.
-			game.newRound();
+			this.game.newRound();
 		}
-		
-		assertTrue(game.isOver());
+
+		assertTrue(this.game.isOver());
 	}
 
 }

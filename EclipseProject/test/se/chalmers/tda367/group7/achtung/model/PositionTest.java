@@ -35,8 +35,8 @@ public class PositionTest {
 
 		// Generate a bunch of positions
 		for (int i = 0; i < testIterations; i++) {
-			randomPositions.add(Position.getRandomPosition(0, 0,
-				this.mapWidth, this.mapHeight));
+			randomPositions.add(Position.getRandomPosition(0, 0, this.mapWidth,
+					this.mapHeight));
 		}
 
 		int[] amountPositionsInSplits = new int[segmentSplits];

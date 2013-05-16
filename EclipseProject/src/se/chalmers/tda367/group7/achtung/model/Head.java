@@ -30,9 +30,9 @@ public class Head {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + Float.floatToIntBits(diameter);
+		result = prime * result + Float.floatToIntBits(this.diameter);
 		result = prime * result
-				+ ((position == null) ? 0 : position.hashCode());
+				+ ((this.position == null) ? 0 : this.position.hashCode());
 		return result;
 	}
 
@@ -48,15 +48,15 @@ public class Head {
 			return false;
 		}
 		Head other = (Head) obj;
-		if (Float.floatToIntBits(diameter) != Float
+		if (Float.floatToIntBits(this.diameter) != Float
 				.floatToIntBits(other.diameter)) {
 			return false;
 		}
-		if (position == null) {
+		if (this.position == null) {
 			if (other.position != null) {
 				return false;
 			}
-		} else if (!position.equals(other.position)) {
+		} else if (!this.position.equals(other.position)) {
 			return false;
 		}
 		return true;

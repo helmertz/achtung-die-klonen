@@ -63,7 +63,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	public void onStartPress() {
 		Slider pu = this.screen.findNiftyControl("puslider", Slider.class);
 
-		// To the left is 0 percent chance, middle little under 1, right 100% 
+		// To the left is 0 percent chance, middle little under 1, right 100%
 		float powerUpChance = (float) Math.pow(pu.getValue() / 100, 7);
 		System.out.println(powerUpChance);
 		int count = 0;

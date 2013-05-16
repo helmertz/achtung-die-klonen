@@ -30,7 +30,8 @@ public class GameView implements View, PropertyChangeListener {
 	private void createScoreView() {
 		// because 8 is max player amount
 		float scoreViewHeight = this.mapView.getMap().getHeight() / 8;
-		this.scoreView = new PlayerScoreView(this.game.getPlayers(), scoreViewHeight);
+		this.scoreView = new PlayerScoreView(this.game.getPlayers(),
+				scoreViewHeight);
 	}
 
 	private void addPlayerViews() {

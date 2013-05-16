@@ -13,14 +13,14 @@ public class RemoveWallsPowerUp implements RoundPowerUpEffect {
 
 	@Override
 	public void applyEffect(Round round) {
-		stacks++;
+		this.stacks++;
 		round.setWallsActive(false);
 	}
 
 	@Override
 	public void removeEffect(Round round) {
-		stacks--;
-		if(stacks == 0){
+		this.stacks--;
+		if (this.stacks == 0) {
 			round.setWallsActive(true);
 		}
 	}
@@ -39,10 +39,10 @@ public class RemoveWallsPowerUp implements RoundPowerUpEffect {
 	public boolean isStackable() {
 		return STACKABLE;
 	}
-	
+
 	@Override
 	public Type[] getAllowedTypes() {
-		return new Type[] {Type.EVERYONE};
+		return new Type[] { Type.EVERYONE };
 	}
 
 }

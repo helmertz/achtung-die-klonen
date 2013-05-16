@@ -22,7 +22,7 @@ public interface PowerUpEffect {
 	 * 
 	 */
 	boolean isStackable();
-	
+
 	/**
 	 * Returns true if the type is allowed for the particular power up
 	 * 

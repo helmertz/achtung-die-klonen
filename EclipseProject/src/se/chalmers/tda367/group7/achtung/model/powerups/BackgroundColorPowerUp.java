@@ -45,7 +45,7 @@ public class BackgroundColorPowerUp implements BodyPowerUpEffect,
 
 	@Override
 	public Type[] getAllowedTypes() {
-		return new Type[] {Type.SELF};
+		return new Type[] { Type.SELF };
 	}
 
 	@Override

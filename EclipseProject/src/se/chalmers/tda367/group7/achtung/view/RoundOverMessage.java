@@ -10,7 +10,7 @@ public class RoundOverMessage extends AbstractPopupMessage {
 	private static final String NEXT_ROUND_MESSAGE_2 = "The winner is";
 	private static final String NEXT_ROUND_MESSAGE_3 = "Press space to continue";
 	private static final Color NEXT_ROUND_COLOR = new Color(0, 0, 0, 0.5f);
-	
+
 	public RoundOverMessage(Player winner) {
 		super(winner);
 	}

@@ -49,9 +49,9 @@ public class Map {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((backgroundColor == null) ? 0 : backgroundColor.hashCode());
-		result = prime * result + Float.floatToIntBits(height);
-		result = prime * result + Float.floatToIntBits(width);
+				+ ((this.backgroundColor == null) ? 0 : this.backgroundColor.hashCode());
+		result = prime * result + Float.floatToIntBits(this.height);
+		result = prime * result + Float.floatToIntBits(this.width);
 		return result;
 	}
 
@@ -67,17 +67,17 @@ public class Map {
 			return false;
 		}
 		Map other = (Map) obj;
-		if (backgroundColor == null) {
+		if (this.backgroundColor == null) {
 			if (other.backgroundColor != null) {
 				return false;
 			}
-		} else if (!backgroundColor.equals(other.backgroundColor)) {
+		} else if (!this.backgroundColor.equals(other.backgroundColor)) {
 			return false;
 		}
-		if (Float.floatToIntBits(height) != Float.floatToIntBits(other.height)) {
+		if (Float.floatToIntBits(this.height) != Float.floatToIntBits(other.height)) {
 			return false;
 		}
-		if (Float.floatToIntBits(width) != Float.floatToIntBits(other.width)) {
+		if (Float.floatToIntBits(this.width) != Float.floatToIntBits(other.width)) {
 			return false;
 		}
 		return true;

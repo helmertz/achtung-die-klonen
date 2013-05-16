@@ -65,8 +65,8 @@ public class Game {
 	 * @return true if a player has won.
 	 */
 	public boolean isOver() {
-		if (currentRound != null) {
-			return !currentRound.isRoundActive() && playerHasGoalPoints();
+		if (this.currentRound != null) {
+			return !this.currentRound.isRoundActive() && playerHasGoalPoints();
 		} else {
 			return false;
 		}

@@ -32,7 +32,7 @@ public class BodyTest {
 		int desiredSize = 10;
 		for (int i = 0; i < updates; i++) {
 			this.b.update();
-			if(this.b.isGeneratingHole()) {
+			if (this.b.isGeneratingHole()) {
 				desiredSize--;
 			}
 		}

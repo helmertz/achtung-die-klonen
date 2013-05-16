@@ -16,18 +16,12 @@ public class Color {
 
 	// Used in making lighter or darker versions of a color
 	private static final float CHANGE_CONSTANT = 0.2f;
-	
+
 	public static final Color[] PLAYER_COLORS = new Color[] {
-		new Color(0x3333ff),
-		new Color(0x00dd00),
-		new Color(0xff2222),
-		new Color(0xffdf22),
-		new Color(0x5ac1ed),
-		new Color(0xf9a2c5),
-		new Color(0xff7800),
-		new Color(0xbb22bb),
-	};
-	
+			new Color(0x3333ff), new Color(0x00dd00), new Color(0xff2222),
+			new Color(0xffdf22), new Color(0x5ac1ed), new Color(0xf9a2c5),
+			new Color(0xff7800), new Color(0xbb22bb), };
+
 	private final float r;
 	private final float g;
 	private final float b;
@@ -228,10 +222,10 @@ public class Color {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + Float.floatToIntBits(a);
-		result = prime * result + Float.floatToIntBits(b);
-		result = prime * result + Float.floatToIntBits(g);
-		result = prime * result + Float.floatToIntBits(r);
+		result = prime * result + Float.floatToIntBits(this.a);
+		result = prime * result + Float.floatToIntBits(this.b);
+		result = prime * result + Float.floatToIntBits(this.g);
+		result = prime * result + Float.floatToIntBits(this.r);
 		return result;
 	}
 
@@ -247,16 +241,16 @@ public class Color {
 			return false;
 		}
 		Color other = (Color) obj;
-		if (Float.floatToIntBits(a) != Float.floatToIntBits(other.a)) {
+		if (Float.floatToIntBits(this.a) != Float.floatToIntBits(other.a)) {
 			return false;
 		}
-		if (Float.floatToIntBits(b) != Float.floatToIntBits(other.b)) {
+		if (Float.floatToIntBits(this.b) != Float.floatToIntBits(other.b)) {
 			return false;
 		}
-		if (Float.floatToIntBits(g) != Float.floatToIntBits(other.g)) {
+		if (Float.floatToIntBits(this.g) != Float.floatToIntBits(other.g)) {
 			return false;
 		}
-		if (Float.floatToIntBits(r) != Float.floatToIntBits(other.r)) {
+		if (Float.floatToIntBits(this.r) != Float.floatToIntBits(other.r)) {
 			return false;
 		}
 		return true;

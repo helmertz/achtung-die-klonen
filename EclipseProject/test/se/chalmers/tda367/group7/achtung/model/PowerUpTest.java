@@ -8,39 +8,39 @@ import org.junit.Test;
 import se.chalmers.tda367.group7.achtung.model.powerups.FatPowerUp;
 
 public class PowerUpTest {
-	
+
 	private PowerUp<PowerUpEffect> p;
-	
+
 	@Before
 	public void setup() {
-		p = new PowerUp<PowerUpEffect>(new FatPowerUp());
+		this.p = new PowerUp<PowerUpEffect>(new FatPowerUp());
 	}
-	
+
 	@Test
 	public void testResetTimer() {
 		setup();
-		p.resetTimer();
-		assertTrue(p.getTimeLeft() == 150);
+		this.p.resetTimer();
+		assertTrue(this.p.getTimeLeft() == 150);
 	}
-	
+
 	@Test
 	public void testActive() {
-		p.resetTimer();
-		assertTrue(p.isActive());
-		for(int i = 0; i<150; i++) {
-			p.update();
+		this.p.resetTimer();
+		assertTrue(this.p.isActive());
+		for (int i = 0; i < 150; i++) {
+			this.p.update();
 		}
-		
-		assertTrue(!p.isActive());
+
+		assertTrue(!this.p.isActive());
 	}
-	
+
 	@Test
 	public void testTimeLeft() {
 		setup();
-		for(int i = 0; i < 75; i++) {
-			p.update();
+		for (int i = 0; i < 75; i++) {
+			this.p.update();
 		}
-		
-		assertTrue(p.getTimeLeft() == 75);
+
+		assertTrue(this.p.getTimeLeft() == 75);
 	}
 }

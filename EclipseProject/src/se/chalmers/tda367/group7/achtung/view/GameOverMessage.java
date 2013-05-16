@@ -10,7 +10,7 @@ public class GameOverMessage extends AbstractPopupMessage {
 	private static final String WON_GAME_MESSAGE_2 = "The winner is";
 	private static final String WON_GAME_MESSAGE_3 = "Press esc to return to menu";
 	private static final Color WON_GAME_COLOR = new Color(0, 0, 0, 0.5f);
-	
+
 	public GameOverMessage(Player winner) {
 		super(winner);
 	}
