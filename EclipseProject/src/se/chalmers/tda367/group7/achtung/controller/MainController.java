@@ -20,6 +20,7 @@ import se.chalmers.tda367.group7.achtung.menu.CustomInputSystem;
 import se.chalmers.tda367.group7.achtung.menu.MainMenuController;
 import se.chalmers.tda367.group7.achtung.menu.MainMenuController.PlayerInfoHolder;
 import se.chalmers.tda367.group7.achtung.model.Game;
+import se.chalmers.tda367.group7.achtung.model.Settings;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 import se.chalmers.tda367.group7.achtung.rendering.RenderServiceFactory;
 import se.chalmers.tda367.group7.achtung.sound.SoundService;
@@ -293,6 +294,9 @@ public class MainController implements PropertyChangeListener,
 		this.gameView = new GameView(this.game);
 		this.game.addPropertyChangeListener(this.gameView);
 		setAtMenu(false);
+		
+		// Save settings
+		Settings.getInstance().save();
 	}
 
 	@SuppressWarnings("unchecked")
