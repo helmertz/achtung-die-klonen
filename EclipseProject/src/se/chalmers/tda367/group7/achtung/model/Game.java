@@ -39,6 +39,7 @@ public class Game {
 	public void update() {
 		this.currentRound.update();
 		sortPlayersByPoints();
+		winnerCheck();
 	}
 
 	private void sortPlayersByPoints() {
@@ -66,36 +67,50 @@ public class Game {
 	 */
 	public boolean isOver() {
 		if (this.currentRound != null) {
-			return !this.currentRound.isRoundActive() && playerHasGoalPoints();
-		} else {
-			return false;
-		}
-	}
-
-	private boolean playerHasGoalPoints() {
-		int goalPoints = getGoalPoints();
-
-		for (Player player : this.players) {
-			if (player.getPoints() >= goalPoints) {
-				this.gameWinner = player;
-				if(gameWinner != null && gameWinner.getPoints() - player.getPoints() < 2) {
-					this.gameWinner = null;
-				}
-			}
-		}
-		
-		if(this.gameWinner != null) {
-			return true;
+			return !this.currentRound.isRoundActive() && gameWinner != null;
 		} else {
 			return false;
 		}
 	}
 
 	/**
+	 * Looks through the players to find a winner, and sets the winner variable
+	 * if found.
+	 */
+	private void winnerCheck() {
+		int goalPoints = getGoalPoints();
+
+		// Finds the highest score and sets a player with that score
+		int highestScore = 0;
+		Player possibleWinner = null;
+		for (Player player : this.players) {
+			if (player.getPoints() > highestScore) {
+				highestScore = player.getPoints();
+				possibleWinner = player;
+			}
+		}
+
+		// No need to check further if below goal
+		if (highestScore < goalPoints) {
+			return;
+		}
+
+		// Checks again and if another player has a score less than two points
+		// below leader, then the leader isn't yet the winner
+		for (Player player : this.players) {
+			if (player != possibleWinner
+					&& highestScore - player.getPoints() < 2) {
+				return;
+			}
+		}
+		this.gameWinner = possibleWinner;
+	}
+
+	/**
 	 * Returns the number of points required to win the game.
 	 */
 	public int getGoalPoints() {
-		return 10 * (this.players.size() - 1);
+		return 5;
 	}
 
 	public Round getCurrentRound() {
