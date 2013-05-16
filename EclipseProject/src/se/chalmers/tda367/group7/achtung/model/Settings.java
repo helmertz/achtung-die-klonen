@@ -8,13 +8,14 @@ import java.util.Properties;
 
 public class Settings {
 
-	private static final float DEFAULT_WIDTH = 10;
-	private static final float DEFAULT_SPEED = 6;
-	private static final float DEFAULT_ROTATION_SPEED = 6f;
-	private static final double DEFAULT_CHANCE_OF_HOLE = 0.015;
-	private static final float DEFAULT_POWER_UP_CHANCE = 0.01f;
-	private static final boolean DEFAULT_MUSIC_ENABLED = true;
-	private static final boolean DEFAULT_SOUND_EFFECTS_ENABLED = true;
+	public static final float DEFAULT_WIDTH = 10;
+	public static final float DEFAULT_SPEED = 6;
+	public static final float DEFAULT_ROTATION_SPEED = 6f;
+	public static final double DEFAULT_CHANCE_OF_HOLE = 0.015;
+	public static final float DEFAULT_POWER_UP_CHANCE = 0.01f;
+	public static final boolean DEFAULT_MUSIC_ENABLED = true;
+	public static final boolean DEFAULT_SOUND_EFFECTS_ENABLED = true;
+	
 	private static final String FILENAME = "achtung.conf";
 
 	private static Settings instance;
