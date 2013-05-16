@@ -48,7 +48,8 @@ public class GameTest {
 		for (int i = 0; i < 3000; i++) {
 			this.game.update();
 			// only creates round if none active.
-			if (!this.game.isOver() && !this.game.getCurrentRound().isRoundActive()) {
+			if (!this.game.isOver()
+					&& !this.game.getCurrentRound().isRoundActive()) {
 				this.game.newRound();
 			}
 		}

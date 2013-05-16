@@ -132,11 +132,12 @@ public class MainController implements PropertyChangeListener,
 			this.inputService.update();
 
 			boolean doLogic = true;
-			
-			if (this.renderer.isActive() && !this.atMenu && this.game.getCurrentRound().isRoundActive()) {
+
+			if (this.renderer.isActive() && !this.atMenu
+					&& this.game.getCurrentRound().isRoundActive()) {
 				this.sound.playMusic();
 			}
-			
+
 			// Essentially pauses the game when not in focus
 			if (!this.renderer.isActive()) {
 				doLogic = false;
@@ -239,7 +240,7 @@ public class MainController implements PropertyChangeListener,
 	public boolean onKeyInputEvent(KeyInputEvent event) {
 		if (!event.isRepeat() && event.isPressed()
 				&& event.getKey() == Keyboard.KEY_ESCAPE) {
-			if(this.atMenu) {
+			if (this.atMenu) {
 				returnToGame();
 			} else {
 				setAtMenu(true);
@@ -308,7 +309,7 @@ public class MainController implements PropertyChangeListener,
 	}
 
 	private void returnToGame() {
-		if(this.game != null && !this.game.isOver()) {
+		if (this.game != null && !this.game.isOver()) {
 			setAtMenu(false);
 		}
 	}

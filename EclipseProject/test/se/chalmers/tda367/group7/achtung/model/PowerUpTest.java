@@ -20,18 +20,18 @@ public class PowerUpTest {
 
 	private PowerUp<PowerUpEffect> p;
 	private Body b;
-//	private Round r;
 
+	// private Round r;
 
 	@Before
 	public void createBody() {
 		this.b = new Body(new Position(0f, 0f), 0);
 	}
-	
-//	@Before
-//	public void createRound() {
-//		this.r = new Round(map, players, powerUpChance);
-//	}
+
+	// @Before
+	// public void createRound() {
+	// this.r = new Round(map, players, powerUpChance);
+	// }
 
 	public void createPowerUp(String powerUp) {
 		switch (powerUp) {
@@ -96,7 +96,7 @@ public class PowerUpTest {
 
 		assertTrue(this.p.getTimeLeft() == 75);
 	}
-	
+
 	@Test
 	public void testClearPowerUp() {
 		createBody();
@@ -107,20 +107,20 @@ public class PowerUpTest {
 		if (this.b.getBodySegments().size() != 0) {
 			this.b.addPowerUp((BodyPowerUpEffect) this.p.getEffect());
 			assertTrue(this.b.getBodySegments().size() == 0);
-		}		
+		}
 	}
-	
+
 	@Test
 	public void testFatPowerUp() {
 		createBody();
 		createPowerUp("Fat");
 		float f = this.b.getWidth();
 		this.b.addPowerUp((BodyPowerUpEffect) this.p.getEffect());
-		assertTrue(this.b.getWidth() == 2*f);
-		for(int i = 0; i < this.p.getEffect().getDuration(); i++) {
+		assertTrue(this.b.getWidth() == 2 * f);
+		for (int i = 0; i < this.p.getEffect().getDuration(); i++) {
 			this.b.update();
 		}
 		assertTrue(this.b.getWidth() == f);
 	}
-	
+
 }

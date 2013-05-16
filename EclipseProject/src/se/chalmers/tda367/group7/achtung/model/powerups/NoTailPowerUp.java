@@ -41,10 +41,10 @@ public class NoTailPowerUp implements BodyPowerUpEffect {
 	public boolean isStackable() {
 		return STACKABLE;
 	}
-	
+
 	@Override
 	public String toString() {
 		return NAME;
 	}
-	
+
 }

@@ -44,7 +44,7 @@ public class RemoveWallsPowerUp implements RoundPowerUpEffect {
 	public Type[] getAllowedTypes() {
 		return new Type[] { Type.EVERYONE };
 	}
-	
+
 	@Override
 	public String toString() {
 		return NAME;
