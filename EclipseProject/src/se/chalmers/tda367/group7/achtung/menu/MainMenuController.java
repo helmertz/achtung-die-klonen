@@ -66,7 +66,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		Slider widthSlider = this.screen.findNiftyControl("widthSlider", Slider.class);
 		Slider holeSlider = this.screen.findNiftyControl("holeSlider", Slider.class);
 		Slider rotSlider = this.screen.findNiftyControl("rotSlider", Slider.class);
-
+		
 		float powerUpChance = calcPowerUpChance(pu.getValue());
 		float speed = calcSpeed(speedSlider.getValue());
 		float width = calcWidth(widthSlider.getValue());
