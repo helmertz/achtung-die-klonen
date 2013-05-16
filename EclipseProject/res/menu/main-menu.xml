@@ -30,7 +30,7 @@
 					</panel>
 					<panel width="80%" align="center" height="23" childLayout="horizontal">
 						<panel width="23" valign="center" height="23" backgroundColor="#222222" childLayout="center">
-							<panel width="21" align="center" valign="center" height="21" backgroundColor="#3333ff"/>
+							<panel width="21" align="center" valign="center" height="21" backgroundColor="#2357ff"/>
 						</panel>
 						<control name="checkbox" checked="true" id="cbp1"/>
 						<control name="textfield" text="Player 1" align="center" id="namep1"/>
@@ -121,7 +121,7 @@
 					</panel>
 					<panel width="80%" align="center" height="23" childLayout="horizontal">
 						<panel width="23" valign="center" height="23" backgroundColor="#222222" childLayout="center">
-							<panel width="21" align="center" valign="center" height="21" backgroundColor="#bb22bb"/>
+							<panel width="21" align="center" valign="center" height="21" backgroundColor="#d12ed1"/>
 						</panel>
 						<control name="checkbox" checked="false" id="cbp8"/>
 						<control name="textfield" text="Player 8" align="center" id="namep8"/>

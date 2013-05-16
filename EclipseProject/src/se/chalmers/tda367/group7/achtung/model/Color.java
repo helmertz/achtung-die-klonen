@@ -18,9 +18,9 @@ public class Color {
 	private static final float CHANGE_CONSTANT = 0.2f;
 
 	public static final Color[] PLAYER_COLORS = new Color[] {
-			new Color(0x3333ff), new Color(0x00dd00), new Color(0xff2222),
+			new Color(0x2357ff), new Color(0x00dd00), new Color(0xff2222),
 			new Color(0xffdf22), new Color(0x5ac1ed), new Color(0xf9a2c5),
-			new Color(0xff7800), new Color(0xbb22bb), };
+			new Color(0xff7800), new Color(0xd12ed1) };
 
 	private final float r;
 	private final float g;
