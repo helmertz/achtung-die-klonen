@@ -8,11 +8,11 @@ import java.util.Properties;
 
 public class Settings {
 
-	private static final float DEFAULT_WIDTH = 10;
-	private static final float DEFAULT_SPEED = 6;
-	private static final float DEFAULT_ROTATION_SPEED = 6f;
-	private static final double DEFAULT_CHANCE_OF_HOLE = 0.015;
-	private static final float DEFAULT_POWER_UP_CHANCE = 0.01f;
+	public static final float DEFAULT_WIDTH = 10;
+	public static final float DEFAULT_SPEED = 6;
+	public static final float DEFAULT_ROTATION_SPEED = 6f;
+	public static final double DEFAULT_CHANCE_OF_HOLE = 0.015;
+	public static final float DEFAULT_POWER_UP_CHANCE = 0.01f;
 	private static final String FILENAME = "achtung.conf";
 
 	private static Settings instance;
@@ -21,8 +21,6 @@ public class Settings {
 
 	private Settings() {
 		load();
-
-		// resetToDefaults();
 	}
 
 	private void load() {
@@ -109,7 +107,5 @@ public class Settings {
 		setRotationSpeed(DEFAULT_ROTATION_SPEED);
 		setChanceOfHole(DEFAULT_CHANCE_OF_HOLE);
 		setPowerUpChance(DEFAULT_POWER_UP_CHANCE);
-
-		save();
 	}
 }
