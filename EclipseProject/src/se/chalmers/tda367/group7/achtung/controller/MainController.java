@@ -273,8 +273,6 @@ public class MainController implements PropertyChangeListener,
 	private void setAtMenu(boolean atMenu) {
 		if (this.atMenu != atMenu) {
 			this.atMenu = atMenu;
-
-			// TODO probably do stuff here
 		}
 	}
 

@@ -13,7 +13,7 @@
 					<control name="button" label="New Game" align="center">
 						<interact onClick="onStartPress()"/>
 					</control>
-					<control name="label" width ="100%" id="errtxt" text=""/>
+					<control name="label" width ="100%" id="errtxt" text="" color="#ff0000"/>
 				</panel>
 				<panel width="50%" height="80%" align="right" valign="bottom" childLayout="vertical">
 					<panel width="80%" align="center" childLayout="vertical">
