@@ -1,5 +1,11 @@
 package se.chalmers.tda367.group7.achtung.model;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 public class Settings {
 
 	private static final float DEFAULT_WIDTH = 10;
@@ -7,58 +13,72 @@ public class Settings {
 	private static final float DEFAULT_ROTATION_SPEED = 6f;
 	private static final double DEFAULT_CHANCE_OF_HOLE = 0.015;
 	private static final float DEFAULT_POWER_UP_CHANCE = 0.01f;
+	private static final String FILENAME = "achtung.conf";
+	
 
 	private static Settings instance;
-
-	private float width;
-	private float speed;
-	private float rotationSpeed;
-	private double chanceOfHole;
-	private float powerUpChance;
+	
+	private Properties prop;
 
 	private Settings() {
-		// TODO - Load settings from file.
-		resetToDefaults();
+		load();
+		
+//		resetToDefaults();
+	}
+	
+	private void load() {
+		prop = new Properties();
+		
+		try {
+			prop.load(new FileInputStream(FILENAME));
+		} catch (FileNotFoundException e) {
+			// Use default settings if file does not exist.
+			resetToDefaults();
+			return;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public float getWidth() {
-		return this.width;
+		return Float.parseFloat(prop.getProperty("width", DEFAULT_WIDTH+""));
 	}
 
 	public void setWidth(float width) {
-		this.width = width;
+		prop.setProperty("width", width+"");
 	}
 
 	public float getSpeed() {
-		return this.speed;
+		return Float.parseFloat(prop.getProperty("speed", DEFAULT_SPEED+""));
 	}
 
 	public void setSpeed(float speed) {
-		this.speed = speed;
+		prop.setProperty("speed", speed+"");
 	}
 
 	public float getRotationSpeed() {
-		return this.rotationSpeed;
+		return Float.parseFloat(prop.getProperty("rotation_speed", DEFAULT_ROTATION_SPEED+""));
 	}
 
 	public void setRotationSpeed(float rotationSpeed) {
-		this.rotationSpeed = rotationSpeed;
+		prop.setProperty("rotation_speed", rotationSpeed+"");
 	}
 
 	public double getChanceOfHole() {
-		return this.chanceOfHole;
+		return Double.parseDouble(prop.getProperty("chance_of_hole", DEFAULT_CHANCE_OF_HOLE+""));
 	}
 
 	public void setChanceOfHole(double chanceOfHole) {
-		this.chanceOfHole = chanceOfHole;
+		prop.setProperty("chance_of_hole", chanceOfHole+"");
 	}
 
 	public float getPowerUpChance() {
-		return this.powerUpChance;
+		return Float.parseFloat(prop.getProperty("power_up_chance", DEFAULT_POWER_UP_CHANCE+""));
 	}
 
 	public void setPowerUpChance(float powerUpChance) {
-		this.powerUpChance = powerUpChance;
+		prop.setProperty("power_up_chance", powerUpChance+"");
 	}
 
 	public static synchronized Settings getInstance() {
@@ -72,8 +92,13 @@ public class Settings {
 	 * Saves the currently loaded settings to a file. These will be accessible
 	 * next time the game is started.
 	 */
-	public void saveSettings() {
-		// TODO - Save current settings to file.
+	public void save() {
+		
+		try {
+			prop.store(new FileOutputStream(FILENAME), null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -81,10 +106,10 @@ public class Settings {
 	 */
 	public void resetToDefaults() {
 
-		this.width = DEFAULT_WIDTH;
-		this.speed = DEFAULT_SPEED;
-		this.rotationSpeed = DEFAULT_ROTATION_SPEED;
-		this.chanceOfHole = DEFAULT_CHANCE_OF_HOLE;
-		this.powerUpChance = DEFAULT_POWER_UP_CHANCE;
+//		this.width = DEFAULT_WIDTH;
+//		this.speed = DEFAULT_SPEED;
+//		this.rotationSpeed = DEFAULT_ROTATION_SPEED;
+//		this.chanceOfHole = DEFAULT_CHANCE_OF_HOLE;
+//		this.powerUpChance = DEFAULT_POWER_UP_CHANCE;
 	}
 }
