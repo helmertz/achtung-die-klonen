@@ -24,7 +24,7 @@ public class Game {
 		this.powerUpChance = Settings.getInstance().getPowerUpChance();
 		this.rounds = new ArrayList<>();
 		this.players = new ArrayList<>();
-		this.map = new Map(1500, 1500);
+		this.map = new Map(1337, 1337);
 
 		this.pcs = new PropertyChangeSupport(this);
 
