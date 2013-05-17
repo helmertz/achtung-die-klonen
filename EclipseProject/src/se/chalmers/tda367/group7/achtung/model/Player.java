@@ -1,82 +1,68 @@
 package se.chalmers.tda367.group7.achtung.model;
 
-
 /**
  * A class representing a player, that is persistent over the rounds.
  */
 public class Player {
 
-	private String name;
-	private Color color;
-	
+	private final String name;
+	private final Color color;
+
 	private int points;
-	private int id;
-	private static int numberOfPlayers = 0;
-	
+
 	private Body body;
-	
+
 	public Player(String name, Color color) {
 		this.name = name;
 		this.color = color;
-		
-		// id mechanism.
-		id = numberOfPlayers;
-		numberOfPlayers++;
 	}
 
 	/**
-	 * Update the player. 
-	 * The player will have to have a body before this method is called.
+	 * Update the player. The player will have to have a body before this method
+	 * is called.
 	 */
 	public void update() {
-		if(body == null) {
+		if (this.body == null) {
 			throw new RuntimeException("No body is set for the player");
 		}
-		body.update();
+		this.body.update();
 	}
 
 	public int getPoints() {
-		return points;
+		return this.points;
 	}
-	
+
 	/**
 	 * Adds the given number of points to the player.
 	 * 
-	 * @param points - the amount of points to add
+	 * @param points
+	 *            - the amount of points to add
 	 */
 	public void addPoints(int points) {
 		this.points += points;
 	}
-	
-	public int getId() {
-		return id;
-	}
 
 	public Color getColor() {
-		return color;
-	}
-	
-	public void setPosition(Position position) {
-		body.setHeadPosition(position);
+		return this.color;
 	}
 
 	public Body getBody() {
 		return this.body;
 	}
-	
+
 	public void setBody(Body body) {
 		this.body = body;
+		if (this.body != null) {
+			this.body.setColor(this.color);
+		}
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
-	
-	public void turnRight() {
-		body.turnRight();
-	}
-	
-	public void turnLeft() {
-		body.turnLeft();
+
+	@Override
+	public String toString() {
+		return getName() + ", " + this.points + " points";
 	}
 }

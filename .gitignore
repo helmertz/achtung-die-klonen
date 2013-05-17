@@ -1,18 +1,12 @@
 # Output dir #
 ###################
 bin
-.settings
 
 # Compiled source #
 ###################
 *.com
 *.class
-*.dll
 *.exe
-*.o
-*.so
-*.dylib
-*.jnilib
 
 # Packages #
 ############
@@ -22,7 +16,6 @@ bin
 *.dmg
 *.gz
 *.iso
-*.jar
 *.rar
 *.tar
 *.zip
@@ -39,3 +32,7 @@ bin
 ehthumbs.db
 Icon?
 Thumbs.db
+
+# Config file #
+###############
+achtung.conf

@@ -3,83 +3,118 @@ package se.chalmers.tda367.group7.achtung.model;
 import java.awt.Polygon;
 
 public class BodySegment {
-	
-	private Position start;
-	private Position end;
-	private float width;
-	
+
+	private final Position start;
+	private final Position end;
+	private final Position[] corners;
+
+	private final float width;
+
 	private Polygon hitBox;
-	
+
 	public BodySegment(Position start, Position end, float width) {
 		this.start = start;
 		this.end = end;
 		this.width = width;
-		
-		setHitBoxBounds();
+		this.corners = new Position[4];
+		createCorners(false);
+		createHitBox();
 	}
 
-	private void setHitBoxBounds() {
+	public BodySegment(BodySegment previousSegment, Position end, float width) {
+		this.start = previousSegment.getEnd();
+		this.end = end;
+		this.width = width;
+		this.corners = new Position[4];
+		createBackCornersFromPrevious(previousSegment);
+		createCorners(true);
+		createHitBox();
+	}
 
-		float linex1 = start.getX();
-		float liney1 = start.getY();
-		float linex2 = end.getX();
-		float liney2 = end.getY();
-		
-		float length = (float) Math.sqrt(Math.pow(linex2-linex1,2) + Math.pow(liney2-liney1,2));
-		float xadd = width * ((liney2-liney1) / (length*2));
-		float yadd = width*(linex2-linex1)/(length*2);
+	/**
+	 * Used for connecting to a previous segment.
+	 * 
+	 * The two front corners of the previous segment is inherited by this.
+	 * 
+	 * @param previousSegment
+	 *            the previous segment
+	 */
+	private void createBackCornersFromPrevious(BodySegment previousSegment) {
+		this.corners[0] = previousSegment.corners[3];
+		this.corners[1] = previousSegment.corners[2];
+	}
 
-		// Rounding since java.awt.Polygon.Polygon, which is used for collision, is integer based
-		int x1 = Math.round(linex1 + xadd);
-		int y1 = Math.round(liney1 - yadd);
-		
-		int x2 = Math.round(linex1 - xadd);
-		int y2 = Math.round(liney1 + yadd);
-		
-		int x3 = Math.round(linex2 - xadd);
-		int y3 = Math.round(liney2 + yadd);
-		
-		int x4 = Math.round(linex2 + xadd);
-		int y4 = Math.round(liney2 - yadd);
-		
-		hitBox = new Polygon(new int[]{x1, x2, x3, x4}, new int[]{y1, y2, y3, y4}, 4);
+	/**
+	 * Fills the corner array.
+	 * 
+	 * @param setFrontOnly
+	 *            is true if the two backmost corners aren't to be set
+	 */
+	private void createCorners(boolean setFrontOnly) {
+		float linex1 = this.start.getX();
+		float liney1 = this.start.getY();
+		float linex2 = this.end.getX();
+		float liney2 = this.end.getY();
+
+		float length = (float) Math.sqrt(Math.pow(linex2 - linex1, 2)
+				+ Math.pow(liney2 - liney1, 2));
+		float xadd = this.width * ((liney2 - liney1) / (length * 2));
+		float yadd = this.width * (linex2 - linex1) / (length * 2);
+
+		// When connected to previous segment, these shouln't be set
+		if (!setFrontOnly) {
+			float x1 = linex1 + xadd;
+			float y1 = liney1 - yadd;
+			this.corners[0] = new Position(x1, y1);
+
+			float x2 = linex1 - xadd;
+			float y2 = liney1 + yadd;
+			this.corners[1] = new Position(x2, y2);
+		}
+
+		float x3 = linex2 - xadd;
+		float y3 = liney2 + yadd;
+		this.corners[2] = new Position(x3, y3);
+
+		float x4 = linex2 + xadd;
+		float y4 = liney2 - yadd;
+		this.corners[3] = new Position(x4, y4);
+	}
+
+	/**
+	 * Creates a java.awt.Polygon instance that is used for collision checking.
+	 * 
+	 * Should be used after corners has been set.
+	 */
+	private void createHitBox() {
+		int[] xPoints = new int[] { Math.round(this.corners[0].getX()),
+				Math.round(this.corners[1].getX()),
+				Math.round(this.corners[2].getX()),
+				Math.round(this.corners[3].getX()) };
+		int[] yPoints = new int[] { Math.round(this.corners[0].getY()),
+				Math.round(this.corners[1].getY()),
+				Math.round(this.corners[2].getY()),
+				Math.round(this.corners[3].getY()) };
+		this.hitBox = new Polygon(xPoints, yPoints, 4);
 	}
 
 	public Position getStart() {
-		return start;
+		return this.start;
 	}
 
 	public Position getEnd() {
-		return end;
+		return this.end;
 	}
 
 	public float getWidth() {
-		return width;
+		return this.width;
 	}
-	
+
 	public Polygon getHitBox() {
 		return this.hitBox;
 	}
-	
-	public boolean collidesWith(BodySegment b) {
-		return polygonsIntersect(getHitBox(), b.getHitBox());
-	}
-	
-	// Checks for collision by checking if a polygon's corner is inside the
-	// other polygon
-	private static boolean polygonsIntersect(Polygon p1, Polygon p2) {
-		// Checks if corner of second polygon is inside the first polygon
-		for (int i = 0; i < p2.npoints; i++) {
-			if (p1.contains(p2.xpoints[i], p2.ypoints[i])) {
-				return true;
-			}
-		}
-		// Checks if corner of first polygon is inside the second polygon
-		for(int i = 0; i < p1.npoints; i++) {
-			if(p2.contains(p1.xpoints[i], p1.ypoints[i])) {
-				return true;
-			}
-		}
-		return false;
+
+	public Position[] getCorners() {
+		return this.corners;
 	}
 }

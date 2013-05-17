@@ -1,34 +1,47 @@
 package se.chalmers.tda367.group7.achtung.model;
 
-public class PowerUp {
+/**
+ * A class that represents a power-up in an applied state.
+ * 
+ * It keeps track of how long it has lasted and when the effect should be
+ * removed.
+ * 
+ * @param <T>
+ *            the type of effect this keeps track of
+ */
+public class PowerUp<T extends PowerUpEffect> {
 
-	private PlayerPowerUpEffect effect;
+	private final T effect;
 	private int timeElapsed;
-	
-	
-	public PowerUp(PlayerPowerUpEffect effect) {
+
+	public PowerUp(T effect) {
 		this.effect = effect;
 	}
 
-	public void applyEffect(Body p) {
-		effect.applyEffect(p);
-	}
-	
-	public void removeEffect(Body p) {
-		effect.removeEffect(p);
-	}
-	
 	/**
 	 * @return true if the power up is still active
 	 */
 	public boolean isActive() {
-		return effect.getDuration() - timeElapsed > 0;
+		return this.effect.getDuration() - this.timeElapsed > 0;
 	}
-	
+
 	/**
 	 * Updates the power up. This should be called every tick.
 	 */
 	public void update() {
-		timeElapsed++;
+		this.timeElapsed++;
 	}
+
+	public T getEffect() {
+		return this.effect;
+	}
+
+	public int getTimeLeft() {
+		return this.effect.getDuration() - this.timeElapsed;
+	}
+
+	public void resetTimer() {
+		this.timeElapsed = 0;
+	}
+
 }
