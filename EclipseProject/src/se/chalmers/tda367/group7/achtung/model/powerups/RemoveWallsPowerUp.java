@@ -13,6 +13,9 @@ public class RemoveWallsPowerUp implements RoundPowerUpEffect {
 
 	@Override
 	public void applyEffect(Round round) {
+		if(stacks != 0 && round.isWallsActive()) {
+			stacks = 0;
+		}
 		this.stacks++;
 		round.setWallsActive(false);
 	}
