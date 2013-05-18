@@ -26,20 +26,34 @@ import de.lessvoid.nifty.screen.ScreenController;
 public class MainMenuController implements ScreenController, KeyInputListener {
 
 	private Screen screen;
-	private Nifty nifty;
 	private boolean handleKeyIn;
-	private Button element;
+	private Button pressedButton;
+	private Button nextButton;
 	private Label errorLabel;
 
 	private final Map<Button, Integer> buttonKeyMap = new HashMap<Button, Integer>();
-
 	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
 	@Override
 	public void bind(Nifty nifty, Screen screen) {
-		this.nifty = nifty;
 		this.screen = screen;
 		this.errorLabel = this.screen.findNiftyControl("errtxt", Label.class);
+
+		// Binds first two player's keys to default buttons
+		Button p1l = this.screen.findNiftyControl("keylp1", Button.class);
+		Button p1r = this.screen.findNiftyControl("keyrp1", Button.class);
+		Button p2l = this.screen.findNiftyControl("keylp2", Button.class);
+		Button p2r = this.screen.findNiftyControl("keyrp2", Button.class);
+		this.buttonKeyMap.put(p1l, Keyboard.KEY_LEFT);
+		this.buttonKeyMap.put(p1r, Keyboard.KEY_RIGHT);
+		this.buttonKeyMap.put(p2l, Keyboard.KEY_A);
+		this.buttonKeyMap.put(p2r, Keyboard.KEY_D);
+	}
+
+	public void setShowContinue(boolean show) {
+		Button continueButton = this.screen.findNiftyControl("continueButton",
+				Button.class);
+		continueButton.getElement().setVisible(show);
 	}
 
 	@Override
@@ -61,6 +75,88 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	}
 
 	public void onStartPress() {
+		// Uses try to abort and show error message on invalid setup
+		try {
+			List<PlayerInfoHolder> pInfoList = createPlayerInfo();
+			if (pInfoList.size() < 2) {
+				throw new RuntimeException("Too few players");
+			}
+			updateGameSettings();
+
+			// Clears previous error messages
+			showErrorText("");
+
+			this.pcs.firePropertyChange("startPressed", null, pInfoList);
+		} catch (RuntimeException e) {
+			showErrorText(e.getMessage());
+		}
+	}
+
+	private void showErrorText(String text) {
+		this.errorLabel.setText(text);
+	}
+
+	/**
+	 * Creates a list of all players information from what's entered in the
+	 * menu.
+	 * 
+	 * @return a list of player information
+	 */
+	private List<PlayerInfoHolder> createPlayerInfo() {
+		List<PlayerInfoHolder> pInfoList = new ArrayList<PlayerInfoHolder>();
+		for (int i = 1; i <= 8; i++) {
+			PlayerInfoHolder playerInfo = getPlayerInfo(i);
+			if (playerInfo != null) {
+				pInfoList.add(playerInfo);
+			}
+		}
+		return pInfoList;
+	}
+
+	/**
+	 * Gets information associated with a player from the menu.
+	 * 
+	 * @param playerNum
+	 *            the number of the player
+	 * @return an object containing info about a player
+	 */
+	private PlayerInfoHolder getPlayerInfo(int playerNum) {
+		CheckBox cb = this.screen.findNiftyControl("cbp" + playerNum,
+				CheckBox.class);
+
+		if (!cb.isChecked()) {
+			return null;
+		}
+
+		TextField tf = this.screen.findNiftyControl("namep" + playerNum,
+				TextField.class);
+		Button lButton = this.screen.findNiftyControl("keylp" + playerNum,
+				Button.class);
+		Button rButton = this.screen.findNiftyControl("keyrp" + playerNum,
+				Button.class);
+
+		String name = tf.getDisplayedText();
+
+		if (name.length() < 1) {
+			throw new RuntimeException("Please enter a name for player "
+					+ playerNum);
+		}
+
+		Integer lKey = this.buttonKeyMap.get(lButton);
+		Integer rKey = this.buttonKeyMap.get(rButton);
+
+		if (lKey == null || rKey == null) {
+			throw new RuntimeException("Keys not set or invalid for " + name);
+		}
+
+		return new PlayerInfoHolder(lKey, rKey,
+				Color.PLAYER_COLORS[playerNum - 1], name);
+	}
+
+	/**
+	 * Polls the menu elements and sets information in the Settings singleton.
+	 */
+	private void updateGameSettings() {
 		Slider pu = this.screen.findNiftyControl("puslider", Slider.class);
 		Slider speedSlider = this.screen.findNiftyControl("speedSlider",
 				Slider.class);
@@ -83,59 +179,6 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		boolean musicEnabled = musicCheckBox.isChecked();
 		boolean soundEffectsEnabled = soundEffectsCheckBox.isChecked();
 
-		int count = 0;
-		List<PlayerInfoHolder> pInfoList = new ArrayList<PlayerInfoHolder>();
-		for (int i = 1; i <= 8; i++) {
-			CheckBox cb = this.screen.findNiftyControl("cbp" + i,
-					CheckBox.class);
-
-			if (cb.isChecked()) {
-				count++;
-			} else {
-				continue;
-			}
-
-			TextField tf = this.screen.findNiftyControl("namep" + i,
-					TextField.class);
-			Button lButton = this.screen.findNiftyControl("keylp" + i,
-					Button.class);
-			Button rButton = this.screen.findNiftyControl("keyrp" + i,
-					Button.class);
-
-			String name = tf.getDisplayedText();
-
-			Integer lKey = this.buttonKeyMap.get(lButton);
-			Integer rKey = this.buttonKeyMap.get(rButton);
-
-			// TODO more checks
-			if (lKey == null || rKey == null) {
-				// Not a pretty way to set default keys. Possibly not store in
-				// Map as now.
-				if (i == 1) {
-					lKey = Keyboard.KEY_LEFT;
-					rKey = Keyboard.KEY_RIGHT;
-				} else if (i == 2) {
-					lKey = Keyboard.KEY_A;
-					rKey = Keyboard.KEY_D;
-				} else {
-					this.errorLabel.setText("Keys not set or invalid for "
-							+ name);
-					return;
-				}
-			}
-
-			PlayerInfoHolder pih = new PlayerInfoHolder(lKey, rKey,
-					Color.PLAYER_COLORS[i - 1], name);
-			pInfoList.add(pih);
-		}
-		if (count < 2) {
-			this.errorLabel.setText("Too few players");
-			return;
-		}
-
-		// Clears previous message
-		this.errorLabel.setText("");
-
 		Settings settings = Settings.getInstance();
 		settings.setPowerUpChance(powerUpChance);
 		settings.setSpeed(speed);
@@ -144,8 +187,105 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		settings.setRotationSpeed(rotSpeed);
 		settings.setMusicEnabled(musicEnabled);
 		settings.setSoundEffectsEnabled(soundEffectsEnabled);
+	}
 
-		this.pcs.firePropertyChange("startPressed", null, pInfoList);
+	public void onContinuePress() {
+		// Updates sound settings when continuing
+		CheckBox musicCheckBox = this.screen.findNiftyControl("music",
+				CheckBox.class);
+		CheckBox soundEffectsCheckBox = this.screen.findNiftyControl("sound",
+				CheckBox.class);
+
+		Settings settings = Settings.getInstance();
+
+		settings.setMusicEnabled(musicCheckBox.isChecked());
+		settings.setSoundEffectsEnabled(soundEffectsCheckBox.isChecked());
+
+		this.pcs.firePropertyChange("continuePressed", false, true);
+	}
+
+	// Called from nifty (using reflection)
+	public void onKeyButtonPressed(String elementID) {
+		Button button = this.screen.findNiftyControl(elementID, Button.class);
+		activateButton(button);
+
+		// If the left key is pressed, store a reference to the right key so
+		// user can set both right away
+		this.nextButton = null;
+		if (elementID.charAt(elementID.length() - 3) == 'l') {
+			Button b = this.screen.findNiftyControl(
+					elementID.replace('l', 'r'), Button.class);
+			if (b.getText().length() == 0) {
+				this.nextButton = b;
+			}
+		}
+	}
+
+	/**
+	 * Sets that the next key event will be handled and the button associated
+	 * with the event.
+	 * 
+	 * @param button
+	 *            the button associated with the event
+	 */
+	private void activateButton(Button button) {
+		// Clears text of previous pressed button if a key wasn't entered
+		if (this.pressedButton != null) {
+			this.pressedButton.setText("");
+		}
+
+		this.pressedButton = button;
+
+		// Mark that the next key event will be catched
+		this.handleKeyIn = true;
+
+		// Removes any key that might have been mapped to the button
+		this.buttonKeyMap.remove(this.pressedButton);
+
+		// Removes text to signal that user will fill in
+		// TODO perhaps signal with color or popup somehow
+		this.pressedButton.setText("(enter)");
+	}
+
+	@Override
+	public boolean onKeyInputEvent(KeyInputEvent event) {
+		if (this.handleKeyIn && event.isPressed()) {
+			this.handleKeyIn = false;
+
+			// TODO check with a blacklist
+			if (event.getKey() == 0) {
+				// Abort, would show up as none
+				return false;
+			}
+
+			char c = Character.toUpperCase(event.getCharacter());
+			String s = Character.toString(c);
+
+			// Shows character if font can display it, otherwise the key's name
+			String buttonText;
+			if (!Character.isWhitespace(c)
+					&& this.pressedButton.getFont().getWidth(s) > 0) {
+				buttonText = s;
+			} else {
+				buttonText = event.getKeyName();
+			}
+			this.pressedButton.setText(buttonText);
+
+			// Bind the selected to a button
+			this.buttonKeyMap.put(this.pressedButton, event.getKey());
+
+			// Activates the next button if one has been set
+			if (this.nextButton != null
+					&& this.pressedButton != this.nextButton) {
+				this.pressedButton = null;
+				activateButton(this.nextButton);
+			} else {
+				this.nextButton = null;
+				this.pressedButton = null;
+			}
+			return true;
+		}
+		return false;
 	}
 
 	private float calcRotSpeed(float value) {
@@ -208,65 +348,6 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 
 	private float calcExp(float a, float b, float c, float value) {
 		return (float) (c * Math.pow(a, value / 100) + b);
-	}
-
-	public void onContinuePress() {
-		
-		// Updates sound settings when continuing
-		CheckBox musicCheckBox = this.screen.findNiftyControl("music",
-				CheckBox.class);
-		CheckBox soundEffectsCheckBox = this.screen.findNiftyControl("sound",
-				CheckBox.class);
-
-		Settings settings = Settings.getInstance();
-		
-		settings.setMusicEnabled(musicCheckBox.isChecked());		
-		settings.setSoundEffectsEnabled(soundEffectsCheckBox.isChecked());
-		
-		this.pcs.firePropertyChange("continuePressed", false, true);
-	}
-
-	public void onKeySet(String elementID) {
-		// Mark that it will catch the next key event
-		this.handleKeyIn = true;
-
-		this.element = this.screen.findNiftyControl(elementID, Button.class);
-
-		// Removes text to signal that user will fill in
-		// TODO perhaps signal with color or popup somehow
-		this.element.setText("");
-	}
-
-	@Override
-	public boolean onKeyInputEvent(KeyInputEvent event) {
-		if (this.handleKeyIn && event.isPressed()) {
-			this.handleKeyIn = false;
-
-			// TODO check with a blacklist
-			if (event.getKey() == 0) {
-				// Abort, would show up as none
-				return false;
-			}
-
-			char c = Character.toUpperCase(event.getCharacter());
-			String s = Character.toString(c);
-
-			// Shows character if font can display it, otherwise the key's name
-			String buttonText;
-			if (!Character.isWhitespace(c)
-					&& this.element.getFont().getWidth(s) > 0) {
-				buttonText = s;
-			} else {
-				buttonText = event.getKeyName();
-			}
-			this.element.setText(buttonText);
-
-			// Bind the selected to a button
-			this.buttonKeyMap.put(this.element, event.getKey());
-
-			return true;
-		}
-		return false;
 	}
 
 	/**

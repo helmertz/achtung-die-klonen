@@ -71,7 +71,7 @@ public class MainController implements PropertyChangeListener,
 	private GameController gameController;
 
 	private final Nifty nifty;
-	private boolean atMenu = true;
+	private boolean atMenu;
 	private final MainMenuController menuController;
 	private final CustomInputSystem inputSystem;
 
@@ -118,6 +118,8 @@ public class MainController implements PropertyChangeListener,
 		this.menuController = (MainMenuController) niftyScreen
 				.getScreenController();
 		this.menuController.addListener(this);
+
+		setAtMenu(true);
 	}
 
 	private long getTickCount() {
@@ -275,6 +277,9 @@ public class MainController implements PropertyChangeListener,
 	private void setAtMenu(boolean atMenu) {
 		if (this.atMenu != atMenu) {
 			this.atMenu = atMenu;
+
+			this.menuController.setShowContinue(this.game != null
+					&& !this.game.isOver());
 		}
 	}
 
@@ -294,7 +299,7 @@ public class MainController implements PropertyChangeListener,
 		this.gameView = new GameView(this.game);
 		this.game.addPropertyChangeListener(this.gameView);
 		setAtMenu(false);
-		
+
 		// Save settings
 		Settings.getInstance().save();
 	}
