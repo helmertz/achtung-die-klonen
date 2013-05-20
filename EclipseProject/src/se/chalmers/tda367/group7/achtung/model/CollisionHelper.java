@@ -31,7 +31,7 @@ public class CollisionHelper {
 		// of the player being checked
 		List<BodySegment> playerSegments = currentBody.getBodySegments();
 
-		if (playerSegments.isEmpty()) {
+		if (playerSegments.isEmpty() || currentBody.isGeneratingHole()) {
 			return false;
 		}
 		return hasCollidedWithSegment(currentBody);

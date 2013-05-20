@@ -119,7 +119,9 @@ public class Round {
 			killPlayer(player);
 		} else if (this.collisionHelper.isPlayerOutOfBounds(player)) {
 			if (this.wallsAreActive) {
-				killPlayer(player);
+				if (!player.getBody().isGeneratingHole()) {
+					killPlayer(player);
+				}
 			} else {
 				this.collisionHelper.mirrorPlayerPosition(player);
 			}
