@@ -1,6 +1,7 @@
 package se.chalmers.tda367.group7.achtung.model;
 
 import java.awt.Polygon;
+import java.awt.Rectangle;
 
 public class BodySegment {
 
@@ -11,6 +12,7 @@ public class BodySegment {
 	private final float width;
 
 	private Polygon hitBox;
+	private final Rectangle bounds;
 
 	public BodySegment(Position start, Position end, float width) {
 		this.start = start;
@@ -19,6 +21,8 @@ public class BodySegment {
 		this.corners = new Position[4];
 		createCorners(false);
 		createHitBox();
+		// Stores a rectangle that covers the whole segment
+		this.bounds = this.hitBox.getBounds();
 	}
 
 	public BodySegment(BodySegment previousSegment, Position end, float width) {
@@ -29,6 +33,7 @@ public class BodySegment {
 		createBackCornersFromPrevious(previousSegment);
 		createCorners(true);
 		createHitBox();
+		this.bounds = this.hitBox.getBounds();
 	}
 
 	/**
@@ -116,5 +121,9 @@ public class BodySegment {
 
 	public Position[] getCorners() {
 		return this.corners;
+	}
+
+	public Rectangle getBounds() {
+		return this.bounds;
 	}
 }

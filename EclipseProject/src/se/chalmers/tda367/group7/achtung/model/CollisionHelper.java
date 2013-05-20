@@ -137,7 +137,7 @@ public class CollisionHelper {
 
 	public static boolean segmentsCollide(BodySegment b1, BodySegment b2) {
 		// Does a fast bounding box check
-		if (!b1.getHitBox().getBounds().intersects(b2.getHitBox().getBounds())) {
+		if (!b1.getBounds().intersects(b2.getBounds())) {
 			return false;
 		}
 		// Does more precise and expensive tests
