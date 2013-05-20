@@ -12,6 +12,16 @@ import se.chalmers.tda367.group7.achtung.rendering.RenderServiceFactory;
 public class PowerUpEntityView implements View {
 	private static Image powerUpBackground;
 
+	static {
+		try {
+			powerUpBackground = RenderServiceFactory.getRenderService()
+					.getImage("powerup-background.png");
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+	}
+	
 	private final PowerUpEntity powerUpEntity;
 	private Image image;
 
@@ -33,16 +43,6 @@ public class PowerUpEntityView implements View {
 						"powerups/unknown.png");
 			} catch (IOException e2) {
 				e2.printStackTrace();
-				System.exit(1);
-			}
-		}
-
-		if (powerUpBackground == null) {
-			try {
-				powerUpBackground = RenderServiceFactory.getRenderService()
-						.getImage("powerup-background.png");
-			} catch (IOException e) {
-				e.printStackTrace();
 				System.exit(1);
 			}
 		}
