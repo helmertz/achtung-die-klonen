@@ -156,7 +156,7 @@
 		<interact onClick="closePopup()"/>
 		<panel width="50%" height="85%" style="nifty-panel" childLayout="vertical">
 			<control name="label" text="Instructions&#10;"/>
-			<control textHAlign="left" textVAlign="top" width="80%" align="center" height="100%" wrap="true" name="label" text="Each player has its own snake that it controls by turning left or right using the two assigned keyboard buttons. The player should control it so it doesn't collide with other snakes, or itself. When a player's snake dies, the remaining players get a point. The round is over when only one player remains. The entire game is over when a player reaches a certain score."/>
+			<control textHAlign="left" textVAlign="top" width="80%" align="center" height="100%" wrap="true" name="label" text="Each player has its own snake that is controlled by turning left or right using the two assigned keyboard buttons. The player should control it so it doesn't collide with other snakes, or itself. When a player's snake dies, the remaining players get a point each. The round is over when only one player remains. The entire game is over when a player reaches the goal points."/>
 		</panel>
 	</popup>
 </nifty>
