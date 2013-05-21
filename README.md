@@ -3,7 +3,7 @@
 ## Our version of the 1995 classic Achtung, die Kurve
 
 ### The game
-Each player has its own snake that it controls by turning left or right using the two assigned keyboard buttons. The player should control it so it doesn't collide with other snakes, or itself. When a player's snake dies, the remaining players get a point. The round is over when only one player remains. The entire game is over when a player reaches a certain score.
+Each player has its own snake that is controlled by turning left or right using the two assigned keyboard buttons. The player should control it so it doesn't collide with other snakes, or itself. When a player's snake dies, the remaining players get a point each. The round is over when only one player remains. The entire game is over when a player reaches the goal points.
 
 ### How to start
 
