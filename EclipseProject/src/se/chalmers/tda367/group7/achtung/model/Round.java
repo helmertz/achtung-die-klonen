@@ -224,7 +224,6 @@ public class Round {
 
 	private void createPlayerBodiesAtRandomPos() {
 		for (Player player : this.players) {
-
 			player.setBody(BodyFactory.getBody(this.map));
 		}
 	}
