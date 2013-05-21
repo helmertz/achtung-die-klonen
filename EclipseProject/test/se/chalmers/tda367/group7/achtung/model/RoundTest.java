@@ -55,7 +55,7 @@ public class RoundTest {
 	}
 
 	@Test
-	public void mirrorPositionThroughWallTest() {
+	public void mirrorXPositionThroughWallTest() {
 		setupGame();
 		float mapWidth = round.getMap().getWidth();
 		
@@ -82,6 +82,36 @@ public class RoundTest {
 		// After one update, it should be correct
 		round.update();
 		assertTrue(p1.getBody().getPosition().getX() == actualMirroredPosition);
+	}
+	
+	@Test
+	public void mirrorYPositionThroughWallTest() {
+		setupGame();
+		float mapHeight = round.getMap().getHeight();
+		
+		// This lets players pass through walls
+		this.round.setWallsActive(false);
+
+		// These can be set to anything as long as player passes through wall
+		// once
+		int p1StartY = 50;
+		int iterations = 300;
+
+		float actualMirroredPosition = mapHeight - (iterations - p1StartY) + 1;
+
+		p1.setBody(new Body(new Position(50, p1StartY), 270));
+		p1.getBody().setSpeed(1);
+
+		for (int i = 0; i < iterations - 1; i++) {
+			round.update();
+		}
+
+		// One update before expected mirrored position, test fails
+		assertFalse(p1.getBody().getPosition().getY() == actualMirroredPosition);
+
+		// After one update, it should be correct
+		round.update();
+		assertTrue(p1.getBody().getPosition().getY() == actualMirroredPosition);
 	}
 	
 	@Test
