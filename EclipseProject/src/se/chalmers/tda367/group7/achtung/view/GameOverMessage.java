@@ -4,7 +4,7 @@ import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Player;
 import se.chalmers.tda367.group7.achtung.rendering.RenderService;
 
-public class GameOverMessage extends AbstractPopupMessage {
+public class GameOverMessage extends AbstractWinnerPopupMessage {
 
 	private static final String WON_GAME_MESSAGE_1 = "Game over!";
 	private static final String WON_GAME_MESSAGE_2 = "The winner is";
