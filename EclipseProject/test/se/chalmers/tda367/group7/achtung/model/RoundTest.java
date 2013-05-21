@@ -27,28 +27,59 @@ public class RoundTest {
 		Settings settings = Settings.getInstance();
 		settings.resetToDefaults();
 		settings.setPowerUpChance(0);
+		settings.setChanceOfHole(0);
 	}
 
 	@Test
 	public void headOnCollisionTest() {
+		setupGame();
 		float p1StartX = 10;
 		float p2StartX = 800;
-		
+
 		float oneBeforeCollisionPoint = (Math.abs(p2StartX - p1StartX) / 2);
-		
-		p1.setBody(new Body(new Position(10, 50), 0));
+
+		p1.setBody(new Body(new Position(p1StartX, 50), 0));
 		p1.getBody().setSpeed(1);
-		p2.setBody(new Body(new Position(800, 50), 180));
+		p2.setBody(new Body(new Position(p2StartX, 50), 180));
 		p2.getBody().setSpeed(1);
 
 		for (int i = 0; i < oneBeforeCollisionPoint; i++) {
 			round.update();
 		}
-		
-		assertTrue(!(p1.getBody().isDead() || p2.getBody().isDead()));
-		
+
+		assertFalse(p1.getBody().isDead() || p2.getBody().isDead());
+
 		// Now we need only one more update for them to collide
 		round.update();
 		assertTrue(p1.getBody().isDead() || p2.getBody().isDead());
+	}
+
+	@Test
+	public void mirrorPositionThroughWallTest() {
+		setupGame();
+		float mapWidth = round.getMap().getWidth();
+		this.round.setWallsActive(false);
+
+		// These can be set to anything as long as player passes through wall
+		// once
+		int p1StartX = 50;
+		int iterations = 300;
+
+		// float oneBeforeMirroredPosition = mapWidth - (iterations - p1StartX);
+		float actualMirroredPosition = mapWidth - (iterations - p1StartX) + 1;
+
+		p1.setBody(new Body(new Position(p1StartX, 5), 180));
+		p1.getBody().setSpeed(1);
+
+		for (int i = 0; i < iterations - 1; i++) {
+			round.update();
+		}
+
+		// One update before expected mirrored position, test fails
+		assertFalse(p1.getBody().getPosition().getX() == actualMirroredPosition);
+
+		// After one update, it should be correct
+		round.update();
+		assertTrue(p1.getBody().getPosition().getX() == actualMirroredPosition);
 	}
 }
