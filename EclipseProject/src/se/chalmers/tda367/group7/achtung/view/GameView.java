@@ -16,10 +16,10 @@ public class GameView implements View, PropertyChangeListener {
 	private final List<PlayerView> playerViews = new ArrayList<PlayerView>();
 	private final List<PowerUpEntityView> powerUpView = new ArrayList<PowerUpEntityView>();
 	private AbstractScoreView scoreView;
-
+	private AbstractScoreView goalScoreView;
+	
 	private MapView mapView;
 	private final Game game;
-	private GoalPointsScoreView goalScoreView;
 
 	public GameView(Game game) {
 		this.game = game;
