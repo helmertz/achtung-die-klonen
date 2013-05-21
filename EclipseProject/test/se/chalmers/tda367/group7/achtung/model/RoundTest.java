@@ -67,6 +67,7 @@ public class RoundTest {
 
 		p1.setBody(new Body(new Position(p1StartX, 5), 180));
 		p1.getBody().setSpeed(1);
+		p2.getBody().setSpeed(0);
 
 		for (int i = 0; i < iterations - 1; i++) {
 			round.update();
@@ -97,6 +98,7 @@ public class RoundTest {
 
 		p1.setBody(new Body(new Position(50, p1StartY), 270));
 		p1.getBody().setSpeed(1);
+		p2.getBody().setSpeed(0);
 
 		for (int i = 0; i < iterations - 1; i++) {
 			round.update();
