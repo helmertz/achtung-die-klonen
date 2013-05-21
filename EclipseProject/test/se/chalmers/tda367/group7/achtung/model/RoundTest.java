@@ -58,6 +58,8 @@ public class RoundTest {
 	public void mirrorPositionThroughWallTest() {
 		setupGame();
 		float mapWidth = round.getMap().getWidth();
+		
+		// This lets players pass through walls
 		this.round.setWallsActive(false);
 
 		// These can be set to anything as long as player passes through wall
@@ -80,5 +82,28 @@ public class RoundTest {
 		// After one update, it should be correct
 		round.update();
 		assertTrue(p1.getBody().getPosition().getX() == actualMirroredPosition);
+	}
+	
+	@Test
+	public void collisionWithWall() {
+		setupGame();
+		int p1StartX = 600;
+		
+		p1.setBody(new Body(new Position(p1StartX, 15), 180));
+		p1.getBody().setSpeed(1);
+		p2.getBody().setSpeed(0);
+		
+		float oneBeforeCollision = p1StartX - p1.getBody().getWidth() + 1;
+		
+		for (int i = 0; i < oneBeforeCollision; i++) {
+			round.update();
+		}
+		
+		// This is one update before colliding
+		assertFalse(p1.getBody().isDead());
+		
+		// Only needs one more update to collide
+		round.update();
+		assertTrue(p1.getBody().isDead());
 	}
 }
