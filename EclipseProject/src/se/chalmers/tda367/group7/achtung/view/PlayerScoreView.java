@@ -21,7 +21,6 @@ public class PlayerScoreView extends AbstractScoreView {
 		for (Player player : this.players) {
 			float sideX = renderService.getViewAreaWidth() - 175;
 			float sideY = 150 + (this.height * this.players.indexOf(player));
-			System.out.println(sideY);
 
 			renderService.drawString(player.getName(), sideX, sideY,
 					NAME_FONT_SIZE, player.getColor());
