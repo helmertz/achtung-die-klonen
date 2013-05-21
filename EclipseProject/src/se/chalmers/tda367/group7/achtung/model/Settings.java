@@ -15,7 +15,7 @@ public class Settings {
 	public static final float DEFAULT_POWER_UP_CHANCE = 0.01f;
 	public static final boolean DEFAULT_MUSIC_ENABLED = true;
 	public static final boolean DEFAULT_SOUND_EFFECTS_ENABLED = true;
-	
+
 	private static final String FILENAME = "achtung.conf";
 
 	private static Settings instance;
@@ -80,21 +80,22 @@ public class Settings {
 	public void setPowerUpChance(float powerUpChance) {
 		this.prop.setProperty("power_up_chance", powerUpChance + "");
 	}
-	
+
 	public boolean isMusicEnabled() {
-		return Boolean.parseBoolean(prop.getProperty("musicEnabled"));
+		return Boolean.parseBoolean(this.prop.getProperty("musicEnabled"));
 	}
-	
+
 	public void setMusicEnabled(boolean musicEnabled) {
-		prop.setProperty("musicEnabled", musicEnabled+"");
+		this.prop.setProperty("musicEnabled", musicEnabled + "");
 	}
-	
+
 	public boolean isSoundEffectsEnabled() {
-		return Boolean.parseBoolean(prop.getProperty("soundEffectsEnabled"));
+		return Boolean.parseBoolean(this.prop
+				.getProperty("soundEffectsEnabled"));
 	}
 
 	public void setSoundEffectsEnabled(boolean soundEffectsEnabled) {
-		prop.setProperty("soundEffectsEnabled", soundEffectsEnabled+"");
+		this.prop.setProperty("soundEffectsEnabled", soundEffectsEnabled + "");
 	}
 
 	public static synchronized Settings getInstance() {
@@ -128,7 +129,7 @@ public class Settings {
 		setPowerUpChance(DEFAULT_POWER_UP_CHANCE);
 		setMusicEnabled(DEFAULT_MUSIC_ENABLED);
 		setSoundEffectsEnabled(DEFAULT_SOUND_EFFECTS_ENABLED);
-		
+
 		save();
 	}
 }

@@ -53,8 +53,8 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		this.buttonKeyMap.put(p2r, Keyboard.KEY_D);
 
 		this.popup = this.nifty.createPopup("instructionPopup");
-		this.nifty
-				.showPopup(this.nifty.getCurrentScreen(), this.popup.getId(), null);
+		this.nifty.showPopup(this.nifty.getCurrentScreen(), this.popup.getId(),
+				null);
 	}
 
 	public void setShowContinue(boolean show) {

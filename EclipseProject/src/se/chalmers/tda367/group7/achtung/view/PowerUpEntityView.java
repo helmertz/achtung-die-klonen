@@ -21,7 +21,7 @@ public class PowerUpEntityView implements View {
 			System.exit(1);
 		}
 	}
-	
+
 	private final PowerUpEntity powerUpEntity;
 	private Image image;
 

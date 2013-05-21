@@ -23,7 +23,7 @@ class Sound implements SoundService {
 	private List<Audio> music;
 	private Audio currentMusic;
 	private float currentPosition = 0f;
-	private Settings settings = Settings.getInstance();
+	private final Settings settings = Settings.getInstance();
 
 	private Sound() {
 		initSounds();
@@ -88,7 +88,7 @@ class Sound implements SoundService {
 	}
 
 	private void playSoundEffect(Audio sound) {
-		if (settings.isSoundEffectsEnabled()) {
+		if (this.settings.isSoundEffectsEnabled()) {
 			sound.playAsSoundEffect(1.0f, 1.0f, false);
 		}
 	}
@@ -111,7 +111,7 @@ class Sound implements SoundService {
 		if (this.currentMusic == null) {
 			this.currentMusic = getRandomMusic();
 		}
-		if (!this.currentMusic.isPlaying() && settings.isMusicEnabled()) {
+		if (!this.currentMusic.isPlaying() && this.settings.isMusicEnabled()) {
 
 			this.currentMusic.playAsMusic(1.0f, 1.0f, true);
 			this.currentMusic.setPosition(this.currentPosition);

@@ -17,7 +17,7 @@ public class GameView implements View, PropertyChangeListener {
 	private final List<PowerUpEntityView> powerUpView = new ArrayList<PowerUpEntityView>();
 	private AbstractScoreView scoreView;
 	private AbstractScoreView goalScoreView;
-	
+
 	private MapView mapView;
 	private final Game game;
 
@@ -33,7 +33,8 @@ public class GameView implements View, PropertyChangeListener {
 		float scoreViewHeight = ((this.mapView.getMap().getHeight() - 150) / 8);
 		this.scoreView = new PlayerScoreView(this.game.getPlayers(),
 				scoreViewHeight);
-		this.goalScoreView = new GoalPointsScoreView(scoreViewHeight, this.game.getGoalPoints());
+		this.goalScoreView = new GoalPointsScoreView(scoreViewHeight,
+				this.game.getGoalPoints());
 	}
 
 	private void addPlayerViews() {

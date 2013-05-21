@@ -67,7 +67,7 @@ public class Game {
 	 */
 	public boolean isOver() {
 		if (this.currentRound != null) {
-			return !this.currentRound.isRoundActive() && gameWinner != null;
+			return !this.currentRound.isRoundActive() && this.gameWinner != null;
 		} else {
 			return false;
 		}
