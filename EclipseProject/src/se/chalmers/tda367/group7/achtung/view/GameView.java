@@ -15,23 +15,25 @@ public class GameView implements View, PropertyChangeListener {
 
 	private final List<PlayerView> playerViews = new ArrayList<PlayerView>();
 	private final List<PowerUpEntityView> powerUpView = new ArrayList<PowerUpEntityView>();
-	private PlayerScoreView scoreView;
+	private AbstractScoreView scoreView;
 
 	private MapView mapView;
 	private final Game game;
+	private GoalPointsScoreView goalScoreView;
 
 	public GameView(Game game) {
 		this.game = game;
 		updateMapView();
-		createScoreView();
+		createScoreViews();
 		addPlayerViews();
 	}
 
-	private void createScoreView() {
+	private void createScoreViews() {
 		// because 8 is max player amount
-		float scoreViewHeight = this.mapView.getMap().getHeight() / 8;
+		float scoreViewHeight = ((this.mapView.getMap().getHeight() - 150) / 8);
 		this.scoreView = new PlayerScoreView(this.game.getPlayers(),
 				scoreViewHeight);
+		this.goalScoreView = new GoalPointsScoreView(scoreViewHeight, this.game.getGoalPoints());
 	}
 
 	private void addPlayerViews() {
@@ -42,7 +44,7 @@ public class GameView implements View, PropertyChangeListener {
 
 	@Override
 	public void render(RenderService renderer, float interpolation) {
-
+		this.goalScoreView.render(renderer, interpolation);
 		this.mapView.render(renderer, interpolation);
 
 		for (View view : this.playerViews) {
