@@ -20,6 +20,7 @@ import de.lessvoid.nifty.controls.CheckBox;
 import de.lessvoid.nifty.controls.Label;
 import de.lessvoid.nifty.controls.Slider;
 import de.lessvoid.nifty.controls.TextField;
+import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 
@@ -33,12 +34,14 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 
 	private final Map<Button, Integer> buttonKeyMap = new HashMap<Button, Integer>();
 	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+	private Nifty nifty;
+	private Element popup;
 
 	@Override
 	public void bind(Nifty nifty, Screen screen) {
 		this.screen = screen;
 		this.errorLabel = this.screen.findNiftyControl("errtxt", Label.class);
-
+		this.nifty = nifty;
 		// Binds first two player's keys to default buttons
 		Button p1l = this.screen.findNiftyControl("keylp1", Button.class);
 		Button p1r = this.screen.findNiftyControl("keyrp1", Button.class);
@@ -48,6 +51,10 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		this.buttonKeyMap.put(p1r, Keyboard.KEY_RIGHT);
 		this.buttonKeyMap.put(p2l, Keyboard.KEY_A);
 		this.buttonKeyMap.put(p2r, Keyboard.KEY_D);
+
+		this.popup = this.nifty.createPopup("instructionPopup");
+		this.nifty
+				.showPopup(this.nifty.getCurrentScreen(), this.popup.getId(), null);
 	}
 
 	public void setShowContinue(boolean show) {
@@ -348,6 +355,10 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 
 	private float calcExp(float a, float b, float c, float value) {
 		return (float) (c * Math.pow(a, value / 100) + b);
+	}
+
+	public void closePopup() {
+		this.nifty.closePopup(this.popup.getId());
 	}
 
 	/**
