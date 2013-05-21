@@ -65,7 +65,6 @@ public class RoundTest {
 		int p1StartX = 50;
 		int iterations = 300;
 
-		// float oneBeforeMirroredPosition = mapWidth - (iterations - p1StartX);
 		float actualMirroredPosition = mapWidth - (iterations - p1StartX) + 1;
 
 		p1.setBody(new Body(new Position(p1StartX, 5), 180));
