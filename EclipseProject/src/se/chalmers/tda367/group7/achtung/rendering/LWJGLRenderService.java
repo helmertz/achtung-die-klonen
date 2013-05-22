@@ -16,6 +16,9 @@ import org.lwjgl.opengl.Util;
 import se.chalmers.tda367.group7.achtung.model.Color;
 
 class LWJGLRenderService implements RenderService {
+	
+	private static final int MIN_WIDTH = 600;
+	private static final int MIN_HEIGHT = 450;
 
 	private static LWJGLRenderService instance;
 
@@ -98,28 +101,45 @@ class LWJGLRenderService implements RenderService {
 
 	}
 
-	// TODO: make scaling proportional
 	private void sizeRefresh() {
-		glViewport(0, 0, Display.getWidth(), Display.getHeight());
+		int displayWidth = Display.getWidth();
+		int displayHeight = Display.getHeight();
+		
+		// Enforces minimum display size
+		if (displayWidth < MIN_WIDTH || displayHeight < MIN_HEIGHT) {
+			if(displayWidth < MIN_WIDTH) {
+				displayWidth = MIN_WIDTH;
+			}
+			if(displayHeight < MIN_HEIGHT) {
+				displayHeight = MIN_HEIGHT;
+			}
+			try {
+				Display.setDisplayMode(new DisplayMode(displayWidth, displayHeight));
+			} catch (LWJGLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		glViewport(0, 0, displayWidth, displayHeight);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		this.xPadding = 0;
 		this.yPadding = 0;
 
 		// for proportional scaling
-		float displayRatio = (float) Display.getWidth() / Display.getHeight();
+		float displayRatio = (float) displayWidth / displayHeight;
 		float viewRatio = this.viewAreaWidth / this.viewAreaHeight;
 
 		if (viewRatio < displayRatio) {
 			// Padd on width
 			this.xPadding = (this.viewAreaHeight * displayRatio - this.viewAreaWidth) / 2;
-			this.scaling = Display.getHeight() / this.viewAreaHeight;
+			this.scaling = displayHeight / this.viewAreaHeight;
 		} else {
 			// Padd on height
 			this.yPadding = (this.viewAreaWidth / displayRatio - this.viewAreaHeight) / 2;
-			this.scaling = Display.getWidth() / this.viewAreaWidth;
+			this.scaling = displayWidth / this.viewAreaWidth;
 		}
-		glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 0, 1);
+		glOrtho(0, displayWidth, displayHeight, 0, 0, 1);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		if (this.scaled) {
