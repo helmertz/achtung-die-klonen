@@ -167,6 +167,12 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		this.nifty.showPopup(this.nifty.getCurrentScreen(), this.popup.getId(),
 				null);
 	}
+	
+	public void onAboutPress () {
+		this.popup = this.nifty.createPopup("aboutPopup");
+		this.nifty.showPopup(this.nifty.getCurrentScreen(), this.popup.getId(),
+				null);
+	}
 
 	/**
 	 * Polls the menu elements and sets information in the Settings singleton.

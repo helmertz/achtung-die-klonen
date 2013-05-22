@@ -6,16 +6,7 @@
 		<layer id="layer" childLayout="center" backgroundColor="#111111">
 			<panel height="90%" width="90%" align="center" valign="center" childLayout="vertical" backgroundColor="#242424">
 				<panel width="100%" align="center" valign="top" childLayout="vertical">
-					<control name="label" text="Game Configuration"/>
-					<control name="button" id="continueButton" label="Continue" align="center">
-						<interact onRelease="onContinuePress()"/>
-					</control>
-					<control name="button" id="instructionButton" label="Instructions" align="center">
-						<interact onRelease="onInstructionPress()"/>
-					</control>
-					<control name="button" id="resetButton" label="Reset to defaults" align="center">
-						<interact onRelease="onResetPress()"/>
-					</control>
+					<control name="label" text="Game  Configuration"/>
 					<control name="label" width="100%" id="errorText" text="" color="#ff0000"/>
 				</panel>
 				<panel width="100%" height="*" childLayout="horizontal" backgroundColor="#333333">
@@ -151,16 +142,29 @@
 								<control name="checkbox" checked="true" id="sound"/>
 								<control name="label" text="Sound effects"/>
 							</panel>
+							<control name="button" id="resetButton" label="Reset all" align="right">
+								<interact onRelease="onResetPress()"/>
+							</control>
 						</panel>
 					</panel>
 				</panel>
 				<panel childLayout="horizontal" valign="bottom" width="100%" height="35">
-					<panel childLayout="center" valign="center" width="50%" align="left">
+					<panel childLayout="horizontal" valign="center" width="50%" align="left">
 						<control name="button" id="exitButton" label="Exit" align="left">
 							<interact onRelease="onExitPress()"/>
 						</control>
+						<control name="button" id="instructionButton" label="Instructions" align="left">
+							<interact onRelease="onInstructionPress()"/>
+						</control>
+						<control name="button" id="aboutButton" label="About" align="left">
+							<interact onRelease="onAboutPress()"/>
+						</control>
 					</panel>
-					<panel childLayout="center" valign="center" width="50%" align="right">
+					<panel childLayout="horizontal" valign="center" width="50%" align="right">
+						<panel width="*" height="0" childLayout="horizontal"/>
+						<control name="button" id="continueButton" label="Continue" align="right">
+							<interact onRelease="onContinuePress()"/>
+						</control>
 						<control name="button" id="newGameButton" label="New Game" align="right">
 							<interact onRelease="onNewGamePress()"/>
 						</control>
@@ -174,6 +178,12 @@
 		<panel width="350" height="300" style="nifty-panel" childLayout="vertical">
 			<control name="label" text="Instructions&#10;"/>
 			<control textHAlign="left" textVAlign="top" width="80%" align="center" height="100%" wrap="true" name="label" text="Each player has its own snake that is controlled by turning left or right using the two assigned keyboard buttons. The player should control it so it doesn't collide with other snakes, or itself. When a player's snake dies, the remaining players get a point each. The round is over when only one player remains. The entire game is over when a player reaches the goal points."/>
+		</panel>
+	</popup>
+	<popup id="aboutPopup" align="center" childLayout="center">
+		<interact onClick="closePopup()"/>
+		<panel width="350" height="300" style="nifty-panel" childLayout="vertical">
+			<control textVAlign="top" width="80%" align="center" height="100%" wrap="true" name="label" text="Achtung, die Klonen&#10;&#10;x.y&#10;(2013-mm-dd)&#10;&#10;Jakob Csörgei Gustavsson&#10;Niklas Helmertz&#10;Lucas Persson&#10;Joel Torstenson&#10;&#10;Music  Credits:&#10;Borderline, (Fantastic Vamps : 8-Bit Mix) http://ccmixter.org/files/vamps/8749&#10;ParagonX9, SM64 - The Alternate Route http://www.newgrounds.com/audio/listen/11245"/>
 		</panel>
 	</popup>
 </nifty>
