@@ -95,6 +95,10 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		}
 	}
 
+	public void onExitPress() {
+		this.pcs.firePropertyChange("exit", false, true);
+	}
+
 	private void showErrorText(String text) {
 		this.errorLabel.setText(text);
 	}

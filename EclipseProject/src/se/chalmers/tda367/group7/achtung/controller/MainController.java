@@ -65,6 +65,7 @@ public class MainController implements PropertyChangeListener,
 	private RenderService renderer;
 	private final InputService inputService;
 	private SoundService sound;
+	private boolean finished;
 
 	private Game game;
 	private GameView gameView;
@@ -128,7 +129,7 @@ public class MainController implements PropertyChangeListener,
 
 	public void run() {
 		this.nextGameTick = getTickCount();
-		while (!this.renderer.isCloseRequested()) {
+		while (!this.finished && !this.renderer.isCloseRequested()) {
 
 			// Called as often as possible, so events gets created directly at
 			// key press
@@ -307,7 +308,9 @@ public class MainController implements PropertyChangeListener,
 	@SuppressWarnings("unchecked")
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals("startPressed")) {
+		if (evt.getPropertyName().equals("exit")) {
+			this.finished = true;
+		} else if (evt.getPropertyName().equals("startPressed")) {
 			// TODO - Better check here?
 			if (evt.getNewValue() instanceof List<?>) {
 				startGame((List<PlayerInfoHolder>) evt.getNewValue());
