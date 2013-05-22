@@ -73,7 +73,7 @@ class LWJGLRenderService implements RenderService {
 
 	private void initDisplay() throws LWJGLException {
 		Display.setResizable(true);
-		Display.setTitle("Achtung");
+		Display.setTitle("Achtung, die Klonen");
 
 		// Used to determine anti-aliasing capabilities
 		int maxSamples = 0;
