@@ -8,13 +8,24 @@ import java.util.Properties;
 
 public class Settings {
 
-	public static final float DEFAULT_WIDTH = 10;
-	public static final float DEFAULT_SPEED = 6;
-	public static final float DEFAULT_ROTATION_SPEED = 6f;
-	public static final double DEFAULT_CHANCE_OF_HOLE = 0.015;
-	public static final float DEFAULT_POWER_UP_CHANCE = 0.01f;
-	public static final boolean DEFAULT_MUSIC_ENABLED = true;
-	public static final boolean DEFAULT_SOUND_EFFECTS_ENABLED = true;
+	public static final float MIN_WIDTH = 3;
+	public static final float MAX_WIDTH = 65;
+	public static final float MIN_SPEED = 1;
+	public static final float MAX_SPEED = 12;
+	public static final float MIN_ROTATION_SPEED = 3;
+	public static final float MAX_ROTATION_SPEED = 10;
+	public static final float MIN_CHANCE_OF_HOLE = 0;
+	public static final float MAX_CHANCE_OF_HOLE = 0.2f;
+	public static final float MIN_POWER_UP_CHANCE = 0;
+	public static final float MAX_POWER_UP_CHANCE = 0.1f;
+
+	private static final float DEFAULT_WIDTH = 10;
+	private static final float DEFAULT_SPEED = 6;
+	private static final float DEFAULT_ROTATION_SPEED = 6f;
+	private static final float DEFAULT_CHANCE_OF_HOLE = 0.015f;
+	private static final float DEFAULT_POWER_UP_CHANCE = 0.01f;
+	private static final boolean DEFAULT_MUSIC_ENABLED = true;
+	private static final boolean DEFAULT_SOUND_EFFECTS_ENABLED = true;
 
 	private static final String FILENAME = "achtung.conf";
 
@@ -65,11 +76,11 @@ public class Settings {
 		this.prop.setProperty("rotation_speed", rotationSpeed + "");
 	}
 
-	public double getChanceOfHole() {
-		return Double.parseDouble(this.prop.getProperty("chance_of_hole"));
+	public float getChanceOfHole() {
+		return Float.parseFloat(this.prop.getProperty("chance_of_hole"));
 	}
 
-	public void setChanceOfHole(double chanceOfHole) {
+	public void setChanceOfHole(float chanceOfHole) {
 		this.prop.setProperty("chance_of_hole", chanceOfHole + "");
 	}
 

@@ -42,6 +42,8 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		this.screen = screen;
 		this.errorLabel = this.screen.findNiftyControl("errorText", Label.class);
 		this.nifty = nifty;
+		
+		loadGameSettings();
 		// Binds first two player's keys to default buttons
 		Button p1l = this.screen.findNiftyControl("keylp1", Button.class);
 		Button p1r = this.screen.findNiftyControl("keyrp1", Button.class);
@@ -184,11 +186,11 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		CheckBox soundEffectsCheckBox = this.screen.findNiftyControl("sound",
 				CheckBox.class);
 
-		float powerUpChance = calcPowerUpChance(pu.getValue());
-		float speed = calcSpeed(speedSlider.getValue());
-		float width = calcWidth(widthSlider.getValue());
-		float holeChance = calcHoleChance(holeSlider.getValue());
-		float rotSpeed = calcRotSpeed(rotSlider.getValue());
+		float powerUpChance = calcSliderToValue(Settings.MIN_POWER_UP_CHANCE, Settings.MAX_POWER_UP_CHANCE, pu.getValue());
+		float speed = calcSliderToValue(Settings.MIN_SPEED, Settings.MAX_SPEED, speedSlider.getValue());
+		float width = calcSliderToValue(Settings.MIN_WIDTH, Settings.MAX_WIDTH, widthSlider.getValue());
+		float holeChance = calcSliderToValue(Settings.MIN_CHANCE_OF_HOLE, Settings.MAX_CHANCE_OF_HOLE, holeSlider.getValue());
+		float rotSpeed = calcSliderToValue(Settings.MIN_ROTATION_SPEED, Settings.MAX_ROTATION_SPEED, rotSlider.getValue());
 		boolean musicEnabled = musicCheckBox.isChecked();
 		boolean soundEffectsEnabled = soundEffectsCheckBox.isChecked();
 
@@ -200,6 +202,44 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		settings.setRotationSpeed(rotSpeed);
 		settings.setMusicEnabled(musicEnabled);
 		settings.setSoundEffectsEnabled(soundEffectsEnabled);
+	}
+	
+	/**
+	 * Polls the menu elements and sets information in the Settings singleton.
+	 */
+	private void loadGameSettings() {
+		Slider pu = this.screen.findNiftyControl("puslider", Slider.class);
+		Slider speedSlider = this.screen.findNiftyControl("speedSlider",
+				Slider.class);
+		Slider widthSlider = this.screen.findNiftyControl("widthSlider",
+				Slider.class);
+		Slider holeSlider = this.screen.findNiftyControl("holeSlider",
+				Slider.class);
+		Slider rotSlider = this.screen.findNiftyControl("rotSlider",
+				Slider.class);
+		CheckBox musicCheckBox = this.screen.findNiftyControl("music",
+				CheckBox.class);
+		CheckBox soundEffectsCheckBox = this.screen.findNiftyControl("sound",
+				CheckBox.class);
+
+		Settings settings = Settings.getInstance();
+		
+		float powerUpChance = calcValueToSlider(Settings.MIN_POWER_UP_CHANCE, Settings.MAX_POWER_UP_CHANCE, settings.getPowerUpChance());
+		float speed = calcValueToSlider(Settings.MIN_SPEED, Settings.MAX_SPEED, settings.getSpeed());
+		float width = calcValueToSlider(Settings.MIN_WIDTH, Settings.MAX_WIDTH, settings.getWidth());
+		float holeChance = calcValueToSlider(Settings.MIN_CHANCE_OF_HOLE, Settings.MAX_CHANCE_OF_HOLE, settings.getChanceOfHole());
+		float rotSpeed = calcValueToSlider(Settings.MIN_ROTATION_SPEED, Settings.MAX_ROTATION_SPEED, settings.getRotationSpeed());
+		boolean musicEnabled = settings.isMusicEnabled();
+		boolean soundEffectsEnabled = settings.isSoundEffectsEnabled();
+
+		pu.setValue(powerUpChance);
+		speedSlider.setValue(speed);
+		widthSlider.setValue(width);
+		holeSlider.setValue(holeChance);
+		rotSlider.setValue(rotSpeed);
+		musicCheckBox.setChecked(musicEnabled);
+		soundEffectsCheckBox.setChecked(soundEffectsEnabled);
+		
 	}
 
 	public void onContinuePress() {
@@ -300,67 +340,35 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		}
 		return false;
 	}
-
-	private float calcRotSpeed(float value) {
-		// value = 0 -> 3
-		// value = 50 -> 6
-		// value = 100 -> 10
-
-		float a = 16 / 9f;
-		float b = -6;
-		float c = 9;
-		return calcExp(a, b, c, value);
+	
+	/**
+	 * Calculates the settings value from a slider value.
+	 * @param min - the minimum setting
+	 * @param max - the maximum setting
+	 * @param sliderValue - the value that the slider has
+	 * 
+	 * @return the value that can be used in game
+	 */
+	private float calcSliderToValue(float min, float max, float sliderValue) {
+		float precent = sliderValue/100;
+		// Here we move the min value to zero,
+		// then calculate position and lastly
+		// moves it back.
+		return (max-min)*precent + min;
 	}
-
-	private float calcHoleChance(float value) {
-		// value = 0 -> 0 chance
-		// value = 50 -> 0.015 chance
-		// value = 100 -> 0.2 chance
-		float a = 1369 / 9f;
-		float b = -(9 / 6800f);
-		float c = 9 / 6800f;
-
-		return calcExp(a, b, c, value);
-	}
-
-	private float calcWidth(float value) {
-		// value = 0 -> 3 speed
-		// value = 50 -> 10 speed
-		// value = 100 -> 65 speed
-
-		float a = 3025 / 49f;
-		float b = 95 / 48f;
-		float c = 49 / 48f;
-
-		return calcExp(a, b, c, value);
-	}
-
-	private float calcSpeed(float value) {
-		// value = 0 -> 0 speed
-		// value = 50 -> 6 speed
-		// value = 100 -> 12 speed
-
-		float a = 36 / 25f;
-		float b = -24;
-		float c = 25;
-
-		return calcExp(a, b, c, value);
-	}
-
-	private float calcPowerUpChance(float value) {
-		// value = 0 -> 0 chance
-		// value = 50 -> 0.01 chance
-		// value = 100 -> 0.1 chance
-
-		float a = 81;
-		float b = -(1 / 800f);
-		float c = 1 / 800f;
-
-		return calcExp(a, b, c, value);
-	}
-
-	private float calcExp(float a, float b, float c, float value) {
-		return (float) (c * Math.pow(a, value / 100) + b);
+	
+	/**
+	 * Calculates the slider value from a settings value.
+	 * @param min - the minimum setting
+	 * @param max - the maximum setting
+	 * @param value - the value that the settings has
+	 * 
+	 * @return the value that can be used on slider
+	 */
+	private float calcValueToSlider(float min, float max, float value) {
+		float precent = (value-min)/(max-min);
+		
+		return precent*100;
 	}
 
 	public void closePopup() {
