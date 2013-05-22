@@ -13,6 +13,9 @@
 					<control name="button" id="instructionButton" label="Instructions" align="center">
 						<interact onRelease="onInstructionPress()"/>
 					</control>
+					<control name="button" id="resetButton" label="Reset to defaults" align="center">
+						<interact onRelease="onResetPress()"/>
+					</control>
 					<control name="label" width="100%" id="errorText" text="" color="#ff0000"/>
 				</panel>
 				<panel width="100%" height="*" childLayout="horizontal">

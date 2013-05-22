@@ -205,7 +205,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	}
 	
 	/**
-	 * Polls the menu elements and sets information in the Settings singleton.
+	 * Gets information from the Settings singleton and sets to the menu elements.
 	 */
 	private void loadGameSettings() {
 		Slider pu = this.screen.findNiftyControl("puslider", Slider.class);
@@ -255,6 +255,12 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		settings.setSoundEffectsEnabled(soundEffectsCheckBox.isChecked());
 
 		this.pcs.firePropertyChange("continuePressed", false, true);
+	}
+	
+	public void onResetPress() {
+		// Resets all settings.
+		Settings.getInstance().resetToDefaults();
+		loadGameSettings();
 	}
 
 	// Called from nifty (using reflection)
