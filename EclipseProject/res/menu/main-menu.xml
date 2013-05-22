@@ -3,8 +3,8 @@
 	<useStyles filename="nifty-default-styles.xml"/>
 	<useControls filename="nifty-default-controls.xml"/>
 	<screen id="start" controller="se.chalmers.tda367.group7.achtung.menu.MainMenuController" defaultFocusElement="button">
-		<layer id="layer" childLayout="center" backgroundColor="#333333">
-			<panel height="90%" width="90%" align="center" valign="center" childLayout="vertical">
+		<layer id="layer" childLayout="center" backgroundColor="#111111">
+			<panel height="90%" width="90%" align="center" valign="center" childLayout="vertical" backgroundColor="#242424">
 				<panel width="100%" align="center" valign="top" childLayout="vertical">
 					<control name="label" text="Game Configuration"/>
 					<control name="button" id="continueButton" label="Continue" align="center">
@@ -18,7 +18,7 @@
 					</control>
 					<control name="label" width="100%" id="errorText" text="" color="#ff0000"/>
 				</panel>
-				<panel width="100%" height="*" childLayout="horizontal">
+				<panel width="100%" height="*" childLayout="horizontal" backgroundColor="#333333">
 					<panel width="50%" childLayout="vertical">
 						<panel width="80%" align="center" childLayout="center">
 							<panel width="120" align="right" childLayout="horizontal">
@@ -154,13 +154,13 @@
 						</panel>
 					</panel>
 				</panel>
-				<panel childLayout="horizontal" valign="bottom" width="100%">
-					<panel childLayout="center" width="50%" align="left">
+				<panel childLayout="horizontal" valign="bottom" width="100%" height="35">
+					<panel childLayout="center" valign="center" width="50%" align="left">
 						<control name="button" id="exitButton" label="Exit" align="left">
 							<interact onRelease="onExitPress()"/>
 						</control>
 					</panel>
-					<panel childLayout="center" width="50%" align="right">
+					<panel childLayout="center" valign="center" width="50%" align="right">
 						<control name="button" id="newGameButton" label="New Game" align="right">
 							<interact onRelease="onNewGamePress()"/>
 						</control>
