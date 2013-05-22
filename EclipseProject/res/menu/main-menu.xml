@@ -3,150 +3,164 @@
 	<useStyles filename="nifty-default-styles.xml"/>
 	<useControls filename="nifty-default-controls.xml"/>
 	<screen id="start" controller="se.chalmers.tda367.group7.achtung.menu.MainMenuController" defaultFocusElement="button">
-		<layer id="layer" childLayout="center" backgroundColor="#dddddd">
-			<panel style="nifty-panel" height="90%" width="90%" align="center" valign="center" childLayout="center">
-				<panel width="100%" height="20%" align="center" valign="top" childLayout="vertical">
+		<layer id="layer" childLayout="center" backgroundColor="#333333">
+			<panel height="90%" width="90%" align="center" valign="center" childLayout="vertical">
+				<panel width="100%" align="center" valign="top" childLayout="vertical">
 					<control name="label" text="Game Configuration"/>
-					<control name="button" id="newGameButton" label="New Game" align="center">
-						<interact onRelease="onStartPress()"/>
-					</control>
 					<control name="button" id="continueButton" label="Continue" align="center">
 						<interact onRelease="onContinuePress()"/>
 					</control>
-					<control name="label" width="100%" id="errtxt" text="" color="#ff0000"/>
+					<control name="button" id="instructionButton" label="Instructions" align="center">
+						<interact onRelease="onInstructionPress()"/>
+					</control>
+					<control name="label" width="100%" id="errorText" text="" color="#ff0000"/>
 				</panel>
-				<panel width="50%" height="80%" align="left" valign="bottom" childLayout="vertical">
-					<panel width="80%" align="center" childLayout="center">
-						<panel width="120" align="right" childLayout="horizontal">
-							<control name="label" text="Left" align="right" width="60"/>
-							<control name="label" text="Right" align="right" width="60"/>
+				<panel width="100%" height="*" childLayout="horizontal">
+					<panel width="50%" childLayout="vertical">
+						<panel width="80%" align="center" childLayout="center">
+							<panel width="120" align="right" childLayout="horizontal">
+								<control name="label" text="Left" align="right" width="60"/>
+								<control name="label" text="Right" align="right" width="60"/>
+							</panel>
+						</panel>
+						<panel width="80%" align="center" childLayout="horizontal">
+							<panel width="23" height="23" backgroundColor="#222222" childLayout="center">
+								<panel width="21" height="21" backgroundColor="#2357ff"/>
+							</panel>
+							<control name="checkbox" checked="true" id="cbp1"/>
+							<control name="textfield" text="Player 1" id="namep1"/>
+							<control name="button" label="LEFT" id="keylp1" width="60">
+								<interact onClick="onKeyButtonPressed(keylp1)"/>
+							</control>
+							<control name="button" label="RIGHT" id="keyrp1" width="60">
+								<interact onClick="onKeyButtonPressed(keyrp1)"/>
+							</control>
+						</panel>
+						<panel width="80%" align="center" childLayout="horizontal">
+							<panel width="23" height="23" backgroundColor="#222222" childLayout="center">
+								<panel width="21" height="21" backgroundColor="#00dd00"/>
+							</panel>
+							<control name="checkbox" checked="true" id="cbp2"/>
+							<control name="textfield" text="Player 2" id="namep2"/>
+							<control name="button" label="A" id="keylp2" width="60">
+								<interact onClick="onKeyButtonPressed(keylp2)"/>
+							</control>
+							<control name="button" label="D" id="keyrp2" width="60">
+								<interact onClick="onKeyButtonPressed(keyrp2)"/>
+							</control>
+						</panel>
+						<panel width="80%" align="center" childLayout="horizontal">
+							<panel width="23" height="23" backgroundColor="#222222" childLayout="center">
+								<panel width="21" height="21" backgroundColor="#ff2222"/>
+							</panel>
+							<control name="checkbox" checked="false" id="cbp3"/>
+							<control name="textfield" text="Player 3" id="namep3"/>
+							<control name="button" label="" id="keylp3" width="60">
+								<interact onClick="onKeyButtonPressed(keylp3)"/>
+							</control>
+							<control name="button" label="" id="keyrp3" width="60">
+								<interact onClick="onKeyButtonPressed(keyrp3)"/>
+							</control>
+						</panel>
+						<panel width="80%" align="center" childLayout="horizontal">
+							<panel width="23" height="23" backgroundColor="#222222" childLayout="center">
+								<panel width="21" height="21" backgroundColor="#ffdf22"/>
+							</panel>
+							<control name="checkbox" checked="false" id="cbp4"/>
+							<control name="textfield" text="Player 4" id="namep4"/>
+							<control name="button" label="" id="keylp4" width="60">
+								<interact onClick="onKeyButtonPressed(keylp4)"/>
+							</control>
+							<control name="button" label="" id="keyrp4" width="60">
+								<interact onClick="onKeyButtonPressed(keyrp4)"/>
+							</control>
+						</panel>
+						<panel width="80%" align="center" childLayout="horizontal">
+							<panel width="23" height="23" backgroundColor="#222222" childLayout="center">
+								<panel width="21" height="21" backgroundColor="#5ac1ed"/>
+							</panel>
+							<control name="checkbox" checked="false" id="cbp5"/>
+							<control name="textfield" text="Player 5" id="namep5"/>
+							<control name="button" label="" id="keylp5" width="60">
+								<interact onClick="onKeyButtonPressed(keylp5)"/>
+							</control>
+							<control name="button" label="" id="keyrp5" width="60">
+								<interact onClick="onKeyButtonPressed(keyrp5)"/>
+							</control>
+						</panel>
+						<panel width="80%" align="center" childLayout="horizontal">
+							<panel width="23" height="23" backgroundColor="#222222" childLayout="center">
+								<panel width="21" height="21" backgroundColor="#f9a2c5"/>
+							</panel>
+							<control name="checkbox" checked="false" id="cbp6"/>
+							<control name="textfield" text="Player 6" id="namep6"/>
+							<control name="button" label="" id="keylp6" width="60">
+								<interact onClick="onKeyButtonPressed(keylp6)"/>
+							</control>
+							<control name="button" label="" id="keyrp6" width="60">
+								<interact onClick="onKeyButtonPressed(keyrp6)"/>
+							</control>
+						</panel>
+						<panel width="80%" align="center" childLayout="horizontal">
+							<panel width="23" height="23" backgroundColor="#222222" childLayout="center">
+								<panel width="21" height="21" backgroundColor="#ff7800"/>
+							</panel>
+							<control name="checkbox" checked="false" id="cbp7"/>
+							<control name="textfield" text="Player 7" id="namep7"/>
+							<control name="button" label="" id="keylp7" width="60">
+								<interact onClick="onKeyButtonPressed(keylp7)"/>
+							</control>
+							<control name="button" label="" id="keyrp7" width="60">
+								<interact onClick="onKeyButtonPressed(keyrp7)"/>
+							</control>
+						</panel>
+						<panel width="80%" align="center" childLayout="horizontal">
+							<panel width="23" height="23" backgroundColor="#222222" childLayout="center">
+								<panel width="21" height="21" backgroundColor="#d12ed1"/>
+							</panel>
+							<control name="checkbox" checked="false" id="cbp8"/>
+							<control name="textfield" text="Player 8" id="namep8"/>
+							<control name="button" label="" id="keylp8" width="60">
+								<interact onClick="onKeyButtonPressed(keylp8)"/>
+							</control>
+							<control name="button" label="" id="keyrp8" width="60">
+								<interact onClick="onKeyButtonPressed(keyrp8)"/>
+							</control>
 						</panel>
 					</panel>
-					<panel width="80%" align="center" childLayout="horizontal">
-						<panel width="23" height="23" backgroundColor="#222222" childLayout="center">
-							<panel width="21" height="21" backgroundColor="#2357ff"/>
+					<panel width="50%" childLayout="vertical">
+						<panel width="80%" align="center" childLayout="vertical">
+							<control name="label" text="Power-up chance"/>
+							<control id="puslider" name="horizontalSlider" initial="50" buttonStepSize="5"/>
+							<control name="label" text="Player speed"/>
+							<control id="speedSlider" name="horizontalSlider" initial="50" buttonStepSize="5"/>
+							<control name="label" text="Player width"/>
+							<control id="widthSlider" name="horizontalSlider" initial="50" buttonStepSize="5"/>
+							<control name="label" text="Hole chance"/>
+							<control id="holeSlider" name="horizontalSlider" initial="50" buttonStepSize="5"/>
+							<control name="label" text="Rotation speed"/>
+							<control id="rotSlider" name="horizontalSlider" initial="50" buttonStepSize="5"/>
+							<panel childLayout="horizontal">
+								<control name="checkbox" checked="true" id="music"/>
+								<control name="label" text="Music"/>
+							</panel>
+							<panel childLayout="horizontal">
+								<control name="checkbox" checked="true" id="sound"/>
+								<control name="label" text="Sound effects"/>
+							</panel>
 						</panel>
-						<control name="checkbox" checked="true" id="cbp1"/>
-						<control name="textfield" text="Player 1" id="namep1"/>
-						<control name="button" label="LEFT" id="keylp1" width="60">
-							<interact onClick="onKeyButtonPressed(keylp1)"/>
-						</control>
-						<control name="button" label="RIGHT" id="keyrp1" width="60">
-							<interact onClick="onKeyButtonPressed(keyrp1)"/>
-						</control>
-					</panel>
-					<panel width="80%" align="center" childLayout="horizontal">
-						<panel width="23" height="23" backgroundColor="#222222" childLayout="center">
-							<panel width="21" height="21" backgroundColor="#00dd00"/>
-						</panel>
-						<control name="checkbox" checked="true" id="cbp2"/>
-						<control name="textfield" text="Player 2" id="namep2"/>
-						<control name="button" label="A" id="keylp2" width="60">
-							<interact onClick="onKeyButtonPressed(keylp2)"/>
-						</control>
-						<control name="button" label="D" id="keyrp2" width="60">
-							<interact onClick="onKeyButtonPressed(keyrp2)"/>
-						</control>
-					</panel>
-					<panel width="80%" align="center" childLayout="horizontal">
-						<panel width="23" height="23" backgroundColor="#222222" childLayout="center">
-							<panel width="21" height="21" backgroundColor="#ff2222"/>
-						</panel>
-						<control name="checkbox" checked="false" id="cbp3"/>
-						<control name="textfield" text="Player 3" id="namep3"/>
-						<control name="button" label="" id="keylp3" width="60">
-							<interact onClick="onKeyButtonPressed(keylp3)"/>
-						</control>
-						<control name="button" label="" id="keyrp3" width="60">
-							<interact onClick="onKeyButtonPressed(keyrp3)"/>
-						</control>
-					</panel>
-					<panel width="80%" align="center" childLayout="horizontal">
-						<panel width="23" height="23" backgroundColor="#222222" childLayout="center">
-							<panel width="21" height="21" backgroundColor="#ffdf22"/>
-						</panel>
-						<control name="checkbox" checked="false" id="cbp4"/>
-						<control name="textfield" text="Player 4" id="namep4"/>
-						<control name="button" label="" id="keylp4" width="60">
-							<interact onClick="onKeyButtonPressed(keylp4)"/>
-						</control>
-						<control name="button" label="" id="keyrp4" width="60">
-							<interact onClick="onKeyButtonPressed(keyrp4)"/>
-						</control>
-					</panel>
-					<panel width="80%" align="center" childLayout="horizontal">
-						<panel width="23" height="23" backgroundColor="#222222" childLayout="center">
-							<panel width="21" height="21" backgroundColor="#5ac1ed"/>
-						</panel>
-						<control name="checkbox" checked="false" id="cbp5"/>
-						<control name="textfield" text="Player 5" id="namep5"/>
-						<control name="button" label="" id="keylp5" width="60">
-							<interact onClick="onKeyButtonPressed(keylp5)"/>
-						</control>
-						<control name="button" label="" id="keyrp5" width="60">
-							<interact onClick="onKeyButtonPressed(keyrp5)"/>
-						</control>
-					</panel>
-					<panel width="80%" align="center" childLayout="horizontal">
-						<panel width="23" height="23" backgroundColor="#222222" childLayout="center">
-							<panel width="21" height="21" backgroundColor="#f9a2c5"/>
-						</panel>
-						<control name="checkbox" checked="false" id="cbp6"/>
-						<control name="textfield" text="Player 6" id="namep6"/>
-						<control name="button" label="" id="keylp6" width="60">
-							<interact onClick="onKeyButtonPressed(keylp6)"/>
-						</control>
-						<control name="button" label="" id="keyrp6" width="60">
-							<interact onClick="onKeyButtonPressed(keyrp6)"/>
-						</control>
-					</panel>
-					<panel width="80%" align="center" childLayout="horizontal">
-						<panel width="23" height="23" backgroundColor="#222222" childLayout="center">
-							<panel width="21" height="21" backgroundColor="#ff7800"/>
-						</panel>
-						<control name="checkbox" checked="false" id="cbp7"/>
-						<control name="textfield" text="Player 7" id="namep7"/>
-						<control name="button" label="" id="keylp7" width="60">
-							<interact onClick="onKeyButtonPressed(keylp7)"/>
-						</control>
-						<control name="button" label="" id="keyrp7" width="60">
-							<interact onClick="onKeyButtonPressed(keyrp7)"/>
-						</control>
-					</panel>
-					<panel width="80%" align="center" childLayout="horizontal">
-						<panel width="23" height="23" backgroundColor="#222222" childLayout="center">
-							<panel width="21" height="21" backgroundColor="#d12ed1"/>
-						</panel>
-						<control name="checkbox" checked="false" id="cbp8"/>
-						<control name="textfield" text="Player 8" id="namep8"/>
-						<control name="button" label="" id="keylp8" width="60">
-							<interact onClick="onKeyButtonPressed(keylp8)"/>
-						</control>
-						<control name="button" label="" id="keyrp8" width="60">
-							<interact onClick="onKeyButtonPressed(keyrp8)"/>
-						</control>
 					</panel>
 				</panel>
-				<panel width="50%" height="80%" align="right" valign="bottom" childLayout="vertical">
-					<panel width="80%" align="center" childLayout="vertical">
-						<control name="label" text="Power-up chance"/>
-						<control id="puslider" name="horizontalSlider" initial="50" buttonStepSize="5"/>
-						<control name="label" text="Player speed"/>
-						<control id="speedSlider" name="horizontalSlider" initial="50" buttonStepSize="5"/>
-						<control name="label" text="Player width"/>
-						<control id="widthSlider" name="horizontalSlider" initial="50" buttonStepSize="5"/>
-						<control name="label" text="Hole chance"/>
-						<control id="holeSlider" name="horizontalSlider" initial="50" buttonStepSize="5"/>
-						<control name="label" text="Rotation speed"/>
-						<control id="rotSlider" name="horizontalSlider" initial="50" buttonStepSize="5"/>
-						<panel childLayout="horizontal">
-							<control name="checkbox" checked="true" id="music"/>
-							<control name="label" text="Music"/>
-						</panel>
-						<panel childLayout="horizontal">
-							<control name="checkbox" checked="true" id="sound"/>
-							<control name="label" text="Sound effects"/>
-						</panel>
+				<panel childLayout="horizontal" valign="bottom" width="100%">
+					<panel childLayout="center" width="50%" align="left">
+						<control name="button" id="exitButton" label="Exit" align="left">
+							<interact onRelease="onExitPress()"/>
+						</control>
+					</panel>
+					<panel childLayout="center" width="50%" align="right">
+						<control name="button" id="newGameButton" label="New Game" align="right">
+							<interact onRelease="onNewGamePress()"/>
+						</control>
 					</panel>
 				</panel>
 			</panel>

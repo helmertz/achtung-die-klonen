@@ -40,7 +40,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	@Override
 	public void bind(Nifty nifty, Screen screen) {
 		this.screen = screen;
-		this.errorLabel = this.screen.findNiftyControl("errtxt", Label.class);
+		this.errorLabel = this.screen.findNiftyControl("errorText", Label.class);
 		this.nifty = nifty;
 		// Binds first two player's keys to default buttons
 		Button p1l = this.screen.findNiftyControl("keylp1", Button.class);
@@ -81,7 +81,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		this.pcs.removePropertyChangeListener(listener);
 	}
 
-	public void onStartPress() {
+	public void onNewGamePress() {
 		// Uses try to abort and show error message on invalid setup
 		try {
 			List<PlayerInfoHolder> pInfoList = createPlayerInfo();
