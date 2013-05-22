@@ -51,10 +51,6 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		this.buttonKeyMap.put(p1r, Keyboard.KEY_RIGHT);
 		this.buttonKeyMap.put(p2l, Keyboard.KEY_A);
 		this.buttonKeyMap.put(p2r, Keyboard.KEY_D);
-
-		this.popup = this.nifty.createPopup("instructionPopup");
-		this.nifty.showPopup(this.nifty.getCurrentScreen(), this.popup.getId(),
-				null);
 	}
 
 	public void setShowContinue(boolean show) {
@@ -158,6 +154,12 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 
 		return new PlayerInfoHolder(lKey, rKey,
 				Color.PLAYER_COLORS[playerNum - 1], name);
+	}
+	
+	public void onInstructionPress () {
+		this.popup = this.nifty.createPopup("instructionPopup");
+		this.nifty.showPopup(this.nifty.getCurrentScreen(), this.popup.getId(),
+				null);
 	}
 
 	/**
