@@ -17,6 +17,7 @@ public class GameView implements View, PropertyChangeListener {
 	private final List<PowerUpEntityView> powerUpView = new ArrayList<PowerUpEntityView>();
 	private AbstractScoreView scoreView;
 	private AbstractScoreView goalScoreView;
+	private final float scoreViewHeight;
 
 	private MapView mapView;
 	private final Game game;
@@ -26,6 +27,7 @@ public class GameView implements View, PropertyChangeListener {
 		updateMapView();
 		createScoreViews();
 		addPlayerViews();
+		this.scoreViewHeight = (this.mapView.getMap().getHeight() - 150) / 8;
 	}
 
 	private void createScoreViews() {
@@ -94,8 +96,14 @@ public class GameView implements View, PropertyChangeListener {
 		} else if (evt.getPropertyName().equals("NewRound")) {
 			updateMapView();
 			updatePowerUpViews();
+			updateGoalScoreView();
 		} else if (evt.getPropertyName().equals("MapChanged")) {
 			updateMapView();
 		}
+	}
+
+	private void updateGoalScoreView() {
+		this.goalScoreView = new GoalPointsScoreView(scoreViewHeight,
+				this.game.getGoalPoints());
 	}
 }

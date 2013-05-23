@@ -16,6 +16,7 @@ public class Game {
 	private final Map map;
 	private Round currentRound;
 	private Player gameWinner;
+	private int goalPoints;
 
 	private final PropertyChangeSupport pcs;
 	private final float powerUpChance;
@@ -52,10 +53,16 @@ public class Game {
 				this.powerUpChance);
 		this.rounds.add(this.currentRound);
 		this.pcs.firePropertyChange("NewRound", false, true);
-		resetRoundScores();
+//		this.goalPoints = 10 * (this.players.size() - 1);
+		this.goalPoints = 3;
+		resetPlayerRoundScores();
 	}
+//
+//	private int setGoalPoints() {
+//		
+//	}
 
-	private void resetRoundScores() {
+	private void resetPlayerRoundScores() {
 		for(Player p : players) {
 			p.resetRoundScore();
 		}
@@ -85,7 +92,6 @@ public class Game {
 	 * if found.
 	 */
 	private void winnerCheck() {
-		int goalPoints = getGoalPoints();
 
 		// Finds the highest score and sets a player with that score
 		int highestScore = 0;
@@ -107,6 +113,9 @@ public class Game {
 		for (Player player : this.players) {
 			if (player != possibleWinner
 					&& highestScore - player.getPoints() < 2) {
+				// Sets the goal score to one higher than highestScore
+				// so that you need two points more than second highest to win
+				this.goalPoints = highestScore + 1;
 				return;
 			}
 		}
@@ -117,7 +126,7 @@ public class Game {
 	 * Returns the number of points required to win the game.
 	 */
 	public int getGoalPoints() {
-		return 10 * (this.players.size() - 1);
+		return this.goalPoints;
 	}
 
 	public Round getCurrentRound() {
