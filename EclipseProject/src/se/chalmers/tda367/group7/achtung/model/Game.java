@@ -54,6 +54,7 @@ public class Game {
 		this.rounds.add(this.currentRound);
 		this.pcs.firePropertyChange("NewRound", false, true);
 		this.goalPoints = 10 * (this.players.size() - 1);
+
 		resetPlayerRoundScores();
 	}
 
