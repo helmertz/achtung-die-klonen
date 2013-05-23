@@ -312,4 +312,8 @@ public class Body {
 	public boolean hasInvertedControls() {
 		return this.invertedControls;
 	}
+
+	public TurnMode getTurnMode() {
+		return turnMode;
+	}
 }
