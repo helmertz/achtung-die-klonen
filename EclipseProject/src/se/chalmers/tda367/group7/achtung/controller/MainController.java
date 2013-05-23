@@ -281,10 +281,12 @@ public class MainController implements PropertyChangeListener,
 
 			this.menuController.setShowContinue(this.game != null
 					&& !this.game.isOver());
-			
-			if(!atMenu) {
-				// Sends a false event to Nifty, fixes problem with nifty button press
-				this.inputSystem.addMouseEvent(new MouseInputEvent(0, 0, 0, 0, false));
+
+			if (!atMenu) {
+				// Sends a false event to Nifty, fixes problem with nifty button
+				// press
+				this.inputSystem.addMouseEvent(new MouseInputEvent(0, 0, 0, 0,
+						false));
 			}
 		}
 	}

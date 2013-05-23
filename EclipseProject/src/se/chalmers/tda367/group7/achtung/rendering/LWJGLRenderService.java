@@ -16,7 +16,7 @@ import org.lwjgl.opengl.Util;
 import se.chalmers.tda367.group7.achtung.model.Color;
 
 class LWJGLRenderService implements RenderService {
-	
+
 	private static final int MIN_WIDTH = 600;
 	private static final int MIN_HEIGHT = 450;
 
@@ -104,17 +104,18 @@ class LWJGLRenderService implements RenderService {
 	private void sizeRefresh() {
 		int displayWidth = Display.getWidth();
 		int displayHeight = Display.getHeight();
-		
+
 		// Enforces minimum display size
 		if (displayWidth < MIN_WIDTH || displayHeight < MIN_HEIGHT) {
-			if(displayWidth < MIN_WIDTH) {
+			if (displayWidth < MIN_WIDTH) {
 				displayWidth = MIN_WIDTH;
 			}
-			if(displayHeight < MIN_HEIGHT) {
+			if (displayHeight < MIN_HEIGHT) {
 				displayHeight = MIN_HEIGHT;
 			}
 			try {
-				Display.setDisplayMode(new DisplayMode(displayWidth, displayHeight));
+				Display.setDisplayMode(new DisplayMode(displayWidth,
+						displayHeight));
 			} catch (LWJGLException e) {
 				e.printStackTrace();
 			}

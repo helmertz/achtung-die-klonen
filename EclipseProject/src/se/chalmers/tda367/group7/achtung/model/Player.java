@@ -32,7 +32,7 @@ public class Player {
 	public int getPoints() {
 		return this.points;
 	}
-	
+
 	public int getRoundPoints() {
 		return this.roundPoints;
 	}

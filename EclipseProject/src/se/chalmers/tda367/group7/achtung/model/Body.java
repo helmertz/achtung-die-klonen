@@ -314,6 +314,6 @@ public class Body {
 	}
 
 	public TurnMode getTurnMode() {
-		return turnMode;
+		return this.turnMode;
 	}
 }

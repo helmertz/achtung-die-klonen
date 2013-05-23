@@ -29,16 +29,16 @@ public class BodySwitchPowerUp implements RoundPowerUpEffect {
 		List<Body> bodies = new ArrayList<Body>();
 		List<Player> players = new ArrayList<Player>();
 		List<TurnMode> turnModes = new ArrayList<TurnMode>();
-		for(Player p : round.getPlayers()) {
+		for (Player p : round.getPlayers()) {
 			Body b = p.getBody();
-			if(!b.isDead()) {
+			if (!b.isDead()) {
 				players.add(p);
 				bodies.add(p.getBody());
 				turnModes.add(p.getBody().getTurnMode());
 			}
 		}
 		Collections.shuffle(bodies);
-		for(int i = 0; i < players.size(); i++) {
+		for (int i = 0; i < players.size(); i++) {
 			Player p = players.get(i);
 			Body newBody = bodies.get(i);
 			p.setBody(newBody);

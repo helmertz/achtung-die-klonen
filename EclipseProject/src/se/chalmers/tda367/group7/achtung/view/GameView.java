@@ -103,7 +103,7 @@ public class GameView implements View, PropertyChangeListener {
 	}
 
 	private void updateGoalScoreView() {
-		this.goalScoreView = new GoalPointsScoreView(scoreViewHeight,
+		this.goalScoreView = new GoalPointsScoreView(this.scoreViewHeight,
 				this.game.getGoalPoints());
 	}
 }

@@ -59,7 +59,7 @@ public class Game {
 	}
 
 	private void resetPlayerRoundScores() {
-		for(Player p : players) {
+		for (Player p : this.players) {
 			p.resetRoundScore();
 		}
 	}
@@ -77,7 +77,8 @@ public class Game {
 	 */
 	public boolean isOver() {
 		if (this.currentRound != null) {
-			return !this.currentRound.isRoundActive() && this.gameWinner != null;
+			return !this.currentRound.isRoundActive()
+					&& this.gameWinner != null;
 		} else {
 			return false;
 		}
@@ -100,7 +101,7 @@ public class Game {
 		}
 
 		// No need to check further if below goal
-		if (highestScore < goalPoints) {
+		if (highestScore < this.goalPoints) {
 			return;
 		}
 
