@@ -53,14 +53,9 @@ public class Game {
 				this.powerUpChance);
 		this.rounds.add(this.currentRound);
 		this.pcs.firePropertyChange("NewRound", false, true);
-//		this.goalPoints = 10 * (this.players.size() - 1);
-		this.goalPoints = 3;
+		this.goalPoints = 10 * (this.players.size() - 1);
 		resetPlayerRoundScores();
 	}
-//
-//	private int setGoalPoints() {
-//		
-//	}
 
 	private void resetPlayerRoundScores() {
 		for(Player p : players) {
