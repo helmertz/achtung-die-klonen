@@ -143,7 +143,7 @@
 								<control name="label" text="Sound effects"/>
 							</panel>
 							<control name="button" id="resetButton" label="Reset all" align="right">
-								<interact onRelease="onResetPress()"/>
+								<interact onClick="onResetPress()"/>
 							</control>
 						</panel>
 					</panel>
@@ -151,22 +151,22 @@
 				<panel childLayout="horizontal" valign="bottom" width="100%" height="35">
 					<panel childLayout="horizontal" valign="center" width="50%" align="left">
 						<control name="button" id="exitButton" label="Exit" align="left">
-							<interact onRelease="onExitPress()"/>
+							<interact onClick="onExitPress()"/>
 						</control>
 						<control name="button" id="instructionButton" label="Instructions" align="left">
-							<interact onRelease="onInstructionPress()"/>
+							<interact onClick="onInstructionPress()"/>
 						</control>
 						<control name="button" id="aboutButton" label="About" align="left">
-							<interact onRelease="onAboutPress()"/>
+							<interact onClick="onAboutPress()"/>
 						</control>
 					</panel>
 					<panel childLayout="horizontal" valign="center" width="50%" align="right">
 						<panel width="*" height="0" childLayout="horizontal"/>
 						<control name="button" id="continueButton" label="Continue" align="right">
-							<interact onRelease="onContinuePress()"/>
+							<interact onClick="onContinuePress()"/>
 						</control>
 						<control name="button" id="newGameButton" label="New Game" align="right">
-							<interact onRelease="onNewGamePress()"/>
+							<interact onClick="onNewGamePress()"/>
 						</control>
 					</panel>
 				</panel>
