@@ -21,11 +21,13 @@ public class PlayerScoreView extends AbstractScoreView {
 		for (Player player : this.players) {
 			float sideX = renderService.getViewAreaWidth() - 175;
 			float sideY = 150 + (this.height * this.players.indexOf(player));
-
+			
 			renderService.drawString(player.getName(), sideX, sideY,
 					NAME_FONT_SIZE, player.getColor());
 			renderService.drawString(player.getPoints() + "", sideX, sideY
 					+ LABEL_SEPARATION, POINTS_FONT_SIZE, player.getColor());
+			renderService.drawString("+" + player.getRoundPoints() + "", sideX + 100, sideY
+					+ LABEL_SEPARATION + 30, POINTS_FONT_SIZE * (float)0.5, player.getColor());
 		}
 	}
 }

@@ -52,6 +52,13 @@ public class Game {
 				this.powerUpChance);
 		this.rounds.add(this.currentRound);
 		this.pcs.firePropertyChange("NewRound", false, true);
+		resetRoundScores();
+	}
+
+	private void resetRoundScores() {
+		for(Player p : players) {
+			p.resetRoundScore();
+		}
 	}
 
 	public void addPlayer(Player p) {
