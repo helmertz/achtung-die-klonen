@@ -67,11 +67,8 @@ public class Body {
 
 	public void update() {
 		updatePowerUps();
-
-		if (!this.dead) {
-			updateHeadPosition();
-			updateSegments();
-		}
+		updateHeadPosition();
+		updateSegments();
 	}
 
 	private void updateSegments() {
