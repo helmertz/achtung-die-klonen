@@ -150,6 +150,7 @@
 				</panel>
 				<panel childLayout="horizontal" valign="bottom" width="100%" height="35">
 					<panel childLayout="horizontal" valign="center" width="50%" align="left">
+						<panel width="5" height="0" childLayout="center"/>
 						<control name="button" id="exitButton" label="Exit" align="left">
 							<interact onClick="onExitPress()"/>
 						</control>
@@ -168,6 +169,7 @@
 						<control name="button" id="newGameButton" label="New Game" align="right">
 							<interact onClick="onNewGamePress()"/>
 						</control>
+						<panel width="5" height="0" childLayout="center"/>
 					</panel>
 				</panel>
 			</panel>
