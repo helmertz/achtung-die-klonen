@@ -181,6 +181,15 @@ public class Round {
 	}
 
 	private void distributeRoundEffect(RoundPowerUpEffect effect) {
+		if (!effect.isStackable()) {
+			for (PowerUp<RoundPowerUpEffect> powerUp : this.activeRoundEffects) {
+				if (powerUp.getEffect().getClass() == effect.getClass()) {
+					powerUp.resetTimer();
+					return;
+				}
+			}
+		}
+		
 		effect.applyEffect(this);
 		this.activeRoundEffects.add(new PowerUp<>(effect));
 	}

@@ -179,9 +179,8 @@ public class Body {
 			}
 		}
 
-		PowerUp<BodyPowerUpEffect> p = new PowerUp<BodyPowerUpEffect>(effect);
-		p.getEffect().applyEffect(this);
-		this.powerUps.add(p);
+		effect.applyEffect(this);
+		this.powerUps.add(new PowerUp<>(effect));
 	}
 
 	/**
