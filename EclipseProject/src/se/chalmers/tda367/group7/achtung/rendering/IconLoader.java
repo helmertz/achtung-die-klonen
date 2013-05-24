@@ -11,7 +11,6 @@ class IconLoader {
 
 	public static ByteBuffer loadIcon(String filename) throws IOException {
 		InputStream is = filename.getClass().getResourceAsStream("/" + filename);
-		System.out.println(is);
 		if (is != null) {
 			ByteBuffer buf = null;
 			PNGDecoder decoder = new PNGDecoder(is);
