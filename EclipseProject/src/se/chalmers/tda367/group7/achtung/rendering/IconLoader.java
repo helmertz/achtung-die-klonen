@@ -10,7 +10,7 @@ import de.matthiasmann.twl.utils.PNGDecoder.Format;
 class IconLoader {
 
 	public static ByteBuffer loadIcon(String filename) throws IOException {
-		InputStream is = filename.getClass().getResourceAsStream("/" + filename);
+		InputStream is = IconLoader.class.getResourceAsStream("/" + filename);
 		if (is != null) {
 			ByteBuffer buf = null;
 			PNGDecoder decoder = new PNGDecoder(is);
@@ -22,7 +22,7 @@ class IconLoader {
 			
 			return buf;
 		} else {
-			throw new IOException("Filename missing");
+			throw new IOException(filename + " not found");
 		}
 	}
 
