@@ -3,6 +3,7 @@ package se.chalmers.tda367.group7.achtung.rendering;
 import static org.lwjgl.opengl.GL11.*;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
@@ -77,6 +78,15 @@ class LWJGLRenderService implements RenderService {
 	private void initDisplay() throws LWJGLException {
 		Display.setResizable(true);
 		Display.setTitle("Achtung, die Klonen");
+		
+		try {
+			ByteBuffer[] icons = new ByteBuffer[2];
+			icons[0] = IconLoader.loadIcon("achtung-icon16.png");
+			icons[1] = IconLoader.loadIcon("achtung-icon32.png");
+			Display.setIcon(icons);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 
 		// Used to determine anti-aliasing capabilities
 		int maxSamples = 0;
