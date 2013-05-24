@@ -10,23 +10,15 @@ public class RemoveWallsPowerUp implements RoundPowerUpEffect {
 	private static final int DURATION = 150;
 	private static final boolean STACKABLE = false;
 	private static final float WEIGHT = 1;
-	private int stacks = 0;
 
 	@Override
 	public void applyEffect(Round round) {
-		if (this.stacks != 0 && round.isWallsActive()) {
-			this.stacks = 0;
-		}
-		this.stacks++;
 		round.setWallsActive(false);
 	}
 
 	@Override
 	public void removeEffect(Round round) {
-		this.stacks--;
-		if (this.stacks == 0) {
-			round.setWallsActive(true);
-		}
+		round.setWallsActive(true);
 	}
 
 	@Override

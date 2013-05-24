@@ -49,7 +49,7 @@ public class Game {
 
 	public void newRound() {
 		this.map.setColor(Map.DEFAULT_COLOR);
-		this.currentRound = new Round(this.map, this.players,
+		this.currentRound = new Round(new Map(1337, 1337), this.players,
 				this.powerUpChance);
 		this.rounds.add(this.currentRound);
 		this.pcs.firePropertyChange("NewRound", false, true);
