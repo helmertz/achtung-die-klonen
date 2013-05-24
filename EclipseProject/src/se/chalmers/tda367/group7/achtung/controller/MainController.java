@@ -251,6 +251,11 @@ public class MainController implements PropertyChangeListener,
 				this.sound.pauseMusic();
 			}
 			return true;
+		} else if (!event.isRepeat() && event.isPressed()
+				&& event.getKey() == Keyboard.KEY_F11) {
+			this.renderer.setFullscreen(!this.renderer.isFullscreen());
+			this.nifty.resolutionChanged();
+			return true;
 		}
 		if (this.atMenu) {
 			if (this.menuController.onKeyInputEvent(event)) {

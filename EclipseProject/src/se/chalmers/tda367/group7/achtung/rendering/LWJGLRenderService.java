@@ -18,6 +18,8 @@ import se.chalmers.tda367.group7.achtung.model.Color;
 
 class LWJGLRenderService implements RenderService {
 
+	private static final int DEFAULT_WIDTH = 800;
+	private static final int DEFAULT_HEIGHT = 600;
 	private static final int MIN_WIDTH = 600;
 	private static final int MIN_HEIGHT = 450;
 
@@ -78,13 +80,13 @@ class LWJGLRenderService implements RenderService {
 	private void initDisplay() throws LWJGLException {
 		Display.setResizable(true);
 		Display.setTitle("Achtung, die Klonen");
-		
+
 		try {
 			ByteBuffer[] icons = new ByteBuffer[2];
 			icons[0] = IconLoader.loadIcon("achtung-icon16.png");
 			icons[1] = IconLoader.loadIcon("achtung-icon32.png");
 			Display.setIcon(icons);
-		} catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
@@ -92,7 +94,7 @@ class LWJGLRenderService implements RenderService {
 		int maxSamples = 0;
 
 		PixelFormat format = new PixelFormat(32, 0, 24, 8, 0);
-		Pbuffer pb = new Pbuffer(800, 600, format, null);
+		Pbuffer pb = new Pbuffer(DEFAULT_WIDTH, DEFAULT_HEIGHT, format, null);
 		pb.makeCurrent();
 		boolean supported = GLContext.getCapabilities().GL_ARB_multisample;
 		if (supported) {
@@ -106,9 +108,8 @@ class LWJGLRenderService implements RenderService {
 		} else if (maxSamples >= 4) {
 			maxSamples = 4;
 		}
-		Display.setDisplayMode(new DisplayMode(800, 600));
+		Display.setDisplayMode(new DisplayMode(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 		Display.create(new PixelFormat().withSamples(maxSamples));
-
 	}
 
 	private void sizeRefresh() {
@@ -357,5 +358,28 @@ class LWJGLRenderService implements RenderService {
 		glVertex2f(x3, y3);
 		glVertex2f(x4, y4);
 		glEnd();
+	}
+
+	@Override
+	public boolean isFullscreen() {
+		return Display.isFullscreen();
+	}
+
+	@Override
+	public void setFullscreen(boolean fullscreen) {
+		if (isFullscreen() != fullscreen) {
+			try {
+				if (fullscreen) {
+					Display.setDisplayModeAndFullscreen(Display
+							.getDesktopDisplayMode());
+				} else {
+					Display.setDisplayMode(new DisplayMode(DEFAULT_WIDTH,
+							DEFAULT_HEIGHT));
+				}
+			} catch (LWJGLException e) {
+				e.printStackTrace();
+			}
+			sizeRefresh();
+		}
 	}
 }
