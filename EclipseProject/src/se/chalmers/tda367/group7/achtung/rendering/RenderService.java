@@ -75,5 +75,5 @@ public interface RenderService {
 
 	boolean isFullscreen();
 
-	void setFullscreen(boolean b);
+	void setFullscreen(boolean fullscreen);
 }
