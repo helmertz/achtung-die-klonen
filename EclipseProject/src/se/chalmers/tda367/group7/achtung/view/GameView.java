@@ -17,6 +17,8 @@ public class GameView implements View, PropertyChangeListener {
 	private final List<PowerUpEntityView> powerUpView = new ArrayList<PowerUpEntityView>();
 	private AbstractScoreView scoreView;
 	private AbstractScoreView goalScoreView;
+	private AbstractWinnerPopupMessage gameOverMessage;
+	private AbstractWinnerPopupMessage roundOverMessage;
 	private final float scoreViewHeight;
 
 	private MapView mapView;
@@ -56,7 +58,6 @@ public class GameView implements View, PropertyChangeListener {
 		} else if (!this.game.getCurrentRound().isRoundActive()) {
 			drawRoundOverMessage(renderer, interpolation);
 		}
-
 	}
 
 	private void renderViews(RenderService renderer, float interpolation) {
@@ -77,14 +78,18 @@ public class GameView implements View, PropertyChangeListener {
 	private void drawRoundOverMessage(RenderService renderer,
 			float interpolation) {
 		Player winner = this.game.getCurrentRound().getWinner();
-		AbstractWinnerPopupMessage message = new RoundOverMessage(winner);
-		message.render(renderer, interpolation);
+		if (this.roundOverMessage == null) {
+			this.roundOverMessage = new RoundOverMessage(winner);
+		}
+		this.roundOverMessage.render(renderer, interpolation);
 	}
 
 	private void drawGameOverMessage(RenderService renderer, float interpolation) {
 		Player winner = this.game.getGameWinner();
-		AbstractWinnerPopupMessage message = new GameOverMessage(winner);
-		message.render(renderer, interpolation);
+		if (this.gameOverMessage == null) {
+			this.gameOverMessage = new GameOverMessage(winner);
+		}
+		this.gameOverMessage.render(renderer, interpolation);
 	}
 
 	private void updatePowerUpViews() {
@@ -107,12 +112,18 @@ public class GameView implements View, PropertyChangeListener {
 		if (evt.getPropertyName().contains("PowerUp")) {
 			updatePowerUpViews();
 		} else if (evt.getPropertyName().equals("NewRound")) {
+			removeMessages();
 			updateMapView();
 			updatePowerUpViews();
 			updateGoalScoreView();
 		} else if (evt.getPropertyName().equals("MapChanged")) {
 			updateMapView();
 		}
+	}
+
+	private void removeMessages() {
+		this.gameOverMessage = null;
+		this.roundOverMessage = null;
 	}
 
 	private void updateGoalScoreView() {
