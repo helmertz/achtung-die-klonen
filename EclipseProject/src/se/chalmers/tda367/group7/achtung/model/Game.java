@@ -63,7 +63,7 @@ public class Game {
 			p.resetRoundScore();
 		}
 	}
-
+	
 	public void addPlayer(Player p) {
 		this.players.add(p);
 	}
@@ -124,6 +124,10 @@ public class Game {
 	 */
 	public int getGoalPoints() {
 		return this.goalPoints;
+	}
+	
+	public void setGoalPoints(int goalPoints) {
+		this.goalPoints = goalPoints;
 	}
 
 	public Round getCurrentRound() {
