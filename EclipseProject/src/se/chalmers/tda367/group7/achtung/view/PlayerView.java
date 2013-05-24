@@ -62,7 +62,7 @@ public class PlayerView implements View {
 					body.getWidth(), this.player.getColor());
 
 		}
-		// Inverts color of head if inverted controlls
+		// Inverts color of head if controls are inverted
 		Color headColor = this.player.getColor();
 
 		if (this.player.getBody().hasInvertedControls()) {
