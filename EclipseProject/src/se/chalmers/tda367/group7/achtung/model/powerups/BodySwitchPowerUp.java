@@ -16,6 +16,7 @@ public class BodySwitchPowerUp implements RoundPowerUpEffect {
 	private static final String NAME = "body-switch";
 	private static final int DURATION = 0;
 	private static final boolean STACKABLE = false;
+	private static final float WEIGHT = 0.1f;
 
 	@Override
 	public int getDuration() {
@@ -68,6 +69,11 @@ public class BodySwitchPowerUp implements RoundPowerUpEffect {
 	@Override
 	public String toString() {
 		return NAME;
+	}
+
+	@Override
+	public float getWeight() {
+		return WEIGHT;
 	}
 
 }

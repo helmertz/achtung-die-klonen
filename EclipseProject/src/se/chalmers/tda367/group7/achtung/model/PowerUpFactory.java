@@ -17,9 +17,9 @@ public class PowerUpFactory {
 	}
 
 	public static PowerUpEntity getRandomEntity(Map map) {
-
+		
 		// Gets a random effect
-		PowerUpEffect effect = effects[(int) (effects.length * Math.random())];
+		PowerUpEffect effect = getRandomEffect();
 
 		float diameter = PowerUpEntity.getDefaultDiameter();
 
@@ -36,5 +36,29 @@ public class PowerUpFactory {
 		PowerUpEntity entity = new PowerUpEntity(randPos, diameter, effect,
 				type);
 		return entity;
+	}
+
+	private static PowerUpEffect getRandomEffect() {
+		// Gets a random effect based on the effect's weight. Higher weights
+		// makes the effect more likely to be returned.
+
+		float totWeight = 0;
+		for (PowerUpEffect effect : effects) {
+			totWeight += effect.getWeight();
+		}
+
+		float randWeight = (float) (totWeight * Math.random());
+		
+		float weightAccum = 0;
+		for (PowerUpEffect effect : effects) {
+			weightAccum += effect.getWeight();
+			if(weightAccum > randWeight) {
+				return effect;
+			}
+		}
+		// This shouldn't be possible to reach, if there are effects in the
+		// array and any effect return a non-zero weight
+		throw new RuntimeException(
+				"No random power-up effect can be found through weighting");
 	}
 }

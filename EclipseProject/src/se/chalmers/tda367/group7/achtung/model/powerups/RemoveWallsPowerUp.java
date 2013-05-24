@@ -9,6 +9,7 @@ public class RemoveWallsPowerUp implements RoundPowerUpEffect {
 	private static final String NAME = "wall-remove";
 	private static final int DURATION = 150;
 	private static final boolean STACKABLE = false;
+	private static final float WEIGHT = 1;
 	private int stacks = 0;
 
 	@Override
@@ -51,6 +52,11 @@ public class RemoveWallsPowerUp implements RoundPowerUpEffect {
 	@Override
 	public String toString() {
 		return NAME;
+	}
+
+	@Override
+	public float getWeight() {
+		return WEIGHT;
 	}
 
 }

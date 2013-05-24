@@ -9,6 +9,7 @@ public class ThinPowerUp implements BodyPowerUpEffect {
 	private static final String NAME = "thin";
 	private static final int DURATION = 150;
 	private static final boolean STACKABLE = true;
+	private static final float WEIGHT = 1;
 
 	@Override
 	public void applyEffect(Body body) {
@@ -43,6 +44,11 @@ public class ThinPowerUp implements BodyPowerUpEffect {
 	@Override
 	public String toString() {
 		return NAME;
+	}
+
+	@Override
+	public float getWeight() {
+		return WEIGHT;
 	}
 
 }

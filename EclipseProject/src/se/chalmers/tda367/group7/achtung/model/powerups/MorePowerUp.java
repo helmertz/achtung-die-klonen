@@ -9,6 +9,7 @@ public class MorePowerUp implements RoundPowerUpEffect {
 	private static final String NAME = "more-powerups";
 	private static final int DURATION = 200;
 	private static final boolean STACKABLE = true;
+	private static final float WEIGHT = 0.5f;
 
 	@Override
 	public void applyEffect(Round round) {
@@ -44,6 +45,11 @@ public class MorePowerUp implements RoundPowerUpEffect {
 	@Override
 	public String toString() {
 		return NAME;
+	}
+
+	@Override
+	public float getWeight() {
+		return WEIGHT;
 	}
 
 }

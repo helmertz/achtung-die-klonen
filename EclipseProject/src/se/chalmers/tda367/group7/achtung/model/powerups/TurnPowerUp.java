@@ -10,6 +10,7 @@ public class TurnPowerUp implements BodyPowerUpEffect {
 	private static final String NAME = "sharp-turn";
 	private static final int DURATION = 150;
 	private static final boolean STACKABLE = false;
+	private static final float WEIGHT = 1;
 
 	@Override
 	public void applyEffect(Body body) {
@@ -47,6 +48,11 @@ public class TurnPowerUp implements BodyPowerUpEffect {
 	@Override
 	public String toString() {
 		return NAME;
+	}
+
+	@Override
+	public float getWeight() {
+		return WEIGHT;
 	}
 
 }

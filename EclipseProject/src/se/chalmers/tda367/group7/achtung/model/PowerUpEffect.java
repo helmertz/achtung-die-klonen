@@ -32,4 +32,14 @@ public interface PowerUpEffect {
 	 */
 	Type[] getAllowedTypes();
 
+	/**
+	 * Gets the weight determining how common the effect is.
+	 * 
+	 * The value must not be negative, but only zero or higher. There is no
+	 * upper limit. Higher values makes the effect more likely to appear.
+	 * 
+	 * @return the weight of the effect
+	 */
+	float getWeight();
+
 }

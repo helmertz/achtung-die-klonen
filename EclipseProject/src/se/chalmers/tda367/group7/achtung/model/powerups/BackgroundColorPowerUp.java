@@ -14,6 +14,7 @@ public class BackgroundColorPowerUp implements BodyPowerUpEffect,
 	private static final String NAME = "background-change";
 	private static final int DURATION = 75;
 	private static final boolean STACKABLE = false;
+	private static final float WEIGHT = 1;
 
 	private Color newColor;
 
@@ -61,6 +62,11 @@ public class BackgroundColorPowerUp implements BodyPowerUpEffect,
 	@Override
 	public String toString() {
 		return NAME;
+	}
+
+	@Override
+	public float getWeight() {
+		return WEIGHT;
 	}
 
 }
