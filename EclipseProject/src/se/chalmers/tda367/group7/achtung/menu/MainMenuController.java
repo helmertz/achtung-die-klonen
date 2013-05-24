@@ -292,9 +292,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		if (elementID.charAt(elementID.length() - 3) == 'l') {
 			Button b = this.screen.findNiftyControl(
 					elementID.replace('l', 'r'), Button.class);
-			if (b.getText().length() == 0) {
-				this.nextButton = b;
-			}
+			this.nextButton = b;
 		}
 	}
 
