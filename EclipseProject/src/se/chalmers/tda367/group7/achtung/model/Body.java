@@ -112,7 +112,7 @@ public class Body {
 				// a hole still will be made.
 				// The subtraction makes it so holes will be longer than the
 				// number subtracted.
-				|| this.makeHole && Math.random() > (this.holeCount - 2) / 10d;
+				|| this.makeHole && Math.random() > (this.holeCount - this.width / 5) / (this.width * 0.8f);
 	}
 
 	private void createBodySegment() {
