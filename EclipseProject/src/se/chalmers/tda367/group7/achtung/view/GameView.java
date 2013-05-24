@@ -47,6 +47,19 @@ public class GameView implements View, PropertyChangeListener {
 
 	@Override
 	public void render(RenderService renderer, float interpolation) {
+		renderViews(renderer, interpolation);
+
+		// If over draws a box displaying the winner, and instructions on how to
+		// continue.
+		if (this.game.isOver()) {
+			drawGameOverMessage(renderer, interpolation);
+		} else if (!this.game.getCurrentRound().isRoundActive()) {
+			drawRoundOverMessage(renderer, interpolation);
+		}
+
+	}
+
+	private void renderViews(RenderService renderer, float interpolation) {
 		this.goalScoreView.render(renderer, interpolation);
 		this.mapView.render(renderer, interpolation);
 
@@ -59,19 +72,19 @@ public class GameView implements View, PropertyChangeListener {
 		}
 
 		this.scoreView.render(renderer, interpolation);
+	}
 
-		// If over draws a box displaying the winner, and instructions on how to
-		// continue.
-		if (this.game.isOver()) {
-			Player winner = this.game.getGameWinner();
-			AbstractWinnerPopupMessage message = new GameOverMessage(winner);
-			message.render(renderer, interpolation);
-		} else if (!this.game.getCurrentRound().isRoundActive()) {
-			Player winner = this.game.getCurrentRound().getWinner();
-			AbstractWinnerPopupMessage message = new RoundOverMessage(winner);
-			message.render(renderer, interpolation);
-		}
+	private void drawRoundOverMessage(RenderService renderer,
+			float interpolation) {
+		Player winner = this.game.getCurrentRound().getWinner();
+		AbstractWinnerPopupMessage message = new RoundOverMessage(winner);
+		message.render(renderer, interpolation);
+	}
 
+	private void drawGameOverMessage(RenderService renderer, float interpolation) {
+		Player winner = this.game.getGameWinner();
+		AbstractWinnerPopupMessage message = new GameOverMessage(winner);
+		message.render(renderer, interpolation);
 	}
 
 	private void updatePowerUpViews() {
