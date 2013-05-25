@@ -39,30 +39,28 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	private Nifty nifty;
 	private Element popup;
+
 	private Slider goalSlider;
 	private CheckBox goalCheckbox;
 	private Label goalLabel;
+	private Slider powerUpSlider;
+	private Slider speedSlider;
+	private Slider widthSlider;
+	private Slider holeSlider;
+	private Slider rotSlider;
+	private CheckBox musicCheckBox;
+	private CheckBox soundEffectsCheckBox;
 
 	@Override
 	public void bind(Nifty nifty, Screen screen) {
 		this.nifty = nifty;
 		this.screen = screen;
-		this.errorLabel = this.screen
-				.findNiftyControl("errorText", Label.class);
-		
-		this.goalSlider = this.screen.findNiftyControl("goalSlider",
-				Slider.class);
-		this.goalCheckbox = this.screen.findNiftyControl("goalCheckbox",
-				CheckBox.class);
-		this.goalLabel = this.screen.findNiftyControl("goalLabel", Label.class);
-		
-		// TODO set min & max for all sliders, didn't know it was possible
-		this.goalSlider.setMin(Settings.MIN_GOAL);
-		this.goalSlider.setMax(Settings.MAX_GOAL);
-		this.goalSlider.setStepSize(1);
-		this.goalSlider.setButtonStepSize(1);
-		
+
+		fetchMenuControls();
+		setSliderSettings();
+
 		loadGameSettings();
+
 		// Binds first two player's keys to default buttons
 		Button p1l = this.screen.findNiftyControl("keylp1", Button.class);
 		Button p1r = this.screen.findNiftyControl("keyrp1", Button.class);
@@ -74,16 +72,73 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		this.buttonKeyMap.put(p2r, Keyboard.KEY_D);
 	}
 
+	private void fetchMenuControls() {
+		this.errorLabel = this.screen
+				.findNiftyControl("errorText", Label.class);
+		this.goalSlider = this.screen.findNiftyControl("goalSlider",
+				Slider.class);
+		this.goalCheckbox = this.screen.findNiftyControl("goalCheckbox",
+				CheckBox.class);
+		this.goalLabel = this.screen.findNiftyControl("goalLabel", Label.class);
+
+		this.powerUpSlider = this.screen.findNiftyControl("powerUpSlider",
+				Slider.class);
+		this.speedSlider = this.screen.findNiftyControl("speedSlider",
+				Slider.class);
+		this.widthSlider = this.screen.findNiftyControl("widthSlider",
+				Slider.class);
+		this.holeSlider = this.screen.findNiftyControl("holeSlider",
+				Slider.class);
+		this.rotSlider = this.screen
+				.findNiftyControl("rotSlider", Slider.class);
+		this.musicCheckBox = this.screen.findNiftyControl("music",
+				CheckBox.class);
+		this.soundEffectsCheckBox = this.screen.findNiftyControl("sound",
+				CheckBox.class);
+	}
+
+	private void setSliderSettings() {
+		configureSlider(this.goalSlider, Settings.MIN_GOAL, Settings.MAX_GOAL,
+				1);
+		
+		// TODO possibly custom step size on some of these
+		configureSlider(this.powerUpSlider, Settings.MIN_POWER_UP_CHANCE,
+				Settings.MAX_POWER_UP_CHANCE);
+		configureSlider(this.speedSlider, Settings.MIN_SPEED,
+				Settings.MAX_SPEED);
+		configureSlider(this.powerUpSlider, Settings.MIN_POWER_UP_CHANCE,
+				Settings.MAX_POWER_UP_CHANCE);
+		configureSlider(this.widthSlider, Settings.MIN_WIDTH,
+				Settings.MAX_WIDTH);
+		configureSlider(this.holeSlider, Settings.MIN_CHANCE_OF_HOLE,
+				Settings.MAX_CHANCE_OF_HOLE);
+		configureSlider(this.rotSlider, Settings.MIN_ROTATION_SPEED,
+				Settings.MAX_ROTATION_SPEED);
+	}
+
+	// By default, uses 100 steps
+	private void configureSlider(Slider slider, float min, float max) {
+		float step = (max - min) / 100f;
+		configureSlider(slider, min, max, step);
+	}
+
+	private void configureSlider(Slider slider, float min, float max, float step) {
+		slider.setMin(min);
+		slider.setMax(max);
+		slider.setStepSize(step);
+		slider.setButtonStepSize(step);
+	}
+
 	private void updateGoalControls() {
 		boolean autoGoal = this.goalCheckbox.isChecked();
 		String goalString;
 		if (autoGoal) {
 			goalString = "auto";
-			goalSlider.disable();
+			this.goalSlider.disable();
 		} else {
 			goalString = Integer
 					.toString(Math.round(this.goalSlider.getValue()));
-			goalSlider.enable();
+			this.goalSlider.enable();
 		}
 		this.goalLabel.setText(goalString);
 	}
@@ -211,32 +266,13 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	 * Polls the menu elements and sets information in the Settings singleton.
 	 */
 	private void updateGameSettings() {
-		Slider pu = this.screen.findNiftyControl("puslider", Slider.class);
-		Slider speedSlider = this.screen.findNiftyControl("speedSlider",
-				Slider.class);
-		Slider widthSlider = this.screen.findNiftyControl("widthSlider",
-				Slider.class);
-		Slider holeSlider = this.screen.findNiftyControl("holeSlider",
-				Slider.class);
-		Slider rotSlider = this.screen.findNiftyControl("rotSlider",
-				Slider.class);
-		CheckBox musicCheckBox = this.screen.findNiftyControl("music",
-				CheckBox.class);
-		CheckBox soundEffectsCheckBox = this.screen.findNiftyControl("sound",
-				CheckBox.class);
-
-		float powerUpChance = calcSliderToValue(Settings.MIN_POWER_UP_CHANCE,
-				Settings.MAX_POWER_UP_CHANCE, pu.getValue());
-		float speed = calcSliderToValue(Settings.MIN_SPEED, Settings.MAX_SPEED,
-				speedSlider.getValue());
-		float width = calcSliderToValue(Settings.MIN_WIDTH, Settings.MAX_WIDTH,
-				widthSlider.getValue());
-		float holeChance = calcSliderToValue(Settings.MIN_CHANCE_OF_HOLE,
-				Settings.MAX_CHANCE_OF_HOLE, holeSlider.getValue());
-		float rotSpeed = calcSliderToValue(Settings.MIN_ROTATION_SPEED,
-				Settings.MAX_ROTATION_SPEED, rotSlider.getValue());
-		boolean musicEnabled = musicCheckBox.isChecked();
-		boolean soundEffectsEnabled = soundEffectsCheckBox.isChecked();
+		float powerUpChance = this.powerUpSlider.getValue();
+		float speed = this.speedSlider.getValue();
+		float width = this.widthSlider.getValue();
+		float holeChance = this.holeSlider.getValue();
+		float rotSpeed = this.rotSlider.getValue();
+		boolean musicEnabled = this.musicCheckBox.isChecked();
+		boolean soundEffectsEnabled = this.soundEffectsCheckBox.isChecked();
 		int goal = Math.round(this.goalSlider.getValue());
 		boolean autoGoal = this.goalCheckbox.isChecked();
 
@@ -257,45 +293,25 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	 * elements.
 	 */
 	private void loadGameSettings() {
-		Slider pu = this.screen.findNiftyControl("puslider", Slider.class);
-		Slider speedSlider = this.screen.findNiftyControl("speedSlider",
-				Slider.class);
-		Slider widthSlider = this.screen.findNiftyControl("widthSlider",
-				Slider.class);
-		Slider holeSlider = this.screen.findNiftyControl("holeSlider",
-				Slider.class);
-		Slider rotSlider = this.screen.findNiftyControl("rotSlider",
-				Slider.class);
-		CheckBox musicCheckBox = this.screen.findNiftyControl("music",
-				CheckBox.class);
-		CheckBox soundEffectsCheckBox = this.screen.findNiftyControl("sound",
-				CheckBox.class);
-
 		Settings settings = Settings.getInstance();
 
-		float powerUpChance = calcValueToSlider(Settings.MIN_POWER_UP_CHANCE,
-				Settings.MAX_POWER_UP_CHANCE, settings.getPowerUpChance());
-		float speed = calcValueToSlider(Settings.MIN_SPEED, Settings.MAX_SPEED,
-				settings.getSpeed());
-		float width = calcValueToSlider(Settings.MIN_WIDTH, Settings.MAX_WIDTH,
-				settings.getWidth());
-		float holeChance = calcValueToSlider(Settings.MIN_CHANCE_OF_HOLE,
-				Settings.MAX_CHANCE_OF_HOLE, settings.getChanceOfHole());
-		float rotSpeed = calcValueToSlider(Settings.MIN_ROTATION_SPEED,
-				Settings.MAX_ROTATION_SPEED, settings.getRotationSpeed());
+		float powerUpChance = settings.getPowerUpChance();
+		float speed = settings.getSpeed();
+		float width = settings.getWidth();
+		float holeChance = settings.getChanceOfHole();
+		float rotSpeed = settings.getRotationSpeed();
 		boolean musicEnabled = settings.isMusicEnabled();
 		boolean soundEffectsEnabled = settings.isSoundEffectsEnabled();
 		int goalScore = settings.getGoalScore();
 		boolean autoGoal = Settings.getInstance().isAutoGoalEnabled();
 
-		pu.setValue(powerUpChance);
-		speedSlider.setValue(speed);
-		widthSlider.setValue(width);
-		holeSlider.setValue(holeChance);
-		rotSlider.setValue(rotSpeed);
-		musicCheckBox.setChecked(musicEnabled);
-		soundEffectsCheckBox.setChecked(soundEffectsEnabled);
-
+		this.powerUpSlider.setValue(powerUpChance);
+		this.speedSlider.setValue(speed);
+		this.widthSlider.setValue(width);
+		this.holeSlider.setValue(holeChance);
+		this.rotSlider.setValue(rotSpeed);
+		this.musicCheckBox.setChecked(musicEnabled);
+		this.soundEffectsCheckBox.setChecked(soundEffectsEnabled);
 		this.goalSlider.setValue(goalScore);
 		this.goalCheckbox.setChecked(autoGoal);
 
@@ -403,44 +419,6 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * Calculates the settings value from a slider value.
-	 * 
-	 * @param min
-	 *            - the minimum setting
-	 * @param max
-	 *            - the maximum setting
-	 * @param sliderValue
-	 *            - the value that the slider has
-	 * 
-	 * @return the value that can be used in game
-	 */
-	private float calcSliderToValue(float min, float max, float sliderValue) {
-		float precent = sliderValue / 100;
-		// Here we move the min value to zero,
-		// then calculate position and lastly
-		// moves it back.
-		return (max - min) * precent + min;
-	}
-
-	/**
-	 * Calculates the slider value from a settings value.
-	 * 
-	 * @param min
-	 *            - the minimum setting
-	 * @param max
-	 *            - the maximum setting
-	 * @param value
-	 *            - the value that the settings has
-	 * 
-	 * @return the value that can be used on slider
-	 */
-	private float calcValueToSlider(float min, float max, float value) {
-		float precent = (value - min) / (max - min);
-
-		return precent * 100;
 	}
 
 	public void closePopup() {

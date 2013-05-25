@@ -134,15 +134,15 @@
 								<control id="goalSlider" name="horizontalSlider"/>
 							</panel>
 							<control name="label" text="Power-up chance"/>
-							<control id="puslider" name="horizontalSlider" buttonStepSize="5"/>
+							<control id="powerUpSlider" name="horizontalSlider"/>
 							<control name="label" text="Player speed"/>
-							<control id="speedSlider" name="horizontalSlider" buttonStepSize="5"/>
+							<control id="speedSlider" name="horizontalSlider"/>
 							<control name="label" text="Player width"/>
-							<control id="widthSlider" name="horizontalSlider" buttonStepSize="5"/>
+							<control id="widthSlider" name="horizontalSlider"/>
 							<control name="label" text="Hole chance"/>
-							<control id="holeSlider" name="horizontalSlider" buttonStepSize="5"/>
+							<control id="holeSlider" name="horizontalSlider"/>
 							<control name="label" text="Rotation speed"/>
-							<control id="rotSlider" name="horizontalSlider" buttonStepSize="5"/>
+							<control id="rotSlider" name="horizontalSlider"/>
 							<panel childLayout="horizontal">
 								<control name="checkbox" checked="true" id="music"/>
 								<control name="label" text="Music"/>
