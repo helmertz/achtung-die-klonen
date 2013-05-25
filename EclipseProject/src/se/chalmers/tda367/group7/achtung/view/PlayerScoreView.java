@@ -27,10 +27,15 @@ public class PlayerScoreView extends AbstractScoreView {
 			renderService.drawString(player.getPoints() + "", sideX, sideY
 					+ LABEL_SEPARATION, POINTS_FONT_SIZE, player.getColor());
 			if (player.getBody().isDead()) {
-				renderService.drawString("+" + player.getRoundPoints() + "",
-						sideX + 100, sideY + LABEL_SEPARATION + 30,
-						POINTS_FONT_SIZE * (float) 0.5, player.getColor());
+				drawCurrentRoundScore(renderService, player, sideX, sideY);
 			}
 		}
+	}
+
+	private void drawCurrentRoundScore(RenderService renderService,
+			Player player, float sideX, float sideY) {
+		renderService.drawString("+" + player.getRoundPoints() + "",
+				sideX + 100, sideY + LABEL_SEPARATION + 30,
+				POINTS_FONT_SIZE * (float) 0.5, player.getColor());
 	}
 }
