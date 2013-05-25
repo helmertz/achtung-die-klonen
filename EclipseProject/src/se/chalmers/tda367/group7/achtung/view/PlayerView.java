@@ -89,10 +89,10 @@ public class PlayerView implements View {
 
 	private void drawSegmentCorners(RenderService renderService,
 			Position[] corners) {
-		renderService.drawFourCornered(corners[0].getX(),
-				corners[0].getY(), corners[1].getX(), corners[1].getY(),
-				corners[2].getX(), corners[2].getY(), corners[3].getX(),
-				corners[3].getY(), this.player.getColor());
+		renderService.drawFourCornered(corners[0].getX(), corners[0].getY(),
+				corners[1].getX(), corners[1].getY(), corners[2].getX(),
+				corners[2].getY(), corners[3].getX(), corners[3].getY(),
+				this.player.getColor());
 	}
 
 	private void drawPowerUpTimer(RenderService renderService,

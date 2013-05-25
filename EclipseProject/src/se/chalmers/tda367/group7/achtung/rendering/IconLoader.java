@@ -19,7 +19,7 @@ class IconLoader {
 			decoder.decode(buf, decoder.getWidth() * 4, Format.RGBA);
 			buf.flip();
 			is.close();
-			
+
 			return buf;
 		} else {
 			throw new IOException(filename + " not found");

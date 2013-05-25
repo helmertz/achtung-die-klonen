@@ -189,7 +189,7 @@ public class Round {
 				}
 			}
 		}
-		
+
 		effect.applyEffect(this);
 		this.activeRoundEffects.add(new PowerUp<>(effect));
 	}

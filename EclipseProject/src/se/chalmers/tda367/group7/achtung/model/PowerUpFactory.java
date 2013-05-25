@@ -17,7 +17,7 @@ public class PowerUpFactory {
 	}
 
 	public static PowerUpEntity getRandomEntity(Map map) {
-		
+
 		// Gets a random effect
 		PowerUpEffect effect = getRandomEffect();
 
@@ -48,11 +48,11 @@ public class PowerUpFactory {
 		}
 
 		float randWeight = (float) (totWeight * Math.random());
-		
+
 		float weightAccum = 0;
 		for (PowerUpEffect effect : effects) {
 			weightAccum += effect.getWeight();
-			if(weightAccum > randWeight) {
+			if (weightAccum > randWeight) {
 				return effect;
 			}
 		}

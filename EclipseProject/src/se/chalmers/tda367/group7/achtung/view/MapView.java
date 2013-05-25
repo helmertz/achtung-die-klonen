@@ -34,8 +34,8 @@ public class MapView implements View {
 	}
 
 	private void drawWall(RenderService renderer, Color color) {
-		renderer.drawLinedRect(0, 0, this.map.getWidth(),
-				this.map.getHeight(), 5, color);
+		renderer.drawLinedRect(0, 0, this.map.getWidth(), this.map.getHeight(),
+				5, color);
 	}
 
 	public Map getMap() {

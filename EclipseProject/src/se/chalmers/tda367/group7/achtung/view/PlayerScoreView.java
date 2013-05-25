@@ -35,7 +35,7 @@ public class PlayerScoreView extends AbstractScoreView {
 	private void drawCurrentRoundScore(RenderService renderService,
 			Player player, float sideX, float sideY) {
 		renderService.drawString("+" + player.getRoundPoints() + "",
-				sideX + 100, sideY + LABEL_SEPARATION + 30,
-				POINTS_FONT_SIZE * (float) 0.5, player.getColor());
+				sideX + 100, sideY + LABEL_SEPARATION + 30, POINTS_FONT_SIZE
+						* (float) 0.5, player.getColor());
 	}
 }
