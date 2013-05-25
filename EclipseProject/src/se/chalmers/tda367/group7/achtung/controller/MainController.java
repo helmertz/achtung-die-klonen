@@ -130,85 +130,99 @@ public class MainController implements PropertyChangeListener,
 	public void run() {
 		this.nextGameTick = getTickCount();
 		while (!this.finished && !this.renderer.isCloseRequested()) {
-
-			// Called as often as possible, so events gets created directly at
-			// key press
-			this.inputService.update();
-
-			boolean doLogic = true;
-
-			if (this.renderer.isActive() && !this.atMenu
-					&& this.game.getCurrentRound().isRoundActive()) {
-				this.sound.playMusic();
-			}
-
-			// Essentially pauses the game when not in focus
-			if (!this.renderer.isActive()) {
-				doLogic = false;
-
-				this.sound.pauseMusic();
-
-				// Allow some sleeping to minimize cpu usage
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-				}
-
-				// Needs to be set to now so that no compensation is done
-				this.nextGameTick = getTickCount();
-			}
-			if (this.atMenu) {
-				this.nifty.update();
-				doLogic = false;
-				this.nextGameTick = getTickCount();
-			}
-			this.loops = 0;
-			while (doLogic && getTickCount() >= this.nextGameTick
-					&& this.loops < MAX_FRAMESKIP) {
-				if (this.loops > 0) {
-					System.out.println("Logic loop compensating");
-				}
-
-				doLogic();
-
-				this.nextGameTick += SKIP_TICKS;
-				this.loops++;
-
-				// For logic rate calculation
-				this.dbgGameTickCounter++;
-			}
-
-			if (FPS_LIMIT <= 0
-					|| getTickCount() - this.lastFrame >= FRAME_DELAY) {
-				this.lastFrame = getTickCount();
-				float interpolation = (getTickCount() + SKIP_TICKS - this.nextGameTick)
-						/ (float) SKIP_TICKS;
-				render(interpolation);
-				// For fps calculation
-				this.dbgFrameCounter++;
-			}
-
-			// Prints performance information to console
-			long deltaDebug = getTickCount() - this.lastDebugPrint;
-			if (deltaDebug >= DEBUG_PRINT_DELAY) {
-				this.lastDebugPrint = getTickCount();
-
-				// Calculate and print average fps
-				double fps = (this.dbgFrameCounter * 1000000000l)
-						/ (double) deltaDebug;
-				this.fpsString = "FPS: "
-						+ String.format(Locale.US, "%.2f", fps);
-				this.dbgFrameCounter = 0;
-
-				// Calculate and print average game logic (tick) rate
-				double logicRate = (this.dbgGameTickCounter * 1000000000l)
-						/ (double) deltaDebug;
-				this.tpsString = "TPS: "
-						+ String.format(Locale.US, "%.2f", logicRate);
-				this.dbgGameTickCounter = 0;
-			}
+			loop();
 		}
 		this.sound.closeSound();
+	}
+
+	private void loop() {
+		// Called as often as possible, so events gets created directly at
+		// key press
+		this.inputService.update();
+
+		boolean doLogic = true;
+
+		if (this.renderer.isActive() && !this.atMenu
+				&& this.game.getCurrentRound().isRoundActive()) {
+			this.sound.playMusic();
+		}
+
+		// Essentially pauses the game when not in focus
+		if (!this.renderer.isActive()) {
+			doLogic = false;
+			whenNotActive();
+		}
+		if (this.atMenu) {
+			doLogic = false;
+			whenAtMenu();
+		}
+		this.loops = 0;
+		while (doLogic && getTickCount() >= this.nextGameTick
+				&& this.loops < MAX_FRAMESKIP) {
+			if (this.loops > 0) {
+				System.out.println("Logic loop compensating");
+			}
+
+			doLogic();
+
+			this.nextGameTick += SKIP_TICKS;
+			this.loops++;
+
+			// For logic rate calculation
+			this.dbgGameTickCounter++;
+		}
+
+		if (FPS_LIMIT <= 0 || getTickCount() - this.lastFrame >= FRAME_DELAY) {
+			this.lastFrame = getTickCount();
+			float interpolation = getInterpolation();
+			render(interpolation);
+			// For fps calculation
+			this.dbgFrameCounter++;
+		}
+
+		// Prints performance information to console
+		long deltaDebug = getTickCount() - this.lastDebugPrint;
+		if (deltaDebug >= DEBUG_PRINT_DELAY) {
+			onDebugUpdate(deltaDebug);
+		}
+	}
+
+	private void whenAtMenu() {
+		this.nifty.update();
+		this.nextGameTick = getTickCount();
+	}
+
+	private float getInterpolation() {
+		return (getTickCount() + SKIP_TICKS - this.nextGameTick)
+				/ (float) SKIP_TICKS;
+	}
+
+	private void onDebugUpdate(long deltaDebug) {
+		this.lastDebugPrint = getTickCount();
+
+		// Calculate and print average fps
+		double fps = (this.dbgFrameCounter * 1000000000l) / (double) deltaDebug;
+		this.fpsString = "FPS: " + String.format(Locale.US, "%.2f", fps);
+		this.dbgFrameCounter = 0;
+
+		// Calculate and print average game logic (tick) rate
+		double logicRate = (this.dbgGameTickCounter * 1000000000l)
+				/ (double) deltaDebug;
+		this.tpsString = "TPS: " + String.format(Locale.US, "%.2f", logicRate);
+		this.dbgGameTickCounter = 0;
+	}
+
+	private void whenNotActive() {
+		this.sound.pauseMusic();
+
+		// Allow some sleeping to minimize cpu usage
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e) {
+		}
+
+		// Needs to be set to now so that no compensation is done
+		this.nextGameTick = getTickCount();
 	}
 
 	private void doLogic() {
