@@ -74,14 +74,16 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		this.buttonKeyMap.put(p2r, Keyboard.KEY_D);
 	}
 
-	private void updateGoalLabel() {
+	private void updateGoalControls() {
 		boolean autoGoal = this.goalCheckbox.isChecked();
 		String goalString;
 		if (autoGoal) {
 			goalString = "auto";
+			goalSlider.disable();
 		} else {
 			goalString = Integer
 					.toString(Math.round(this.goalSlider.getValue()));
+			goalSlider.enable();
 		}
 		this.goalLabel.setText(goalString);
 	}
@@ -297,7 +299,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		this.goalSlider.setValue(goalScore);
 		this.goalCheckbox.setChecked(autoGoal);
 
-		updateGoalLabel();
+		updateGoalControls();
 	}
 
 	public void onContinuePress() {
@@ -448,13 +450,13 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	@NiftyEventSubscriber(id = "goalCheckbox")
 	public void onCheckBoxChanged(final String id,
 			final CheckBoxStateChangedEvent event) {
-		updateGoalLabel();
+		updateGoalControls();
 	}
 
 	@NiftyEventSubscriber(id = "goalSlider")
 	public void onSliderChangedEvent(final String id,
 			final SliderChangedEvent event) {
-		updateGoalLabel();
+		updateGoalControls();
 	}
 
 	/**
