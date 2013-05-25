@@ -115,7 +115,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		try {
 			List<PlayerInfoHolder> pInfoList = createPlayerInfo();
 			if (pInfoList.size() < 2) {
-				throw new RuntimeException("Too few players");
+				throw new MenuException("Too few players");
 			}
 			updateGameSettings();
 
@@ -123,7 +123,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 			showErrorText("");
 
 			this.pcs.firePropertyChange("startPressed", null, pInfoList);
-		} catch (RuntimeException e) {
+		} catch (MenuException e) {
 			showErrorText(e.getMessage());
 		}
 	}
@@ -178,7 +178,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		String name = tf.getDisplayedText();
 
 		if (name.length() < 1) {
-			throw new RuntimeException("Please enter a name for player "
+			throw new MenuException("Please enter a name for player "
 					+ playerNum);
 		}
 
@@ -186,7 +186,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		Integer rKey = this.buttonKeyMap.get(rButton);
 
 		if (lKey == null || rKey == null) {
-			throw new RuntimeException("Keys not set or invalid for " + name);
+			throw new MenuException("Keys not set or invalid for " + name);
 		}
 
 		return new PlayerInfoHolder(lKey, rKey,
