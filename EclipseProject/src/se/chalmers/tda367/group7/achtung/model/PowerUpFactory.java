@@ -30,8 +30,8 @@ public class PowerUpFactory {
 
 		Position randPos = Position.getRandomPosition(minX, minY, maxX, maxY);
 
-		Type type = effect.getAllowedTypes()[(int) (effect.getAllowedTypes().length * Math
-				.random())];
+		Type[] allowedTypes = effect.getAllowedTypes();
+		Type type = allowedTypes[(int) (allowedTypes.length * Math.random())];
 
 		PowerUpEntity entity = new PowerUpEntity(randPos, diameter, effect,
 				type);

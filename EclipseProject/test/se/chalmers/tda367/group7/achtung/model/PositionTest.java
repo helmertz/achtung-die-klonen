@@ -16,7 +16,7 @@ public class PositionTest {
 
 	@Before
 	public void setUpRound() {
-		this.round = new Round(new Map(1000, 1000), new ArrayList<Player>(), 0);
+		this.round = new Round(new Map(1000, 1000), new ArrayList<Player>());
 		this.mapWidth = this.round.getMap().getWidth();
 		this.mapHeight = this.round.getMap().getHeight();
 	}

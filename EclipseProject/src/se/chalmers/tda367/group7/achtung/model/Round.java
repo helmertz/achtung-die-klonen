@@ -10,7 +10,7 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 import se.chalmers.tda367.group7.achtung.model.powerups.NoTailPowerUp;
 
 /**
- * Class containing the data for a game currently playing.
+ * Class containing the data for a round in the game.
  */
 public class Round {
 
@@ -30,7 +30,7 @@ public class Round {
 
 	private Player winner;
 
-	public Round(Map map, List<Player> players, float powerUpChance) {
+	public Round(Map map, List<Player> players) {
 		this.map = map;
 		this.players = players;
 		this.powerUpEntities = new ArrayList<PowerUpEntity>();
@@ -39,7 +39,7 @@ public class Round {
 
 		this.pcs = new PropertyChangeSupport(this);
 
-		this.powerUpChance = powerUpChance;
+		this.powerUpChance = Settings.getInstance().getPowerUpChance();
 		this.setWallsActive(true);
 
 		createPlayerBodiesAtRandomPos();

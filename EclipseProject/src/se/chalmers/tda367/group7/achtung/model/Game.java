@@ -7,28 +7,22 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Class for setting up everything before starting the game.
+ * Class representing an entire game session, with a number of rounds.
  */
 public class Game {
 
 	private final List<Round> rounds;
 	private final List<Player> players;
-	private final Map map;
 	private Round currentRound;
 	private Player gameWinner;
 	private int goalPoints;
 
 	private final PropertyChangeSupport pcs;
-	private final float powerUpChance;
 
 	public Game() {
-		this.powerUpChance = Settings.getInstance().getPowerUpChance();
 		this.rounds = new ArrayList<>();
 		this.players = new ArrayList<>();
-		this.map = new Map(1337, 1337);
-
 		this.pcs = new PropertyChangeSupport(this);
-
 	}
 
 	public Player createNewPlayer(String name, Color color) {
@@ -48,9 +42,7 @@ public class Game {
 	}
 
 	public void newRound() {
-		this.map.setColor(Map.DEFAULT_COLOR);
-		this.currentRound = new Round(new Map(1337, 1337), this.players,
-				this.powerUpChance);
+		this.currentRound = new Round(new Map(1337, 1337), this.players);
 		this.rounds.add(this.currentRound);
 		this.pcs.firePropertyChange("NewRound", false, true);
 		this.goalPoints = 10 * (this.players.size() - 1);
