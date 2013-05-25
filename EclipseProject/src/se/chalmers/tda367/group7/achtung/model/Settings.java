@@ -4,6 +4,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Properties;
 
 public class Settings {
@@ -40,14 +42,24 @@ public class Settings {
 	private void load() {
 		this.prop = new Properties();
 
+		InputStream inputStream = null;
 		try {
-			this.prop.load(new FileInputStream(FILENAME));
+			inputStream = new FileInputStream(FILENAME);
+			this.prop.load(inputStream);
 		} catch (FileNotFoundException e) {
 			// Use default settings if file does not exist.
 			resetToDefaults();
 			return;
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 	}
@@ -122,10 +134,20 @@ public class Settings {
 	 */
 	public void save() {
 
+		OutputStream outputStream = null;
 		try {
-			this.prop.store(new FileOutputStream(FILENAME), null);
+			outputStream = new FileOutputStream(FILENAME);
+			this.prop.store(outputStream, null);
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			if(outputStream != null) {
+				try {
+					outputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
