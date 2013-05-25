@@ -57,6 +57,9 @@ public class CollisionHelper {
 			newY = 0;
 		} else if (exitOnBottom(curY)) {
 			newY = this.map.getHeight();
+		} else {
+			// position shouldn't be modified if not actually outside
+			return;
 		}
 		Position pos = new Position(newX, newY);
 
