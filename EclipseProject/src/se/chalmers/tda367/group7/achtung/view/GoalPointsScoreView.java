@@ -18,8 +18,18 @@ public class GoalPointsScoreView extends AbstractScoreView {
 		float sideX = renderService.getViewAreaWidth() - 175;
 		float sideY = 20;
 
+		drawGoalText(renderService, sideX, sideY);
+		drawGoalScore(renderService, sideX, sideY);
+	}
+
+	private void drawGoalText(RenderService renderService, float sideX,
+			float sideY) {
 		renderService.drawString("Goal", sideX + 6, sideY, NAME_FONT_SIZE,
 				Color.WHITE);
+	}
+	
+	private void drawGoalScore(RenderService renderService, float sideX,
+			float sideY) {
 		renderService.drawString(this.goalScore + "", sideX, sideY
 				+ LABEL_SEPARATION + (float) 0.2, POINTS_FONT_SIZE
 				+ (float) 1.1, Color.WHITE);
