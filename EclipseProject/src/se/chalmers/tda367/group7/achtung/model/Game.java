@@ -45,7 +45,11 @@ public class Game {
 		this.currentRound = new Round(new Map(1337, 1337), this.players);
 		this.rounds.add(this.currentRound);
 		this.pcs.firePropertyChange("NewRound", false, true);
-		this.goalPoints = 10 * (this.players.size() - 1);
+		if(Settings.getInstance().isAutoGoalEnabled()) {
+			this.goalPoints = 10 * (this.players.size() - 1);
+		} else {
+			this.goalPoints = Settings.getInstance().getGoalScore();
+		}
 
 		resetPlayerRoundScores();
 	}

@@ -15,10 +15,13 @@ import se.chalmers.tda367.group7.achtung.model.Color;
 import se.chalmers.tda367.group7.achtung.model.Settings;
 
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.NiftyEventSubscriber;
 import de.lessvoid.nifty.controls.Button;
 import de.lessvoid.nifty.controls.CheckBox;
+import de.lessvoid.nifty.controls.CheckBoxStateChangedEvent;
 import de.lessvoid.nifty.controls.Label;
 import de.lessvoid.nifty.controls.Slider;
+import de.lessvoid.nifty.controls.SliderChangedEvent;
 import de.lessvoid.nifty.controls.TextField;
 import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
@@ -36,14 +39,29 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	private Nifty nifty;
 	private Element popup;
+	private Slider goalSlider;
+	private CheckBox goalCheckbox;
+	private Label goalLabel;
 
 	@Override
 	public void bind(Nifty nifty, Screen screen) {
+		this.nifty = nifty;
 		this.screen = screen;
 		this.errorLabel = this.screen
 				.findNiftyControl("errorText", Label.class);
-		this.nifty = nifty;
-
+		
+		this.goalSlider = this.screen.findNiftyControl("goalSlider",
+				Slider.class);
+		this.goalCheckbox = this.screen.findNiftyControl("goalCheckbox",
+				CheckBox.class);
+		this.goalLabel = this.screen.findNiftyControl("goalLabel", Label.class);
+		
+		// TODO set min & max for all sliders, didn't know it was possible
+		this.goalSlider.setMin(Settings.MIN_GOAL);
+		this.goalSlider.setMax(Settings.MAX_GOAL);
+		this.goalSlider.setStepSize(1);
+		this.goalSlider.setButtonStepSize(1);
+		
 		loadGameSettings();
 		// Binds first two player's keys to default buttons
 		Button p1l = this.screen.findNiftyControl("keylp1", Button.class);
@@ -54,6 +72,18 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		this.buttonKeyMap.put(p1r, Keyboard.KEY_RIGHT);
 		this.buttonKeyMap.put(p2l, Keyboard.KEY_A);
 		this.buttonKeyMap.put(p2r, Keyboard.KEY_D);
+	}
+
+	private void updateGoalLabel() {
+		boolean autoGoal = this.goalCheckbox.isChecked();
+		String goalString;
+		if (autoGoal) {
+			goalString = "auto";
+		} else {
+			goalString = Integer
+					.toString(Math.round(this.goalSlider.getValue()));
+		}
+		this.goalLabel.setText(goalString);
 	}
 
 	public void setShowContinue(boolean show) {
@@ -205,6 +235,8 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 				Settings.MAX_ROTATION_SPEED, rotSlider.getValue());
 		boolean musicEnabled = musicCheckBox.isChecked();
 		boolean soundEffectsEnabled = soundEffectsCheckBox.isChecked();
+		int goal = Math.round(this.goalSlider.getValue());
+		boolean autoGoal = this.goalCheckbox.isChecked();
 
 		Settings settings = Settings.getInstance();
 		settings.setPowerUpChance(powerUpChance);
@@ -214,6 +246,8 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		settings.setRotationSpeed(rotSpeed);
 		settings.setMusicEnabled(musicEnabled);
 		settings.setSoundEffectsEnabled(soundEffectsEnabled);
+		settings.setGoalScore(goal);
+		settings.setAutoGoalEnabled(autoGoal);
 	}
 
 	/**
@@ -249,6 +283,8 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 				Settings.MAX_ROTATION_SPEED, settings.getRotationSpeed());
 		boolean musicEnabled = settings.isMusicEnabled();
 		boolean soundEffectsEnabled = settings.isSoundEffectsEnabled();
+		int goalScore = settings.getGoalScore();
+		boolean autoGoal = Settings.getInstance().isAutoGoalEnabled();
 
 		pu.setValue(powerUpChance);
 		speedSlider.setValue(speed);
@@ -258,6 +294,10 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		musicCheckBox.setChecked(musicEnabled);
 		soundEffectsCheckBox.setChecked(soundEffectsEnabled);
 
+		this.goalSlider.setValue(goalScore);
+		this.goalCheckbox.setChecked(autoGoal);
+
+		updateGoalLabel();
 	}
 
 	public void onContinuePress() {
@@ -403,6 +443,18 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 
 	public void closePopup() {
 		this.nifty.closePopup(this.popup.getId());
+	}
+
+	@NiftyEventSubscriber(id = "goalCheckbox")
+	public void onCheckBoxChanged(final String id,
+			final CheckBoxStateChangedEvent event) {
+		updateGoalLabel();
+	}
+
+	@NiftyEventSubscriber(id = "goalSlider")
+	public void onSliderChangedEvent(final String id,
+			final SliderChangedEvent event) {
+		updateGoalLabel();
 	}
 
 	/**

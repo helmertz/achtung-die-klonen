@@ -20,6 +20,8 @@ public class Settings {
 	public static final float MAX_CHANCE_OF_HOLE = 0.2f;
 	public static final float MIN_POWER_UP_CHANCE = 0;
 	public static final float MAX_POWER_UP_CHANCE = 0.1f;
+	public static final float MIN_GOAL = 1;
+	public static final float MAX_GOAL = 99;
 
 	private static final float DEFAULT_WIDTH = 10;
 	private static final float DEFAULT_SPEED = 6;
@@ -28,6 +30,8 @@ public class Settings {
 	private static final float DEFAULT_POWER_UP_CHANCE = 0.01f;
 	private static final boolean DEFAULT_MUSIC_ENABLED = true;
 	private static final boolean DEFAULT_SOUND_EFFECTS_ENABLED = true;
+	private static final int DEFAULT_GOAL_SCORE = 10;
+	private static final boolean DEFAULT_AUTO_GOAL = true;
 
 	private static final String FILENAME = "achtung.conf";
 
@@ -61,7 +65,6 @@ public class Settings {
 				}
 			}
 		}
-
 	}
 
 	public float getWidth() {
@@ -121,6 +124,32 @@ public class Settings {
 		this.prop.setProperty("soundEffectsEnabled", soundEffectsEnabled + "");
 	}
 
+	public void setGoalScore(int score) {
+		this.prop.setProperty("goal_score", score + "");
+	}
+
+	public boolean isAutoGoalEnabled() {
+		String loaded = this.prop.getProperty("auto_goal");
+		if(loaded == null) {
+			setAutoGoalEnabled(DEFAULT_AUTO_GOAL);
+			return DEFAULT_AUTO_GOAL;
+		}
+		return Boolean.parseBoolean(this.prop.getProperty("auto_goal"));
+	}
+
+	public void setAutoGoalEnabled(boolean autoGoal) {
+		this.prop.setProperty("auto_goal", autoGoal + "");
+	}
+	
+	public int getGoalScore() {
+		String loaded = this.prop.getProperty("goal_score");
+		if(loaded == null) {
+			setGoalScore(DEFAULT_GOAL_SCORE);
+			return DEFAULT_GOAL_SCORE;
+		}
+		return Integer.parseInt(loaded);
+	}
+	
 	public static synchronized Settings getInstance() {
 		if (instance == null) {
 			instance = new Settings();
@@ -162,6 +191,8 @@ public class Settings {
 		setPowerUpChance(DEFAULT_POWER_UP_CHANCE);
 		setMusicEnabled(DEFAULT_MUSIC_ENABLED);
 		setSoundEffectsEnabled(DEFAULT_SOUND_EFFECTS_ENABLED);
+		setGoalScore(DEFAULT_GOAL_SCORE);
+		setAutoGoalEnabled(DEFAULT_AUTO_GOAL);
 
 		save();
 	}
