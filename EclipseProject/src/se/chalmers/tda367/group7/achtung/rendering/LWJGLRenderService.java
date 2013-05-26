@@ -21,7 +21,7 @@ class LWJGLRenderService implements RenderService {
 	private static final int DEFAULT_WIDTH = 800;
 	private static final int DEFAULT_HEIGHT = 600;
 	private static final int MIN_WIDTH = 600;
-	private static final int MIN_HEIGHT = 480;
+	private static final int MIN_HEIGHT = 530;
 
 	private static LWJGLRenderService instance;
 
