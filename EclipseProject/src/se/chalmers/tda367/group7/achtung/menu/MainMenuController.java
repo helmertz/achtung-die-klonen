@@ -52,6 +52,10 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	private CheckBox musicCheckBox;
 	private CheckBox soundEffectsCheckBox;
 
+	private static final int[] ILLEGAL_KEYS = new int[] { 0,
+			Keyboard.KEY_SPACE, Keyboard.KEY_ESCAPE, Keyboard.KEY_RETURN,
+			Keyboard.KEY_F3, Keyboard.KEY_F11, Keyboard.KEY_F12 };
+
 	@Override
 	public void bind(Nifty nifty, Screen screen) {
 		this.nifty = nifty;
@@ -92,8 +96,8 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 				Slider.class);
 		this.rotSlider = this.screen
 				.findNiftyControl("rotSlider", Slider.class);
-		this.sizeSlider = this.screen
-				.findNiftyControl("sizeSlider", Slider.class);
+		this.sizeSlider = this.screen.findNiftyControl("sizeSlider",
+				Slider.class);
 		this.musicCheckBox = this.screen.findNiftyControl("music",
 				CheckBox.class);
 		this.soundEffectsCheckBox = this.screen.findNiftyControl("sound",
@@ -103,7 +107,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	private void setSliderSettings() {
 		configureSlider(this.goalSlider, Settings.MIN_GOAL, Settings.MAX_GOAL,
 				1);
-		
+
 		// TODO possibly custom step size on some of these
 		configureSlider(this.powerUpSlider, Settings.MIN_POWER_UP_CHANCE,
 				Settings.MAX_POWER_UP_CHANCE);
@@ -117,7 +121,8 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 				Settings.MAX_CHANCE_OF_HOLE);
 		configureSlider(this.rotSlider, Settings.MIN_ROTATION_SPEED,
 				Settings.MAX_ROTATION_SPEED);
-		configureSlider(this.sizeSlider, Settings.MIN_MAP_SIZE, Settings.MAX_MAP_SIZE);
+		configureSlider(this.sizeSlider, Settings.MIN_MAP_SIZE,
+				Settings.MAX_MAP_SIZE);
 	}
 
 	// By default, uses 100 steps
@@ -395,10 +400,11 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		if (this.handleKeyIn && event.isPressed()) {
 			this.handleKeyIn = false;
 
-			// TODO check with a blacklist
-			if (event.getKey() == 0) {
-				// Abort, would show up as none
+			if (isIllegalKey(event.getKey())) {
+				showErrorText(event.getKeyName() + " is not allowed");
 				return false;
+			} else {
+				showErrorText("");
 			}
 
 			char c = Character.toUpperCase(event.getCharacter());
@@ -427,6 +433,15 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 				this.pressedButton = null;
 			}
 			return true;
+		}
+		return false;
+	}
+
+	private boolean isIllegalKey(int key) {
+		for (int i = 0; i < ILLEGAL_KEYS.length; i++) {
+			if (ILLEGAL_KEYS[i] == key) {
+				return true;
+			}
 		}
 		return false;
 	}
