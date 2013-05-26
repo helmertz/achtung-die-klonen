@@ -9,6 +9,7 @@ public class Player {
 	private final Color color;
 
 	private int points;
+	private int roundPoints;
 
 	private Body body;
 
@@ -32,6 +33,10 @@ public class Player {
 		return this.points;
 	}
 
+	public int getRoundPoints() {
+		return this.roundPoints;
+	}
+
 	/**
 	 * Adds the given number of points to the player.
 	 * 
@@ -40,6 +45,7 @@ public class Player {
 	 */
 	public void addPoints(int points) {
 		this.points += points;
+		this.roundPoints++;
 	}
 
 	public Color getColor() {
@@ -64,5 +70,9 @@ public class Player {
 	@Override
 	public String toString() {
 		return getName() + ", " + this.points + " points";
+	}
+
+	public void resetRoundScore() {
+		this.roundPoints = 0;
 	}
 }

@@ -10,7 +10,7 @@ import se.chalmers.tda367.group7.achtung.model.PowerUpEntity.Type;
 import se.chalmers.tda367.group7.achtung.model.powerups.NoTailPowerUp;
 
 /**
- * Class containing the data for a game currently playing.
+ * Class containing the data for a round in the game.
  */
 public class Round {
 
@@ -30,7 +30,7 @@ public class Round {
 
 	private Player winner;
 
-	public Round(Map map, List<Player> players, float powerUpChance) {
+	public Round(Map map, List<Player> players) {
 		this.map = map;
 		this.players = players;
 		this.powerUpEntities = new ArrayList<PowerUpEntity>();
@@ -39,7 +39,7 @@ public class Round {
 
 		this.pcs = new PropertyChangeSupport(this);
 
-		this.powerUpChance = powerUpChance;
+		this.powerUpChance = Settings.getInstance().getPowerUpChance();
 		this.setWallsActive(true);
 
 		createPlayerBodiesAtRandomPos();
@@ -119,7 +119,9 @@ public class Round {
 			killPlayer(player);
 		} else if (this.collisionHelper.isPlayerOutOfBounds(player)) {
 			if (this.wallsAreActive) {
-				killPlayer(player);
+				if (!player.getBody().isGeneratingHole()) {
+					killPlayer(player);
+				}
 			} else {
 				this.collisionHelper.mirrorPlayerPosition(player);
 			}
@@ -179,6 +181,15 @@ public class Round {
 	}
 
 	private void distributeRoundEffect(RoundPowerUpEffect effect) {
+		if (!effect.isStackable()) {
+			for (PowerUp<RoundPowerUpEffect> powerUp : this.activeRoundEffects) {
+				if (powerUp.getEffect().getClass() == effect.getClass()) {
+					powerUp.resetTimer();
+					return;
+				}
+			}
+		}
+
 		effect.applyEffect(this);
 		this.activeRoundEffects.add(new PowerUp<>(effect));
 	}
@@ -222,7 +233,6 @@ public class Round {
 
 	private void createPlayerBodiesAtRandomPos() {
 		for (Player player : this.players) {
-
 			player.setBody(BodyFactory.getBody(this.map));
 		}
 	}

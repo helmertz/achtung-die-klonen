@@ -67,11 +67,8 @@ public class Body {
 
 	public void update() {
 		updatePowerUps();
-
-		if (!this.dead) {
-			updateHeadPosition();
-			updateSegments();
-		}
+		updateHeadPosition();
+		updateSegments();
 	}
 
 	private void updateSegments() {
@@ -109,13 +106,16 @@ public class Body {
 	}
 
 	private void holeUpdate() {
-		this.makeHole = !this.segmentGenerationEnabled || !this.makeHole
+		this.makeHole = !this.segmentGenerationEnabled
+				|| !this.makeHole
 				&& Math.random() < this.settings.getChanceOfHole()
 				// If a hole was made the previous time, it's often more likely
 				// a hole still will be made.
 				// The subtraction makes it so holes will be longer than the
 				// number subtracted.
-				|| this.makeHole && Math.random() > (this.holeCount - 2) / 10d;
+				|| this.makeHole
+				&& Math.random() > (this.holeCount - this.width / 5)
+						/ (this.width * 0.8f);
 	}
 
 	private void createBodySegment() {
@@ -182,9 +182,8 @@ public class Body {
 			}
 		}
 
-		PowerUp<BodyPowerUpEffect> p = new PowerUp<BodyPowerUpEffect>(effect);
-		p.getEffect().applyEffect(this);
-		this.powerUps.add(p);
+		effect.applyEffect(this);
+		this.powerUps.add(new PowerUp<>(effect));
 	}
 
 	/**
@@ -314,5 +313,9 @@ public class Body {
 
 	public boolean hasInvertedControls() {
 		return this.invertedControls;
+	}
+
+	public TurnMode getTurnMode() {
+		return this.turnMode;
 	}
 }

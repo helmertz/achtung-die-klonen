@@ -49,10 +49,10 @@ public class MainController implements PropertyChangeListener,
 	private int loops;
 
 	// Frame rate related
-	private static final double FPS_LIMIT = 60.1; // Set to zero or below to
-													// prevent limiting
-	private static final long FRAME_DELAY = (long) (1000000000d / FPS_LIMIT);
+	private double fpsLimit; // Set to zero or below to prevent limiting
+	private long frameDelay;
 	private long lastFrame;
+	private boolean limitFPS;
 
 	// Debug related
 	private static final long DEBUG_PRINT_DELAY = 1000000000l;
@@ -61,23 +61,26 @@ public class MainController implements PropertyChangeListener,
 	private int dbgGameTickCounter;
 	private String fpsString = "";
 	private String tpsString = "";
+	private boolean showDebug;
 
 	private RenderService renderer;
 	private final InputService inputService;
 	private SoundService sound;
+	private boolean finished;
 
 	private Game game;
 	private GameView gameView;
 	private GameController gameController;
 
 	private final Nifty nifty;
-	private boolean atMenu = true;
+	private boolean atMenu;
 	private final MainMenuController menuController;
 	private final CustomInputSystem inputSystem;
 
 	public MainController() {
 
 		this.renderer = RenderServiceFactory.getRenderService();
+		setLimitFPS(true);
 
 		// The service for supplying mouse and keyboard events
 		this.inputService = InputServiceFactory.getInputService();
@@ -118,6 +121,8 @@ public class MainController implements PropertyChangeListener,
 		this.menuController = (MainMenuController) niftyScreen
 				.getScreenController();
 		this.menuController.addListener(this);
+
+		setAtMenu(true);
 	}
 
 	private long getTickCount() {
@@ -126,86 +131,101 @@ public class MainController implements PropertyChangeListener,
 
 	public void run() {
 		this.nextGameTick = getTickCount();
-		while (!this.renderer.isCloseRequested()) {
-
-			// Called as often as possible, so events gets created directly at
-			// key press
-			this.inputService.update();
-
-			boolean doLogic = true;
-
-			if (this.renderer.isActive() && !this.atMenu
-					&& this.game.getCurrentRound().isRoundActive()) {
-				this.sound.playMusic();
-			}
-
-			// Essentially pauses the game when not in focus
-			if (!this.renderer.isActive()) {
-				doLogic = false;
-
-				this.sound.pauseMusic();
-
-				// Allow some sleeping to minimize cpu usage
-				try {
-					Thread.sleep(50);
-				} catch (InterruptedException e) {
-				}
-
-				// Needs to be set to now so that no compensation is done
-				this.nextGameTick = getTickCount();
-			}
-			if (this.atMenu) {
-				this.nifty.update();
-				doLogic = false;
-				this.nextGameTick = getTickCount();
-			}
-			this.loops = 0;
-			while (doLogic && getTickCount() >= this.nextGameTick
-					&& this.loops < MAX_FRAMESKIP) {
-				if (this.loops > 0) {
-					System.out.println("Logic loop compensating");
-				}
-
-				doLogic();
-
-				this.nextGameTick += SKIP_TICKS;
-				this.loops++;
-
-				// For logic rate calculation
-				this.dbgGameTickCounter++;
-			}
-
-			if (FPS_LIMIT <= 0
-					|| getTickCount() - this.lastFrame >= FRAME_DELAY) {
-				this.lastFrame = getTickCount();
-				float interpolation = (getTickCount() + SKIP_TICKS - this.nextGameTick)
-						/ (float) SKIP_TICKS;
-				render(interpolation);
-				// For fps calculation
-				this.dbgFrameCounter++;
-			}
-
-			// Prints performance information to console
-			long deltaDebug = getTickCount() - this.lastDebugPrint;
-			if (deltaDebug >= DEBUG_PRINT_DELAY) {
-				this.lastDebugPrint = getTickCount();
-
-				// Calculate and print average fps
-				double fps = (this.dbgFrameCounter * 1000000000l)
-						/ (double) deltaDebug;
-				this.fpsString = "FPS: "
-						+ String.format(Locale.US, "%.2f", fps);
-				this.dbgFrameCounter = 0;
-
-				// Calculate and print average game logic (tick) rate
-				double logicRate = (this.dbgGameTickCounter * 1000000000l)
-						/ (double) deltaDebug;
-				this.tpsString = "TPS: "
-						+ String.format(Locale.US, "%.2f", logicRate);
-				this.dbgGameTickCounter = 0;
-			}
+		while (!this.finished && !this.renderer.isCloseRequested()) {
+			loop();
 		}
 		this.sound.closeSound();
+	}
+
+	private void loop() {
+		// Called as often as possible, so events gets created directly at
+		// key press
+		this.inputService.update();
+
+		boolean doLogic = true;
+
+		if (this.renderer.isActive() && !this.atMenu
+				&& this.game.getCurrentRound().isRoundActive()) {
+			this.sound.playMusic();
+		}
+
+		// Essentially pauses the game when not in focus
+		if (!this.renderer.isActive()) {
+			doLogic = false;
+			whenNotActive();
+		}
+		if (this.atMenu) {
+			doLogic = false;
+			whenAtMenu();
+		}
+		this.loops = 0;
+		while (doLogic && getTickCount() >= this.nextGameTick
+				&& this.loops < MAX_FRAMESKIP) {
+			if (this.loops > 0) {
+				System.out.println("Logic loop compensating");
+			}
+
+			doLogic();
+
+			this.nextGameTick += SKIP_TICKS;
+			this.loops++;
+
+			// For logic rate calculation
+			this.dbgGameTickCounter++;
+		}
+
+		if (this.fpsLimit <= 0
+				|| getTickCount() - this.lastFrame >= this.frameDelay) {
+			this.lastFrame = getTickCount();
+			float interpolation = getInterpolation();
+			render(interpolation);
+			// For fps calculation
+			this.dbgFrameCounter++;
+		}
+
+		// Prints performance information to console
+		long deltaDebug = getTickCount() - this.lastDebugPrint;
+		if (deltaDebug >= DEBUG_PRINT_DELAY) {
+			onDebugUpdate(deltaDebug);
+		}
+	}
+
+	private void whenAtMenu() {
+		this.nifty.update();
+		this.nextGameTick = getTickCount();
+	}
+
+	private float getInterpolation() {
+		return (getTickCount() + SKIP_TICKS - this.nextGameTick)
+				/ (float) SKIP_TICKS;
+	}
+
+	private void onDebugUpdate(long deltaDebug) {
+		this.lastDebugPrint = getTickCount();
+
+		// Calculate and print average fps
+		double fps = (this.dbgFrameCounter * 1000000000l) / (double) deltaDebug;
+		this.fpsString = "FPS: " + String.format(Locale.US, "%.2f", fps);
+		this.dbgFrameCounter = 0;
+
+		// Calculate and print average game logic (tick) rate
+		double logicRate = (this.dbgGameTickCounter * 1000000000l)
+				/ (double) deltaDebug;
+		this.tpsString = "TPS: " + String.format(Locale.US, "%.2f", logicRate);
+		this.dbgGameTickCounter = 0;
+	}
+
+	private void whenNotActive() {
+		this.sound.pauseMusic();
+
+		// Allow some sleeping to minimize cpu usage
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e) {
+		}
+
+		// Needs to be set to now so that no compensation is done
+		this.nextGameTick = getTickCount();
 	}
 
 	private void doLogic() {
@@ -223,10 +243,6 @@ public class MainController implements PropertyChangeListener,
 
 		this.renderer.setScaled(false);
 
-		// Render debug info
-		this.renderer.drawString(this.fpsString, 0, 0, 1);
-		this.renderer.drawString(this.tpsString, 0, 20, 1);
-
 		if (Display.wasResized()) {
 			this.nifty.resolutionChanged();
 		}
@@ -234,6 +250,13 @@ public class MainController implements PropertyChangeListener,
 		if (this.atMenu) {
 			this.nifty.render(false);
 		}
+
+		if (this.showDebug) {
+			// Render debug info
+			this.renderer.drawString(this.fpsString, 0, 0, 1);
+			this.renderer.drawString(this.tpsString, 0, 20, 1);
+		}
+
 		this.renderer.postDraw();
 	}
 
@@ -248,6 +271,19 @@ public class MainController implements PropertyChangeListener,
 				this.sound.pauseMusic();
 			}
 			return true;
+		} else if (!event.isRepeat() && event.isPressed()
+				&& event.getKey() == Keyboard.KEY_F3) {
+			this.showDebug = !this.showDebug;
+			return true;
+		} else if (!event.isRepeat() && event.isPressed()
+				&& event.getKey() == Keyboard.KEY_F11) {
+			this.renderer.setFullscreen(!this.renderer.isFullscreen());
+			this.nifty.resolutionChanged();
+			return true;
+		} else if (!event.isRepeat() && event.isPressed()
+				&& event.getKey() == Keyboard.KEY_F12) {
+			toggleFPSLimit();
+			return true;
 		}
 		if (this.atMenu) {
 			if (this.menuController.onKeyInputEvent(event)) {
@@ -258,6 +294,23 @@ public class MainController implements PropertyChangeListener,
 			this.gameController.onKeyInputEvent(event);
 		}
 		return false;
+	}
+
+	private void toggleFPSLimit() {
+		setLimitFPS(!this.limitFPS);
+	}
+
+	private void setLimitFPS(boolean limitFPS) {
+		if (this.limitFPS != limitFPS) {
+			this.limitFPS = limitFPS;
+			if (limitFPS) {
+				this.fpsLimit = this.renderer.getRefreshRate();
+				this.frameDelay = Math.round(1000000000d / this.fpsLimit);
+			} else {
+				this.fpsLimit = 0;
+				this.frameDelay = 0;
+			}
+		}
 	}
 
 	@Override
@@ -275,6 +328,16 @@ public class MainController implements PropertyChangeListener,
 	private void setAtMenu(boolean atMenu) {
 		if (this.atMenu != atMenu) {
 			this.atMenu = atMenu;
+
+			this.menuController.setShowContinue(this.game != null
+					&& !this.game.isOver());
+
+			if (atMenu) {
+				// Sends a false event to Nifty, fixes problem with nifty button
+				// press
+				this.inputSystem.addMouseEvent(new MouseInputEvent(0, -1, -1,
+						0, false));
+			}
 		}
 	}
 
@@ -294,7 +357,7 @@ public class MainController implements PropertyChangeListener,
 		this.gameView = new GameView(this.game);
 		this.game.addPropertyChangeListener(this.gameView);
 		setAtMenu(false);
-		
+
 		// Save settings
 		Settings.getInstance().save();
 	}
@@ -302,7 +365,9 @@ public class MainController implements PropertyChangeListener,
 	@SuppressWarnings("unchecked")
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals("startPressed")) {
+		if (evt.getPropertyName().equals("exit")) {
+			this.finished = true;
+		} else if (evt.getPropertyName().equals("startPressed")) {
 			// TODO - Better check here?
 			if (evt.getNewValue() instanceof List<?>) {
 				startGame((List<PlayerInfoHolder>) evt.getNewValue());

@@ -12,6 +12,16 @@ import se.chalmers.tda367.group7.achtung.rendering.RenderServiceFactory;
 public class PowerUpEntityView implements View {
 	private static Image powerUpBackground;
 
+	static {
+		try {
+			powerUpBackground = RenderServiceFactory.getRenderService()
+					.getImage("powerup-background.png");
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+	}
+
 	private final PowerUpEntity powerUpEntity;
 	private Image image;
 
@@ -36,29 +46,12 @@ public class PowerUpEntityView implements View {
 				System.exit(1);
 			}
 		}
-
-		if (powerUpBackground == null) {
-			try {
-				powerUpBackground = RenderServiceFactory.getRenderService()
-						.getImage("powerup-background.png");
-			} catch (IOException e) {
-				e.printStackTrace();
-				System.exit(1);
-			}
-		}
 	}
 
 	@Override
 	public void render(RenderService renderService, float interpolation) {
 		Position pos = this.powerUpEntity.getPosition();
-		Color color = null;
-		if (this.powerUpEntity.getType() == PowerUpEntity.Type.SELF) {
-			color = Color.GREEN;
-		} else if (this.powerUpEntity.getType() == PowerUpEntity.Type.EVERYONE_ELSE) {
-			color = Color.RED;
-		} else {
-			color = Color.BLUE;
-		}
+		Color color = getCorrectPowerupColor();
 
 		powerUpBackground.drawImageCentered(pos.getX(), pos.getY(),
 				this.powerUpEntity.getDiameter(),
@@ -68,6 +61,16 @@ public class PowerUpEntityView implements View {
 			this.image.drawImageCentered(pos.getX(), pos.getY(),
 					this.powerUpEntity.getDiameter(),
 					this.powerUpEntity.getDiameter());
+		}
+	}
+
+	private Color getCorrectPowerupColor() {
+		if (this.powerUpEntity.getType() == PowerUpEntity.Type.SELF) {
+			return Color.GREEN;
+		} else if (this.powerUpEntity.getType() == PowerUpEntity.Type.EVERYONE_ELSE) {
+			return Color.RED;
+		} else {
+			return Color.BLUE;
 		}
 	}
 }

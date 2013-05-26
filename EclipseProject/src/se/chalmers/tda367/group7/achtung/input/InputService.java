@@ -10,5 +10,9 @@ public interface InputService {
 
 	void removeMouseListener(MouseInputListener listener);
 
+	/**
+	 * Polls the system for keyboard and mouse events and sends them out to
+	 * listeners.
+	 */
 	void update();
 }

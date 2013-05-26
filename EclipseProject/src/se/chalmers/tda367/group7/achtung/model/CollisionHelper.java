@@ -31,7 +31,7 @@ public class CollisionHelper {
 		// of the player being checked
 		List<BodySegment> playerSegments = currentBody.getBodySegments();
 
-		if (playerSegments.isEmpty()) {
+		if (playerSegments.isEmpty() || currentBody.isGeneratingHole()) {
 			return false;
 		}
 		return hasCollidedWithSegment(currentBody);
@@ -57,6 +57,9 @@ public class CollisionHelper {
 			newY = 0;
 		} else if (exitOnBottom(curY)) {
 			newY = this.map.getHeight();
+		} else {
+			// position shouldn't be modified if not actually outside
+			return;
 		}
 		Position pos = new Position(newX, newY);
 
@@ -137,7 +140,7 @@ public class CollisionHelper {
 
 	public static boolean segmentsCollide(BodySegment b1, BodySegment b2) {
 		// Does a fast bounding box check
-		if (!b1.getHitBox().getBounds().intersects(b2.getHitBox().getBounds())) {
+		if (!b1.getBounds().intersects(b2.getBounds())) {
 			return false;
 		}
 		// Does more precise and expensive tests

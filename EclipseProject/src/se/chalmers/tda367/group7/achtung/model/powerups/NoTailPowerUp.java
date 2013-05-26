@@ -9,6 +9,7 @@ public class NoTailPowerUp implements BodyPowerUpEffect {
 	private static final String NAME = "immortal";
 	private static final int DURATION = 120;
 	private static final boolean STACKABLE = false;
+	private static final float WEIGHT = 0.6f;
 
 	@Override
 	public int getDuration() {
@@ -45,6 +46,11 @@ public class NoTailPowerUp implements BodyPowerUpEffect {
 	@Override
 	public String toString() {
 		return NAME;
+	}
+
+	@Override
+	public float getWeight() {
+		return WEIGHT;
 	}
 
 }

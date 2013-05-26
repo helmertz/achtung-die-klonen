@@ -7,27 +7,22 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Class for setting up everything before starting the game.
+ * Class representing an entire game session, with a number of rounds.
  */
 public class Game {
 
 	private final List<Round> rounds;
 	private final List<Player> players;
-	private final Map map;
 	private Round currentRound;
 	private Player gameWinner;
+	private int goalPoints;
 
 	private final PropertyChangeSupport pcs;
-	private final float powerUpChance;
 
 	public Game() {
-		this.powerUpChance = Settings.getInstance().getPowerUpChance();
 		this.rounds = new ArrayList<>();
 		this.players = new ArrayList<>();
-		this.map = new Map(1337, 1337);
-
 		this.pcs = new PropertyChangeSupport(this);
-
 	}
 
 	public Player createNewPlayer(String name, Color color) {
@@ -47,11 +42,23 @@ public class Game {
 	}
 
 	public void newRound() {
-		this.map.setColor(Map.DEFAULT_COLOR);
-		this.currentRound = new Round(this.map, this.players,
-				this.powerUpChance);
+		float size = Settings.getInstance().getMapSize();
+		this.currentRound = new Round(new Map(size, size), this.players);
 		this.rounds.add(this.currentRound);
 		this.pcs.firePropertyChange("NewRound", false, true);
+		if(Settings.getInstance().isAutoGoalEnabled()) {
+			this.goalPoints = 10 * (this.players.size() - 1);
+		} else {
+			this.goalPoints = Settings.getInstance().getGoalScore();
+		}
+
+		resetPlayerRoundScores();
+	}
+
+	private void resetPlayerRoundScores() {
+		for (Player p : this.players) {
+			p.resetRoundScore();
+		}
 	}
 
 	public void addPlayer(Player p) {
@@ -67,7 +74,8 @@ public class Game {
 	 */
 	public boolean isOver() {
 		if (this.currentRound != null) {
-			return !this.currentRound.isRoundActive() && gameWinner != null;
+			return !this.currentRound.isRoundActive()
+					&& this.gameWinner != null;
 		} else {
 			return false;
 		}
@@ -78,7 +86,6 @@ public class Game {
 	 * if found.
 	 */
 	private void winnerCheck() {
-		int goalPoints = getGoalPoints();
 
 		// Finds the highest score and sets a player with that score
 		int highestScore = 0;
@@ -91,7 +98,7 @@ public class Game {
 		}
 
 		// No need to check further if below goal
-		if (highestScore < goalPoints) {
+		if (highestScore < this.goalPoints) {
 			return;
 		}
 
@@ -100,6 +107,9 @@ public class Game {
 		for (Player player : this.players) {
 			if (player != possibleWinner
 					&& highestScore - player.getPoints() < 2) {
+				// Sets the goal score to one higher than highestScore
+				// so that you need two points more than second highest to win
+				this.goalPoints = highestScore + 1;
 				return;
 			}
 		}
@@ -110,7 +120,11 @@ public class Game {
 	 * Returns the number of points required to win the game.
 	 */
 	public int getGoalPoints() {
-		return 10 * (this.players.size() - 1);
+		return this.goalPoints;
+	}
+
+	public void setGoalPoints(int goalPoints) {
+		this.goalPoints = goalPoints;
 	}
 
 	public Round getCurrentRound() {

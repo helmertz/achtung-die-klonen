@@ -62,7 +62,7 @@ public class PlayerView implements View {
 					body.getWidth(), this.player.getColor());
 
 		}
-		// Inverts color of head if inverted controlls
+		// Inverts color of head if controls are inverted
 		Color headColor = this.player.getColor();
 
 		if (this.player.getBody().hasInvertedControls()) {
@@ -80,14 +80,19 @@ public class PlayerView implements View {
 	private void drawSegment(RenderService renderService, BodySegment b) {
 		Position[] corners = b.getCorners();
 		if (corners.length == 4) {
-			renderService.drawFourCornered(corners[0].getX(),
-					corners[0].getY(), corners[1].getX(), corners[1].getY(),
-					corners[2].getX(), corners[2].getY(), corners[3].getX(),
-					corners[3].getY(), this.player.getColor());
+			drawSegmentCorners(renderService, corners);
 		} else {
 			throw new IllegalArgumentException(
 					"Segment doesn't have four corners");
 		}
+	}
+
+	private void drawSegmentCorners(RenderService renderService,
+			Position[] corners) {
+		renderService.drawFourCornered(corners[0].getX(), corners[0].getY(),
+				corners[1].getX(), corners[1].getY(), corners[2].getX(),
+				corners[2].getY(), corners[3].getX(), corners[3].getY(),
+				this.player.getColor());
 	}
 
 	private void drawPowerUpTimer(RenderService renderService,

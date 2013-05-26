@@ -166,12 +166,12 @@ public class Color {
 	/**
 	 * Returns a string representation of the color.
 	 * 
-	 * @return a string representing the color
+	 * @return a string representation of the color.
 	 */
 	@Override
 	public String toString() {
-		return "Color: red: " + this.r + " green: " + this.g + " blue: "
-				+ this.b + " alpha: " + this.a + "";
+		return "Color [red=" + this.r + ", green=" + this.g + ", blue="
+				+ this.b + ", alpha=" + this.a + "]";
 	}
 
 	/**

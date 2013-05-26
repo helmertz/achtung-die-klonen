@@ -9,6 +9,7 @@ public class ClearPowerUp implements BodyPowerUpEffect {
 	private static final String NAME = "clear";
 	private static final int DURATION = 0;
 	private static final boolean STACKABLE = false;
+	private static final float WEIGHT = 0.2f;
 
 	@Override
 	public void applyEffect(Body body) {
@@ -43,6 +44,11 @@ public class ClearPowerUp implements BodyPowerUpEffect {
 	@Override
 	public String toString() {
 		return NAME;
+	}
+
+	@Override
+	public float getWeight() {
+		return WEIGHT;
 	}
 
 }

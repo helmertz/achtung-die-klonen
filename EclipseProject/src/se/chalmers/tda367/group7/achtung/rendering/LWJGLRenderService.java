@@ -3,6 +3,7 @@ package se.chalmers.tda367.group7.achtung.rendering;
 import static org.lwjgl.opengl.GL11.*;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
@@ -16,6 +17,11 @@ import org.lwjgl.opengl.Util;
 import se.chalmers.tda367.group7.achtung.model.Color;
 
 class LWJGLRenderService implements RenderService {
+
+	private static final int DEFAULT_WIDTH = 800;
+	private static final int DEFAULT_HEIGHT = 600;
+	private static final int MIN_WIDTH = 600;
+	private static final int MIN_HEIGHT = 530;
 
 	private static LWJGLRenderService instance;
 
@@ -73,13 +79,23 @@ class LWJGLRenderService implements RenderService {
 
 	private void initDisplay() throws LWJGLException {
 		Display.setResizable(true);
-		Display.setTitle("Achtung");
+		Display.setTitle("Achtung, die Klonen");
+
+		// Sets program icons, shown in taskbar for example
+		try {
+			ByteBuffer[] icons = new ByteBuffer[2];
+			icons[0] = IconLoader.loadIcon("achtung-icon16.png");
+			icons[1] = IconLoader.loadIcon("achtung-icon32.png");
+			Display.setIcon(icons);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		// Used to determine anti-aliasing capabilities
 		int maxSamples = 0;
 
 		PixelFormat format = new PixelFormat(32, 0, 24, 8, 0);
-		Pbuffer pb = new Pbuffer(800, 600, format, null);
+		Pbuffer pb = new Pbuffer(DEFAULT_WIDTH, DEFAULT_HEIGHT, format, null);
 		pb.makeCurrent();
 		boolean supported = GLContext.getCapabilities().GL_ARB_multisample;
 		if (supported) {
@@ -93,33 +109,50 @@ class LWJGLRenderService implements RenderService {
 		} else if (maxSamples >= 4) {
 			maxSamples = 4;
 		}
-		Display.setDisplayMode(new DisplayMode(800, 600));
+		Display.setDisplayMode(new DisplayMode(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 		Display.create(new PixelFormat().withSamples(maxSamples));
-
 	}
 
-	// TODO: make scaling proportional
 	private void sizeRefresh() {
-		glViewport(0, 0, Display.getWidth(), Display.getHeight());
+		int displayWidth = Display.getWidth();
+		int displayHeight = Display.getHeight();
+
+		// Enforces minimum display size
+		if (displayWidth < MIN_WIDTH || displayHeight < MIN_HEIGHT) {
+			if (displayWidth < MIN_WIDTH) {
+				displayWidth = MIN_WIDTH;
+			}
+			if (displayHeight < MIN_HEIGHT) {
+				displayHeight = MIN_HEIGHT;
+			}
+			try {
+				Display.setDisplayMode(new DisplayMode(displayWidth,
+						displayHeight));
+			} catch (LWJGLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		glViewport(0, 0, displayWidth, displayHeight);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		this.xPadding = 0;
 		this.yPadding = 0;
 
 		// for proportional scaling
-		float displayRatio = (float) Display.getWidth() / Display.getHeight();
+		float displayRatio = (float) displayWidth / displayHeight;
 		float viewRatio = this.viewAreaWidth / this.viewAreaHeight;
 
 		if (viewRatio < displayRatio) {
 			// Padd on width
 			this.xPadding = (this.viewAreaHeight * displayRatio - this.viewAreaWidth) / 2;
-			this.scaling = Display.getHeight() / this.viewAreaHeight;
+			this.scaling = displayHeight / this.viewAreaHeight;
 		} else {
 			// Padd on height
 			this.yPadding = (this.viewAreaWidth / displayRatio - this.viewAreaHeight) / 2;
-			this.scaling = Display.getWidth() / this.viewAreaWidth;
+			this.scaling = displayWidth / this.viewAreaWidth;
 		}
-		glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 0, 1);
+		glOrtho(0, displayWidth, displayHeight, 0, 0, 1);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		if (this.scaled) {
@@ -317,7 +350,6 @@ class LWJGLRenderService implements RenderService {
 		drawFourCornered(x1, y1, x2, y2, x3, y3, x4, y4);
 	}
 
-	@Override
 	public void drawFourCornered(float x1, float y1, float x2, float y2,
 			float x3, float y3, float x4, float y4) {
 		glBegin(GL_QUADS);
@@ -326,5 +358,33 @@ class LWJGLRenderService implements RenderService {
 		glVertex2f(x3, y3);
 		glVertex2f(x4, y4);
 		glEnd();
+	}
+
+	@Override
+	public boolean isFullscreen() {
+		return Display.isFullscreen();
+	}
+
+	@Override
+	public void setFullscreen(boolean fullscreen) {
+		if (isFullscreen() != fullscreen) {
+			try {
+				if (fullscreen) {
+					Display.setDisplayModeAndFullscreen(Display
+							.getDesktopDisplayMode());
+				} else {
+					Display.setDisplayMode(new DisplayMode(DEFAULT_WIDTH,
+							DEFAULT_HEIGHT));
+				}
+			} catch (LWJGLException e) {
+				e.printStackTrace();
+			}
+			sizeRefresh();
+		}
+	}
+
+	@Override
+	public double getRefreshRate() {
+		return Display.getDesktopDisplayMode().getFrequency();
 	}
 }
