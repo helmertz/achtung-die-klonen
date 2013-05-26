@@ -49,9 +49,10 @@ public class MainController implements PropertyChangeListener,
 	private int loops;
 
 	// Frame rate related
-	private final double fpsLimit; // Set to zero or below to prevent limiting
-	private final long frameDelay;
+	private double fpsLimit; // Set to zero or below to prevent limiting
+	private long frameDelay;
 	private long lastFrame;
+	private boolean limitFPS;
 
 	// Debug related
 	private static final long DEBUG_PRINT_DELAY = 1000000000l;
@@ -60,6 +61,7 @@ public class MainController implements PropertyChangeListener,
 	private int dbgGameTickCounter;
 	private String fpsString = "";
 	private String tpsString = "";
+	private boolean showDebug;
 
 	private RenderService renderer;
 	private final InputService inputService;
@@ -78,9 +80,7 @@ public class MainController implements PropertyChangeListener,
 	public MainController() {
 
 		this.renderer = RenderServiceFactory.getRenderService();
-		this.fpsLimit = this.renderer.getRefreshRate(); // Set to zero or below
-														// to prevent limiting
-		this.frameDelay = Math.round(1000000000d / fpsLimit);
+		setLimitFPS(true);
 
 		// The service for supplying mouse and keyboard events
 		this.inputService = InputServiceFactory.getInputService();
@@ -174,7 +174,8 @@ public class MainController implements PropertyChangeListener,
 			this.dbgGameTickCounter++;
 		}
 
-		if (fpsLimit <= 0 || getTickCount() - this.lastFrame >= frameDelay) {
+		if (this.fpsLimit <= 0
+				|| getTickCount() - this.lastFrame >= this.frameDelay) {
 			this.lastFrame = getTickCount();
 			float interpolation = getInterpolation();
 			render(interpolation);
@@ -250,9 +251,11 @@ public class MainController implements PropertyChangeListener,
 			this.nifty.render(false);
 		}
 
-		// Render debug info
-		this.renderer.drawString(this.fpsString, 0, 0, 1);
-		this.renderer.drawString(this.tpsString, 0, 20, 1);
+		if (this.showDebug) {
+			// Render debug info
+			this.renderer.drawString(this.fpsString, 0, 0, 1);
+			this.renderer.drawString(this.tpsString, 0, 20, 1);
+		}
 
 		this.renderer.postDraw();
 	}
@@ -269,9 +272,17 @@ public class MainController implements PropertyChangeListener,
 			}
 			return true;
 		} else if (!event.isRepeat() && event.isPressed()
+				&& event.getKey() == Keyboard.KEY_F3) {
+			this.showDebug = !this.showDebug;
+			return true;
+		} else if (!event.isRepeat() && event.isPressed()
 				&& event.getKey() == Keyboard.KEY_F11) {
 			this.renderer.setFullscreen(!this.renderer.isFullscreen());
 			this.nifty.resolutionChanged();
+			return true;
+		} else if (!event.isRepeat() && event.isPressed()
+				&& event.getKey() == Keyboard.KEY_F12) {
+			toggleFPSLimit();
 			return true;
 		}
 		if (this.atMenu) {
@@ -283,6 +294,23 @@ public class MainController implements PropertyChangeListener,
 			this.gameController.onKeyInputEvent(event);
 		}
 		return false;
+	}
+
+	private void toggleFPSLimit() {
+		setLimitFPS(!this.limitFPS);
+	}
+
+	private void setLimitFPS(boolean limitFPS) {
+		if (this.limitFPS != limitFPS) {
+			this.limitFPS = limitFPS;
+			if (limitFPS) {
+				this.fpsLimit = this.renderer.getRefreshRate();
+				this.frameDelay = Math.round(1000000000d / this.fpsLimit);
+			} else {
+				this.fpsLimit = 0;
+				this.frameDelay = 0;
+			}
+		}
 	}
 
 	@Override
