@@ -6,17 +6,17 @@ import se.chalmers.tda367.group7.achtung.model.Color;
 
 public interface RenderService {
 	/**
-	 * Should be before a new frame is drawn.
+	 * Should called be before a new frame is drawn.
 	 */
 	void preDraw();
 
 	/**
-	 * Should be after all drawing methods has been done for a frame.
+	 * Should called be after all drawing methods has been done for a frame.
 	 */
 	void postDraw();
 
 	/**
-	 * Sets the color the screen is filled with after it has been cleared.
+	 * Sets the color the screen is filled when it's cleared.
 	 * 
 	 * @param color
 	 *            the background color
