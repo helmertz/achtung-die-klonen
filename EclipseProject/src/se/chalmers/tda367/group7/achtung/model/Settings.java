@@ -120,20 +120,20 @@ public class Settings {
 	}
 
 	public boolean isMusicEnabled() {
-		return Boolean.parseBoolean(this.prop.getProperty("musicEnabled"));
+		return Boolean.parseBoolean(this.prop.getProperty("music"));
 	}
 
 	public void setMusicEnabled(boolean musicEnabled) {
-		this.prop.setProperty("musicEnabled", musicEnabled + "");
+		this.prop.setProperty("music", musicEnabled + "");
 	}
 
 	public boolean isSoundEffectsEnabled() {
 		return Boolean.parseBoolean(this.prop
-				.getProperty("soundEffectsEnabled"));
+				.getProperty("sound_effects"));
 	}
 
 	public void setSoundEffectsEnabled(boolean soundEffectsEnabled) {
-		this.prop.setProperty("soundEffectsEnabled", soundEffectsEnabled + "");
+		this.prop.setProperty("sound_effects", soundEffectsEnabled + "");
 	}
 
 	public void setGoalScore(int score) {
