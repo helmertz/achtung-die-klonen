@@ -196,7 +196,7 @@
 	<popup id="aboutPopup" align="center" childLayout="center">
 		<interact onClick="closePopup()"/>
 		<panel width="350" height="300" style="nifty-panel" childLayout="vertical">
-			<control textVAlign="top" width="80%" align="center" height="100%" wrap="true" name="label" text="Achtung, die Klonen&#10;&#10;x.y&#10;(2013-mm-dd)&#10;&#10;Jakob Csörgei Gustavsson&#10;Niklas Helmertz&#10;Lucas Persson&#10;Joel Torstenson&#10;&#10;Music  Credits:&#10;Borderline, (Fantastic Vamps : 8-Bit Mix) http://ccmixter.org/files/vamps/8749&#10;ParagonX9, SM64 - The Alternate Route http://www.newgrounds.com/audio/listen/11245"/>
+			<control textVAlign="top" width="80%" align="center" height="100%" wrap="true" name="label" text="Achtung, die Klonen&#10;&#10;1.0&#10;(2013-05-26)&#10;&#10;Jakob Csörgei Gustavsson&#10;Niklas Helmertz&#10;Lucas Persson&#10;Joel Torstenson&#10;&#10;Music  Credits:&#10;Borderline, (Fantastic Vamps : 8-Bit Mix) http://ccmixter.org/files/vamps/8749&#10;ParagonX9, SM64 - The Alternate Route http://www.newgrounds.com/audio/listen/11245"/>
 		</panel>
 	</popup>
 </nifty>
