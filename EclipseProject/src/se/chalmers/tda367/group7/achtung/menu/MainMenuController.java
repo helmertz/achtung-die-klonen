@@ -48,6 +48,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 	private Slider widthSlider;
 	private Slider holeSlider;
 	private Slider rotSlider;
+	private Slider sizeSlider;
 	private CheckBox musicCheckBox;
 	private CheckBox soundEffectsCheckBox;
 
@@ -91,6 +92,8 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 				Slider.class);
 		this.rotSlider = this.screen
 				.findNiftyControl("rotSlider", Slider.class);
+		this.sizeSlider = this.screen
+				.findNiftyControl("sizeSlider", Slider.class);
 		this.musicCheckBox = this.screen.findNiftyControl("music",
 				CheckBox.class);
 		this.soundEffectsCheckBox = this.screen.findNiftyControl("sound",
@@ -114,6 +117,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 				Settings.MAX_CHANCE_OF_HOLE);
 		configureSlider(this.rotSlider, Settings.MIN_ROTATION_SPEED,
 				Settings.MAX_ROTATION_SPEED);
+		configureSlider(this.sizeSlider, Settings.MIN_MAP_SIZE, Settings.MAX_MAP_SIZE);
 	}
 
 	// By default, uses 100 steps
@@ -273,8 +277,10 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		float rotSpeed = this.rotSlider.getValue();
 		boolean musicEnabled = this.musicCheckBox.isChecked();
 		boolean soundEffectsEnabled = this.soundEffectsCheckBox.isChecked();
+
 		int goal = Math.round(this.goalSlider.getValue());
 		boolean autoGoal = this.goalCheckbox.isChecked();
+		float mapSize = this.sizeSlider.getValue();
 
 		Settings settings = Settings.getInstance();
 		settings.setPowerUpChance(powerUpChance);
@@ -286,6 +292,7 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		settings.setSoundEffectsEnabled(soundEffectsEnabled);
 		settings.setGoalScore(goal);
 		settings.setAutoGoalEnabled(autoGoal);
+		settings.setMapSize(mapSize);
 	}
 
 	/**
@@ -303,7 +310,8 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		boolean musicEnabled = settings.isMusicEnabled();
 		boolean soundEffectsEnabled = settings.isSoundEffectsEnabled();
 		int goalScore = settings.getGoalScore();
-		boolean autoGoal = Settings.getInstance().isAutoGoalEnabled();
+		boolean autoGoal = settings.isAutoGoalEnabled();
+		float mapSize = settings.getMapSize();
 
 		this.powerUpSlider.setValue(powerUpChance);
 		this.speedSlider.setValue(speed);
@@ -312,6 +320,8 @@ public class MainMenuController implements ScreenController, KeyInputListener {
 		this.rotSlider.setValue(rotSpeed);
 		this.musicCheckBox.setChecked(musicEnabled);
 		this.soundEffectsCheckBox.setChecked(soundEffectsEnabled);
+		this.sizeSlider.setValue(mapSize);
+
 		this.goalSlider.setValue(goalScore);
 		this.goalCheckbox.setChecked(autoGoal);
 

@@ -143,6 +143,8 @@
 							<control id="holeSlider" name="horizontalSlider"/>
 							<control name="label" text="Rotation speed"/>
 							<control id="rotSlider" name="horizontalSlider"/>
+							<control name="label" text="Map size"/>
+							<control id="sizeSlider" name="horizontalSlider" />
 							<panel childLayout="horizontal">
 								<control name="checkbox" checked="true" id="music"/>
 								<control name="label" text="Music"/>

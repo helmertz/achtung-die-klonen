@@ -42,7 +42,8 @@ public class Game {
 	}
 
 	public void newRound() {
-		this.currentRound = new Round(new Map(1337, 1337), this.players);
+		float size = Settings.getInstance().getMapSize();
+		this.currentRound = new Round(new Map(size, size), this.players);
 		this.rounds.add(this.currentRound);
 		this.pcs.firePropertyChange("NewRound", false, true);
 		if(Settings.getInstance().isAutoGoalEnabled()) {

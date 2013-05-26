@@ -22,6 +22,9 @@ public class Settings {
 	public static final float MAX_POWER_UP_CHANCE = 0.1f;
 	public static final float MIN_GOAL = 1;
 	public static final float MAX_GOAL = 99;
+	public static final float MIN_MAP_SIZE = 800;
+	public static final float MAX_MAP_SIZE = 2500;
+	
 
 	private static final float DEFAULT_WIDTH = 10;
 	private static final float DEFAULT_SPEED = 6;
@@ -32,6 +35,7 @@ public class Settings {
 	private static final boolean DEFAULT_SOUND_EFFECTS_ENABLED = true;
 	private static final int DEFAULT_GOAL_SCORE = 10;
 	private static final boolean DEFAULT_AUTO_GOAL = true;
+	private static final float DEFAULT_MAP_SIZE = 1337;
 
 	private static final String FILENAME = "achtung.conf";
 
@@ -105,6 +109,14 @@ public class Settings {
 
 	public void setPowerUpChance(float powerUpChance) {
 		this.prop.setProperty("power_up_chance", powerUpChance + "");
+	}
+
+	public float getMapSize() {
+		return Float.parseFloat(this.prop.getProperty("map_size"));
+	}
+
+	public void setMapSize(float mapSize) {
+		this.prop.setProperty("map_size", mapSize + "");
 	}
 
 	public boolean isMusicEnabled() {
@@ -193,6 +205,7 @@ public class Settings {
 		setSoundEffectsEnabled(DEFAULT_SOUND_EFFECTS_ENABLED);
 		setGoalScore(DEFAULT_GOAL_SCORE);
 		setAutoGoalEnabled(DEFAULT_AUTO_GOAL);
+		setMapSize(DEFAULT_MAP_SIZE);
 
 		save();
 	}
