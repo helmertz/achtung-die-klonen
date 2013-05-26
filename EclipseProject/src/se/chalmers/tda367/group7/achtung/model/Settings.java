@@ -72,7 +72,12 @@ public class Settings {
 	}
 
 	public float getWidth() {
-		return Float.parseFloat(this.prop.getProperty("width"));
+		String loaded = this.prop.getProperty("width");
+		if(loaded == null) {
+			setWidth(DEFAULT_WIDTH);
+			return DEFAULT_WIDTH;
+		}
+		return Float.parseFloat(loaded);
 	}
 
 	public void setWidth(float width) {
@@ -80,7 +85,12 @@ public class Settings {
 	}
 
 	public float getSpeed() {
-		return Float.parseFloat(this.prop.getProperty("speed"));
+		String loaded = this.prop.getProperty("speed");
+		if(loaded == null) {
+			setSpeed(DEFAULT_SPEED);
+			return DEFAULT_SPEED;
+		}
+		return Float.parseFloat(loaded);
 	}
 
 	public void setSpeed(float speed) {
@@ -88,7 +98,12 @@ public class Settings {
 	}
 
 	public float getRotationSpeed() {
-		return Float.parseFloat(this.prop.getProperty("rotation_speed"));
+		String loaded = this.prop.getProperty("rotation_speed");
+		if(loaded == null) {
+			setRotationSpeed(DEFAULT_ROTATION_SPEED);
+			return DEFAULT_ROTATION_SPEED;
+		}
+		return Float.parseFloat(loaded);
 	}
 
 	public void setRotationSpeed(float rotationSpeed) {
@@ -96,7 +111,12 @@ public class Settings {
 	}
 
 	public float getChanceOfHole() {
-		return Float.parseFloat(this.prop.getProperty("chance_of_hole"));
+		String loaded = this.prop.getProperty("chance_of_hole");
+		if(loaded == null) {
+			setChanceOfHole(DEFAULT_CHANCE_OF_HOLE);
+			return DEFAULT_CHANCE_OF_HOLE;
+		}
+		return Float.parseFloat(loaded);
 	}
 
 	public void setChanceOfHole(float chanceOfHole) {
@@ -104,7 +124,12 @@ public class Settings {
 	}
 
 	public float getPowerUpChance() {
-		return Float.parseFloat(this.prop.getProperty("power_up_chance"));
+		String loaded = this.prop.getProperty("power_up_chance");
+		if(loaded == null) {
+			setPowerUpChance(DEFAULT_POWER_UP_CHANCE);
+			return DEFAULT_POWER_UP_CHANCE;
+		}
+		return Float.parseFloat(loaded);
 	}
 
 	public void setPowerUpChance(float powerUpChance) {
@@ -112,7 +137,12 @@ public class Settings {
 	}
 
 	public float getMapSize() {
-		return Float.parseFloat(this.prop.getProperty("map_size"));
+		String loaded = this.prop.getProperty("map_size");
+		if(loaded == null) {
+			setMapSize(DEFAULT_MAP_SIZE);
+			return DEFAULT_MAP_SIZE;
+		}
+		return Float.parseFloat(loaded);
 	}
 
 	public void setMapSize(float mapSize) {
@@ -120,7 +150,12 @@ public class Settings {
 	}
 
 	public boolean isMusicEnabled() {
-		return Boolean.parseBoolean(this.prop.getProperty("music"));
+		String loaded = this.prop.getProperty("music");
+		if(loaded == null) {
+			setMusicEnabled(DEFAULT_MUSIC_ENABLED);
+			return DEFAULT_MUSIC_ENABLED;
+		}
+		return Boolean.parseBoolean(loaded);
 	}
 
 	public void setMusicEnabled(boolean musicEnabled) {
@@ -128,8 +163,12 @@ public class Settings {
 	}
 
 	public boolean isSoundEffectsEnabled() {
-		return Boolean.parseBoolean(this.prop
-				.getProperty("sound_effects"));
+		String loaded = this.prop.getProperty("sound_effects");
+		if(loaded == null) {
+			setSoundEffectsEnabled(DEFAULT_SOUND_EFFECTS_ENABLED);
+			return DEFAULT_SOUND_EFFECTS_ENABLED;
+		}
+		return Boolean.parseBoolean(loaded);
 	}
 
 	public void setSoundEffectsEnabled(boolean soundEffectsEnabled) {
@@ -146,7 +185,7 @@ public class Settings {
 			setAutoGoalEnabled(DEFAULT_AUTO_GOAL);
 			return DEFAULT_AUTO_GOAL;
 		}
-		return Boolean.parseBoolean(this.prop.getProperty("auto_goal"));
+		return Boolean.parseBoolean(loaded);
 	}
 
 	public void setAutoGoalEnabled(boolean autoGoal) {
