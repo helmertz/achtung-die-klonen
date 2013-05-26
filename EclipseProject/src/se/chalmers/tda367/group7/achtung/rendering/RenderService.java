@@ -76,4 +76,6 @@ public interface RenderService {
 	boolean isFullscreen();
 
 	void setFullscreen(boolean fullscreen);
+
+	double getRefreshRate();
 }

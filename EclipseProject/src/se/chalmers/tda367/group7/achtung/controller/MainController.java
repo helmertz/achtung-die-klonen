@@ -49,9 +49,8 @@ public class MainController implements PropertyChangeListener,
 	private int loops;
 
 	// Frame rate related
-	private static final double FPS_LIMIT = 60.1; // Set to zero or below to
-													// prevent limiting
-	private static final long FRAME_DELAY = (long) (1000000000d / FPS_LIMIT);
+	private final double fpsLimit; // Set to zero or below to prevent limiting
+	private final long frameDelay;
 	private long lastFrame;
 
 	// Debug related
@@ -79,6 +78,9 @@ public class MainController implements PropertyChangeListener,
 	public MainController() {
 
 		this.renderer = RenderServiceFactory.getRenderService();
+		this.fpsLimit = this.renderer.getRefreshRate(); // Set to zero or below
+														// to prevent limiting
+		this.frameDelay = Math.round(1000000000d / fpsLimit);
 
 		// The service for supplying mouse and keyboard events
 		this.inputService = InputServiceFactory.getInputService();
@@ -172,7 +174,7 @@ public class MainController implements PropertyChangeListener,
 			this.dbgGameTickCounter++;
 		}
 
-		if (FPS_LIMIT <= 0 || getTickCount() - this.lastFrame >= FRAME_DELAY) {
+		if (fpsLimit <= 0 || getTickCount() - this.lastFrame >= frameDelay) {
 			this.lastFrame = getTickCount();
 			float interpolation = getInterpolation();
 			render(interpolation);
@@ -240,10 +242,6 @@ public class MainController implements PropertyChangeListener,
 
 		this.renderer.setScaled(false);
 
-		// Render debug info
-		this.renderer.drawString(this.fpsString, 0, 0, 1);
-		this.renderer.drawString(this.tpsString, 0, 20, 1);
-
 		if (Display.wasResized()) {
 			this.nifty.resolutionChanged();
 		}
@@ -251,6 +249,11 @@ public class MainController implements PropertyChangeListener,
 		if (this.atMenu) {
 			this.nifty.render(false);
 		}
+
+		// Render debug info
+		this.renderer.drawString(this.fpsString, 0, 0, 1);
+		this.renderer.drawString(this.tpsString, 0, 20, 1);
+
 		this.renderer.postDraw();
 	}
 

@@ -382,4 +382,9 @@ class LWJGLRenderService implements RenderService {
 			sizeRefresh();
 		}
 	}
+
+	@Override
+	public double getRefreshRate() {
+		return Display.getDesktopDisplayMode().getFrequency();
+	}
 }
