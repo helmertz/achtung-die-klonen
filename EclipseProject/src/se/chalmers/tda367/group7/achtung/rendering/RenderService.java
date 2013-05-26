@@ -6,12 +6,12 @@ import se.chalmers.tda367.group7.achtung.model.Color;
 
 public interface RenderService {
 	/**
-	 * Should called be before a new frame is drawn.
+	 * Should be called before a new frame is drawn.
 	 */
 	void preDraw();
 
 	/**
-	 * Should called be after all drawing methods has been done for a frame.
+	 * Should be called after all drawing for a frame are done.
 	 */
 	void postDraw();
 
