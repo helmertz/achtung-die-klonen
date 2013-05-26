@@ -81,6 +81,7 @@ class LWJGLRenderService implements RenderService {
 		Display.setResizable(true);
 		Display.setTitle("Achtung, die Klonen");
 
+		// Sets program icons, shown in taskbar for example
 		try {
 			ByteBuffer[] icons = new ByteBuffer[2];
 			icons[0] = IconLoader.loadIcon("achtung-icon16.png");
@@ -349,7 +350,6 @@ class LWJGLRenderService implements RenderService {
 		drawFourCornered(x1, y1, x2, y2, x3, y3, x4, y4);
 	}
 
-	@Override
 	public void drawFourCornered(float x1, float y1, float x2, float y2,
 			float x3, float y3, float x4, float y4) {
 		glBegin(GL_QUADS);

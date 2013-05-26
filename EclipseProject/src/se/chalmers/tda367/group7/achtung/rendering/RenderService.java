@@ -7,11 +7,15 @@ import se.chalmers.tda367.group7.achtung.model.Color;
 public interface RenderService {
 	/**
 	 * Should be called before a new frame is drawn.
+	 * 
+	 * Clears the screen and checks whether the window has been scaled.
 	 */
 	void preDraw();
 
 	/**
-	 * Should be called after all drawing for a frame are done.
+	 * Should be called after all drawing for a frame is done.
+	 * 
+	 * The things drawn using the draw methods are made visible to the user.
 	 */
 	void postDraw();
 
@@ -112,7 +116,7 @@ public interface RenderService {
 			Color color);
 
 	/**
-	 * Draws text on the screen.
+	 * Draws white text on the screen.
 	 * 
 	 * @param string
 	 *            the string to be drawn
@@ -121,14 +125,54 @@ public interface RenderService {
 	 * @param y
 	 *            the y-coordinate of the top-left corner of the first letter
 	 * @param scale
-	 *            the scale of the string
+	 *            the scale of the text
 	 */
 	void drawString(String string, float x, float y, float scale);
 
+	/**
+	 * Draws text with specified color on the screen.
+	 * 
+	 * @param string
+	 *            the string to be drawn
+	 * @param x
+	 *            the x-coordinate of the top-left corner of the first letter
+	 * @param y
+	 *            the y-coordinate of the top-left corner of the first letter
+	 * @param scale
+	 *            the scale of the text
+	 * @param color
+	 *            the color of the text
+	 */
 	void drawString(String string, float x, float y, float scale, Color color);
 
+	/**
+	 * Draws white text on the screen.
+	 * 
+	 * @param string
+	 *            the string to be drawn
+	 * @param x
+	 *            the center x-coordinate of where the string is drawn
+	 * @param y
+	 *            the center y-coordinate of where the string is drawn
+	 * @param scale
+	 *            the scale of the text
+	 */
 	void drawStringCentered(String string, float x, float y, float scale);
 
+	/**
+	 * Draws text with specified color on the screen.
+	 * 
+	 * @param string
+	 *            the string to be drawn
+	 * @param x
+	 *            the center x-coordinate of where the string is drawn
+	 * @param y
+	 *            the center y-coordinate of where the string is drawn
+	 * @param scale
+	 *            the scale of the text
+	 * @param color
+	 *            the color of the text
+	 */
 	void drawStringCentered(String string, float x, float y, float scale,
 			Color color);
 
@@ -203,9 +247,6 @@ public interface RenderService {
 	 */
 	void drawFourCornered(float x, float y, float x2, float y2, float x3,
 			float y3, float x4, float y4, Color color);
-
-	void drawFourCornered(float x1, float y1, float x2, float y2, float x3,
-			float y3, float x4, float y4);
 
 	boolean isFullscreen();
 

@@ -10,6 +10,8 @@ import se.chalmers.tda367.group7.achtung.model.Color;
 
 class LWJGLImage implements Image {
 
+	// Caching of loaded images are done to prevent loading the same multiple
+	// times
 	private static final Map<String, Image> LOADED = new HashMap<String, Image>();
 
 	private final int texID;
